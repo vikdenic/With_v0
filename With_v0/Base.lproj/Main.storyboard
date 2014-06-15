@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5023" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="gDr-xG-KPT">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--class Prefix:identifier View Controller-->
+        <!--Home View Controller - Home-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
+                <viewController title="Home" id="vXZ-lx-hvc" customClass="HomeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -15,13 +15,155 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="nav_bar" translatesAutoresizingMaskIntoConstraints="NO" id="s9t-NY-ose">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Home" image="home_tab_image" id="UJH-tn-uSk"/>
+                    <navigationItem key="navigationItem" id="vKJ-AE-kfH"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="657" y="-1331"/>
+        </scene>
+        <!--Explore View Controller - Explore-->
+        <scene sceneID="upb-6q-sMu">
+            <objects>
+                <viewController id="5Xw-tn-va0" customClass="ExploreViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vh3-x1-Y1H"/>
+                        <viewControllerLayoutGuide type="bottom" id="OxR-Mf-wJi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="01R-6f-ZQ5">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="nav_bar" translatesAutoresizingMaskIntoConstraints="NO" id="xXr-De-dnP">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Explore" image="explore_tab_image" id="yIo-mz-q67"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="398-e9-wTk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="649" y="-568"/>
+        </scene>
+        <!--Create Event View Controller - Create-->
+        <scene sceneID="8Mp-7T-6Rv">
+            <objects>
+                <viewController id="slZ-Mk-xvY" customClass="CreateEventViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Blz-Bn-1MH"/>
+                        <viewControllerLayoutGuide type="bottom" id="FfQ-0K-tK1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="V3u-XG-a23">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="nav_bar" translatesAutoresizingMaskIntoConstraints="NO" id="b4Q-g0-yMp">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Create" image="create_tab_image" id="Uhq-QM-mhq"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aDp-Yj-Zw6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="649" y="82"/>
+        </scene>
+        <!--Find Friends View Controller - Find-->
+        <scene sceneID="nDU-NF-7Sc">
+            <objects>
+                <viewController id="kKl-Ph-QLm" customClass="FindFriendsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1wK-Cl-tMW"/>
+                        <viewControllerLayoutGuide type="bottom" id="jxD-Rw-xJ6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ijr-sD-85h">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="nav_bar" translatesAutoresizingMaskIntoConstraints="NO" id="LOd-p0-Buf">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Find" image="find_tab_image" id="qIF-Vv-Qc6"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UZm-Cb-g0Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="657" y="774"/>
+        </scene>
+        <!--Profile View Controller - Profile-->
+        <scene sceneID="7fI-zG-GZU">
+            <objects>
+                <viewController id="gZ4-Yo-Uwp" customClass="ProfileViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dde-lm-Rs3"/>
+                        <viewControllerLayoutGuide type="bottom" id="Cu0-hJ-z0C"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Pro-L9-i5p">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="nav_bar" translatesAutoresizingMaskIntoConstraints="NO" id="pbT-Tz-zYJ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile_tab_image" id="Q62-9K-QrK"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="b61-Vf-d5R" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="663" y="1466"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="h9q-i0-nTZ">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="gDr-xG-KPT" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" backgroundImage="tab_bar_background" id="Zv8-7j-EbI">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="viewControllers" id="YVC-aR-cB7"/>
+                        <segue destination="5Xw-tn-va0" kind="relationship" relationship="viewControllers" id="NyY-oT-clK"/>
+                        <segue destination="slZ-Mk-xvY" kind="relationship" relationship="viewControllers" id="A2d-Sx-egb"/>
+                        <segue destination="kKl-Ph-QLm" kind="relationship" relationship="viewControllers" id="R6y-AY-X3a"/>
+                        <segue destination="gZ4-Yo-Uwp" kind="relationship" relationship="viewControllers" id="eVm-Fk-D6n"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3GO-5O-Btd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="129" y="82"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="create_tab_image" width="28" height="27"/>
+        <image name="explore_tab_image" width="34" height="27"/>
+        <image name="find_tab_image" width="31" height="32"/>
+        <image name="home_tab_image" width="32" height="32"/>
+        <image name="nav_bar" width="320" height="64"/>
+        <image name="profile_tab_image" width="36" height="27"/>
+        <image name="tab_bar_background" width="320" height="50"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
