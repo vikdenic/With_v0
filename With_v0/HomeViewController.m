@@ -7,6 +7,7 @@
 //
 
 #import "HomeViewController.h"
+#import <Parse/Parse.h>
 
 @interface HomeViewController ()
 

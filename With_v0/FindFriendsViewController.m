@@ -7,6 +7,7 @@
 //
 
 #import "FindFriendsViewController.h"
+#import <Parse/Parse.h>
 
 @interface FindFriendsViewController ()
 
