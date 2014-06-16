@@ -20,16 +20,6 @@
 @property (weak, nonatomic) IBOutlet UITextView *dateAndTimeTextView;
 @property (weak, nonatomic) IBOutlet UITextView *detailsTextView;
 
-
-
-
-
-
-
-
-
-
-
 @end
 
 @implementation IndividualEventViewController
@@ -37,6 +27,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+
+    self.addressTextView.text = @"Address";
+    self.dateAndTimeTextView.text = @"Date and Time";
+    self.detailsTextView.text = @"Throw on some neon and bring your friends on over to our place for a night of fun and plently of refreshments.";
 }
 
 @end

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		60C72085194F677300ADE5DF /* ChatEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C72084194F677300ADE5DF /* ChatEventViewController.m */; };
+		60C7208E194F689400ADE5DF /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C7208D194F689400ADE5DF /* PageViewController.m */; };
+		60C72094194F692000ADE5DF /* StreamEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C72093194F692000ADE5DF /* StreamEventViewController.m */; };
 		60F47A9D194E2325007422E7 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47A9C194E2325007422E7 /* Parse.framework */; };
 		60F47A9F194E2348007422E7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47A9E194E2348007422E7 /* AudioToolbox.framework */; };
 		60F47AA1194E234E007422E7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47AA0194E234E007422E7 /* CFNetwork.framework */; };
@@ -50,6 +53,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		60C72083194F677300ADE5DF /* ChatEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatEventViewController.h; sourceTree = "<group>"; };
+		60C72084194F677300ADE5DF /* ChatEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatEventViewController.m; sourceTree = "<group>"; };
+		60C7208C194F689400ADE5DF /* PageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageViewController.h; sourceTree = "<group>"; };
+		60C7208D194F689400ADE5DF /* PageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageViewController.m; sourceTree = "<group>"; };
+		60C72092194F692000ADE5DF /* StreamEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamEventViewController.h; path = ../StreamEventViewController.h; sourceTree = "<group>"; };
+		60C72093194F692000ADE5DF /* StreamEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamEventViewController.m; path = ../StreamEventViewController.m; sourceTree = "<group>"; };
 		60F47A9C194E2325007422E7 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		60F47A9E194E2348007422E7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		60F47AA0194E234E007422E7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -173,6 +182,12 @@
 				93952F9C194D5D4C001AA3E4 /* AppDelegate.h */,
 				93952F9D194D5D4C001AA3E4 /* AppDelegate.m */,
 				93952F9F194D5D4C001AA3E4 /* Main.storyboard */,
+				60C7208C194F689400ADE5DF /* PageViewController.h */,
+				60C7208D194F689400ADE5DF /* PageViewController.m */,
+				60C72083194F677300ADE5DF /* ChatEventViewController.h */,
+				60C72084194F677300ADE5DF /* ChatEventViewController.m */,
+				60C72092194F692000ADE5DF /* StreamEventViewController.h */,
+				60C72093194F692000ADE5DF /* StreamEventViewController.m */,
 				60F47AB0194E5223007422E7 /* HomeTableViewCell.h */,
 				60F47AB1194E5223007422E7 /* HomeTableViewCell.m */,
 				93952FC2194D6BEA001AA3E4 /* HomeViewController.h */,
@@ -322,12 +337,15 @@
 				93952FD0194D7347001AA3E4 /* FindFriendsViewController.m in Sources */,
 				60F47AB5194E7653007422E7 /* IndividualEventViewController.m in Sources */,
 				93952FCA194D7241001AA3E4 /* ExploreViewController.m in Sources */,
+				60C72085194F677300ADE5DF /* ChatEventViewController.m in Sources */,
 				60F47AB2194E5223007422E7 /* HomeTableViewCell.m in Sources */,
 				93952FCD194D7318001AA3E4 /* CreateEventViewController.m in Sources */,
 				93952F9E194D5D4C001AA3E4 /* AppDelegate.m in Sources */,
+				60C72094194F692000ADE5DF /* StreamEventViewController.m in Sources */,
 				93952F9A194D5D4C001AA3E4 /* main.m in Sources */,
 				93952FC7194D6BFC001AA3E4 /* ProfileViewController.m in Sources */,
 				93952FC4194D6BEA001AA3E4 /* HomeViewController.m in Sources */,
+				60C7208E194F689400ADE5DF /* PageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

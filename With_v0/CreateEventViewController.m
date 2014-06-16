@@ -77,6 +77,8 @@
 - (IBAction)onCreatButtonTapped:(id)sender
 {
 
+    [self.tabBarController setSelectedIndex:0];
+
 //    if ([self.titleTextView.text isEqualToString:nil])
 //    {
 //        //need requirements so user has to do title and date and location? error message by highlighting what they need to fill out if they don't do it

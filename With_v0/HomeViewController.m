@@ -9,6 +9,7 @@
 #import "HomeViewController.h"
 #import <Parse/Parse.h>
 #import "HomeTableViewCell.h"
+#import "IndividualEventViewController.h"
 
 @interface HomeViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -68,9 +69,25 @@
 //    cell.creatorNameLabel.text = query through user relation
     cell.eventNameLabel.text = object[@"title"];
     cell.eventDateLabel.text = @"Saturday. June 25, 5pm";
+
+    cell.accessoryType = UITableViewCellAccessoryNone;
     
     return cell;
 }
+
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main"
+//                                                         bundle:nil];
+//    IndividualEventViewController *individualEventViewController =
+//    [storyboard instantiateViewControllerWithIdentifier:@"IndividualEventViewController"];
+//
+//    [self presentViewController:individualEventViewController
+//                       animated:YES
+//                     completion:nil];
+//
+////    [self.view addSubview:individualEventViewController.view];
+//}
 
 #pragma mark - Query for Events
 
@@ -105,10 +122,7 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"HomeToIndividualSegue"])
-    {
-        //pass current object here
-    }
+
 }
 
 
