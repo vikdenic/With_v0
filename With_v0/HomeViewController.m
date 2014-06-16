@@ -8,45 +8,113 @@
 
 #import "HomeViewController.h"
 #import <Parse/Parse.h>
+#import "HomeTableViewCell.h"
 
-@interface HomeViewController ()
+@interface HomeViewController () <UITableViewDataSource, UITableViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property UIRefreshControl *refreshControl;
+
+@property NSMutableArray *eventArray;
 
 @end
 
 @implementation HomeViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    //pull to refresh
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+
+    [self.tableView addSubview:refreshControl];
 }
 
-- (void)didReceiveMemoryWarning
+-(void)viewWillAppear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [super viewWillAppear:animated];
+
+    self.eventArray = [NSMutableArray array];
+
+    //while everything is loading, we should do what facebook does and simulate that it is a connection problem by outlining out User Inteface. I might not be querying the right way
+
+    [self queryForEvents];
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - Table View
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    return self.eventArray.count;
 }
-*/
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    PFObject *object = [self.eventArray objectAtIndex:indexPath.row];
+
+    PFFile *file = [object objectForKey:@"themeImage"];
+
+    [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+     {
+         UIImage *image = [UIImage imageWithData:data];
+         cell.themeImageView.image = image;
+    }];
+
+//    cell.creatorImageView.image = query through user relation
+//    cell.creatorNameLabel.text = query through user relation
+    cell.eventNameLabel.text = object[@"title"];
+    cell.eventDateLabel.text = @"Saturday. June 25, 5pm";
+    
+    return cell;
+}
+
+#pragma mark - Query for Events
+
+- (void)queryForEvents
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+        if (!error)
+        {
+            [self.eventArray addObjectsFromArray:objects];
+            [self.tableView reloadData];
+        }
+    }];
+}
+
+#pragma mark - Pull To Refresh
+
+- (void)refresh:(UIRefreshControl *)refreshControl
+{
+    [self.eventArray removeAllObjects];
+    [self queryForEvents];
+    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2.0];
+}
+
+- (void)stopRefresh
+{
+    [self.refreshControl endRefreshing];
+}
+
+#pragma mark - Segue
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"HomeToIndividualSegue"])
+    {
+        //pass current object here
+    }
+}
 
 
+- (IBAction)unwindSegueToHomeViewController:(UIStoryboardSegue *)sender
+{
+
+}
 
 @end

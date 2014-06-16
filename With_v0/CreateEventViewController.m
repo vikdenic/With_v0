@@ -9,7 +9,7 @@
 #import "CreateEventViewController.h"
 #import <Parse/Parse.h>
 
-@interface CreateEventViewController () <UITextViewDelegate>
+@interface CreateEventViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *themeImageView;
 @property (weak, nonatomic) IBOutlet UITextView *titleTextView;
@@ -21,6 +21,11 @@
 
 @property (weak, nonatomic) IBOutlet UIView *dateAndTimeView;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property NSDate *selectedDate;
+
+@property UIImagePickerController *cameraController;
+@property UIImage *themeImagePicked;
+@property PFFile *themeImagePicker;
 
 @end
 
@@ -37,6 +42,19 @@
 
     self.dateAndTimeView.alpha = 0;
     self.dateAndTimeView.hidden = YES;
+
+    //UIImagePicker Stuff
+    self.cameraController = [[UIImagePickerController alloc] init];
+    self.cameraController.delegate = self;
+    self.cameraController.allowsEditing = YES;
+    self.cameraController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+
+    //tap on themImageView to open Image Picker
+    UITapGestureRecognizer *tapping = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapTap:)];
+    tapping.numberOfTapsRequired = 1;
+    [self.themeImageView addGestureRecognizer:tapping];
+    self.themeImageView.userInteractionEnabled = YES;
+
 }
 
 #pragma mark - Action Methods
@@ -48,12 +66,31 @@
 
 - (IBAction)onLocationButtonTapped:(id)sender
 {
-
+    //fourSquare API? what else
 }
 
 - (IBAction)onInvitePeopleButtonTapped:(id)sender
 {
-    
+    //modally brings up all of the users friends and they can tap them to invite
+}
+
+- (IBAction)onCreatButtonTapped:(id)sender
+{
+
+//    if ([self.titleTextView.text isEqualToString:nil])
+//    {
+//        //need requirements so user has to do title and date and location? error message by highlighting what they need to fill out if they don't do it
+//
+//    } else {
+
+        //    PFObject *event = [PFObject objectWithClassName:@"Event"];
+        //    event[@"title"] = self.titleTextView.text;
+        //    event[@"details"] = self.detailsTextView.text;
+        //    event[@"date"] = self.selectedDate;
+        //    event [@"location"] = @"Test Location";
+        //    event [@"themeImage"] = self.themeImagePicker;
+        //    event [@"user"] = [PFUser currentUser];
+        //    [event saveInBackground];
 }
 
 #pragma mark - Date and Time View Animation
@@ -73,14 +110,14 @@
 
 -(IBAction)onDoneButtonTappedForDatePicker:(id)sender
 {
-    NSDate *selectedDate = [self.datePicker date];
+    self.selectedDate = [self.datePicker date];
 
 //    NSDateFormatter *date = [[NSDateFormatter alloc] init];
 //    [date setDateFormat:@"MM-dd-yyyy-HH-mm"];
 //    NSString *formattedDate = [date stringFromDate:selectedDate];
 
 
-    NSString *dateString = [NSDateFormatter localizedStringFromDate:selectedDate
+    NSString *dateString = [NSDateFormatter localizedStringFromDate:self.selectedDate
                                                           dateStyle:NSDateFormatterFullStyle
                                                           timeStyle:NSDateFormatterShortStyle];
     [self.dateAndTimeButton setTitle:[NSString stringWithFormat:@"           %@", dateString] forState:UIControlStateNormal];
@@ -91,6 +128,47 @@
                          [self.dateAndTimeView setAlpha:0.0f];
                      }
      ];
+}
+
+#pragma mark - Theme Image View Tapped
+//going to put a tap gesture on this so that when the user taps it, modally a view controller comes up that allows the user to select photos from their library to put in as the theme photo
+//might have some sizing issues and stuff here
+
+#pragma mark - Tap Gesture Recognizer
+
+- (void)tapTap:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    [self presentViewController:self.cameraController animated:NO completion:nil];
+}
+
+#pragma mark - Image Picker
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:^{
+        //back to Create Events View Controller
+    }];
+}
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [picker dismissViewControllerAnimated:NO completion:^{
+
+        self.themeImagePicked = [info valueForKey:UIImagePickerControllerOriginalImage];
+        //here I should resize the image to the size of the imageView so it looks good and normal before saving it?
+        //maybe this might make it weird in the other image views it goes in
+
+        self.themeImageView.image = self.themeImagePicked;
+
+        NSData *themeImageData = UIImagePNGRepresentation(self.themeImagePicked);
+        self.themeImagePicker = [PFFile fileWithData:themeImageData];
+
+        if (self.themeImageView.image)
+        {
+            self.changeThemeButton.hidden = YES;
+        }
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }];
 }
 
 

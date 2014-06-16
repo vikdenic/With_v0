@@ -17,6 +17,8 @@
 		60F47AAB194E2370007422E7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47AAA194E236F007422E7 /* Security.framework */; };
 		60F47AAD194E2375007422E7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47AAC194E2375007422E7 /* StoreKit.framework */; };
 		60F47AAF194E237C007422E7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47AAE194E237C007422E7 /* SystemConfiguration.framework */; };
+		60F47AB2194E5223007422E7 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F47AB1194E5223007422E7 /* HomeTableViewCell.m */; };
+		60F47AB5194E7653007422E7 /* IndividualEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F47AB4194E7653007422E7 /* IndividualEventViewController.m */; };
 		93952F8E194D5D4C001AA3E4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93952F8D194D5D4C001AA3E4 /* Foundation.framework */; };
 		93952F90194D5D4C001AA3E4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93952F8F194D5D4C001AA3E4 /* CoreGraphics.framework */; };
 		93952F92194D5D4C001AA3E4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93952F91194D5D4C001AA3E4 /* UIKit.framework */; };
@@ -58,6 +60,10 @@
 		60F47AAA194E236F007422E7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		60F47AAC194E2375007422E7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		60F47AAE194E237C007422E7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		60F47AB0194E5223007422E7 /* HomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCell.h; sourceTree = "<group>"; };
+		60F47AB1194E5223007422E7 /* HomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewCell.m; sourceTree = "<group>"; };
+		60F47AB3194E7653007422E7 /* IndividualEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualEventViewController.h; sourceTree = "<group>"; };
+		60F47AB4194E7653007422E7 /* IndividualEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualEventViewController.m; sourceTree = "<group>"; };
 		93952F8A194D5D4C001AA3E4 /* With_v0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = With_v0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93952F8D194D5D4C001AA3E4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		93952F8F194D5D4C001AA3E4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -167,8 +173,12 @@
 				93952F9C194D5D4C001AA3E4 /* AppDelegate.h */,
 				93952F9D194D5D4C001AA3E4 /* AppDelegate.m */,
 				93952F9F194D5D4C001AA3E4 /* Main.storyboard */,
+				60F47AB0194E5223007422E7 /* HomeTableViewCell.h */,
+				60F47AB1194E5223007422E7 /* HomeTableViewCell.m */,
 				93952FC2194D6BEA001AA3E4 /* HomeViewController.h */,
 				93952FC3194D6BEA001AA3E4 /* HomeViewController.m */,
+				60F47AB3194E7653007422E7 /* IndividualEventViewController.h */,
+				60F47AB4194E7653007422E7 /* IndividualEventViewController.m */,
 				93952FC8194D7241001AA3E4 /* ExploreViewController.h */,
 				93952FC9194D7241001AA3E4 /* ExploreViewController.m */,
 				93952FCB194D7318001AA3E4 /* CreateEventViewController.h */,
@@ -310,7 +320,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				93952FD0194D7347001AA3E4 /* FindFriendsViewController.m in Sources */,
+				60F47AB5194E7653007422E7 /* IndividualEventViewController.m in Sources */,
 				93952FCA194D7241001AA3E4 /* ExploreViewController.m in Sources */,
+				60F47AB2194E5223007422E7 /* HomeTableViewCell.m in Sources */,
 				93952FCD194D7318001AA3E4 /* CreateEventViewController.m in Sources */,
 				93952F9E194D5D4C001AA3E4 /* AppDelegate.m in Sources */,
 				93952F9A194D5D4C001AA3E4 /* main.m in Sources */,
