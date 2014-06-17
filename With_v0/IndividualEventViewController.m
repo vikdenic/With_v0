@@ -58,12 +58,15 @@
         self.yesButtonTapped = YES;
 
         self.yesImageView.image = [UIImage imageNamed:@"Yes_Button_Selected"];
+        self.noImageView.image = [UIImage imageNamed:@"No_Button"];
 
     } else {
 
         self.yesButtonTapped = NO;
         
         self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
+        self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
+
     }
 }
 
@@ -73,14 +76,14 @@
     if (self.noButtonTapped == NO)
     {
         self.noButtonTapped = YES;
-
         self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
+        self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
 
     } else {
 
         self.noButtonTapped = NO;
-
         self.noImageView.image = [UIImage imageNamed:@"No_Button"];
+        self.yesImageView.image = [UIImage imageNamed:@"Yes_Button_Selected"];
     }
 }
 
