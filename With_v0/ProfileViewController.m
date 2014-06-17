@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *followersLabel;
 @property (weak, nonatomic) IBOutlet UILabel *followingLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UITextView *bioTextView;
 @property (weak, nonatomic) IBOutlet UILabel *cityStateLabel;
 
@@ -75,6 +76,18 @@
 
 
 #pragma mark - Segues
+
+// When user CANCELS within settings
+- (IBAction)unwindSegueCancelSettingsToProfile:(UIStoryboardSegue *)sender
+{
+
+}
+
+// When user SAVES settings
+- (IBAction)unwindSegueSaveSettingsToProfile:(UIStoryboardSegue *)sender
+{
+
+}
 
 - (IBAction)unwindSegueInvitesToProfile:(UIStoryboardSegue *)sender
 {
