@@ -8,8 +8,9 @@
 
 #import "FindFriendsViewController.h"
 #import <Parse/Parse.h>
+#import "FindFriendsTableViewCell.h"
 
-@interface FindFriendsViewController ()
+@interface FindFriendsViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @end
 
@@ -29,22 +30,24 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
-
-- (void)didReceiveMemoryWarning
+- (IBAction)onPeopleYouMayKnowButtonPressed:(id)sender
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - TableView
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    return 1;
 }
-*/
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    FindFriendsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FindCell"];
+
+
+    return cell;
+}
 
 @end
