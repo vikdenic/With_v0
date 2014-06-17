@@ -24,6 +24,8 @@
 		60F47AAF194E237C007422E7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47AAE194E237C007422E7 /* SystemConfiguration.framework */; };
 		60F47AB2194E5223007422E7 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F47AB1194E5223007422E7 /* HomeTableViewCell.m */; };
 		60F47AB5194E7653007422E7 /* IndividualEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F47AB4194E7653007422E7 /* IndividualEventViewController.m */; };
+		93755444195099F9008AAD45 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93755443195099F9008AAD45 /* Parse.framework */; };
+		9375544719509CAA008AAD45 /* InvitesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9375544619509CAA008AAD45 /* InvitesViewController.m */; };
 		93952F8E194D5D4C001AA3E4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93952F8D194D5D4C001AA3E4 /* Foundation.framework */; };
 		93952F90194D5D4C001AA3E4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93952F8F194D5D4C001AA3E4 /* CoreGraphics.framework */; };
 		93952F92194D5D4C001AA3E4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93952F91194D5D4C001AA3E4 /* UIKit.framework */; };
@@ -78,6 +80,9 @@
 		60F47AB1194E5223007422E7 /* HomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewCell.m; sourceTree = "<group>"; };
 		60F47AB3194E7653007422E7 /* IndividualEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualEventViewController.h; sourceTree = "<group>"; };
 		60F47AB4194E7653007422E7 /* IndividualEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualEventViewController.m; sourceTree = "<group>"; };
+		93755443195099F9008AAD45 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../Parse.framework; sourceTree = "<group>"; };
+		9375544519509CAA008AAD45 /* InvitesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitesViewController.h; sourceTree = "<group>"; };
+		9375544619509CAA008AAD45 /* InvitesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitesViewController.m; sourceTree = "<group>"; };
 		93952F8A194D5D4C001AA3E4 /* With_v0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = With_v0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93952F8D194D5D4C001AA3E4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		93952F8F194D5D4C001AA3E4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -112,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93755444195099F9008AAD45 /* Parse.framework in Frameworks */,
 				60F47AA7194E2364007422E7 /* MobileCoreServices.framework in Frameworks */,
 				60C72099194FC53500ADE5DF /* MediaPlayer.framework in Frameworks */,
 				60F47AAF194E237C007422E7 /* SystemConfiguration.framework in Frameworks */,
@@ -164,6 +170,7 @@
 		93952F8C194D5D4C001AA3E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				93755443195099F9008AAD45 /* Parse.framework */,
 				60C72098194FC53500ADE5DF /* MediaPlayer.framework */,
 				60F47AAE194E237C007422E7 /* SystemConfiguration.framework */,
 				60F47AAC194E2375007422E7 /* StoreKit.framework */,
@@ -211,6 +218,8 @@
 				93952FCF194D7347001AA3E4 /* FindFriendsViewController.m */,
 				93952FC5194D6BFC001AA3E4 /* ProfileViewController.h */,
 				93952FC6194D6BFC001AA3E4 /* ProfileViewController.m */,
+				9375544519509CAA008AAD45 /* InvitesViewController.h */,
+				9375544619509CAA008AAD45 /* InvitesViewController.m */,
 				93952FA5194D5D4C001AA3E4 /* Images.xcassets */,
 				93952F94194D5D4C001AA3E4 /* Supporting Files */,
 			);
@@ -356,6 +365,7 @@
 				93952FC7194D6BFC001AA3E4 /* ProfileViewController.m in Sources */,
 				93952FC4194D6BEA001AA3E4 /* HomeViewController.m in Sources */,
 				60C7208E194F689400ADE5DF /* PageViewController.m in Sources */,
+				9375544719509CAA008AAD45 /* InvitesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,6 +493,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					/Users/viktordenic/Desktop,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "With_v0/With_v0-Prefix.pch";
@@ -500,6 +511,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					/Users/viktordenic/Desktop,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "With_v0/With_v0-Prefix.pch";
