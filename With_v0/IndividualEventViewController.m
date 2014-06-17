@@ -10,6 +10,7 @@
 
 @interface IndividualEventViewController ()
 
+@property (weak ,nonatomic) IBOutlet UILabel *eventNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *themeImageView;
 @property (weak, nonatomic) IBOutlet UILabel *goingLabel;
 @property (weak, nonatomic) IBOutlet UILabel *invitedLabel;
@@ -33,6 +34,27 @@
     self.addressTextView.text = @"Address";
     self.dateAndTimeTextView.text = @"Date and Time";
     self.detailsTextView.text = @"Throw on some neon and bring your friends on over to our place for a night of fun and plently of refreshments.";
+}
+
+#pragma mark - Action methods
+
+- (IBAction)onYesButtonTapped:(UIButton *)sender
+{
+    //add the current user to the event, update the count of going
+
+//    if (sender.highlighted)
+//    {
+//        [self.goingButton setImage:[UIImage imageNamed:@"Yes_Button_Selected"] forState:UIControlStateHighlighted];
+//
+//    } else {
+//        
+//        [self.goingButton setImage:[UIImage imageNamed:@"Yes_Button"] forState:UIControlStateHighlighted];
+//    }
+}
+
+- (IBAction)onNoButtonTapped:(id)sender
+{
+    //not sure what to do here yet
 }
 
 @end

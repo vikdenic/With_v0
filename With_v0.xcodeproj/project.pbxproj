@@ -10,6 +10,7 @@
 		60C72085194F677300ADE5DF /* ChatEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C72084194F677300ADE5DF /* ChatEventViewController.m */; };
 		60C7208E194F689400ADE5DF /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C7208D194F689400ADE5DF /* PageViewController.m */; };
 		60C72094194F692000ADE5DF /* StreamEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C72093194F692000ADE5DF /* StreamEventViewController.m */; };
+		60C72097194FAFC200ADE5DF /* StreamTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C72096194FAFC200ADE5DF /* StreamTableViewCell.m */; };
 		60F47A9D194E2325007422E7 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47A9C194E2325007422E7 /* Parse.framework */; };
 		60F47A9F194E2348007422E7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47A9E194E2348007422E7 /* AudioToolbox.framework */; };
 		60F47AA1194E234E007422E7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47AA0194E234E007422E7 /* CFNetwork.framework */; };
@@ -59,6 +60,8 @@
 		60C7208D194F689400ADE5DF /* PageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageViewController.m; sourceTree = "<group>"; };
 		60C72092194F692000ADE5DF /* StreamEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamEventViewController.h; path = ../StreamEventViewController.h; sourceTree = "<group>"; };
 		60C72093194F692000ADE5DF /* StreamEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamEventViewController.m; path = ../StreamEventViewController.m; sourceTree = "<group>"; };
+		60C72095194FAFC200ADE5DF /* StreamTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamTableViewCell.h; sourceTree = "<group>"; };
+		60C72096194FAFC200ADE5DF /* StreamTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamTableViewCell.m; sourceTree = "<group>"; };
 		60F47A9C194E2325007422E7 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		60F47A9E194E2348007422E7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		60F47AA0194E234E007422E7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -186,6 +189,8 @@
 				60C7208D194F689400ADE5DF /* PageViewController.m */,
 				60C72083194F677300ADE5DF /* ChatEventViewController.h */,
 				60C72084194F677300ADE5DF /* ChatEventViewController.m */,
+				60C72095194FAFC200ADE5DF /* StreamTableViewCell.h */,
+				60C72096194FAFC200ADE5DF /* StreamTableViewCell.m */,
 				60C72092194F692000ADE5DF /* StreamEventViewController.h */,
 				60C72093194F692000ADE5DF /* StreamEventViewController.m */,
 				60F47AB0194E5223007422E7 /* HomeTableViewCell.h */,
@@ -340,6 +345,7 @@
 				60C72085194F677300ADE5DF /* ChatEventViewController.m in Sources */,
 				60F47AB2194E5223007422E7 /* HomeTableViewCell.m in Sources */,
 				93952FCD194D7318001AA3E4 /* CreateEventViewController.m in Sources */,
+				60C72097194FAFC200ADE5DF /* StreamTableViewCell.m in Sources */,
 				93952F9E194D5D4C001AA3E4 /* AppDelegate.m in Sources */,
 				60C72094194F692000ADE5DF /* StreamEventViewController.m in Sources */,
 				93952F9A194D5D4C001AA3E4 /* main.m in Sources */,

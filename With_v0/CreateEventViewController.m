@@ -59,6 +59,11 @@
 
 #pragma mark - Action Methods
 
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
 - (IBAction)onDateAndTimeButtonTapped:(id)sender
 {
     [self animatePopUpShow];
@@ -173,6 +178,18 @@
     }];
 }
 
+#pragma mark - Text View
 
+
+//this could be an issue
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+
+    if([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+
+    return YES;
+}
 
 @end
