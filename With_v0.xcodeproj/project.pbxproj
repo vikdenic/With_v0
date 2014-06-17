@@ -11,6 +11,7 @@
 		60C7208E194F689400ADE5DF /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C7208D194F689400ADE5DF /* PageViewController.m */; };
 		60C72094194F692000ADE5DF /* StreamEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C72093194F692000ADE5DF /* StreamEventViewController.m */; };
 		60C72097194FAFC200ADE5DF /* StreamTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C72096194FAFC200ADE5DF /* StreamTableViewCell.m */; };
+		60C72099194FC53500ADE5DF /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60C72098194FC53500ADE5DF /* MediaPlayer.framework */; };
 		60F47A9D194E2325007422E7 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47A9C194E2325007422E7 /* Parse.framework */; };
 		60F47A9F194E2348007422E7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47A9E194E2348007422E7 /* AudioToolbox.framework */; };
 		60F47AA1194E234E007422E7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47AA0194E234E007422E7 /* CFNetwork.framework */; };
@@ -62,6 +63,7 @@
 		60C72093194F692000ADE5DF /* StreamEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamEventViewController.m; path = ../StreamEventViewController.m; sourceTree = "<group>"; };
 		60C72095194FAFC200ADE5DF /* StreamTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamTableViewCell.h; sourceTree = "<group>"; };
 		60C72096194FAFC200ADE5DF /* StreamTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamTableViewCell.m; sourceTree = "<group>"; };
+		60C72098194FC53500ADE5DF /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		60F47A9C194E2325007422E7 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		60F47A9E194E2348007422E7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		60F47AA0194E234E007422E7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -110,11 +112,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60F47AA7194E2364007422E7 /* MobileCoreServices.framework in Frameworks */,
+				60C72099194FC53500ADE5DF /* MediaPlayer.framework in Frameworks */,
 				60F47AAF194E237C007422E7 /* SystemConfiguration.framework in Frameworks */,
 				60F47AAD194E2375007422E7 /* StoreKit.framework in Frameworks */,
 				60F47AAB194E2370007422E7 /* Security.framework in Frameworks */,
 				60F47AA9194E236A007422E7 /* QuartzCore.framework in Frameworks */,
-				60F47AA7194E2364007422E7 /* MobileCoreServices.framework in Frameworks */,
 				60F47AA5194E235F007422E7 /* libz.dylib in Frameworks */,
 				60F47AA3194E2359007422E7 /* CoreLocation.framework in Frameworks */,
 				93952F90194D5D4C001AA3E4 /* CoreGraphics.framework in Frameworks */,
@@ -161,6 +164,7 @@
 		93952F8C194D5D4C001AA3E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				60C72098194FC53500ADE5DF /* MediaPlayer.framework */,
 				60F47AAE194E237C007422E7 /* SystemConfiguration.framework */,
 				60F47AAC194E2375007422E7 /* StoreKit.framework */,
 				60F47AAA194E236F007422E7 /* Security.framework */,

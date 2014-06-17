@@ -32,6 +32,8 @@
     self.refreshControl = refreshControl;
 
     [self.tableView addSubview:refreshControl];
+
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
 }
 
 -(void)viewWillAppear:(BOOL)animated

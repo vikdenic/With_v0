@@ -21,6 +21,13 @@
 @property (weak, nonatomic) IBOutlet UITextView *dateAndTimeTextView;
 @property (weak, nonatomic) IBOutlet UITextView *detailsTextView;
 
+@property BOOL yesButtonTapped;
+@property BOOL noButtonTapped;
+@property (weak, nonatomic) IBOutlet UIImageView *yesImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *noImageView;
+
+
+
 @end
 
 @implementation IndividualEventViewController
@@ -34,27 +41,47 @@
     self.addressTextView.text = @"Address";
     self.dateAndTimeTextView.text = @"Date and Time";
     self.detailsTextView.text = @"Throw on some neon and bring your friends on over to our place for a night of fun and plently of refreshments.";
+
+    self.yesButtonTapped = NO;
+    self.noButtonTapped = NO;
+    self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
+    self.noImageView.image = [UIImage imageNamed:@"No_Button"];
 }
 
 #pragma mark - Action methods
 
 - (IBAction)onYesButtonTapped:(UIButton *)sender
 {
-    //add the current user to the event, update the count of going
 
-//    if (sender.highlighted)
-//    {
-//        [self.goingButton setImage:[UIImage imageNamed:@"Yes_Button_Selected"] forState:UIControlStateHighlighted];
-//
-//    } else {
-//        
-//        [self.goingButton setImage:[UIImage imageNamed:@"Yes_Button"] forState:UIControlStateHighlighted];
-//    }
+    if (self.yesButtonTapped == NO)
+    {
+        self.yesButtonTapped = YES;
+
+        self.yesImageView.image = [UIImage imageNamed:@"Yes_Button_Selected"];
+
+    } else {
+
+        self.yesButtonTapped = NO;
+        
+        self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
+    }
 }
 
 - (IBAction)onNoButtonTapped:(id)sender
 {
-    //not sure what to do here yet
+
+    if (self.noButtonTapped == NO)
+    {
+        self.noButtonTapped = YES;
+
+        self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
+
+    } else {
+
+        self.noButtonTapped = NO;
+
+        self.noImageView.image = [UIImage imageNamed:@"No_Button"];
+    }
 }
 
 @end

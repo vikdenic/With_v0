@@ -8,16 +8,19 @@
 
 #import "StreamEventViewController.h"
 #import "StreamTableViewCell.h"
+#import <MediaPlayer/MediaPlayer.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
 @interface StreamEventViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *collectionViewView;
 @property (weak, nonatomic) IBOutlet UIView *tableViewView;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 //@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property UIImagePickerController *cameraController;
+@property (strong, nonatomic) NSURL *videoUrl;
+@property (strong, nonatomic) MPMoviePlayerController *videoController;
 
 @end
 
@@ -43,6 +46,8 @@
     self.cameraController = [[UIImagePickerController alloc] init];
     self.cameraController.delegate = self;
     self.cameraController.allowsEditing = YES;
+    self.cameraController.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+    self.cameraController.videoMaximumDuration = 11;
 
     self.cameraController.sourceType = UIImagePickerControllerSourceTypeCamera;
     //    self.cameraController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
@@ -183,16 +188,11 @@
 {
     [picker dismissViewControllerAnimated:NO completion:^{
         // Segues to SaveViewController after user picks photo
-        self.imageTaken = [info valueForKey:UIImagePickerControllerOriginalImage];
+//        self.imageTaken = [info valueForKey:UIImagePickerControllerOriginalImage];
 
         //       NSData *imageData = UIImagePNGRepresentation(image);
 
-        // Extracts and stores creation date of image as NSDate reference
-        NSDictionary *metaData = [info objectForKey:@"UIImagePickerControllerMediaMetadata"];
-        self.date = [[NSDate alloc]init];
-        self.date = [[metaData objectForKey:@"{Exif}"] objectForKey:@"DateTimeOriginal"];
-
-        [self performSegueWithIdentifier:@"SaveSegue" sender:self];
+        //just dismiss it
     }];
 }
 
