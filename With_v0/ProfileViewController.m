@@ -13,6 +13,8 @@
 
 @interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource>
 
+//Views
+
 @property (weak, nonatomic) IBOutlet UIImageView *profileAvatar;
 
 @property (weak, nonatomic) IBOutlet UILabel *followersLabel;
@@ -25,23 +27,74 @@
 @property (weak, nonatomic) IBOutlet UILabel *pastLabel;
 @property (weak, nonatomic) IBOutlet UILabel *UpcomingLabel;
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+//Data
+
+@property NSArray *usersArray;
+
 @end
 
 @implementation ProfileViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+//    self.usersArray = [[NSArray alloc]init];
+    [self setUserInfo];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+}
+
+#pragma mark - Helpers
+
+//-(void)retrieveUsersFromParse
+//{
+//    PFQuery *retrieveUsers = [PFQuery queryWithClassName:@"User"];
+//    [retrieveUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//
+//        self.usersArray = objects;
+//        [self.tableView reloadData];
+//    }];
+//}
+
+-(void)setUserInfo
+{
+    PFQuery *retrieveUsers = [PFQuery queryWithClassName:@"User"];
+
+    [retrieveUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            PFUser *user = [PFUser currentUser];
+            self.nameLabel.text = [user objectForKey:@"name"];
+            self.cityStateLabel.text = [user objectForKey:@"userCityState"];
+            self.bioTextView.text = [user objectForKey:@"userBio"];
+            
+            PFFile *imageFile = [user objectForKey:@"userProfilePhoto"];
+
+            [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                UIImage *image = [UIImage imageWithData:data];
+                self.profileAvatar.image = image;
+            }];
+
+            [self.nameLabel sizeToFit];
+            [self.cityStateLabel sizeToFit];
+            [self.bioTextView sizeToFit];
+
+//            self.followersLabel.text = [user objectForKey:@"followersCount"]; ?
+//            self.followingLabel.text = [user objectForKey:@"followingCount"]; ?
+        }
+    }];
 }
 
 #pragma mark - Actions
@@ -63,7 +116,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return self.usersArray.count;
 
 }
 
