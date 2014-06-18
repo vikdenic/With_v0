@@ -11,14 +11,11 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <Parse/Parse.h>
+#import "CommentsViewController.h"
 
 @interface StreamEventViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *tableViewView;
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-//@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-
 @property UIImagePickerController *cameraController;
 @property (strong, nonatomic) NSURL *videoUrl;
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
@@ -44,6 +41,8 @@
 {
     [super viewWillAppear:animated];
 
+    [self queryForImages];
+
     [self.tableView reloadData];
 
     self.cameraController = [[UIImagePickerController alloc] init];
@@ -56,12 +55,6 @@
     //    self.cameraController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-    [self queryForImages];
-}
 
 #pragma mark - Getting Pictures and Videos
 
@@ -69,6 +62,8 @@
 
 - (void)queryForImages
 {
+    [self.pictureAndVideoArray removeAllObjects];
+
     PFQuery *query = [PFQuery queryWithClassName:@"Photo"];
     [query includeKey:@"photographer"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -120,12 +115,18 @@
     [like saveInBackground];
 }
 
+- (IBAction)onCommentButtonTapped:(UIButton *)sender
+{
+    PFObject *object = [self.pictureAndVideoArray objectAtIndex:sender.tag];
+    self.commentObject = object;
+}
 
 #pragma mark - Table View
 
 //- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 //{
 //    PFObject *object = [self.pictureAndVideoArray objectAtIndex:section];
+//    //outside the bounds of the array
 //
 //    PFUser *user = [object objectForKey:@"photographer"];
 //    //in the future we will want to return the users actual name
@@ -133,9 +134,54 @@
 //    return user.username;
 //}
 
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    CGRect frame = tableView.frame;
+
+    PFObject *object = [self.pictureAndVideoArray objectAtIndex:section];
+    NSLog(@"array:%@", self.pictureAndVideoArray);
+
+    PFUser *user = [object objectForKey:@"photographer"];
+
+    UIImageView *customImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 30, 30)];
+
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, 100, 30)];
+    title.text = [NSString stringWithFormat:@"%@", user.username];
+
+//    PFFile *userProfilePhoto = [[object objectForKey:@"fromUser"] objectForKey:@"userProfilePhoto"];
+    PFFile *userProfilePhoto = [user objectForKey:@"userProfilePhoto"];
+
+    [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+     {
+         if (!error)
+         {
+             UIImage *image = [UIImage imageWithData:data];
+             customImageView.image = image;
+             customImageView.layer.cornerRadius = customImageView.bounds.size.width/2;
+             customImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
+             customImageView.layer.borderWidth = 2.0;
+             customImageView.layer.masksToBounds = YES;
+         } else {
+             customImageView.backgroundColor = [UIColor purpleColor];
+         }
+     }];
+
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+    [headerView addSubview:title];
+    [headerView addSubview:customImageView];
+    headerView.backgroundColor = [UIColor orangeColor];
+
+    return headerView;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 45;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.imagesArray.count;
+    return self.pictureAndVideoArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -150,6 +196,7 @@
     cell.theImageView.tag = indexPath.section;
     cell.likeButton.tag = indexPath.section;
     cell.likedImageView.hidden = YES;
+    cell.commentButton.tag = indexPath.section;
 
     cell.theImageView.image = [self.imagesArray objectAtIndex:indexPath.section];
 
@@ -260,6 +307,16 @@
 }
 
 #pragma mark - Segue
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"ToCommentViewControllerSegue"])
+    {
+        CommentsViewController *commentsViewController = segue.destinationViewController;
+        commentsViewController.commentObject = self.commentObject;
+    }
+}
+
 
 - (IBAction)unwindSegueToStreamEventViewController:(UIStoryboardSegue *)sender
 {
