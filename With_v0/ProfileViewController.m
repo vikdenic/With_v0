@@ -8,8 +8,22 @@
 
 #import "ProfileViewController.h"
 #import <Parse/Parse.h>
+#import "IndividualEventViewController.h"
+#import "HomeTableViewCell.h"
 
-@interface ProfileViewController ()
+@interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource>
+
+@property (weak, nonatomic) IBOutlet UIImageView *profileAvatar;
+
+@property (weak, nonatomic) IBOutlet UILabel *followersLabel;
+@property (weak, nonatomic) IBOutlet UILabel *followingLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UITextView *bioTextView;
+@property (weak, nonatomic) IBOutlet UILabel *cityStateLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *pastLabel;
+@property (weak, nonatomic) IBOutlet UILabel *UpcomingLabel;
 
 @end
 
@@ -30,21 +44,54 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - Actions
+
+- (IBAction)onPastButtonPressed:(id)sender
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.pastLabel.textColor = [UIColor blackColor];
+    self.UpcomingLabel.textColor = [UIColor grayColor];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (IBAction)onUpcomingButtonPressed:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    self.pastLabel.textColor = [UIColor grayColor];
+    self.UpcomingLabel.textColor = [UIColor blackColor];
 }
-*/
+
+
+#pragma mark - TableView
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileCell"];
+
+    return cell;
+}
+
+
+#pragma mark - Segues
+
+// When user CANCELS within settings
+- (IBAction)unwindSegueCancelSettingsToProfile:(UIStoryboardSegue *)sender
+{
+
+}
+
+// When user SAVES settings
+- (IBAction)unwindSegueSaveSettingsToProfile:(UIStoryboardSegue *)sender
+{
+
+}
+
+- (IBAction)unwindSegueInvitesToProfile:(UIStoryboardSegue *)sender
+{
+    
+}
 
 @end

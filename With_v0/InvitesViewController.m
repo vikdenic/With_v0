@@ -1,20 +1,19 @@
 //
-//  FindFriendsViewController.m
+//  InvitesViewController.m
 //  With_v0
 //
-//  Created by Vik Denic on 6/15/14.
+//  Created by Vik Denic on 6/17/14.
 //  Copyright (c) 2014 Mobile Makers. All rights reserved.
 //
 
-#import "FindFriendsViewController.h"
-#import <Parse/Parse.h>
-#import "FindFriendsTableViewCell.h"
+#import "InvitesViewController.h"
+#import "HomeTableViewCell.h"
 
-@interface FindFriendsViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface InvitesViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @end
 
-@implementation FindFriendsViewController
+@implementation InvitesViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,10 +29,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
-- (IBAction)onPeopleYouMayKnowButtonPressed:(id)sender
-{
-
-}
 
 #pragma mark - TableView
 
@@ -44,8 +39,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    FindFriendsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FindCell"];
-
+    HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InviteCell"];
 
     return cell;
 }
