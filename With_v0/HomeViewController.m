@@ -26,6 +26,15 @@
 {
     [super viewDidLoad];
 
+    PFUser *currentUser = [PFUser currentUser];
+
+    if (currentUser)
+    {
+        
+    } else{
+        [self performSegueWithIdentifier:@"showLogin" sender:self];
+    }
+
     //pull to refresh
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];

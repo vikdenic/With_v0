@@ -10,6 +10,7 @@
 #import "StreamTableViewCell.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <Parse/Parse.h>
 
 @interface StreamEventViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -22,6 +23,9 @@
 @property (strong, nonatomic) NSURL *videoUrl;
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
 
+@property NSMutableArray *pictureAndVideoArray;
+@property NSMutableArray *imagesArray;
+
 @end
 
 @implementation StreamEventViewController
@@ -30,11 +34,8 @@
 {
     [super viewDidLoad];
 
-//    self.collectionViewView.hidden = YES;
-//    self.collectionView.userInteractionEnabled = NO;
-//    self.collectionViewView.alpha = 0;
-//    self.tableViewView.hidden = NO;
-//    self.tableViewView.alpha = 1;
+    self.pictureAndVideoArray = [NSMutableArray array];
+    self.imagesArray = [NSMutableArray array];
 
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
 }
@@ -42,6 +43,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    [self.tableView reloadData];
 
     self.cameraController = [[UIImagePickerController alloc] init];
     self.cameraController.delegate = self;
@@ -51,42 +54,93 @@
 
     self.cameraController.sourceType = UIImagePickerControllerSourceTypeCamera;
     //    self.cameraController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+}
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    [self queryForImages];
+}
+
+#pragma mark - Getting Pictures and Videos
+
+//probably do these in the view did load or view will appear?
+
+- (void)queryForImages
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Photo"];
+    [query includeKey:@"photographer"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error)
+        {
+            [self.pictureAndVideoArray addObjectsFromArray:objects];
+        }
+        [self createImages];
+    }];
+}
+
+//this is going to be an issue- videos don't need to be created right? might have to separate the calls or something?
+
+- (void)createImages
+{
+    for (PFObject *object in self.pictureAndVideoArray)
+    {
+        PFFile *file = [object objectForKey:@"photo"];
+        [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+         {
+             if (!error)
+             {
+                 UIImage *temporaryImage = [UIImage imageWithData:data];
+
+                 CGSize sacleSize = CGSizeMake(320, 320);
+                 UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
+                 [temporaryImage drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
+                 UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+                 UIGraphicsEndImageContext();
+
+                 [self.imagesArray addObject:resizedImage];
+                 [self.tableView reloadData];
+             }
+         }];
+    }
 }
 
 #pragma mark - Action Methods
 
-//- (IBAction)onTableViewButtonTapped:(id)sender
-//{
-//    self.tableViewView.hidden = NO;
-//    self.tableViewView.alpha = 1;
-//    self.tableView.userInteractionEnabled = YES;
-//    self.collectionViewView.hidden = YES;
-//    self.collectionView.userInteractionEnabled = NO;
-//    self.collectionViewView.alpha = 0;
-//}
-//
-//- (IBAction)onCollectionViewButtonTapped:(id)sender
-//{
-//    self.collectionViewView.hidden = NO;
-//    self.collectionViewView.alpha = 1;
-//    self.collectionView.userInteractionEnabled = YES;
-//    self.tableViewView.hidden = YES;
-//    self.tableView.userInteractionEnabled = NO;
-//    self.tableViewView.alpha = 0;
-//}
+- (IBAction)onLikeButtonTapped:(UIButton *)sender
+{
+    PFObject *object = [self.pictureAndVideoArray objectAtIndex:sender.tag];
+    PFUser *picturePhotographer = [object objectForKey:@"photographer"];
+
+    PFObject *like = [PFObject objectWithClassName:@"LikeActivity"];
+    like[@"fromUser"] = [PFUser currentUser];
+    like[@"toUser"] = picturePhotographer;
+    like[@"photo"] = object;
+    [like saveInBackground];
+}
+
 
 #pragma mark - Table View
+
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//{
+//    PFObject *object = [self.pictureAndVideoArray objectAtIndex:section];
+//
+//    PFUser *user = [object objectForKey:@"photographer"];
+//    //in the future we will want to return the users actual name
+//
+//    return user.username;
+//}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.imagesArray.count;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 1;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 100;
-    //this is where we reuturn however many pictures. One picture per section
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -94,7 +148,10 @@
     StreamTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
 
     cell.theImageView.tag = indexPath.section;
+    cell.likeButton.tag = indexPath.section;
     cell.likedImageView.hidden = YES;
+
+    cell.theImageView.image = [self.imagesArray objectAtIndex:indexPath.section];
 
     //double tap to like
     if (cell.theImageView.gestureRecognizers.count == 0)
@@ -109,45 +166,20 @@
     return cell;
 }
 
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return @"Blake";
-}
-
-
-//#pragma mark - Collection View
-//
-//- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-//{
-//    return 10;
-//}
-//
-//- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-//    return cell;
-//}
-
-
-
 #pragma mark - Tap Gesture Recognizer
 
 - (void)tapTap:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     UIImageView *sender = (UIImageView *)tapGestureRecognizer.view;
 
-//    PFObject *object = [self.pictureObjectsArray objectAtIndex:sender.tag];
-//    PFQuery *query = [PFQuery queryWithClassName:@"Pictures"];
-//
-//    [query getObjectInBackgroundWithId:object.objectId block:^(PFObject *picture, NSError *error) {
-//        NSLog(@"%@", object.objectId);
-//        PFUser *current = [PFUser currentUser];
-//        PFRelation *relation = [picture relationforKey:@"likers"];
-//        [relation addObject:current];
-//        [picture saveInBackground];
-    
-        //we are making a relationship between the picture and likers. Then we add the current user to that relation. Then we save the picture in the background because the picture is what all this is getting called on
-//    }];
+    PFObject *object = [self.pictureAndVideoArray objectAtIndex:sender.tag];
+    PFUser *picturePhotographer = [object objectForKey:@"photographer"];
+
+    PFObject *like = [PFObject objectWithClassName:@"LikeActivity"];
+    like[@"fromUser"] = [PFUser currentUser];
+    like[@"toUser"] = picturePhotographer;
+    like[@"photo"] = object;
+    [like saveInBackground];
 
     StreamTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sender.tag]];
 
@@ -158,7 +190,7 @@
     [UIView animateWithDuration:0.3 animations:^{
         cell.likedImageView.alpha = 1;
     } completion:^(BOOL finished) {
-        [UIView animateKeyframesWithDuration:0.3 delay:1.2 options:0 animations:^{
+        [UIView animateKeyframesWithDuration:0.3 delay:0.75 options:0 animations:^{
             cell.likedImageView.alpha = 0;
         } completion:^(BOOL finished) {
             cell.likedImageView.hidden = YES;
@@ -187,36 +219,51 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [picker dismissViewControllerAnimated:NO completion:^{
-        // Segues to SaveViewController after user picks photo
-//        self.imageTaken = [info valueForKey:UIImagePickerControllerOriginalImage];
 
-        //       NSData *imageData = UIImagePNGRepresentation(image);
+        //NEED TO FIGURE OUT HOW TO SAVE VIDEOS DIFFERENTLY- THIS MIGHT BE TRICKY
+        UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
 
-        //just dismiss it
+        CGSize sacleSize = CGSizeMake(320, 320);
+        UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
+        [image drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
+        UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+
+        NSData *imageData = UIImagePNGRepresentation(resizedImage);
+        PFFile *imageFile = [PFFile fileWithData:imageData];
+
+        // Save PFFile
+        [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             if (!error) {
+
+                 // Create a PFObject around a PFFile and associate it with the current user
+                 PFObject *photoTaken = [PFObject objectWithClassName:@"Photo"];
+                 [photoTaken setObject:imageFile forKey:@"photo"];
+
+                 [photoTaken setObject:[PFUser currentUser] forKey:@"photographer"];
+//                 photoTaken[@"caption"] = //
+
+                 [photoTaken saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                  {
+                      if (!error) {
+
+                          [self dismissViewControllerAnimated:self.cameraController completion:nil];
+                      }
+                      else {
+                          NSLog(@"Error: %@ %@", error, [error userInfo]);
+                      }
+                  }];
+             }
+         }];
     }];
 }
 
+#pragma mark - Segue
 
+- (IBAction)unwindSegueToStreamEventViewController:(UIStoryboardSegue *)sender
+{
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 @end

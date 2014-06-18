@@ -8,13 +8,11 @@
 
 #import "PageViewController.h"
 #import "IndividualEventViewController.h"
-#import "ChatEventViewController.h"
 #import "StreamEventViewController.h"
 
 @interface PageViewController () <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
 @property IndividualEventViewController *individualViewController;
-@property ChatEventViewController *chatEventViewController;
 @property StreamEventViewController *streamEventViewController;
 
 @property NSArray *viewControllerArray;
@@ -35,10 +33,9 @@
 - (void)setupScene
 {
     self.individualViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"IndividualEventViewController"];
-    self.chatEventViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ChatEventViewController"];
     self.streamEventViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StreamEventViewController"];
 
-    self.viewControllerArray = [NSArray arrayWithObjects:self.individualViewController,self.chatEventViewController,self.streamEventViewController, nil];
+    self.viewControllerArray = [NSArray arrayWithObjects:self.individualViewController,self.streamEventViewController, nil];
 
     [self setViewControllers:@[self.viewControllerArray.firstObject]
                    direction:UIPageViewControllerNavigationDirectionForward
@@ -74,13 +71,9 @@
     {
         return nil;
 
-    } else if ([viewController isKindOfClass:[ChatEventViewController class]])
-    {
-        return self.viewControllerArray[0];
-
     } else if ([viewController isKindOfClass:[StreamEventViewController class]])
     {
-        return self.viewControllerArray[1];
+        return self.viewControllerArray[0];
     } else
     {
         return nil;
@@ -94,10 +87,6 @@
     if ([viewController isKindOfClass:[IndividualEventViewController class]])
     {
         return self.viewControllerArray[1];
-
-    } else if ([viewController isKindOfClass:[ChatEventViewController class]])
-    {
-        return self.viewControllerArray[2];
 
     } else if ([viewController isKindOfClass:[StreamEventViewController class]])
     {

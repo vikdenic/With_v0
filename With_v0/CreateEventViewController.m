@@ -82,22 +82,20 @@
 - (IBAction)onCreatButtonTapped:(id)sender
 {
 
+    //if statement here requiring certain fields
+
+        PFObject *event = [PFObject objectWithClassName:@"Event"];
+        event[@"title"] = self.titleTextView.text;
+        event[@"details"] = self.detailsTextView.text;
+//        event[@"date"] =
+        event [@"location"] = @"Test Location";
+        event [@"themeImage"] = self.themeImagePicker;
+        event [@"user"] = [PFUser currentUser];
+        [event saveInBackground];
+
+    //takes user back to home page
     [self.tabBarController setSelectedIndex:0];
 
-//    if ([self.titleTextView.text isEqualToString:nil])
-//    {
-//        //need requirements so user has to do title and date and location? error message by highlighting what they need to fill out if they don't do it
-//
-//    } else {
-
-        //    PFObject *event = [PFObject objectWithClassName:@"Event"];
-        //    event[@"title"] = self.titleTextView.text;
-        //    event[@"details"] = self.detailsTextView.text;
-        //    event[@"date"] = self.selectedDate;
-        //    event [@"location"] = @"Test Location";
-        //    event [@"themeImage"] = self.themeImagePicker;
-        //    event [@"user"] = [PFUser currentUser];
-        //    [event saveInBackground];
 }
 
 #pragma mark - Date and Time View Animation
@@ -137,9 +135,6 @@
      ];
 }
 
-#pragma mark - Theme Image View Tapped
-//going to put a tap gesture on this so that when the user taps it, modally a view controller comes up that allows the user to select photos from their library to put in as the theme photo
-//might have some sizing issues and stuff here
 
 #pragma mark - Tap Gesture Recognizer
 
@@ -156,6 +151,10 @@
         //back to Create Events View Controller
     }];
 }
+
+#pragma mark - Theme Image View Tapped
+//going to put a tap gesture on this so that when the user taps it, modally a view controller comes up that allows the user to select photos from their library to put in as the theme photo
+//might have some sizing issues and stuff here
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {

@@ -26,8 +26,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *yesImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *noImageView;
 
-
-
 @end
 
 @implementation IndividualEventViewController
@@ -86,5 +84,22 @@
         self.yesImageView.image = [UIImage imageNamed:@"Yes_Button_Selected"];
     }
 }
+
+#pragma mark - Segue
+
+- (IBAction)unwindSegueToIndividualViewController:(UIStoryboardSegue *)sender
+{
+    
+}
+
+
+
+
+
+
+
+
+
+
 
 @end
