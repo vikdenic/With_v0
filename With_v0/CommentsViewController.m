@@ -132,7 +132,6 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          [self.commentsArray addObjectsFromArray:objects];
-//         PFObject *object = [[objects.lastObject objectForKey:@"fromUser"] objectForKey:@"username"];
          [self.tableView reloadData];
     }];
 }
