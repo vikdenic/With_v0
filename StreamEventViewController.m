@@ -11,14 +11,11 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <Parse/Parse.h>
+#import "CommentsViewController.h"
 
 @interface StreamEventViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *tableViewView;
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-//@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-
 @property UIImagePickerController *cameraController;
 @property (strong, nonatomic) NSURL *videoUrl;
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
@@ -44,6 +41,8 @@
 {
     [super viewWillAppear:animated];
 
+    [self queryForImages];
+
     [self.tableView reloadData];
 
     self.cameraController = [[UIImagePickerController alloc] init];
@@ -56,12 +55,6 @@
     //    self.cameraController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-    [self queryForImages];
-}
 
 #pragma mark - Getting Pictures and Videos
 
@@ -120,22 +113,28 @@
     [like saveInBackground];
 }
 
+- (IBAction)onCommentButtonTapped:(UIButton *)sender
+{
+    PFObject *object = [self.pictureAndVideoArray objectAtIndex:sender.tag];
+    self.commentObject = object;
+}
 
 #pragma mark - Table View
 
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-//{
-//    PFObject *object = [self.pictureAndVideoArray objectAtIndex:section];
-//
-//    PFUser *user = [object objectForKey:@"photographer"];
-//    //in the future we will want to return the users actual name
-//
-//    return user.username;
-//}
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    PFObject *object = [self.pictureAndVideoArray objectAtIndex:section];
+    //outside the bounds of the array
+
+    PFUser *user = [object objectForKey:@"photographer"];
+    //in the future we will want to return the users actual name
+
+    return user.username;
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.imagesArray.count;
+    return self.pictureAndVideoArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -150,6 +149,7 @@
     cell.theImageView.tag = indexPath.section;
     cell.likeButton.tag = indexPath.section;
     cell.likedImageView.hidden = YES;
+    cell.commentButton.tag = indexPath.section;
 
     cell.theImageView.image = [self.imagesArray objectAtIndex:indexPath.section];
 
@@ -260,6 +260,16 @@
 }
 
 #pragma mark - Segue
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"ToCommentViewControllerSegue"])
+    {
+        CommentsViewController *commentsViewController = segue.destinationViewController;
+        commentsViewController.commentObject = self.commentObject;
+    }
+}
+
 
 - (IBAction)unwindSegueToStreamEventViewController:(UIStoryboardSegue *)sender
 {
