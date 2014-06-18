@@ -17,8 +17,11 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property UIImagePickerController *cameraController;
-@property (strong, nonatomic) NSURL *videoUrl;
-@property (strong, nonatomic) MPMoviePlayerController *videoController;
+
+//@property (strong, nonatomic) NSURL *videoUrl;
+//@property (strong, nonatomic) MPMoviePlayerController *videoController;
+
+@property UIRefreshControl *refreshControl;
 
 @property NSMutableArray *pictureAndVideoArray;
 @property NSMutableArray *imagesArray;
@@ -35,6 +38,13 @@
     self.imagesArray = [NSMutableArray array];
 
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
+
+    //pull to refresh
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+
+    [self.tableView addSubview:refreshControl];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -51,7 +61,7 @@
     self.cameraController.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
     self.cameraController.videoMaximumDuration = 11;
 
-    self.cameraController.sourceType = UIImagePickerControllerSourceTypeCamera;
+//    self.cameraController.sourceType = UIImagePickerControllerSourceTypeCamera;
     //    self.cameraController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 }
 
@@ -139,7 +149,6 @@
     CGRect frame = tableView.frame;
 
     PFObject *object = [self.pictureAndVideoArray objectAtIndex:section];
-    NSLog(@"array:%@", self.pictureAndVideoArray);
 
     PFUser *user = [object objectForKey:@"photographer"];
 
@@ -248,6 +257,17 @@
 
 - (IBAction)onPickerButtonTapped:(id)sender
 {
+    self.cameraController.sourceType = UIImagePickerControllerSourceTypeCamera;
+
+    [self presentViewController:self.cameraController animated:NO completion:^{
+        //
+    }];
+}
+
+- (IBAction)onPhotoLibraryButtonTapped:(id)sender
+{
+    self.cameraController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+
     [self presentViewController:self.cameraController animated:NO completion:^{
         //
     }];
@@ -284,16 +304,21 @@
          {
              if (!error) {
 
-                 // Create a PFObject around a PFFile and associate it with the current user
                  PFObject *photoTaken = [PFObject objectWithClassName:@"Photo"];
                  [photoTaken setObject:imageFile forKey:@"photo"];
-
                  [photoTaken setObject:[PFUser currentUser] forKey:@"photographer"];
 //                 photoTaken[@"caption"] = //
+
+                 //make event object here and add the relation to either the
 
                  [photoTaken saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                   {
                       if (!error) {
+
+                          PFRelation *relation = [self.event relationforKey:@"eventPhotos"];
+                          [relation addObject:photoTaken];
+                          [self.event saveInBackground];
+                          NSLog(@"%@", relation);
 
                           [self dismissViewControllerAnimated:self.cameraController completion:nil];
                       }
@@ -321,6 +346,21 @@
 - (IBAction)unwindSegueToStreamEventViewController:(UIStoryboardSegue *)sender
 {
 
+}
+
+#pragma mark - Pull To Refresh
+
+- (void)refresh:(UIRefreshControl *)refreshControl
+{
+    [self.pictureAndVideoArray removeAllObjects];
+    [self.imagesArray removeAllObjects];
+    [self queryForImages];
+    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2.0];
+}
+
+- (void)stopRefresh
+{
+    [self.refreshControl endRefreshing];
 }
 
 @end

@@ -33,12 +33,37 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
 
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
-    self.addressTextView.text = @"Address";
-    self.dateAndTimeTextView.text = @"Date and Time";
-    self.detailsTextView.text = @"Throw on some neon and bring your friends on over to our place for a night of fun and plently of refreshments.";
+        self.eventNameLabel.text = self.event[@"title"];
+        self.detailsTextView.text = self.event[@"details"];
+        self.addressTextView.text = @"Address";
+        self.dateAndTimeTextView.text = @"Date and Time";
+
+    //need to have a place holder if stuff is empty so it doesn't crash
+
+    PFFile *file = self.event[@"themeImage"];
+    [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+     {
+         if (!error)
+         {
+             UIImage *temporaryImage = [UIImage imageWithData:data];
+
+             CGSize sacleSize = CGSizeMake(320, 320);
+             UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
+             [temporaryImage drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
+             UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+             UIGraphicsEndImageContext();
+
+             self.themeImageView.image = resizedImage;
+         }
+     }];
 
     self.yesButtonTapped = NO;
     self.noButtonTapped = NO;
@@ -91,6 +116,7 @@
 {
     
 }
+
 
 
 

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface IndividualEventViewController : UIViewController
+
+@property PFObject *event;
 
 @end

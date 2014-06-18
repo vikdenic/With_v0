@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "HomeTableViewCell.h"
 #import "IndividualEventViewController.h"
+#import "PageViewController.h"
 
 @interface HomeViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -68,6 +69,33 @@
     HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     PFObject *object = [self.eventArray objectAtIndex:indexPath.row];
 
+            NSLog(@"%@", object);
+
+
+    //profile picture for creator
+    PFFile *userProfilePhoto = [[object objectForKey:@"user"] objectForKey:@"userProfilePhoto"];
+
+    [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+     {
+         if (!error)
+         {
+             UIImage *temporaryImage = [UIImage imageWithData:data];
+
+             CGSize sacleSize = CGSizeMake(320, 320);
+             UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
+             [temporaryImage drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
+             UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+             UIGraphicsEndImageContext();
+
+             cell.creatorImageView.image = resizedImage;
+         } else {
+             
+             cell.creatorImageView.image = nil;
+         }
+     }];
+
+
+    //theme image
     PFFile *file = [object objectForKey:@"themeImage"];
 
     [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
@@ -76,8 +104,11 @@
          cell.themeImageView.image = image;
     }];
 
-//    cell.creatorImageView.image = query through user relation
-//    cell.creatorNameLabel.text = query through user relation
+    //creator username
+
+    PFObject *userName = [[object objectForKey:@"user"] objectForKey:@"username"];
+    cell.creatorNameLabel.text = [NSString stringWithFormat:@"%@", userName];
+
     cell.eventNameLabel.text = object[@"title"];
     cell.eventDateLabel.text = @"Saturday. June 25, 5pm";
 
@@ -86,25 +117,18 @@
     return cell;
 }
 
-//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main"
-//                                                         bundle:nil];
-//    IndividualEventViewController *individualEventViewController =
-//    [storyboard instantiateViewControllerWithIdentifier:@"IndividualEventViewController"];
-//
-//    [self presentViewController:individualEventViewController
-//                       animated:YES
-//                     completion:nil];
-//
-////    [self.view addSubview:individualEventViewController.view];
-//}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.event = [self.eventArray objectAtIndex:indexPath.row];
+    NSLog(@"%@", self.event);
+}
 
 #pragma mark - Query for Events
 
 - (void)queryForEvents
 {
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
+    [query includeKey:@"user"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
         if (!error)
@@ -133,7 +157,11 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-
+    if ([segue.identifier isEqualToString:@"ToPageViewControllerSegue"])
+    {
+        PageViewController *pageViewController = segue.destinationViewController;
+        pageViewController.event = self.event;
+    }
 }
 
 

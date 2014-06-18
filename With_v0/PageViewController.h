@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface PageViewController : UIPageViewController
+
+@property PFObject *event;
+
 
 @end

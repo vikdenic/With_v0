@@ -11,6 +11,8 @@
 
 @interface StreamEventViewController : UIViewController
 
+@property PFObject *event;
+
 @property PFObject *commentObject;
 
 @end

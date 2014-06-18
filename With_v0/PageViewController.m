@@ -33,7 +33,13 @@
 - (void)setupScene
 {
     self.individualViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"IndividualEventViewController"];
+
+    self.individualViewController.event = self.event;
+
+
     self.streamEventViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StreamEventViewController"];
+
+    self.streamEventViewController.event = self.event;
 
     self.viewControllerArray = [NSArray arrayWithObjects:self.individualViewController,self.streamEventViewController, nil];
 
