@@ -30,7 +30,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    [super viewDidAppear:NO];
+    [super viewDidAppear:animated];
     [self setUserInfo];
 
 }
@@ -81,6 +81,8 @@
 {
     [PFUser logOut];
 }
+
+
 
 
 @end

@@ -28,16 +28,16 @@
 {
     [super viewDidLoad];
 
-    PFUser *currentUser = [PFUser currentUser];
     [PFUser logOut];
-
-    //there is a bug here where the user can go to the home screen here//disable and hide the tab bar;
+    PFUser *currentUser = [PFUser currentUser];
 
     if (currentUser)
     {
 
-    } else{
+    } else {
+        
         [self performSegueWithIdentifier:@"showLogin" sender:self];
+        NSLog(@"WTF");
     }
 
     //pull to refresh
@@ -195,9 +195,6 @@
 
 }
 
--(IBAction)unwindLogOutToHome:(UIStoryboardSegue *)sender
-{
-    
-}
+
 
 @end

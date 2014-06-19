@@ -149,11 +149,11 @@
     
 }
 
--(IBAction)unwindLogOutToProfile:(UIStoryboardSegue *)sender
-{
-    [PFUser logOut];
-
-    [self performSegueWithIdentifier:@"LogOutToSignIn" sender:self];
-}
+//-(IBAction)unwindLogOutToProfile:(UIStoryboardSegue *)sender
+//{
+//    [PFUser logOut];
+//
+//    [self performSegueWithIdentifier:@"LogOutToSignIn" sender:self];
+//}
 
 @end
