@@ -37,6 +37,8 @@
     self.pictureAndVideoArray = [NSMutableArray array];
     self.imagesArray = [NSMutableArray array];
 
+    [self queryForImages];
+
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
     //pull to refresh
@@ -50,8 +52,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-    [self queryForImages];
 
     self.cameraController = [[UIImagePickerController alloc] init];
     self.cameraController.delegate = self;
@@ -129,15 +129,6 @@
 
 #pragma mark - Table View
 
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-//{
-//    PFObject *object = [self.pictureAndVideoArray objectAtIndex:section];
-//
-//    PFUser *theUser = [object objectForKey:@"photographer"];
-//
-//    return theUser.username;
-//}
-
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     CGRect frame = tableView.frame;
@@ -172,7 +163,7 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
     [headerView addSubview:title];
     [headerView addSubview:customImageView];
-    headerView.backgroundColor = [UIColor orangeColor];
+    headerView.backgroundColor = [UIColor greenColor];
 
     return headerView;
 }
@@ -202,6 +193,27 @@
     cell.commentButton.tag = indexPath.section;
 
     cell.theImageView.image = [self.imagesArray objectAtIndex:indexPath.section];
+
+
+    
+
+    //getting the number of likes for each photo
+    PFQuery *query = [PFQuery queryWithClassName:@"LikeActivity"];
+    PFObject *object = [self.pictureAndVideoArray objectAtIndex:indexPath.section];
+
+    [query whereKey:@"photo" equalTo:object];
+//    [query includeKey:@"fromUser"];
+
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)objects.count];
+     }];
+
+
+
+
+
+
 
     //double tap to like
     if (cell.theImageView.gestureRecognizers.count == 0)

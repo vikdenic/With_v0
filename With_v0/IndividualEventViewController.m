@@ -37,6 +37,7 @@
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
         self.eventNameLabel.text = self.event[@"title"];
+        [self.eventNameLabel sizeToFit];
         self.detailsTextView.text = self.event[@"details"];
         self.addressTextView.text = @"Address";
         self.dateAndTimeTextView.text = @"Date and Time";
