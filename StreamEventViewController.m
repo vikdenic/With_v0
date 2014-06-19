@@ -26,6 +26,8 @@
 @property NSMutableArray *pictureAndVideoArray;
 @property NSMutableArray *imagesArray;
 
+@property NSMutableArray *numberOfLikes;
+
 @end
 
 @implementation StreamEventViewController
@@ -36,6 +38,7 @@
 
     self.pictureAndVideoArray = [NSMutableArray array];
     self.imagesArray = [NSMutableArray array];
+    self.numberOfLikes = [NSMutableArray array];
 
     [self queryForImages];
 
@@ -65,6 +68,9 @@
 
 - (void)queryForImages
 {
+    [self.pictureAndVideoArray removeAllObjects];
+    [self.imagesArray removeAllObjects];
+
     PFRelation *relation = [self.event relationForKey:@"eventPhotos"];
     PFQuery *query = [relation query];
     [query includeKey:@"photographer"];
@@ -206,10 +212,10 @@
 
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
-         cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)objects.count];
+         [self.numberOfLikes addObjectsFromArray:objects];
+
+          cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)objects.count];
      }];
-
-
 
 
 
@@ -244,6 +250,14 @@
     [like saveInBackground];
 
     StreamTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sender.tag]];
+
+    //increment count
+    NSString *numberOfLikesString = cell.numberOfLikesLabel.text;
+    NSInteger numberOfLikesInt = [numberOfLikesString integerValue];
+    numberOfLikesInt++;
+    cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
+
+
 
     cell.likedImageView.hidden = NO;
 
@@ -356,8 +370,6 @@
 
 - (void)refresh:(UIRefreshControl *)refreshControl
 {
-    [self.pictureAndVideoArray removeAllObjects];
-    [self.imagesArray removeAllObjects];
     [self queryForImages];
     [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2.0];
 }
