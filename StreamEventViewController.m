@@ -132,6 +132,20 @@
     like[@"toUser"] = picturePhotographer;
     like[@"photo"] = object;
     [like saveInBackground];
+
+    //testing like button to see if selected
+    if (sender.backgroundColor == [UIColor colorWithPatternImage:[UIImage imageNamed:@"like_selected"]])
+    {
+        NSLog(@"selected");
+        UIImage *btnImage = [UIImage imageNamed:@"like_unselected"];
+        [sender setImage:btnImage forState:UIControlStateNormal];
+
+    } else if (sender.backgroundColor == [UIColor colorWithPatternImage:[UIImage imageNamed:@"like_unselected"]])
+    {
+        NSLog(@"unselected");
+        UIImage *btnImage = [UIImage imageNamed:@"like_selected"];
+        [sender setImage:btnImage forState:UIControlStateNormal];
+    }
 }
 
 - (IBAction)onCommentButtonTapped:(UIButton *)sender
@@ -212,7 +226,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     StreamTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-
     cell.theImageView.tag = indexPath.section;
     cell.likeButton.tag = indexPath.section;
     cell.likedImageView.hidden = YES;
@@ -264,6 +277,9 @@
     [like saveInBackground];
 
     StreamTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sender.tag]];
+
+    UIImage *btnImage = [UIImage imageNamed:@"like_selected"];
+    [cell.likeButton setImage:btnImage forState:UIControlStateNormal];
 
     //increment count
     NSString *numberOfLikesString = cell.numberOfLikesLabel.text;
