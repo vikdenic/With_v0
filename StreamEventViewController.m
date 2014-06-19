@@ -55,7 +55,12 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+}
 
+#pragma mark - Helper Method
+
+- (void)cameraSetUp
+{
     self.cameraController = [[UIImagePickerController alloc] init];
     self.cameraController.delegate = self;
     self.cameraController.allowsEditing = YES;
@@ -74,6 +79,8 @@
     PFRelation *relation = [self.event relationForKey:@"eventPhotos"];
     PFQuery *query = [relation query];
     [query includeKey:@"photographer"];
+    [query includeKey:@"createdAt"];
+    [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
      {
         if (!error)
@@ -140,17 +147,29 @@
     CGRect frame = tableView.frame;
 
     PFObject *object = [self.pictureAndVideoArray objectAtIndex:section];
-
     PFUser *user = [object objectForKey:@"photographer"];
 
-    UIImageView *customImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 30, 30)];
 
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, 100, 30)];
+    //setting time top right
+    NSDate *timeOfPicture = [object valueForKey:@"createdAt"];
+
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:timeOfPicture];
+    NSInteger hour = [components hour];
+    NSInteger minute = [components minute];
+    NSInteger totalTimeForPictures = (hour * 12) + minute;
+
+//    NSTimeInterval secondsElapsed = [ timeIntervalSinceDate:firstDate];
+
+    UILabel *timeInterval = [[UILabel alloc] initWithFrame:CGRectMake(230, 5, 100, 30)];
+    timeInterval.text = [NSString stringWithFormat:@"%li min", (long)totalTimeForPictures];
+
+    //setting the username
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
     title.text = [NSString stringWithFormat:@"%@", user.username];
 
-//    PFFile *userProfilePhoto = [[object objectForKey:@"fromUser"] objectForKey:@"userProfilePhoto"];
     PFFile *userProfilePhoto = [user objectForKey:@"userProfilePhoto"];
-
+    UIImageView *customImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
     [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
      {
          if (!error)
@@ -168,15 +187,16 @@
 
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
     [headerView addSubview:title];
+    [headerView addSubview:timeInterval];
     [headerView addSubview:customImageView];
-    headerView.backgroundColor = [UIColor greenColor];
+    headerView.backgroundColor = [UIColor blueColor];
 
     return headerView;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 45;
+    return 40;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -201,14 +221,12 @@
     cell.theImageView.image = [self.imagesArray objectAtIndex:indexPath.section];
 
 
-    
-
     //getting the number of likes for each photo
     PFQuery *query = [PFQuery queryWithClassName:@"LikeActivity"];
     PFObject *object = [self.pictureAndVideoArray objectAtIndex:indexPath.section];
 
     [query whereKey:@"photo" equalTo:object];
-//    [query includeKey:@"fromUser"];
+    [query includeKey:@"fromUser"];
 
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
@@ -216,10 +234,6 @@
 
           cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)objects.count];
      }];
-
-
-
-
 
     //double tap to like
     if (cell.theImageView.gestureRecognizers.count == 0)
@@ -277,6 +291,8 @@
 
 - (IBAction)onPickerButtonTapped:(id)sender
 {
+    [self cameraSetUp];
+
     self.cameraController.sourceType = UIImagePickerControllerSourceTypeCamera;
 
     [self presentViewController:self.cameraController animated:NO completion:^{
@@ -286,9 +302,11 @@
 
 - (IBAction)onPhotoLibraryButtonTapped:(id)sender
 {
+    [self cameraSetUp];
+
     self.cameraController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 
-    [self presentViewController:self.cameraController animated:NO completion:^{
+    [self presentViewController:self.cameraController animated:YES completion:^{
         //
     }];
 }
@@ -305,7 +323,7 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    [picker dismissViewControllerAnimated:NO completion:^{
+    [picker dismissViewControllerAnimated:YES completion:^{
 
         //NEED TO FIGURE OUT HOW TO SAVE VIDEOS DIFFERENTLY- THIS MIGHT BE TRICKY
         UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
@@ -337,7 +355,7 @@
                           [relation addObject:photoTaken];
                           [self.event saveInBackground];
 
-                          [self dismissViewControllerAnimated:NO completion:nil];
+                          //[self dismissViewControllerAnimated:NO completion:nil];
 
                           [self.tableView reloadData];
                       }

@@ -24,18 +24,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    self.dataSource = self;
+    self.delegate = self;
+    [self setupScene];
+    [self setupPageControl];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 
-    [super viewDidLoad];
-    self.dataSource = self;
-    self.delegate = self;
-    [self setupScene];
-    [self setupPageControl];
 }
 
 - (void)setupScene

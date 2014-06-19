@@ -53,12 +53,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-//    self.event = nil;
-
-    //while everything is loading, we should do what facebook does and simulate that it is a connection problem by outlining out User Inteface. I might not be querying the right way
-
-//    [self queryForEvents];
 }
 
 #pragma mark - Table View
