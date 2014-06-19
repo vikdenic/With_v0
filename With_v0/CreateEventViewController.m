@@ -99,7 +99,7 @@
     event[@"title"] = self.titleTextField.text;
     event[@"details"] = self.detailsTextView.text;
     //        event[@"date"] =
-    event [@"location"] = self.eventName;
+    event [@"location"] = @"Mobile Makers Academy";
     event [@"themeImage"] = self.themeImagePicker;
     event [@"user"] = [PFUser currentUser];
 //    event [@"location"] = self.eventName;
