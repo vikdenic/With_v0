@@ -28,6 +28,8 @@
 		60F47AAF194E237C007422E7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47AAE194E237C007422E7 /* SystemConfiguration.framework */; };
 		60F47AB2194E5223007422E7 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F47AB1194E5223007422E7 /* HomeTableViewCell.m */; };
 		60F47AB5194E7653007422E7 /* IndividualEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F47AB4194E7653007422E7 /* IndividualEventViewController.m */; };
+		93513A6119528A9000302A54 /* ChooseEventLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93513A6019528A9000302A54 /* ChooseEventLocationViewController.m */; };
+		93513A641952902C00302A54 /* FSVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 93513A631952902C00302A54 /* FSVenue.m */; };
 		9375544719509CAA008AAD45 /* InvitesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9375544619509CAA008AAD45 /* InvitesViewController.m */; };
 		9375544A1950A5BF008AAD45 /* FindFriendsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 937554491950A5BF008AAD45 /* FindFriendsTableViewCell.m */; };
 		9375544D1950B883008AAD45 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9375544C1950B883008AAD45 /* EditProfileViewController.m */; };
@@ -93,6 +95,10 @@
 		60F47AB1194E5223007422E7 /* HomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewCell.m; sourceTree = "<group>"; };
 		60F47AB3194E7653007422E7 /* IndividualEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualEventViewController.h; sourceTree = "<group>"; };
 		60F47AB4194E7653007422E7 /* IndividualEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualEventViewController.m; sourceTree = "<group>"; };
+		93513A5F19528A9000302A54 /* ChooseEventLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseEventLocationViewController.h; sourceTree = "<group>"; };
+		93513A6019528A9000302A54 /* ChooseEventLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseEventLocationViewController.m; sourceTree = "<group>"; };
+		93513A621952902C00302A54 /* FSVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSVenue.h; sourceTree = "<group>"; };
+		93513A631952902C00302A54 /* FSVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSVenue.m; sourceTree = "<group>"; };
 		9375544519509CAA008AAD45 /* InvitesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitesViewController.h; sourceTree = "<group>"; };
 		9375544619509CAA008AAD45 /* InvitesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitesViewController.m; sourceTree = "<group>"; };
 		937554481950A5BF008AAD45 /* FindFriendsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendsTableViewCell.h; sourceTree = "<group>"; };
@@ -243,6 +249,10 @@
 				93952FC9194D7241001AA3E4 /* ExploreViewController.m */,
 				93952FCB194D7318001AA3E4 /* CreateEventViewController.h */,
 				93952FCC194D7318001AA3E4 /* CreateEventViewController.m */,
+				93513A5F19528A9000302A54 /* ChooseEventLocationViewController.h */,
+				93513A6019528A9000302A54 /* ChooseEventLocationViewController.m */,
+				93513A621952902C00302A54 /* FSVenue.h */,
+				93513A631952902C00302A54 /* FSVenue.m */,
 				93952FCE194D7347001AA3E4 /* FindFriendsViewController.h */,
 				93952FCF194D7347001AA3E4 /* FindFriendsViewController.m */,
 				937554481950A5BF008AAD45 /* FindFriendsTableViewCell.h */,
@@ -392,11 +402,13 @@
 				60C72085194F677300ADE5DF /* ChatEventViewController.m in Sources */,
 				608B6C991950DBCF007D4503 /* LoginViewController.m in Sources */,
 				60F47AB2194E5223007422E7 /* HomeTableViewCell.m in Sources */,
+				93513A6119528A9000302A54 /* ChooseEventLocationViewController.m in Sources */,
 				93952FCD194D7318001AA3E4 /* CreateEventViewController.m in Sources */,
 				60C72097194FAFC200ADE5DF /* StreamTableViewCell.m in Sources */,
 				608B6C9E1950FF51007D4503 /* CommentsViewController.m in Sources */,
 				9375544A1950A5BF008AAD45 /* FindFriendsTableViewCell.m in Sources */,
 				93952F9E194D5D4C001AA3E4 /* AppDelegate.m in Sources */,
+				93513A641952902C00302A54 /* FSVenue.m in Sources */,
 				608B6C9A1950DBCF007D4503 /* SignupViewController.m in Sources */,
 				60C72094194F692000ADE5DF /* StreamEventViewController.m in Sources */,
 				93952F9A194D5D4C001AA3E4 /* main.m in Sources */,

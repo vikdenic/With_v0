@@ -82,25 +82,41 @@
 {
     //modally brings up all of the users friends and they can tap them to invite
 }
-
-- (IBAction)onCreatButtonTapped:(id)sender
+- (IBAction)onCreateButtonTapped:(id)sender
 {
-
     //if statement here requiring certain fields
 
-        PFObject *event = [PFObject objectWithClassName:@"Event"];
-        event[@"title"] = self.titleTextView.text;
-        event[@"details"] = self.detailsTextView.text;
-//        event[@"date"] =
-        event [@"location"] = @"Test Location";
-        event [@"themeImage"] = self.themeImagePicker;
-        event [@"user"] = [PFUser currentUser];
+    PFObject *event = [PFObject objectWithClassName:@"Event"];
+    event[@"title"] = self.titleTextView.text;
+    event[@"details"] = self.detailsTextView.text;
+    //        event[@"date"] =
+    event [@"location"] = @"Test Location";
+    event [@"themeImage"] = self.themeImagePicker;
+    event [@"user"] = [PFUser currentUser];
     [event saveInBackground];
 
     //takes user back to home page
     [self.tabBarController setSelectedIndex:0];
-
 }
+
+//- (IBAction)onCreatButtonTapped:(id)sender
+//{
+//
+//    //if statement here requiring certain fields
+//
+//        PFObject *event = [PFObject objectWithClassName:@"Event"];
+//        event[@"title"] = self.titleTextView.text;
+//        event[@"details"] = self.detailsTextView.text;
+////        event[@"date"] =
+//        event [@"location"] = @"Test Location";
+//        event [@"themeImage"] = self.themeImagePicker;
+//        event [@"user"] = [PFUser currentUser];
+//    [event saveInBackground];
+//
+//    //takes user back to home page
+//    [self.tabBarController setSelectedIndex:0];
+//
+//}
 
 #pragma mark - Date and Time View Animation
 
