@@ -144,6 +144,7 @@
     FSVenue *venue = [self.retrievedVenuesArray objectAtIndex:indexPath.row];
 
     self.eventName = venue.name;
+    NSLog(@"did select row %@",self.eventName);
 }
 
 #pragma mark - Miscellaneous
