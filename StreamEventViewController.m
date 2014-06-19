@@ -26,6 +26,8 @@
 @property NSMutableArray *pictureAndVideoArray;
 @property NSMutableArray *imagesArray;
 
+@property NSMutableArray *numberOfLikes;
+
 @end
 
 @implementation StreamEventViewController
@@ -36,6 +38,9 @@
 
     self.pictureAndVideoArray = [NSMutableArray array];
     self.imagesArray = [NSMutableArray array];
+    self.numberOfLikes = [NSMutableArray array];
+
+    [self queryForImages];
 
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
@@ -51,8 +56,6 @@
 {
     [super viewWillAppear:animated];
 
-    [self queryForImages];
-
     self.cameraController = [[UIImagePickerController alloc] init];
     self.cameraController.delegate = self;
     self.cameraController.allowsEditing = YES;
@@ -65,6 +68,9 @@
 
 - (void)queryForImages
 {
+    [self.pictureAndVideoArray removeAllObjects];
+    [self.imagesArray removeAllObjects];
+
     PFRelation *relation = [self.event relationForKey:@"eventPhotos"];
     PFQuery *query = [relation query];
     [query includeKey:@"photographer"];
@@ -129,15 +135,6 @@
 
 #pragma mark - Table View
 
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-//{
-//    PFObject *object = [self.pictureAndVideoArray objectAtIndex:section];
-//
-//    PFUser *theUser = [object objectForKey:@"photographer"];
-//
-//    return theUser.username;
-//}
-
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     CGRect frame = tableView.frame;
@@ -172,7 +169,7 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
     [headerView addSubview:title];
     [headerView addSubview:customImageView];
-    headerView.backgroundColor = [UIColor orangeColor];
+    headerView.backgroundColor = [UIColor greenColor];
 
     return headerView;
 }
@@ -203,6 +200,27 @@
 
     cell.theImageView.image = [self.imagesArray objectAtIndex:indexPath.section];
 
+
+    
+
+    //getting the number of likes for each photo
+    PFQuery *query = [PFQuery queryWithClassName:@"LikeActivity"];
+    PFObject *object = [self.pictureAndVideoArray objectAtIndex:indexPath.section];
+
+    [query whereKey:@"photo" equalTo:object];
+//    [query includeKey:@"fromUser"];
+
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         [self.numberOfLikes addObjectsFromArray:objects];
+
+          cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)objects.count];
+     }];
+
+
+
+
+
     //double tap to like
     if (cell.theImageView.gestureRecognizers.count == 0)
     {
@@ -232,6 +250,14 @@
     [like saveInBackground];
 
     StreamTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sender.tag]];
+
+    //increment count
+    NSString *numberOfLikesString = cell.numberOfLikesLabel.text;
+    NSInteger numberOfLikesInt = [numberOfLikesString integerValue];
+    numberOfLikesInt++;
+    cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
+
+
 
     cell.likedImageView.hidden = NO;
 
@@ -344,8 +370,6 @@
 
 - (void)refresh:(UIRefreshControl *)refreshControl
 {
-    [self.pictureAndVideoArray removeAllObjects];
-    [self.imagesArray removeAllObjects];
     [self queryForImages];
     [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2.0];
 }
