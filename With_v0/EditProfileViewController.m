@@ -77,5 +77,10 @@
             [user saveInBackground];
 }
 
+- (IBAction)onLogOutButtonTapped:(id)sender
+{
+    [PFUser logOut];
+}
+
 
 @end

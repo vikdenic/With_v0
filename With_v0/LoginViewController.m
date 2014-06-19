@@ -22,9 +22,6 @@
     [super viewDidLoad];
 
     self.navigationItem.hidesBackButton = YES;
-
-
-
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -64,7 +61,11 @@
                 [alertView show];
             }
             else {
-                [self.navigationController popToRootViewControllerAnimated:YES];
+                
+//                [self.navigationController popToRootViewControllerAnimated:YES];
+                [self dismissViewControllerAnimated:YES completion:nil];
+
+                NSLog(@"%@", [PFUser currentUser]);
             }
         }];
     }
