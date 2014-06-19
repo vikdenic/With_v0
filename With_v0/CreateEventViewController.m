@@ -12,7 +12,8 @@
 @interface CreateEventViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *themeImageView;
-@property (weak, nonatomic) IBOutlet UITextView *titleTextView;
+//@property (weak, nonatomic) IBOutlet UITextView *titleTextView;
+@property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UITextView *detailsTextView;
 @property (weak, nonatomic) IBOutlet UILabel *changeThemeButton;
 @property (weak, nonatomic) IBOutlet UIButton *dateAndTimeButton;
@@ -26,7 +27,9 @@
 @property UIImagePickerController *cameraController;
 @property UIImage *themeImagePicked;
 @property PFFile *themeImagePicker;
+@property (weak, nonatomic) IBOutlet UILabel *detailsPlaceholderLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *placeholderLabel;
 @end
 
 @implementation CreateEventViewController
@@ -34,6 +37,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -41,7 +45,8 @@
     [super viewWillAppear:animated];
 
     self.themeImageView.image = nil;
-    self.titleTextView.text = nil;
+//    self.titleTextView.text = nil;
+    self.titleTextField.text = nil;
     self.detailsTextView.text = nil;
 
     self.dateAndTimeView.alpha = 0;
@@ -87,7 +92,8 @@
     //if statement here requiring certain fields
 
     PFObject *event = [PFObject objectWithClassName:@"Event"];
-    event[@"title"] = self.titleTextView.text;
+//    event[@"title"] = self.titleTextView.text;
+    event[@"title"] = self.titleTextField.text;
     event[@"details"] = self.detailsTextView.text;
     //        event[@"date"] =
     event [@"location"] = @"Test Location";
@@ -199,6 +205,26 @@
 
 #pragma mark - Text View
 
+// Replicates Placeholder with label
+- (IBAction)onTitleTextViewDidBeginEditing:(id)sender
+{
+    self.placeholderLabel.hidden = YES;
+}
+
+- (IBAction)onTitleTextViewDidChange:(id)sender
+{
+    self.placeholderLabel.hidden = ([self.titleTextField.text length] > 0);
+}
+
+- (IBAction)onTitleTextViewDidEnd:(id)sender
+{
+    self.placeholderLabel.hidden = ([self.titleTextField.text length] > 0);
+}
+
+-(void)textViewDidBeginEditing:(UITextView *)textView
+{
+    self.detailsPlaceholderLabel.alpha = 0;
+}
 
 //this could be an issue
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
