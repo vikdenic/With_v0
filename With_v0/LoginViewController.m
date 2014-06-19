@@ -62,8 +62,14 @@
                 [alertView show];
             }
             else {
-                
+
+                //DISMISS LOG-IN SO TABBAR ISNT HIDDEN ANYMORE
+                [self dismissViewControllerAnimated:YES completion:^{
+                }];
+
+                //TRYING TO GET TO HOME FEED
                 [self.navigationController popToRootViewControllerAnimated:YES];
+                [self.tabBarController setSelectedIndex:0];
             }
         }];
     }
