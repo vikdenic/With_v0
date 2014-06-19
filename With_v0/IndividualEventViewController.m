@@ -30,11 +30,6 @@
 
 @implementation IndividualEventViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-}
-
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -55,7 +50,7 @@
          {
              UIImage *temporaryImage = [UIImage imageWithData:data];
 
-             CGSize sacleSize = CGSizeMake(320, 320);
+             CGSize sacleSize = CGSizeMake(320, 160);
              UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
              [temporaryImage drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
              UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();

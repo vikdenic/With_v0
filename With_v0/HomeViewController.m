@@ -29,6 +29,8 @@
 
     PFUser *currentUser = [PFUser currentUser];
 
+    //there is a bug here where the user can go to the home screen here//disable and hide the tab bar;
+
     if (currentUser)
     {
         
@@ -50,7 +52,7 @@
 {
     [super viewWillAppear:animated];
 
-    self.eventArray = [NSMutableArray array];
+    self.event = nil;
 
     //while everything is loading, we should do what facebook does and simulate that it is a connection problem by outlining out User Inteface. I might not be querying the right way
 
@@ -69,25 +71,21 @@
     HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     PFObject *object = [self.eventArray objectAtIndex:indexPath.row];
 
-            NSLog(@"%@", object);
-
-
     //profile picture for creator
     PFFile *userProfilePhoto = [[object objectForKey:@"user"] objectForKey:@"userProfilePhoto"];
-
     [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
      {
          if (!error)
          {
              UIImage *temporaryImage = [UIImage imageWithData:data];
 
-             CGSize sacleSize = CGSizeMake(320, 320);
-             UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
-             [temporaryImage drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
-             UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
-             UIGraphicsEndImageContext();
+             cell.creatorImageView.layer.cornerRadius = cell.creatorImageView.bounds.size.width/2;
+             cell.creatorImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
+             cell.creatorImageView.layer.borderWidth = 2.0;
+             cell.creatorImageView.layer.masksToBounds = YES;
+             cell.creatorImageView.backgroundColor = [UIColor redColor];
 
-             cell.creatorImageView.image = resizedImage;
+             cell.creatorImageView.image = temporaryImage;
          } else {
              
              cell.creatorImageView.image = nil;
@@ -104,11 +102,12 @@
          cell.themeImageView.image = image;
     }];
 
-    //creator username
 
+    //creator username
     PFObject *userName = [[object objectForKey:@"user"] objectForKey:@"username"];
     cell.creatorNameLabel.text = [NSString stringWithFormat:@"%@", userName];
 
+    //event Name and Date;
     cell.eventNameLabel.text = object[@"title"];
     cell.eventDateLabel.text = @"Saturday. June 25, 5pm";
 
@@ -117,16 +116,19 @@
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    self.event = [self.eventArray objectAtIndex:indexPath.row];
-    NSLog(@"%@", self.event);
-}
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    self.event = [self.eventArray objectAtIndex:indexPath.row];
+//}
 
 #pragma mark - Query for Events
 
 - (void)queryForEvents
 {
+    [self.eventArray removeAllObjects];
+
+    self.eventArray = [NSMutableArray array];
+
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
     [query includeKey:@"user"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
@@ -143,7 +145,7 @@
 
 - (void)refresh:(UIRefreshControl *)refreshControl
 {
-    [self.eventArray removeAllObjects];
+//    [self.eventArray removeAllObjects];
     [self queryForEvents];
     [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:2.0];
 }
@@ -159,11 +161,12 @@
 {
     if ([segue.identifier isEqualToString:@"ToPageViewControllerSegue"])
     {
+        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+        self.event = [self.eventArray objectAtIndex:selectedIndexPath.row];
         PageViewController *pageViewController = segue.destinationViewController;
         pageViewController.event = self.event;
     }
 }
-
 
 - (IBAction)unwindSegueToHomeViewController:(UIStoryboardSegue *)sender
 {

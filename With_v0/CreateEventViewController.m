@@ -40,6 +40,10 @@
 {
     [super viewWillAppear:animated];
 
+    self.themeImageView.image = nil;
+    self.titleTextView.text = nil;
+    self.detailsTextView.text = nil;
+
     self.dateAndTimeView.alpha = 0;
     self.dateAndTimeView.hidden = YES;
 
@@ -91,7 +95,7 @@
         event [@"location"] = @"Test Location";
         event [@"themeImage"] = self.themeImagePicker;
         event [@"user"] = [PFUser currentUser];
-        [event saveInBackground];
+    [event saveInBackground];
 
     //takes user back to home page
     [self.tabBarController setSelectedIndex:0];

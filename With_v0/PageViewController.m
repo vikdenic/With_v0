@@ -24,6 +24,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    [super viewDidLoad];
     self.dataSource = self;
     self.delegate = self;
     [self setupScene];
@@ -35,7 +43,6 @@
     self.individualViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"IndividualEventViewController"];
 
     self.individualViewController.event = self.event;
-
 
     self.streamEventViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"StreamEventViewController"];
 

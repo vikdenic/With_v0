@@ -53,45 +53,38 @@
 
     [self queryForImages];
 
-    [self.tableView reloadData];
-
     self.cameraController = [[UIImagePickerController alloc] init];
     self.cameraController.delegate = self;
     self.cameraController.allowsEditing = YES;
     self.cameraController.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
     self.cameraController.videoMaximumDuration = 11;
-
-//    self.cameraController.sourceType = UIImagePickerControllerSourceTypeCamera;
-    //    self.cameraController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 }
 
 
 #pragma mark - Getting Pictures and Videos
 
-//probably do these in the view did load or view will appear?
-
 - (void)queryForImages
 {
-    [self.pictureAndVideoArray removeAllObjects];
-
-    PFQuery *query = [PFQuery queryWithClassName:@"Photo"];
+    PFRelation *relation = [self.event relationForKey:@"eventPhotos"];
+    PFQuery *query = [relation query];
     [query includeKey:@"photographer"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
+     {
         if (!error)
         {
-            [self.pictureAndVideoArray addObjectsFromArray:objects];
+            [self.pictureAndVideoArray addObjectsFromArray:results];
         }
         [self createImages];
+
     }];
 }
-
-//this is going to be an issue- videos don't need to be created right? might have to separate the calls or something?
 
 - (void)createImages
 {
     for (PFObject *object in self.pictureAndVideoArray)
     {
         PFFile *file = [object objectForKey:@"photo"];
+
         [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
          {
              if (!error)
@@ -106,6 +99,9 @@
 
                  [self.imagesArray addObject:resizedImage];
                  [self.tableView reloadData];
+             }
+             else {
+                 NSLog(@"Alert!");
              }
          }];
     }
@@ -136,12 +132,10 @@
 //- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 //{
 //    PFObject *object = [self.pictureAndVideoArray objectAtIndex:section];
-//    //outside the bounds of the array
 //
-//    PFUser *user = [object objectForKey:@"photographer"];
-//    //in the future we will want to return the users actual name
+//    PFUser *theUser = [object objectForKey:@"photographer"];
 //
-//    return user.username;
+//    return theUser.username;
 //}
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -309,8 +303,6 @@
                  [photoTaken setObject:[PFUser currentUser] forKey:@"photographer"];
 //                 photoTaken[@"caption"] = //
 
-                 //make event object here and add the relation to either the
-
                  [photoTaken saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                   {
                       if (!error) {
@@ -318,12 +310,12 @@
                           PFRelation *relation = [self.event relationforKey:@"eventPhotos"];
                           [relation addObject:photoTaken];
                           [self.event saveInBackground];
-                          NSLog(@"%@", relation);
 
-                          [self dismissViewControllerAnimated:self.cameraController completion:nil];
+                          [self dismissViewControllerAnimated:NO completion:nil];
+
+                          [self.tableView reloadData];
                       }
                       else {
-                          NSLog(@"Error: %@ %@", error, [error userInfo]);
                       }
                   }];
              }
@@ -364,3 +356,40 @@
 }
 
 @end
+
+
+//probably do these in the view did load or view will appear?
+
+//- (void)queryForImages
+//{
+//    [self.pictureAndVideoArray removeAllObjects];
+//
+//    PFQuery *query = [PFQuery queryWithClassName:@"Photo"];
+//    [query includeKey:@"photographer"];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        if (!error)
+//        {
+//            [self.pictureAndVideoArray addObjectsFromArray:objects];
+//        }
+//        [self createImages];
+//    }];
+//}
+
+
+//- (void)queryForImages
+//{
+//    [self.pictureAndVideoArray removeAllObjects];
+//
+//    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
+//    [query whereKey:@"objectId" equalTo:self.event.objectId];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        if (!error)
+//        {
+//            [self.pictureAndVideoArray addObjectsFromArray:objects];
+//
+//
+//            //then get the photos from it in a new array and create the images from that
+//        }
+//        [self createImages];
+//    }];
+//}
