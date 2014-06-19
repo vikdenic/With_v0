@@ -64,7 +64,8 @@
                 [alertView show];
             }
             else {
-                [self.navigationController popToRootViewControllerAnimated:YES];
+                //[self.navigationController popToRootViewControllerAnimated:YES];
+                NSLog(@"LOGIN TAPPED");
             }
         }];
     }

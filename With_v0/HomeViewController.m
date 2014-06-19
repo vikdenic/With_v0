@@ -28,6 +28,30 @@
 {
     [super viewDidLoad];
 
+
+    PFUser *currentUser = [PFUser currentUser];
+    [PFUser logOut];
+
+    //there is a bug here where the user can go to the home screen here//disable and hide the tab bar;
+
+    if (currentUser)
+    {
+
+    } else{
+        [self performSegueWithIdentifier:@"showLogin" sender:self];
+    }
+
+    //pull to refresh
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+
+    [self.tableView addSubview:refreshControl];
+
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+
+    [self queryForEvents];
+
 //    PFUser *currentUser = [PFUser currentUser];
 //
 //    //there is a bug here where the user can go to the home screen here//disable and hide the tab bar;
@@ -49,33 +73,34 @@
 //    [[self navigationController] setNavigationBarHidden:YES animated:YES];
 //
 //    [self queryForEvents];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 
-    PFUser *currentUser = [PFUser currentUser];
-
-    //there is a bug here where the user can go to the home screen here//disable and hide the tab bar;
-
-    if (currentUser)
-    {
-
-    } else{
-        [self performSegueWithIdentifier:@"showLogin" sender:self];
-    }
-
-    //pull to refresh
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    self.refreshControl = refreshControl;
-
-    [self.tableView addSubview:refreshControl];
-
-    [[self navigationController] setNavigationBarHidden:YES animated:YES];
-
-    [self queryForEvents];
+//    PFUser *currentUser = [PFUser currentUser];
+//
+//    //there is a bug here where the user can go to the home screen here//disable and hide the tab bar;
+//
+//    if (currentUser)
+//    {
+//
+//    } else{
+//        [self performSegueWithIdentifier:@"showLogin" sender:self];
+//    }
+//
+//    //pull to refresh
+//    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+//    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+//    self.refreshControl = refreshControl;
+//
+//    [self.tableView addSubview:refreshControl];
+//
+//    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+//
+//    [self queryForEvents];
 
 }
 
