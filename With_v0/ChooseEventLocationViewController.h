@@ -10,4 +10,6 @@
 
 @interface ChooseEventLocationViewController : UIViewController
 
+@property (strong, nonatomic) NSString *eventName;
+
 @end

@@ -8,6 +8,7 @@
 
 #import "CreateEventViewController.h"
 #import <Parse/Parse.h>
+#import "ChooseEventLocationViewController.h"
 
 @interface CreateEventViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 
@@ -99,6 +100,7 @@
     event [@"location"] = @"Test Location";
     event [@"themeImage"] = self.themeImagePicker;
     event [@"user"] = [PFUser currentUser];
+    event [@"eventName"] = self.eventName;
     [event saveInBackground];
 
     //takes user back to home page
@@ -235,6 +237,14 @@
     }
 
     return YES;
+}
+
+#pragma mark - Segues
+//NEED TO HOOK UP SEGUE FROM CHOOSELOCATION SELECTED CELL
+-(IBAction)unwindChooseLocationToCreateEvent:(UIStoryboardSegue *)sender
+{
+    ChooseEventLocationViewController *chooseVC = [[ChooseEventLocationViewController alloc]init];
+    self.eventName = chooseVC.eventName;
 }
 
 @end

@@ -24,15 +24,63 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    [self setUserInfo];
 }
 
+#pragma mark - Helpers
+
+-(void)setUserInfo
+{
+    PFQuery *retrieveUsers = [PFQuery queryWithClassName:@"User"];
+
+    [retrieveUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            PFUser *user = [PFUser currentUser];
+            self.nameTextField.text = [user objectForKey:@"name"];
+            self.locationTextField.text = [user objectForKey:@"userCityState"];
+            self.bioTextView.text = [user objectForKey:@"userBio"];
+
+            PFFile *imageFile = [user objectForKey:@"userProfilePhoto"];
+
+            [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                UIImage *image = [UIImage imageWithData:data];
+                self.avatarImageView.image = image;
+            }];
+
+//            [self. sizeToFit];
+//            [self.cityStateLabel sizeToFit];
+//            [self.bioTextView sizeToFit];
+
+            //            self.followersLabel.text = [user objectForKey:@"followersCount"]; ?
+            //            self.followingLabel.text = [user objectForKey:@"followingCount"]; ?
+        }
+    }];
+}
+
+#pragma mark - Actions
+
+-(IBAction)onSaveButtonPressed:(id)sender
+{
+    PFQuery *retrieveUsers = [PFQuery queryWithClassName:@"User"];
+
+    [retrieveUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            PFUser *user = [PFUser currentUser];
+            [user setValue:self.nameTextField.text forKey:@"name"];
+            [user setValue:self.locationTextField.text forKey:@"userCityState"];
+            [user setValue:self.bioTextView.text forKey:@"userBio"];
+        }
+    }];
+}
+
+
+//NEEDS TO UNWIND OR SEGUE TO HOMEFEED ?
 - (IBAction)onLogOutPressed:(id)sender
 {
-//    [PFUser logOut];
     [self dismissViewControllerAnimated:YES completion:^{
         [PFUser logOut];
     }];
 }
-
 
 @end

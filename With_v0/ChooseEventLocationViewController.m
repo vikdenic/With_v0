@@ -9,6 +9,7 @@
 #import "ChooseEventLocationViewController.h"
 #import <MapKit/MapKit.h>
 #import "FSVenue.h"
+#import "CreateEventViewController.h"
 
 @interface ChooseEventLocationViewController () <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate>
 
@@ -110,7 +111,7 @@
 
 
 #pragma mark - TableView Delegates
-
+//NOT SURE WHERE THESE WARNINGS CAME FROM?
 -(int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.retrievedVenuesArray.count;
@@ -137,9 +138,20 @@
     return cell;
 }
 
+//CRUCIAL
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    FSVenue *venue = [self.retrievedVenuesArray objectAtIndex:indexPath.row];
+
+    self.eventName = venue.name;
+}
+
+#pragma mark - Miscellaneous
+
 // Dismisses billTextField's keyboard upon tap-away
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
 }
+
 @end
