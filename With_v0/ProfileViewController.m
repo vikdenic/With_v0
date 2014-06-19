@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "IndividualEventViewController.h"
 #import "HomeTableViewCell.h"
+#import "HomeViewController.h"
 
 @interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -42,7 +43,6 @@
     [super viewDidLoad];
 
 //    self.usersArray = [[NSArray alloc]init];
-    [self setUserInfo];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -54,6 +54,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self setUserInfo];
 
 }
 
@@ -139,12 +140,20 @@
 // When user SAVES settings
 - (IBAction)unwindSegueSaveSettingsToProfile:(UIStoryboardSegue *)sender
 {
+    [self setUserInfo];
 
 }
 
 - (IBAction)unwindSegueInvitesToProfile:(UIStoryboardSegue *)sender
 {
     
+}
+
+-(IBAction)unwindLogOutToProfile:(UIStoryboardSegue *)sender
+{
+    [PFUser logOut];
+
+    [self performSegueWithIdentifier:@"LogOutToSignIn" sender:self];
 }
 
 @end

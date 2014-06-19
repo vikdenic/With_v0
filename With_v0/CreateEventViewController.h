@@ -10,6 +10,6 @@
 
 @interface CreateEventViewController : UIViewController
 
-@property (strong, nonatomic) NSString *eventName;
+@property (weak, nonatomic) NSString *eventName;
 
 @end

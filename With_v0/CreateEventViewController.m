@@ -65,6 +65,8 @@
     [self.themeImageView addGestureRecognizer:tapping];
     self.themeImageView.userInteractionEnabled = YES;
 
+    NSLog(@"VIEWWILLAPPEAR SEES %@",self.eventName);
+
 }
 
 #pragma mark - Action Methods
@@ -97,10 +99,10 @@
     event[@"title"] = self.titleTextField.text;
     event[@"details"] = self.detailsTextView.text;
     //        event[@"date"] =
-    event [@"location"] = @"Test Location";
+    event [@"location"] = self.eventName;
     event [@"themeImage"] = self.themeImagePicker;
     event [@"user"] = [PFUser currentUser];
-    event [@"eventName"] = self.eventName;
+//    event [@"location"] = self.eventName;
     [event saveInBackground];
 
     //takes user back to home page
@@ -223,9 +225,10 @@
     self.placeholderLabel.hidden = ([self.titleTextField.text length] > 0);
 }
 
+
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
-    self.detailsPlaceholderLabel.alpha = 0;
+    self.detailsPlaceholderLabel.hidden = YES;
 }
 
 //this could be an issue
@@ -243,8 +246,9 @@
 //NEED TO HOOK UP SEGUE FROM CHOOSELOCATION SELECTED CELL
 -(IBAction)unwindChooseLocationToCreateEvent:(UIStoryboardSegue *)sender
 {
-    ChooseEventLocationViewController *chooseVC = [[ChooseEventLocationViewController alloc]init];
+    ChooseEventLocationViewController *chooseVC = sender.sourceViewController;
     self.eventName = chooseVC.eventName;
+    NSLog(@"UNWIND SEES %@",chooseVC.eventName);
 }
 
 @end

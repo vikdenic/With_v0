@@ -10,6 +10,8 @@
 #import <Parse/Parse.h>
 
 @interface LoginViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 
 @end
 
@@ -20,6 +22,25 @@
     [super viewDidLoad];
 
     self.navigationItem.hidesBackButton = YES;
+
+
+
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:NO];
+
+    [self.usernameField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+
+    [self.passwordField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+
+}
+
+// Dismisses billTextField's keyboard upon tap-away
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
 }
 
 
@@ -47,6 +68,11 @@
             }
         }];
     }
+}
+
+-(IBAction)unwindFromRegisterToLogIn:(UIStoryboardSegue *)sender
+{
+    
 }
 
 @end

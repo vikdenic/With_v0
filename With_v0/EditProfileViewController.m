@@ -28,6 +28,13 @@
     [self setUserInfo];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:NO];
+    [self setUserInfo];
+
+}
+
 #pragma mark - Helpers
 
 -(void)setUserInfo
@@ -62,25 +69,13 @@
 
 -(IBAction)onSaveButtonPressed:(id)sender
 {
-    PFQuery *retrieveUsers = [PFQuery queryWithClassName:@"User"];
 
-    [retrieveUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
             PFUser *user = [PFUser currentUser];
             [user setValue:self.nameTextField.text forKey:@"name"];
             [user setValue:self.locationTextField.text forKey:@"userCityState"];
             [user setValue:self.bioTextView.text forKey:@"userBio"];
-        }
-    }];
+            [user saveInBackground];
 }
 
-
-//NEEDS TO UNWIND OR SEGUE TO HOMEFEED ?
-- (IBAction)onLogOutPressed:(id)sender
-{
-    [self dismissViewControllerAnimated:YES completion:^{
-        [PFUser logOut];
-    }];
-}
 
 @end
