@@ -64,11 +64,11 @@
             else {
 
                 //DISMISS LOG-IN SO TABBAR ISNT HIDDEN ANYMORE
-                [self dismissViewControllerAnimated:YES completion:^{
+                [self dismissViewControllerAnimated:NO completion:^{
                 }];
 
                 //TRYING TO GET TO HOME FEED
-                [self.navigationController popToRootViewControllerAnimated:YES];
+//                [self.navigationController popToRootViewControllerAnimated:YES];
                 [self.tabBarController setSelectedIndex:0];
             }
         }];
