@@ -165,18 +165,36 @@
 
 
     //setting time top right
-    NSDate *timeOfPicture = [object valueForKey:@"createdAt"];
 
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:timeOfPicture];
-    NSInteger hour = [components hour];
-    NSInteger minute = [components minute];
-    NSInteger totalTimeForPictures = (hour * 12) + minute;
+//    NSDate *timeOfPicture = [object valueForKey:@"createdAt"];
+//    NSLog(@"First Time: %@", timeOfPicture);
+//    NSCalendar *calendar = [NSCalendar currentCalendar];
+//    NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:timeOfPicture];
+//    NSInteger hour = [components hour];
+//    NSInteger minute = [components minute];
+//    NSInteger totalTimeForPictures = (hour * 12) + minute;
+//
+//    UILabel *timeInterval = [[UILabel alloc] initWithFrame:CGRectMake(230, 5, 100, 30)];
+//
+//    NSLog(@"Second Time: %ld", (long)totalTimeForPictures);
+//
+//    if (totalTimeForPictures < 60)
+//    {
+//        timeInterval.text = [NSString stringWithFormat:@"%lim", (long)totalTimeForPictures];
+//
+//    } else if (totalTimeForPictures > 60 && totalTimeForPictures < 1440)
+//    {
+//        totalTimeForPictures = totalTimeForPictures/60;
+//
+//        timeInterval.text = [NSString stringWithFormat:@"%lih", (long)totalTimeForPictures];
+//
+//    } else {
+//
+//        totalTimeForPictures = totalTimeForPictures/1440;
+//        timeInterval.text = [NSString stringWithFormat:@"%lid", (long)totalTimeForPictures];
+//
+//    }
 
-//    NSTimeInterval secondsElapsed = [ timeIntervalSinceDate:firstDate];
-
-    UILabel *timeInterval = [[UILabel alloc] initWithFrame:CGRectMake(230, 5, 100, 30)];
-    timeInterval.text = [NSString stringWithFormat:@"%li min", (long)totalTimeForPictures];
 
     //setting the username
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
@@ -201,7 +219,7 @@
 
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
     [headerView addSubview:title];
-    [headerView addSubview:timeInterval];
+//    [headerView addSubview:timeInterval];
     [headerView addSubview:customImageView];
     headerView.backgroundColor = [UIColor blueColor];
 
