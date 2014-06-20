@@ -165,18 +165,68 @@
 
 
     //setting time top right
+
+//    NSDate *timeOfPicture = [object valueForKey:@"createdAt"];
+//    NSLog(@"First Time: %@", timeOfPicture);
+//    NSCalendar *calendar = [NSCalendar currentCalendar];
+//    NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:timeOfPicture];
+//    //I need the current date here
+//
+//    NSInteger hour = [components hour];
+//    NSInteger minute = [components minute];
+//    NSInteger totalTimeForPictures = (hour * 60) + minute;
+
+//    NSDate *currentDate = [NSDate date];
+//    NSLog(@"Current Date: %@", currentDate);
+
+//    NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[NSDate date]];
+//    //I need the current date here
+//
+//    NSInteger hour = [components hour];
+//    NSLog(@"hour: %ld", (long)hour);
+//    NSInteger minute = [components minute];
+//    NSLog(@"minutes: %ld", (long)minute);
+//
+//    NSInteger totalTimeForPictures = (hour * 60) + minute;
+
+
+
+
+
     NSDate *timeOfPicture = [object valueForKey:@"createdAt"];
+    NSLog(@"First Time: %@", timeOfPicture);
 
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:timeOfPicture];
-    NSInteger hour = [components hour];
-    NSInteger minute = [components minute];
-    NSInteger totalTimeForPictures = (hour * 12) + minute;
+    NSUInteger desiredComponents = NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekCalendarUnit | NSHourCalendarUnit | NSDayCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSDateComponents *elapsedTimeUnits = [[NSCalendar currentCalendar] components:desiredComponents
+                                                                         fromDate:timeOfPicture
+                                                                           toDate:[NSDate date]
+                                                                          options:0];
 
-//    NSTimeInterval secondsElapsed = [ timeIntervalSinceDate:firstDate];
+    NSLog(@"elapsed Time: %@", elapsedTimeUnits);
 
-    UILabel *timeInterval = [[UILabel alloc] initWithFrame:CGRectMake(230, 5, 100, 30)];
-    timeInterval.text = [NSString stringWithFormat:@"%li min", (long)totalTimeForPictures];
+
+
+//    UILabel *timeInterval = [[UILabel alloc] initWithFrame:CGRectMake(230, 5, 100, 30)];
+//
+//    NSLog(@"Second Time: %ld", (long)totalTimeForPictures);
+//
+//    if (totalTimeForPictures < 60)
+//    {
+//        timeInterval.text = [NSString stringWithFormat:@"%lim", (long)totalTimeForPictures];
+//
+//    } else if (totalTimeForPictures > 60 && totalTimeForPictures < 1440)
+//    {
+//        totalTimeForPictures = totalTimeForPictures/60;
+//
+//        timeInterval.text = [NSString stringWithFormat:@"%lih", (long)totalTimeForPictures];
+//
+//    } else {
+//
+//        totalTimeForPictures = totalTimeForPictures/1440;
+//        timeInterval.text = [NSString stringWithFormat:@"%lid", (long)totalTimeForPictures];
+//
+//    }
+
 
     //setting the username
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
@@ -201,7 +251,7 @@
 
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
     [headerView addSubview:title];
-    [headerView addSubview:timeInterval];
+//    [headerView addSubview:timeInterval];
     [headerView addSubview:customImageView];
     headerView.backgroundColor = [UIColor blueColor];
 
@@ -245,8 +295,27 @@
      {
          [self.numberOfLikes addObjectsFromArray:objects];
 
+         //check to see if user has already liked the photo
+         for (PFObject *object in self.numberOfLikes)
+         {
+             if ([[object objectForKey:@"fromUser"] isEqual:[PFUser currentUser]])
+             {
+                 NSLog(@"The user has liked the photo");
+             } else {
+                 NSLog(@"The user doesn't like the photo");
+             }
+         }
+
+
           cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)objects.count];
      }];
+
+
+
+
+
+
+
 
     //double tap to like
     if (cell.theImageView.gestureRecognizers.count == 0)
