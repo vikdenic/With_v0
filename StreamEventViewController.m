@@ -170,10 +170,42 @@
 //    NSLog(@"First Time: %@", timeOfPicture);
 //    NSCalendar *calendar = [NSCalendar currentCalendar];
 //    NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:timeOfPicture];
+//    //I need the current date here
+//
 //    NSInteger hour = [components hour];
 //    NSInteger minute = [components minute];
-//    NSInteger totalTimeForPictures = (hour * 12) + minute;
+//    NSInteger totalTimeForPictures = (hour * 60) + minute;
+
+//    NSDate *currentDate = [NSDate date];
+//    NSLog(@"Current Date: %@", currentDate);
+
+//    NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[NSDate date]];
+//    //I need the current date here
 //
+//    NSInteger hour = [components hour];
+//    NSLog(@"hour: %ld", (long)hour);
+//    NSInteger minute = [components minute];
+//    NSLog(@"minutes: %ld", (long)minute);
+//
+//    NSInteger totalTimeForPictures = (hour * 60) + minute;
+
+
+
+
+
+    NSDate *timeOfPicture = [object valueForKey:@"createdAt"];
+    NSLog(@"First Time: %@", timeOfPicture);
+
+    NSUInteger desiredComponents = NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekCalendarUnit | NSHourCalendarUnit | NSDayCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSDateComponents *elapsedTimeUnits = [[NSCalendar currentCalendar] components:desiredComponents
+                                                                         fromDate:timeOfPicture
+                                                                           toDate:[NSDate date]
+                                                                          options:0];
+
+    NSLog(@"elapsed Time: %@", elapsedTimeUnits);
+
+
+
 //    UILabel *timeInterval = [[UILabel alloc] initWithFrame:CGRectMake(230, 5, 100, 30)];
 //
 //    NSLog(@"Second Time: %ld", (long)totalTimeForPictures);
@@ -263,8 +295,27 @@
      {
          [self.numberOfLikes addObjectsFromArray:objects];
 
+         //check to see if user has already liked the photo
+         for (PFObject *object in self.numberOfLikes)
+         {
+             if ([[object objectForKey:@"fromUser"] isEqual:[PFUser currentUser]])
+             {
+                 NSLog(@"The user has liked the photo");
+             } else {
+                 NSLog(@"The user doesn't like the photo");
+             }
+         }
+
+
           cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)objects.count];
      }];
+
+
+
+
+
+
+
 
     //double tap to like
     if (cell.theImageView.gestureRecognizers.count == 0)
