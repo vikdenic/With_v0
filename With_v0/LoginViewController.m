@@ -68,7 +68,7 @@
                 }];
 
                 //TRYING TO GET TO HOME FEED
-//                [self.navigationController popToRootViewControllerAnimated:YES];
+                [self.navigationController popToRootViewControllerAnimated:YES];
                 [self.tabBarController setSelectedIndex:0];
             }
         }];
