@@ -87,37 +87,8 @@
         {
             [self.pictureAndVideoArray addObjectsFromArray:results];
         }
-        [self createImages];
-
+         [self.tableView reloadData];
     }];
-}
-
-- (void)createImages
-{
-    for (PFObject *object in self.pictureAndVideoArray)
-    {
-        PFFile *file = [object objectForKey:@"photo"];
-
-        [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
-         {
-             if (!error)
-             {
-                 UIImage *temporaryImage = [UIImage imageWithData:data];
-
-                 CGSize sacleSize = CGSizeMake(320, 320);
-                 UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
-                 [temporaryImage drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
-                 UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
-                 UIGraphicsEndImageContext();
-
-                 [self.imagesArray addObject:resizedImage];
-                 [self.tableView reloadData];
-             }
-             else {
-                 NSLog(@"Alert!");
-             }
-         }];
-    }
 }
 
 #pragma mark - Action Methods
@@ -136,13 +107,11 @@
     //testing like button to see if selected
     if (sender.backgroundColor == [UIColor colorWithPatternImage:[UIImage imageNamed:@"like_selected"]])
     {
-        NSLog(@"selected");
         UIImage *btnImage = [UIImage imageNamed:@"like_unselected"];
         [sender setImage:btnImage forState:UIControlStateNormal];
 
     } else if (sender.backgroundColor == [UIColor colorWithPatternImage:[UIImage imageNamed:@"like_unselected"]])
     {
-        NSLog(@"unselected");
         UIImage *btnImage = [UIImage imageNamed:@"like_selected"];
         [sender setImage:btnImage forState:UIControlStateNormal];
     }
@@ -194,15 +163,12 @@
 
 
     NSDate *timeOfPicture = [object valueForKey:@"createdAt"];
-    NSLog(@"First Time: %@", timeOfPicture);
 
     NSUInteger desiredComponents = NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekCalendarUnit | NSHourCalendarUnit | NSDayCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
     NSDateComponents *elapsedTimeUnits = [[NSCalendar currentCalendar] components:desiredComponents
                                                                          fromDate:timeOfPicture
                                                                            toDate:[NSDate date]
                                                                           options:0];
-
-    NSLog(@"elapsed Time: %@", elapsedTimeUnits);
 
 
 
@@ -281,28 +247,29 @@
     cell.likedImageView.hidden = YES;
     cell.commentButton.tag = indexPath.section;
 
-    cell.theImageView.image = [self.imagesArray objectAtIndex:indexPath.section];
-
-
     //getting the number of likes for each photo
     PFQuery *query = [PFQuery queryWithClassName:@"LikeActivity"];
     PFObject *object = [self.pictureAndVideoArray objectAtIndex:indexPath.section];
-
     [query whereKey:@"photo" equalTo:object];
     [query includeKey:@"fromUser"];
 
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
-         [self.numberOfLikes addObjectsFromArray:objects];
 
-         //check to see if user has already liked the photo
-         for (PFObject *object in self.numberOfLikes)
+         for (PFObject *object in objects)
          {
-             if ([[object objectForKey:@"fromUser"] isEqual:[PFUser currentUser]])
+             NSString *objectID = [[object objectForKey:@"fromUser"] objectId];
+             NSString *currentUserID = [[PFUser currentUser] objectId];
+
+             if ([currentUserID isEqualToString:objectID])
              {
-                 NSLog(@"The user has liked the photo");
+                 //this means user likes the photo
+                 UIImage *btnImage = [UIImage imageNamed:@"like_selected"];
+                 [cell.likeButton setImage:btnImage forState:UIControlStateNormal];
+
              } else {
-                 NSLog(@"The user doesn't like the photo");
+                 UIImage *btnImage = [UIImage imageNamed:@"like_unselected"];
+                 [cell.likeButton setImage:btnImage forState:UIControlStateNormal];
              }
          }
 
@@ -310,10 +277,29 @@
           cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)objects.count];
      }];
 
+    PFFile *file = [object objectForKey:@"photo"];
 
+    [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+     {
+         if (!error)
+         {
+             UIImage *temporaryImage = [UIImage imageWithData:data];
 
+             CGSize sacleSize = CGSizeMake(320, 320);
+             UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
+             [temporaryImage drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
+             UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+             UIGraphicsEndImageContext();
 
+//             [self.imagesArray addObject:resizedImage];
+//             [self.tableView reloadData];
+             cell.theImageView.image = resizedImage;
 
+         }
+         else {
+             NSLog(@"Alert!");
+         }
+     }];
 
 
 
@@ -461,6 +447,10 @@
         CommentsViewController *commentsViewController = segue.destinationViewController;
         commentsViewController.commentObject = self.commentObject;
     }
+//    else if ([segue.identifier isEqualToString:@"ToPhotoEditingPage"])
+//    {
+//        //pass the image here
+//    }
 }
 
 
