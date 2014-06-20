@@ -39,6 +39,8 @@
 {
     [super viewDidLoad];
 
+    //Vik
+    self.eventName = @"Location";;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -65,8 +67,17 @@
     [self.themeImageView addGestureRecognizer:tapping];
     self.themeImageView.userInteractionEnabled = YES;
 
-    NSLog(@"VIEWWILLAPPEAR SEES %@",self.eventName);
+    //Vik: sets button text to selected foursquare location
+    if(![self.eventName isEqual:@""])
+    {
+        NSString *locationName = [NSString stringWithFormat:@"           %@",self.eventName];
 
+        [self.locationButton setTitle:locationName forState:UIControlStateNormal];
+    }
+    else if (!self.eventName)
+    {
+        [self.locationButton setTitle:@"          Location" forState:UIControlStateNormal];
+    }
 }
 
 #pragma mark - Action Methods
@@ -99,10 +110,9 @@
     event[@"title"] = self.titleTextField.text;
     event[@"details"] = self.detailsTextView.text;
     //        event[@"date"] =
-    event [@"location"] = @"Mobile Makers Academy";
+    event [@"location"] = self.eventName;
     event [@"themeImage"] = self.themeImagePicker;
     event [@"user"] = [PFUser currentUser];
-//    event [@"location"] = self.eventName;
     [event saveInBackground];
 
     //takes user back to home page

@@ -141,10 +141,22 @@
 //CRUCIAL
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+//    FSVenue *venue = [self.retrievedVenuesArray objectAtIndex:indexPath.row];
+//
+//    self.eventName = venue.name;
+//    NSLog(@"did select row %@",self.eventName);
+}
+
+-(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     FSVenue *venue = [self.retrievedVenuesArray objectAtIndex:indexPath.row];
 
     self.eventName = venue.name;
-    NSLog(@"did select row %@",self.eventName);
+
+    NSLog(@"will select row %@",self.eventName);
+
+    return indexPath;
+
 }
 
 #pragma mark - Miscellaneous
