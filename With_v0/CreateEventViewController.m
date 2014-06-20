@@ -14,8 +14,8 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *themeImageView;
 //@property (weak, nonatomic) IBOutlet UITextView *titleTextView;
-@property (weak, nonatomic) IBOutlet UITextField *titleTextField;
-@property (weak, nonatomic) IBOutlet UITextView *detailsTextView;
+@property (strong, nonatomic) IBOutlet UITextField *titleTextField;
+@property (strong, nonatomic) IBOutlet UITextView *detailsTextView;
 @property (weak, nonatomic) IBOutlet UILabel *changeThemeButton;
 @property (weak, nonatomic) IBOutlet UIButton *dateAndTimeButton;
 @property (weak, nonatomic) IBOutlet UIButton *locationButton;
@@ -40,17 +40,18 @@
     [super viewDidLoad];
 
     //Vik
-    self.eventName = @"Location";;
+    self.eventName = @"Location";
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 
-    self.themeImageView.image = nil;
+//    Vik: we will nil these properties on Create button tapped
+//    self.themeImageView.image = nil;
 //    self.titleTextView.text = nil;
-    self.titleTextField.text = nil;
-    self.detailsTextView.text = nil;
+//    self.titleTextField.text = nil;
+//    self.detailsTextView.text = nil;
 
     self.dateAndTimeView.alpha = 0;
     self.dateAndTimeView.hidden = YES;
@@ -109,34 +110,27 @@
 //    event[@"title"] = self.titleTextView.text;
     event[@"title"] = self.titleTextField.text;
     event[@"details"] = self.detailsTextView.text;
-    //        event[@"date"] =
-    event [@"location"] = self.eventName;
-    event [@"themeImage"] = self.themeImagePicker;
-    event [@"user"] = [PFUser currentUser];
+
+    event[@"location"] = self.eventName;
+
+    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:self.coordinate.latitude
+                                                  longitude:self.coordinate.longitude];
+    event[@"locationGeoPoint"] = geoPoint;
+
+    event[@"themeImage"] = self.themeImagePicker;
+    event[@"user"] = [PFUser currentUser];
     [event saveInBackground];
 
     //takes user back to home page
     [self.tabBarController setSelectedIndex:0];
-}
 
-//- (IBAction)onCreatButtonTapped:(id)sender
-//{
-//
-//    //if statement here requiring certain fields
-//
-//        PFObject *event = [PFObject objectWithClassName:@"Event"];
-//        event[@"title"] = self.titleTextView.text;
-//        event[@"details"] = self.detailsTextView.text;
-////        event[@"date"] =
-//        event [@"location"] = @"Test Location";
-//        event [@"themeImage"] = self.themeImagePicker;
-//        event [@"user"] = [PFUser currentUser];
-//    [event saveInBackground];
-//
-//    //takes user back to home page
-//    [self.tabBarController setSelectedIndex:0];
-//
-//}
+    //erases event forms
+    self.themeImageView.image = nil;
+    self.titleTextField.text = nil;
+    self.detailsTextView.text = nil;
+    self.locationButton.titleLabel.text = @"           Location";
+//    self.dateAndTimeButton.titleLabel.text = nil;
+}
 
 #pragma mark - Date and Time View Animation
 
@@ -258,7 +252,9 @@
 {
     ChooseEventLocationViewController *chooseVC = sender.sourceViewController;
     self.eventName = chooseVC.eventName;
-    NSLog(@"UNWIND SEES %@",chooseVC.eventName);
+    self.coordinate = chooseVC.coordinate;
+
+    NSLog(@"CREATE: %f %f",self.coordinate.latitude, self.coordinate.longitude);
 }
 
 @end

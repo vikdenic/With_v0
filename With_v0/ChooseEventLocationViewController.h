@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface ChooseEventLocationViewController : UIViewController
 
 @property (strong, nonatomic) NSString *eventName;
+
+@property CLLocationCoordinate2D coordinate;
 
 @end

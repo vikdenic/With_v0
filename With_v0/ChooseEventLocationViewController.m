@@ -98,8 +98,8 @@
             venue.city = [[venueDictionary objectForKey:@"location"] objectForKey:@"city"];
 
 
-            venue.lat = [[[venueDictionary objectForKey:@"location"] objectForKey:@"lat"] doubleValue];
-            venue.lng = [[[venueDictionary objectForKey:@"location"] objectForKey:@"lng"] doubleValue];
+            venue.lat = [[[venueDictionary objectForKey:@"location"] objectForKey:@"lat"] floatValue];
+            venue.lng = [[[venueDictionary objectForKey:@"location"] objectForKey:@"lng"] floatValue];
 
 //            NSLog(@"%@ %f %f", venue.name, venue.lat, venue.lng);
 
@@ -153,7 +153,8 @@
 
     self.eventName = venue.name;
 
-    NSLog(@"will select row %@",self.eventName);
+    self.coordinate = CLLocationCoordinate2DMake(venue.lat, venue.lng);
+    NSLog(@"CHOOSE: %f %f", self.coordinate.latitude, self.coordinate.longitude);
 
     return indexPath;
 
