@@ -80,6 +80,7 @@
 - (IBAction)onLogOutButtonTapped:(id)sender
 {
     [PFUser logOut];
+    [self.tabBarController setSelectedIndex:0];
 }
 
 

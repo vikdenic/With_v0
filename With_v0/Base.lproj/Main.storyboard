@@ -1279,6 +1279,7 @@
                                 </state>
                                 <connections>
                                     <action selector="onLogOutButtonTapped:" destination="6Fw-TW-OhR" eventType="touchUpInside" id="oIj-BO-ckC"/>
+                                    <segue destination="ueY-w6-Wwn" kind="modal" animates="NO" id="stH-2g-YYg"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1604,4 +1605,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="stH-2g-YYg"/>
+    </inferredMetricsTieBreakers>
 </document>

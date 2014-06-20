@@ -28,7 +28,8 @@
 {
     [super viewDidLoad];
 
-    [PFUser logOut];
+
+//    [PFUser logOut];
     PFUser *currentUser = [PFUser currentUser];
 
     if (currentUser)
@@ -74,6 +75,16 @@
 //    [self queryForEvents];
 
 }
+
+//-(void)viewDidAppear:(BOOL)animated
+//{
+//    PFUser *currentUser = [PFUser currentUser];
+//
+//    if (currentUser)
+//    {
+//        self.navigationController.hidesBottomBarWhenPushed = NO;
+//    }
+//}
 
 #pragma mark - Table View
 
