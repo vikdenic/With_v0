@@ -257,6 +257,14 @@
                                     <segue destination="ZG1-5c-rcA" kind="modal" modalTransitionStyle="coverVertical" id="XiP-Dg-LcC"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0AS-o5-66y">
+                                <rect key="frame" x="15" y="20" width="75" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Edit Event">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -265,6 +273,7 @@
                         <outlet property="addressTextView" destination="Nwj-RW-P1G" id="TiW-LC-cCN"/>
                         <outlet property="dateAndTimeTextView" destination="fzt-AZ-bXy" id="hQC-u3-AXG"/>
                         <outlet property="detailsTextView" destination="7RA-ss-y8t" id="Q3X-nS-Ta3"/>
+                        <outlet property="editEventButton" destination="0AS-o5-66y" id="JFy-uT-TC5"/>
                         <outlet property="eventNameLabel" destination="G2E-Ot-iSj" id="kaY-5T-U3f"/>
                         <outlet property="goingButton" destination="004-Fb-V39" id="bdn-jR-HWd"/>
                         <outlet property="goingLabel" destination="Hog-mf-E60" id="TjV-Cg-IFo"/>

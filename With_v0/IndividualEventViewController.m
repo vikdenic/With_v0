@@ -26,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *yesImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *noImageView;
 
+@property (weak, nonatomic) IBOutlet UIButton *editEventButton;
+
 @end
 
 @implementation IndividualEventViewController
@@ -43,6 +45,9 @@
         self.dateAndTimeTextView.text = @"Date and Time";
 
     //need to have a place holder if stuff is empty so it doesn't crash
+
+    PFUser *user =  [self.event objectForKey:@"creator"];
+    NSLog(@"Creator of Event: %@", user.username);
 
     PFFile *file = self.event[@"themeImage"];
     [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
