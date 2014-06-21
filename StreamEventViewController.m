@@ -18,16 +18,13 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property UIImagePickerController *cameraController;
 
-//@property (strong, nonatomic) NSURL *videoUrl;
-//@property (strong, nonatomic) MPMoviePlayerController *videoController;
+@property (strong, nonatomic) NSURL *videoUrl;
+@property (strong, nonatomic) MPMoviePlayerController *videoController;
 
 @property UIRefreshControl *refreshControl;
-
 @property NSMutableArray *pictureAndVideoArray;
 @property NSMutableArray *imagesArray;
-
 @property NSMutableArray *numberOfLikes;
-
 
 @end
 
@@ -43,8 +40,6 @@
 
     [self queryForImages];
 
-//    [[self navigationController] setNavigationBarHidden:YES animated:YES];
-
     //pull to refresh
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
@@ -57,18 +52,6 @@
 {
     [super viewWillAppear:animated];
 }
-
-#pragma mark - Helper Method
-
-- (void)cameraSetUp
-{
-    self.cameraController = [[UIImagePickerController alloc] init];
-    self.cameraController.delegate = self;
-    self.cameraController.allowsEditing = YES;
-    self.cameraController.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
-    self.cameraController.videoMaximumDuration = 11;
-}
-
 
 #pragma mark - Getting Pictures and Videos
 
@@ -133,23 +116,21 @@
    UILabel *timeInterval = [[UILabel alloc] initWithFrame:CGRectMake(230, 5, 100, 30)];
     timeInterval.textColor = [UIColor whiteColor];
 
+        if (minutes < 60)
+        {
+            timeInterval.text = [NSString stringWithFormat:@"%im", minutes];
 
-    if (minutes < 60)
-    {
-        timeInterval.text = [NSString stringWithFormat:@"%im", minutes];
+        } else if (minutes > 60 && minutes < 1440)
+        {
+            minutes = minutes/60;
 
-    } else if (minutes > 60 && minutes < 1440)
-    {
-        minutes = minutes/60;
+            timeInterval.text = [NSString stringWithFormat:@"%ih", minutes];
 
-        timeInterval.text = [NSString stringWithFormat:@"%ih", minutes];
+        } else {
 
-    } else {
-
-        minutes = minutes/1440;
-        timeInterval.text = [NSString stringWithFormat:@"%id", minutes];
-
-    }
+            minutes = minutes/1440;
+            timeInterval.text = [NSString stringWithFormat:@"%id", minutes];
+        }
 
     //setting the username
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
@@ -242,6 +223,7 @@
 
     PFFile *file = [object objectForKey:@"photo"];
 
+
     [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
      {
          if (!error)
@@ -263,8 +245,6 @@
              NSLog(@"Alert!");
          }
      }];
-
-
 
     //double tap to like
     if (cell.theImageView.gestureRecognizers.count == 0)
@@ -305,8 +285,6 @@
     numberOfLikesInt++;
     cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
 
-
-
     cell.likedImageView.hidden = NO;
 
     cell.likedImageView.alpha = 0;
@@ -322,6 +300,18 @@
     }];
 }
 
+#pragma mark - Helper Method
+
+- (void)cameraSetUp
+{
+    self.cameraController = [[UIImagePickerController alloc] init];
+    self.cameraController.delegate = self;
+    self.cameraController.allowsEditing = YES;
+    self.cameraController.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+    self.cameraController.videoMaximumDuration = 11;
+}
+
+#pragma mark - Image Picker
 
 - (IBAction)onPickerButtonTapped:(id)sender
 {
@@ -344,8 +334,6 @@
         //
     }];
 }
-
-#pragma mark - Image Picker
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
@@ -416,11 +404,11 @@
 //    }
 }
 
-
 - (IBAction)unwindSegueToStreamEventViewController:(UIStoryboardSegue *)sender
 {
 
 }
+
 
 #pragma mark - Pull To Refresh
 
@@ -436,40 +424,3 @@
 }
 
 @end
-
-
-//probably do these in the view did load or view will appear?
-
-//- (void)queryForImages
-//{
-//    [self.pictureAndVideoArray removeAllObjects];
-//
-//    PFQuery *query = [PFQuery queryWithClassName:@"Photo"];
-//    [query includeKey:@"photographer"];
-//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-//        if (!error)
-//        {
-//            [self.pictureAndVideoArray addObjectsFromArray:objects];
-//        }
-//        [self createImages];
-//    }];
-//}
-
-
-//- (void)queryForImages
-//{
-//    [self.pictureAndVideoArray removeAllObjects];
-//
-//    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
-//    [query whereKey:@"objectId" equalTo:self.event.objectId];
-//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-//        if (!error)
-//        {
-//            [self.pictureAndVideoArray addObjectsFromArray:objects];
-//
-//
-//            //then get the photos from it in a new array and create the images from that
-//        }
-//        [self createImages];
-//    }];
-//}
