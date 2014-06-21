@@ -32,7 +32,6 @@
 {
     [super viewDidAppear:animated];
     [self setUserInfo];
-
 }
 
 #pragma mark - Helpers
@@ -69,12 +68,13 @@
 
 -(IBAction)onSaveButtonPressed:(id)sender
 {
-
             PFUser *user = [PFUser currentUser];
             [user setValue:self.nameTextField.text forKey:@"name"];
             [user setValue:self.locationTextField.text forKey:@"userCityState"];
             [user setValue:self.bioTextView.text forKey:@"userBio"];
             [user saveInBackground];
+
+    NSLog(@"%@", [user objectForKey:@"name"]);
 }
 
 - (IBAction)onLogOutButtonTapped:(id)sender
@@ -82,8 +82,5 @@
     [PFUser logOut];
     [self.tabBarController setSelectedIndex:0];
 }
-
-
-
 
 @end

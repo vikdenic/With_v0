@@ -43,7 +43,7 @@
 
     [self queryForImages];
 
-    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+//    [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
     //pull to refresh
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -173,6 +173,7 @@
          }
      }];
 
+    //TRY TO SET THIS HEADERVIEW TO "STREAM_BLUR_IMAGE"
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
     headerView.alpha = .7;
     [headerView addSubview:title];

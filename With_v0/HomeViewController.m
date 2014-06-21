@@ -28,6 +28,7 @@
 {
     [super viewDidLoad];
 
+    self.tabBarController.tabBar.tintColor = [UIColor orangeColor];
 
 //    [PFUser logOut];
     PFUser *currentUser = [PFUser currentUser];
@@ -47,7 +48,7 @@
 
     [self.tableView addSubview:refreshControl];
 
-    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
 
     [self queryForEvents];
 

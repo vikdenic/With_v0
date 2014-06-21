@@ -42,19 +42,22 @@
 {
     [super viewDidLoad];
 
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:nil action:nil];
+
+        [self setUserInfo];
+
 //    self.usersArray = [[NSArray alloc]init];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self setUserInfo];
+//    [self setUserInfo];
 
 }
 
@@ -141,7 +144,6 @@
 - (IBAction)unwindSegueSaveSettingsToProfile:(UIStoryboardSegue *)sender
 {
     [self setUserInfo];
-
 }
 
 - (IBAction)unwindSegueInvitesToProfile:(UIStoryboardSegue *)sender

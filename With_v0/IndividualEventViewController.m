@@ -36,7 +36,7 @@
 {
     [super viewWillAppear:animated];
 
-    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+//    [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
         self.eventNameLabel.text = self.event[@"title"];
         [self.eventNameLabel sizeToFit];

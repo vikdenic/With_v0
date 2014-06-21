@@ -32,6 +32,8 @@
 
     [self.passwordField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
 
+    self.navigationController.navigationBarHidden = YES;
+
 }
 
 // Dismisses billTextField's keyboard upon tap-away
@@ -64,7 +66,7 @@
             else {
 
                 //DISMISS LOG-IN SO TABBAR ISNT HIDDEN ANYMORE
-                [self dismissViewControllerAnimated:NO completion:^{
+                [self dismissViewControllerAnimated:YES completion:^{
                 }];
 
                 //TRYING TO GET TO HOME FEED
@@ -77,7 +79,8 @@
 
 -(IBAction)unwindFromRegisterToLogIn:(UIStoryboardSegue *)sender
 {
-    
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+
 }
 
 @end
