@@ -159,7 +159,7 @@
 //    NSLog(@"%@", customSearchString);
     self.isSearching = NO;
 
-    NSLog(@"%d",self.isSearching);
+//    NSLog(@"%d",self.isSearching);
 
     NSString *customSearchString = [self.searchBar.text stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
 
@@ -218,7 +218,7 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LocationCell"];
 
-    NSLog(@"CELLFORROW: %d",self.isSearching);
+//    NSLog(@"CELLFORROW: %d",self.isSearching);
 
     if(self.isSearching == NO)
     {
@@ -240,6 +240,7 @@
 
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", venue.address, venue.city];
         }
+        cell.imageView.image = nil;
     }
 
     //Presents option to create custom location or search
@@ -261,19 +262,19 @@
 //    self.eventName = venue.name;
 //    NSLog(@"did select row %@",self.eventName);
 
-    if(self.isSearching == YES)
-    {
-        if(indexPath.row == 0)
-        {
-            NSLog(@"Create Custom Location");
-            self.isSearching = NO;
-        }
-        else if(indexPath.row == 1)
-        {
-            [self searchBarSearchButtonClicked:self.searchBar];
-            self.isSearching = NO;
-        }
-    }
+//    if(self.isSearching == YES)
+//    {
+//        if(indexPath.row == 0)
+//        {
+//            NSLog(@"Create Custom Location");
+//            self.isSearching = NO;
+//        }
+//        else if(indexPath.row == 1)
+//        {
+//            [self searchBarSearchButtonClicked:self.searchBar];
+//            self.isSearching = NO;
+//        }
+//    }
 }
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -285,7 +286,19 @@
     self.eventName = venue.name;
 
     self.coordinate = CLLocationCoordinate2DMake(venue.lat, venue.lng);
-    NSLog(@"CHOOSE: %f %f", self.coordinate.latitude, self.coordinate.longitude);
+//    NSLog(@"CHOOSE: %f %f", self.coordinate.latitude, self.coordinate.longitude);
+    }
+
+    else{
+        if(indexPath.row == 0)
+        {
+            NSLog(@"Create Custom Location");
+        }
+        else if(indexPath.row == 1)
+        {
+            [self searchBarSearchButtonClicked:self.searchBar];
+        }
+        self.isSearching = NO;
     }
 
     return indexPath;
