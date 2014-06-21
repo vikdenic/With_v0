@@ -151,15 +151,8 @@
     return YES;
 }
 
-
-
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+-(void)searchForVenue
 {
-//    NSString *customSearchString = [self.searchBar.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-//    NSLog(@"%@", customSearchString);
-
-//    NSLog(@"%d",self.isSearching);
-
     NSString *customSearchString = [self.searchBar.text stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
 
     NSString *locationString = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?query=%@&ll=%f,%f&oauth_token=3JZTWOWUCT0SQDKB1MAQ54ILOYNKJXDERR5CLKFSN20GRZIT&v=20140618", customSearchString, self.latitude, self.longitude];
@@ -192,13 +185,22 @@
             venue.lng = [[[venueDictionary objectForKey:@"location"] objectForKey:@"lng"] floatValue];
 
             //            NSLog(@"%@ %f %f", venue.name, venue.lat, venue.lng);
-            
+
             [self.retrievedVenuesArray addObject:venue];
         }
         [self.tableView reloadData];
     }];
     [self.searchBar resignFirstResponder];
     self.isSearching = NO;
+}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+//    NSString *customSearchString = [self.searchBar.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+//    NSLog(@"%@", customSearchString);
+
+//    NSLog(@"%d",self.isSearching);
+    [self searchForVenue];
 }
 
 #pragma mark - TableView Delegates
@@ -254,7 +256,7 @@
     return cell;
 }
 
-//CRUCIAL
+//CRUCIAL?
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 //    FSVenue *venue = [self.retrievedVenuesArray objectAtIndex:indexPath.row];
@@ -289,7 +291,8 @@
 //    NSLog(@"CHOOSE: %f %f", self.coordinate.latitude, self.coordinate.longitude);
     }
 
-    else{
+    else
+    {
         self.isSearching = NO;
 
         if(indexPath.row == 0)
@@ -301,11 +304,10 @@
 
         else if(indexPath.row == 1)
         {
-            [self searchBarSearchButtonClicked:self.searchBar];
+            [self searchForVenue];
             NSLog(@"Search Custom Location");
         }
-}
-
+    }
     return indexPath;
 }
 

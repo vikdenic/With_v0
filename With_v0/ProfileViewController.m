@@ -62,12 +62,12 @@
 
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-//    [self setUserInfo];
-
-}
+//- (void)viewDidAppear:(BOOL)animated
+//{
+//    [super viewDidAppear:animated];
+////    [self setUserInfo];
+//
+//}
 
 #pragma mark - Helpers
 
