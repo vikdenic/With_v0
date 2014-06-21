@@ -19,9 +19,49 @@
 
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 
+    [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
+     UIRemoteNotificationTypeAlert|
+     UIRemoteNotificationTypeSound];
+
     return YES;
 }
-							
+
+//- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+//{
+//    [Parse setApplicationId:@"T6Q93YCI5TEs09X2CWRUYqJOLYceftDzIhU2qR6N"
+//                  clientKey:@"HNvrJUv7tN6NJYO7e6fjdGL6qcGFfDwnacZwcDk8"];
+//
+//    [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
+//     UIRemoteNotificationTypeAlert|
+//     UIRemoteNotificationTypeSound];
+//
+//    return YES;
+//}
+
+#pragma mark - Parse push methods
+
+
+- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    // Store the deviceToken in the current installation and save it to Parse.
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    [currentInstallation saveInBackground];
+}
+//- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error NS_AVAILABLE_IOS(3_0);
+//{
+
+//}
+
+- (void)application:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)userInfo {
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"Test1" object:self];
+    [PFPush handlePush:userInfo];
+    
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
