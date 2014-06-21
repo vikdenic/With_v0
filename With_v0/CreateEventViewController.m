@@ -118,7 +118,7 @@
     event[@"locationGeoPoint"] = geoPoint;
 
     event[@"themeImage"] = self.themeImagePicker;
-    event[@"user"] = [PFUser currentUser];
+    event[@"creator"] = [PFUser currentUser];
     [event saveInBackground];
 
     //takes user back to home page
