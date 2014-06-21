@@ -81,6 +81,10 @@
 {
     [PFUser logOut];
     [self.tabBarController setSelectedIndex:0];
+    self.avatarImageView.image = nil;
+    self.nameTextField.text = nil;
+    self.locationTextField.text = nil;
+    self.bioTextView.text = nil;
 }
 
 @end

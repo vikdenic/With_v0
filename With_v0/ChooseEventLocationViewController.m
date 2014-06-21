@@ -16,14 +16,14 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property NSArray *options;
-@property NSArray *detailOptions;
+@property NSMutableArray *options;
+@property NSMutableArray *detailOptions;
 @property NSString *createCustomString;
 @property NSString *findCustomString;
 
 //API stuff
 @property NSArray *venuesArray;
-@property NSArray *imagesArray;
+@property NSMutableArray *imagesArray;
 @property NSMutableArray *retrievedVenuesArray;
 
 //Location stuff
@@ -53,12 +53,12 @@
 
     self.createCustomString = [NSString stringWithFormat:@"Create \"%@\"",self.searchBar.text];
     self.findCustomString = [NSString stringWithFormat:@"Find \"%@\"",self.searchBar.text];
-    self.options = [NSArray arrayWithObjects:self.createCustomString, self.findCustomString, nil];
+    self.options = [NSMutableArray arrayWithObjects:self.createCustomString, self.findCustomString, nil];
 
     NSString *detailCreateString = @"Create this location";
     NSString *detailSearchString = @"Search for this location";
-    self.detailOptions = [NSArray arrayWithObjects:detailCreateString, detailSearchString, nil];
-    self.imagesArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"pin"], [UIImage imageNamed:@"search_image"], nil];
+    self.detailOptions = [NSMutableArray arrayWithObjects:detailCreateString, detailSearchString, nil];
+    self.imagesArray = [NSMutableArray arrayWithObjects:[UIImage imageNamed:@"pin"], [UIImage imageNamed:@"search_image"], nil];
 }
 
 -(void)locationStuff
@@ -137,11 +137,13 @@
 {
     self.isSearching = YES;
 
+    NSLog(@"%d",self.isSearching);
+
     NSString *currentText = [self.searchBar.text stringByReplacingCharactersInRange:range withString:text];
 
     self.createCustomString = [NSString stringWithFormat:@"Create \"%@\"",currentText];
     self.findCustomString = [NSString stringWithFormat:@"Find \"%@\"",currentText];
-    self.options = [NSArray arrayWithObjects:self.createCustomString, self.findCustomString, nil];
+    self.options = [NSMutableArray arrayWithObjects:self.createCustomString, self.findCustomString, nil];
 
     [self.retrievedVenuesArray removeAllObjects];
     [self.tableView reloadData];
@@ -156,6 +158,8 @@
 //    NSString *customSearchString = [self.searchBar.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 //    NSLog(@"%@", customSearchString);
     self.isSearching = NO;
+
+    NSLog(@"%d",self.isSearching);
 
     NSString *customSearchString = [self.searchBar.text stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
 
@@ -214,26 +218,33 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LocationCell"];
 
+    NSLog(@"CELLFORROW: %d",self.isSearching);
+
     if(self.isSearching == NO)
     {
         FSVenue *venue = [self.retrievedVenuesArray objectAtIndex:indexPath.row];
 
-        if(venue.address)
+        if (venue.address && venue.city)
         {
             cell.textLabel.text = venue.name;
 
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", venue.address, venue.city];
         }
-        else
+        else if (!venue.address && venue.city)
         {
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", venue.city];
         }
+        else if (!venue.name)
+        {
+            cell.textLabel.text = @"Unnamed";
 
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", venue.address, venue.city];
+        }
     }
 
     //Presents option to create custom location or search
-    else{
-
+    else if(self.isSearching == YES)
+    {
         cell.textLabel.text = [self.options objectAtIndex:indexPath.row];
         cell.detailTextLabel.text = [self.detailOptions objectAtIndex:indexPath.row];
         cell.imageView.image = [self.imagesArray objectAtIndex:indexPath.row];
@@ -252,12 +263,12 @@
 
     if(self.isSearching == YES)
     {
-        if(indexPath.row == 1)
+        if(indexPath.row == 0)
         {
             NSLog(@"Create Custom Location");
             self.isSearching = NO;
         }
-        else if(indexPath.row == 2)
+        else if(indexPath.row == 1)
         {
             [self searchBarSearchButtonClicked:self.searchBar];
             self.isSearching = NO;
