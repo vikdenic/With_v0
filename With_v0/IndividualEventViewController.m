@@ -61,10 +61,61 @@
          }
      }];
 
+    [self checkingUsersEventStatus];
+
     self.yesButtonTapped = NO;
     self.noButtonTapped = NO;
-    self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
-    self.noImageView.image = [UIImage imageNamed:@"No_Button"];
+}
+
+#pragma mark- Helper Methods
+
+
+- (void)checkingUsersEventStatus
+{
+    //check to see if user is going to the event
+    PFRelation *relation = [self.event relationforKey:@"usersAttending"];
+
+    [[relation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+
+        for (PFUser *user in objects)
+        {
+            NSString *currentUser = [[PFUser currentUser] objectId];
+
+            if ([user.objectId isEqualToString:currentUser])
+            {
+                self.yesImageView.image = [UIImage imageNamed:@"Yes_Button_Selected"];
+                self.noImageView.image = [UIImage imageNamed:@"No_Button"];
+
+            } else {
+                //should query both going and not going because the user might not have decided Yet
+
+                self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
+                self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
+            }
+        }
+    }];
+
+    PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
+
+    [[relation2 query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+
+        for (PFUser *user in objects)
+        {
+            NSString *currentUser = [[PFUser currentUser] objectId];
+
+            if ([user.objectId isEqualToString:currentUser])
+            {
+                self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
+                self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
+
+            } else {
+                //should query both going and not going because the user might not have decided Yet
+
+                self.yesImageView.image = [UIImage imageNamed:@"Yes_Button_Selected"];
+                self.noImageView.image = [UIImage imageNamed:@"No_Button"];
+            }
+        }
+    }];
 }
 
 #pragma mark - Action methods
@@ -79,13 +130,22 @@
         self.yesImageView.image = [UIImage imageNamed:@"Yes_Button_Selected"];
         self.noImageView.image = [UIImage imageNamed:@"No_Button"];
 
+        //adds current user to going to the event
+        PFRelation *relation = [self.event relationforKey:@"usersAttending"];
+        [relation addObject:[PFUser currentUser]];
+
+        //adds current user to not going relation
+        PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
+        [relation2 removeObject:[PFUser currentUser]];
+
+        [self.event saveInBackground];
+
     } else {
 
         self.yesButtonTapped = NO;
-        
+
         self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
         self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
-
     }
 }
 
@@ -97,6 +157,16 @@
         self.noButtonTapped = YES;
         self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
         self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
+
+        //removes current user from going
+        PFRelation *relation = [self.event relationForKey:@"usersAttending"];
+        [relation removeObject:[PFUser currentUser]];
+
+        //adds current user to not going relation
+        PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
+        [relation2 addObject:[PFUser currentUser]];
+
+        [self.event saveInBackground];
 
     } else {
 

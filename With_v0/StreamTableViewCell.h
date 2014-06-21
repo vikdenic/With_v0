@@ -16,6 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *commentButton;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIImageView *likedImageView;
-
+@property BOOL ifLiked;
 
 @end

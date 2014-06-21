@@ -38,7 +38,6 @@
     } else {
         
         [self performSegueWithIdentifier:@"showLogin" sender:self];
-        NSLog(@"WTF");
     }
 
     //pull to refresh

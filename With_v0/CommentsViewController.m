@@ -56,6 +56,12 @@
     [self getComments];
 }
 
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+
+}
+
 #pragma mark - Table View
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -117,7 +123,7 @@
     [comment saveInBackground];
 
     [self.textField resignFirstResponder];
-    
+
     return YES;
 }
 
