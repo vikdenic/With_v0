@@ -98,7 +98,7 @@
     PFObject *object = [self.eventArray objectAtIndex:indexPath.row];
 
     //profile picture for creator
-    PFFile *userProfilePhoto = [[object objectForKey:@"user"] objectForKey:@"userProfilePhoto"];
+    PFFile *userProfilePhoto = [[object objectForKey:@"creator"] objectForKey:@"userProfilePhoto"];
     [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
      {
          if (!error)
@@ -130,7 +130,7 @@
 
 
     //creator username
-    PFObject *userName = [[object objectForKey:@"user"] objectForKey:@"username"];
+    PFObject *userName = [[object objectForKey:@"creator"] objectForKey:@"username"];
     cell.creatorNameLabel.text = [NSString stringWithFormat:@"%@", userName];
 
     //event Name and Date;
@@ -156,7 +156,7 @@
     self.eventArray = [NSMutableArray array];
 
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
-    [query includeKey:@"user"];
+    [query includeKey:@"creator"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
         if (!error)
