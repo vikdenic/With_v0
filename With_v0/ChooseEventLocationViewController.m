@@ -291,10 +291,12 @@
 
     else{
         self.isSearching = NO;
+
         if(indexPath.row == 0)
         {
             NSLog(@"Create Custom Location");
             self.eventName = self.searchBar.text;
+            self.coordinate = CLLocationCoordinate2DMake(self.latitude, self.longitude);
         }
 
         else if(indexPath.row == 1)
@@ -302,8 +304,7 @@
             [self searchBarSearchButtonClicked:self.searchBar];
             NSLog(@"Search Custom Location");
         }
-//        self.isSearching = NO;
-    }
+}
 
     return indexPath;
 }
