@@ -359,6 +359,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Mobile Makers";
 				TargetAttributes = {
+					93952F89194D5D4C001AA3E4 = {
+						DevelopmentTeam = 368PGMF9QJ;
+					};
 					93952FAA194D5D4C001AA3E4 = {
 						TestTargetID = 93952F89194D5D4C001AA3E4;
 					};
@@ -556,6 +559,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -565,6 +570,7 @@
 				GCC_PREFIX_HEADER = "With_v0/With_v0-Prefix.pch";
 				INFOPLIST_FILE = "With_v0/With_v0-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -574,6 +580,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -583,6 +591,7 @@
 				GCC_PREFIX_HEADER = "With_v0/With_v0-Prefix.pch";
 				INFOPLIST_FILE = "With_v0/With_v0-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
