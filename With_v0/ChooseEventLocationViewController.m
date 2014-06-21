@@ -11,7 +11,7 @@
 #import "FSVenue.h"
 #import "CreateEventViewController.h"
 
-@interface ChooseEventLocationViewController () <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate>
+@interface ChooseEventLocationViewController () <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -25,6 +25,8 @@
 @property double latitude;
 @property double longitude;
 
+@property BOOL isSearching;
+
 @end
 
 @implementation ChooseEventLocationViewController
@@ -33,12 +35,15 @@
 {
     [super viewDidLoad];
 
+    self.searchBar.delegate = self;
+    self.isSearching = NO;
+
     [self locationStuff];
 
     self.venuesArray = [[NSArray alloc]init];
     self.retrievedVenuesArray = [[NSMutableArray alloc]init];
 
-    [self retrieveData];
+    [self retrieveInitialData];
 }
 
 -(void)locationStuff
@@ -65,12 +70,12 @@
     self.longitude = self.locationManager.location.coordinate.longitude;
 
     [self.locationManager stopUpdatingLocation];
-    [self retrieveData];
+    [self retrieveInitialData];
 }
 
 #pragma mark - FourSquare Data
 
--(void)retrieveData
+-(void)retrieveInitialData
 {
     NSString *locationString = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?ll=%f,%f&oauth_token=3JZTWOWUCT0SQDKB1MAQ54ILOYNKJXDERR5CLKFSN20GRZIT&v=20140618", self.latitude, self.longitude];
 
@@ -109,6 +114,64 @@
     }];
 }
 
+
+
+#pragma mark - Search Bar
+
+-(BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    self.isSearching = YES;
+    [self.retrievedVenuesArray removeAllObjects];
+    [self.tableView reloadData];
+
+    return YES;
+}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+//    NSString *customSearchString = [self.searchBar.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+//    NSLog(@"%@", customSearchString);
+    self.isSearching = NO;
+
+    NSString *customSearchString = [self.searchBar.text stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+
+    NSString *locationString = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?query=%@&ll=%f,%f&oauth_token=3JZTWOWUCT0SQDKB1MAQ54ILOYNKJXDERR5CLKFSN20GRZIT&v=20140618", customSearchString, self.latitude, self.longitude];
+
+    //    NSLog(@"%@",locationString);
+
+    NSURL *url = [NSURL URLWithString:locationString];
+
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response,
+                                                                                                            NSData *data,
+                                                                                                            NSError *connectionError) {
+
+        NSDictionary *fsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&connectionError];
+
+        self.venuesArray = [[fsDictionary objectForKey:@"response"]objectForKey:@"venues"];
+
+        for(NSDictionary *venueDictionary in self.venuesArray)
+        {
+            FSVenue *venue = [[FSVenue alloc]init];
+
+            venue.name = [venueDictionary objectForKey:@"name"];
+
+            venue.address = [[venueDictionary objectForKey:@"location"] objectForKey:@"address"];
+            venue.city = [[venueDictionary objectForKey:@"location"] objectForKey:@"city"];
+
+
+            venue.lat = [[[venueDictionary objectForKey:@"location"] objectForKey:@"lat"] floatValue];
+            venue.lng = [[[venueDictionary objectForKey:@"location"] objectForKey:@"lng"] floatValue];
+
+            //            NSLog(@"%@ %f %f", venue.name, venue.lat, venue.lng);
+            
+            [self.retrievedVenuesArray addObject:venue];
+        }
+        [self.tableView reloadData];
+    }];
+    [self.searchBar resignFirstResponder];
+}
 
 #pragma mark - TableView Delegates
 //NOT SURE WHERE THESE WARNINGS CAME FROM?
@@ -157,7 +220,11 @@
     NSLog(@"CHOOSE: %f %f", self.coordinate.latitude, self.coordinate.longitude);
 
     return indexPath;
+}
 
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark - Miscellaneous
