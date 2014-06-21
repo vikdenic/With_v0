@@ -11,19 +11,27 @@
 #import "FSVenue.h"
 #import "CreateEventViewController.h"
 
-@interface ChooseEventLocationViewController () <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate>
+@interface ChooseEventLocationViewController () <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property NSArray *options;
+@property NSArray *detailOptions;
+@property NSString *createCustomString;
+@property NSString *findCustomString;
+
 //API stuff
 @property NSArray *venuesArray;
+@property NSArray *imagesArray;
 @property NSMutableArray *retrievedVenuesArray;
 
 //Location stuff
 @property CLLocationManager *locationManager;
 @property double latitude;
 @property double longitude;
+
+@property BOOL isSearching;
 
 @end
 
@@ -33,12 +41,24 @@
 {
     [super viewDidLoad];
 
+    self.searchBar.delegate = self;
+    self.isSearching = NO;
+
     [self locationStuff];
 
     self.venuesArray = [[NSArray alloc]init];
     self.retrievedVenuesArray = [[NSMutableArray alloc]init];
 
-    [self retrieveData];
+    [self retrieveInitialData];
+
+    self.createCustomString = [NSString stringWithFormat:@"Create \"%@\"",self.searchBar.text];
+    self.findCustomString = [NSString stringWithFormat:@"Find \"%@\"",self.searchBar.text];
+    self.options = [NSArray arrayWithObjects:self.createCustomString, self.findCustomString, nil];
+
+    NSString *detailCreateString = @"Create this location";
+    NSString *detailSearchString = @"Search for this location";
+    self.detailOptions = [NSArray arrayWithObjects:detailCreateString, detailSearchString, nil];
+    self.imagesArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"pin"], [UIImage imageNamed:@"search_image"], nil];
 }
 
 -(void)locationStuff
@@ -65,12 +85,12 @@
     self.longitude = self.locationManager.location.coordinate.longitude;
 
     [self.locationManager stopUpdatingLocation];
-    [self retrieveData];
+    [self retrieveInitialData];
 }
 
 #pragma mark - FourSquare Data
 
--(void)retrieveData
+-(void)retrieveInitialData
 {
     NSString *locationString = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?ll=%f,%f&oauth_token=3JZTWOWUCT0SQDKB1MAQ54ILOYNKJXDERR5CLKFSN20GRZIT&v=20140618", self.latitude, self.longitude];
 
@@ -98,8 +118,8 @@
             venue.city = [[venueDictionary objectForKey:@"location"] objectForKey:@"city"];
 
 
-            venue.lat = [[[venueDictionary objectForKey:@"location"] objectForKey:@"lat"] doubleValue];
-            venue.lng = [[[venueDictionary objectForKey:@"location"] objectForKey:@"lng"] doubleValue];
+            venue.lat = [[[venueDictionary objectForKey:@"location"] objectForKey:@"lat"] floatValue];
+            venue.lng = [[[venueDictionary objectForKey:@"location"] objectForKey:@"lng"] floatValue];
 
 //            NSLog(@"%@ %f %f", venue.name, venue.lat, venue.lng);
 
@@ -110,29 +130,113 @@
 }
 
 
+
+#pragma mark - Search Bar
+
+-(BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    self.isSearching = YES;
+
+    NSString *currentText = [self.searchBar.text stringByReplacingCharactersInRange:range withString:text];
+
+    self.createCustomString = [NSString stringWithFormat:@"Create \"%@\"",currentText];
+    self.findCustomString = [NSString stringWithFormat:@"Find \"%@\"",currentText];
+    self.options = [NSArray arrayWithObjects:self.createCustomString, self.findCustomString, nil];
+
+    [self.retrievedVenuesArray removeAllObjects];
+    [self.tableView reloadData];
+
+    return YES;
+}
+
+
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+//    NSString *customSearchString = [self.searchBar.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+//    NSLog(@"%@", customSearchString);
+    self.isSearching = NO;
+
+    NSString *customSearchString = [self.searchBar.text stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+
+    NSString *locationString = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?query=%@&ll=%f,%f&oauth_token=3JZTWOWUCT0SQDKB1MAQ54ILOYNKJXDERR5CLKFSN20GRZIT&v=20140618", customSearchString, self.latitude, self.longitude];
+
+    //    NSLog(@"%@",locationString);
+
+    NSURL *url = [NSURL URLWithString:locationString];
+
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response,
+                                                                                                            NSData *data,
+                                                                                                            NSError *connectionError) {
+
+        NSDictionary *fsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&connectionError];
+
+        self.venuesArray = [[fsDictionary objectForKey:@"response"]objectForKey:@"venues"];
+
+        for(NSDictionary *venueDictionary in self.venuesArray)
+        {
+            FSVenue *venue = [[FSVenue alloc]init];
+
+            venue.name = [venueDictionary objectForKey:@"name"];
+
+            venue.address = [[venueDictionary objectForKey:@"location"] objectForKey:@"address"];
+            venue.city = [[venueDictionary objectForKey:@"location"] objectForKey:@"city"];
+
+
+            venue.lat = [[[venueDictionary objectForKey:@"location"] objectForKey:@"lat"] floatValue];
+            venue.lng = [[[venueDictionary objectForKey:@"location"] objectForKey:@"lng"] floatValue];
+
+            //            NSLog(@"%@ %f %f", venue.name, venue.lat, venue.lng);
+            
+            [self.retrievedVenuesArray addObject:venue];
+        }
+        [self.tableView reloadData];
+    }];
+    [self.searchBar resignFirstResponder];
+}
+
 #pragma mark - TableView Delegates
 //NOT SURE WHERE THESE WARNINGS CAME FROM?
 -(int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if(self.isSearching == NO)
+    {
     return self.retrievedVenuesArray.count;
+    }
+    else{
+        return 2;
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    FSVenue *venue = [self.retrievedVenuesArray objectAtIndex:indexPath.row];
-
-
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LocationCell"];
 
-    cell.textLabel.text = venue.name;
-
-    if(venue.address)
+    if(self.isSearching == NO)
     {
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", venue.address, venue.city];
+        FSVenue *venue = [self.retrievedVenuesArray objectAtIndex:indexPath.row];
+
+        if(venue.address)
+        {
+            cell.textLabel.text = venue.name;
+
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", venue.address, venue.city];
+        }
+        else
+        {
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", venue.city];
+        }
+
     }
+
+    //Presents option to create custom location or search
     else{
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", venue.city];
+
+        cell.textLabel.text = [self.options objectAtIndex:indexPath.row];
+        cell.detailTextLabel.text = [self.detailOptions objectAtIndex:indexPath.row];
+        cell.imageView.image = [self.imagesArray objectAtIndex:indexPath.row];
     }
 
     return cell;
@@ -141,15 +245,47 @@
 //CRUCIAL
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+//    FSVenue *venue = [self.retrievedVenuesArray objectAtIndex:indexPath.row];
+//
+//    self.eventName = venue.name;
+//    NSLog(@"did select row %@",self.eventName);
+
+    if(self.isSearching == YES)
+    {
+        if(indexPath.row == 1)
+        {
+            NSLog(@"Create Custom Location");
+            self.isSearching = NO;
+        }
+        else if(indexPath.row == 2)
+        {
+            [self searchBarSearchButtonClicked:self.searchBar];
+            self.isSearching = NO;
+        }
+    }
+}
+
+-(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(self.isSearching == NO)
+    {
     FSVenue *venue = [self.retrievedVenuesArray objectAtIndex:indexPath.row];
 
     self.eventName = venue.name;
-    NSLog(@"did select row %@",self.eventName);
+
+    self.coordinate = CLLocationCoordinate2DMake(venue.lat, venue.lng);
+    NSLog(@"CHOOSE: %f %f", self.coordinate.latitude, self.coordinate.longitude);
+    }
+
+    return indexPath;
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark - Miscellaneous
-
-// Dismisses billTextField's keyboard upon tap-away
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
