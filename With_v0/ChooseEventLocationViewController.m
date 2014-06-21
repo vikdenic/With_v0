@@ -157,7 +157,6 @@
 {
 //    NSString *customSearchString = [self.searchBar.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 //    NSLog(@"%@", customSearchString);
-    self.isSearching = NO;
 
 //    NSLog(@"%d",self.isSearching);
 
@@ -199,6 +198,7 @@
         [self.tableView reloadData];
     }];
     [self.searchBar resignFirstResponder];
+    self.isSearching = NO;
 }
 
 #pragma mark - TableView Delegates
@@ -293,11 +293,15 @@
         if(indexPath.row == 0)
         {
             NSLog(@"Create Custom Location");
+            self.eventName = self.searchBar.text;
         }
+
         else if(indexPath.row == 1)
         {
             [self searchBarSearchButtonClicked:self.searchBar];
+            NSLog(@"Search Custom Location");
         }
+        
         self.isSearching = NO;
     }
 
