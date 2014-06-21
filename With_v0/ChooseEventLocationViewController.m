@@ -290,6 +290,7 @@
     }
 
     else{
+        self.isSearching = NO;
         if(indexPath.row == 0)
         {
             NSLog(@"Create Custom Location");
@@ -301,8 +302,7 @@
             [self searchBarSearchButtonClicked:self.searchBar];
             NSLog(@"Search Custom Location");
         }
-        
-        self.isSearching = NO;
+//        self.isSearching = NO;
     }
 
     return indexPath;
