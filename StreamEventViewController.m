@@ -35,6 +35,19 @@
 {
     [super viewDidLoad];
 
+
+
+
+
+
+    //add a uiimageview and then on viewDidAppear I remove it or animate it out after 1.2 seconds
+
+
+
+
+
+
+
     self.theLegitArrayOfEverything = [NSMutableArray array];
 
     [self queryForImages];
@@ -43,7 +56,6 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
-
     [self.tableView addSubview:refreshControl];
 }
 
@@ -107,12 +119,12 @@
 
 ///fix storyboard with the like button issue and here as well- do the same thing in the comments view controller as I did above with the likes thing- only the photo we passed from eventPhotos
 
-//- (IBAction)onCommentButtonTapped:(UIButton *)sender
-//{
-//    //convert to individual thing
-//    PFObject *object = [self.pictureAndVideoArray objectAtIndex:sender.tag];
-//    self.commentObject = object;
-//}
+- (IBAction)onCommentButtonTapped:(UIButton *)sender
+{
+    //convert to individual thing
+    IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:sender.tag];
+    self.individualEventPhoto = individualEventPhoto;
+}
 
 #pragma mark - Table View
 
@@ -200,7 +212,7 @@
     IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:indexPath.section];
 
     //number of likes
-    cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)individualEventPhoto.likes.count];
+    cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)individualEventPhoto.likes.count];
 
     [individualEventPhoto.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
      {
@@ -328,7 +340,7 @@
         UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
 
-        NSData *imageData = UIImagePNGRepresentation(resizedImage);
+        NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.05f);
         PFFile *imageFile = [PFFile fileWithData:imageData];
 
         // Save PFFile
@@ -369,7 +381,7 @@
     if ([segue.identifier isEqualToString:@"ToCommentViewControllerSegue"])
     {
         CommentsViewController *commentsViewController = segue.destinationViewController;
-        commentsViewController.commentObject = self.commentObject;
+        commentsViewController.individualEventPhoto = self.individualEventPhoto;
     }
 //    else if ([segue.identifier isEqualToString:@"ToPhotoEditingPage"])
 //    {

@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "IndividualEventPhoto.h"
 
 @interface StreamEventViewController : UIViewController
 
 @property PFObject *event;
 
-@property PFObject *commentObject;
+@property IndividualEventPhoto *individualEventPhoto;
 
 @end

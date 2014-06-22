@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "IndividualEventPhoto.h"
 
 @interface CommentsViewController : UIViewController
 
-@property PFObject *commentObject;
+@property IndividualEventPhoto *individualEventPhoto;
 
 @end

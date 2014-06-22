@@ -36,6 +36,8 @@
 {
     [super viewWillAppear:animated];
 
+    [self checkingUsersEventStatus];
+
 //    [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
         self.eventNameLabel.text = self.event[@"title"];
@@ -65,8 +67,6 @@
              self.themeImageView.image = resizedImage;
          }
      }];
-
-    [self checkingUsersEventStatus];
 
     self.yesButtonTapped = NO;
     self.noButtonTapped = NO;

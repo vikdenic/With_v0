@@ -27,38 +27,42 @@
 
     self.commentsArray = [NSMutableArray array];
 
-    [self.tableView reloadData];
+    [self gettingComments];
 
-    PFFile *file = [self.commentObject objectForKey:@"photo"];
-    [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+    [self.individualEventPhoto.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
      {
          if (!error)
          {
              UIImage *temporaryImage = [UIImage imageWithData:data];
 
-             CGSize sacleSize = CGSizeMake(320, 320);
-             UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
-             [temporaryImage drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
-             UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
-             UIGraphicsEndImageContext();
-
-             self.imageView.image = resizedImage;
+             self.imageView.image = temporaryImage;
          }
      }];
 
     [self.textField becomeFirstResponder];
 }
 
--(void)viewWillAppear:(BOOL)animated
+- (void)gettingComments
 {
-    [super viewWillAppear:animated];
 
-    [self getComments];
-}
+    [self.commentsArray removeAllObjects];
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
+    PFRelation *relation = [self.individualEventPhoto.object relationForKey:@"commentActivity"];
+    PFQuery *query = [relation query];
+    [query includeKey:@"fromUser"];
+    [query includeKey:@"createdAt"];
+    [query orderByAscending:@"createdAt"];
+
+query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+[query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
+ {
+     if (!error)
+     {
+
+         [self.commentsArray addObjectsFromArray:results];
+     }
+     [self.tableView reloadData];
+ }];
 
 }
 
@@ -77,8 +81,21 @@
     CommentsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     cell.commentLabel.text = [comment objectForKey:@"commentContent"];
 
-    cell.timeLabel.text = [NSString stringWithFormat:@"%@", comment.createdAt];
-    //change the date into something cool
+    //setting the time since comment was uploaded
+    NSDate *timeOfPicture = [comment valueForKey:@"createdAt"];
+    int seconds = -(int)[timeOfPicture timeIntervalSinceNow];
+    int minutes = seconds/60;
+
+    if (minutes < 60) {
+        cell.timeLabel.text = [NSString stringWithFormat:@"%im", minutes];
+    } else if (minutes > 60 && minutes < 1440)
+    {
+        minutes = minutes/60;
+        cell.timeLabel.text = [NSString stringWithFormat:@"%ih", minutes];
+    } else {
+        minutes = minutes/1440;
+        cell.timeLabel.text = [NSString stringWithFormat:@"%id", minutes];
+    }
 
     PFObject *userName = [[comment objectForKey:@"fromUser"] objectForKey:@"username"];
     cell.nameLabel.text = [NSString stringWithFormat:@"%@", userName];
@@ -90,6 +107,7 @@
      {
          if (!error)
          {
+             //this will already be set to the right image size- can we round it too?
              UIImage *image = [UIImage imageWithData:data];
              cell.theImageView.image = image;
              cell.theImageView.layer.cornerRadius = cell.theImageView.bounds.size.width/2;
@@ -112,33 +130,65 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    PFObject *object = self.commentObject;
-    PFUser *picturePhotographer = [object objectForKey:@"photographer"];
+//    PFObject *object = self.commentObject;
+    PFUser *picturePhotographer = [self.individualEventPhoto.object objectForKey:@"photographer"];
 
     PFObject *comment = [PFObject objectWithClassName:@"CommentActivity"];
     comment[@"fromUser"] = [PFUser currentUser];
     comment[@"toUser"] = picturePhotographer;
-    comment[@"photo"] = object;
+    comment[@"photo"] = self.individualEventPhoto.object;
     comment[@"commentContent"] = self.textField.text;
-    [comment saveInBackground];
+    [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+     {
+         PFRelation *relation = [self.individualEventPhoto.object relationForKey:@"commentActivity"];
+         [relation addObject:comment];
+         [self.individualEventPhoto.object saveInBackground];
+    }];
 
     [self.textField resignFirstResponder];
 
     return YES;
 }
 
-- (void)getComments
-{
-    PFQuery *query = [PFQuery queryWithClassName:@"CommentActivity"];
-    [query whereKey:@"photo" equalTo:self.commentObject];
-    [query includeKey:@"fromUser"];
-    [query orderByAscending:@"createdAt"];
 
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-     {
-         [self.commentsArray addObjectsFromArray:objects];
-         [self.tableView reloadData];
-    }];
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//- (void)getComments
+//{
+//    PFQuery *query = [PFQuery queryWithClassName:@"CommentActivity"];
+//    [query whereKey:@"photo" equalTo:self.commentObject];
+//    [query includeKey:@"fromUser"];
+//    [query orderByAscending:@"createdAt"];
+//
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+//     {
+//         [self.commentsArray addObjectsFromArray:objects];
+//         [self.tableView reloadData];
+//    }];
+//}
 
 @end

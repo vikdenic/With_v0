@@ -45,7 +45,6 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
-
     [self.tableView addSubview:refreshControl];
 
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
@@ -120,6 +119,9 @@
      }];
 
 
+    ///basically doing all this image getting right here is drastically slowing down the app. Use NSCatche?
+
+
     //theme image
     PFFile *file = [object objectForKey:@"themeImage"];
 
@@ -158,13 +160,14 @@
 
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
     [query includeKey:@"creator"];
+    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
         if (!error)
         {
             [self.eventArray addObjectsFromArray:objects];
-            [self.tableView reloadData];
         }
+         [self.tableView reloadData];
     }];
 }
 
@@ -191,6 +194,7 @@
         self.event = [self.eventArray objectAtIndex:selectedIndexPath.row];
         PageViewController *pageViewController = segue.destinationViewController;
         pageViewController.event = self.event;
+
     }
     else if([segue.identifier isEqualToString:@"showLogin"])
     {
