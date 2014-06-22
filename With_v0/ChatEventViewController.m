@@ -10,7 +10,8 @@
 #import "ChatEventViewController.h"
 #import <Parse/Parse.h>
 #import "CustomTableViewCell.h"
-//#import "Custom2TableViewCell.h"
+
+//-----------------------------------------------
 
 @interface ChatEventViewController () <UITableViewDataSource, UITableViewDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
@@ -24,19 +25,11 @@
 
 @property NSString *usernamePlaceHolder;
 
-//@property UIPushBehavior *pushBehavior;
-//@property UIGravityBehavior *gravityBehavior;
-//@property UIDynamicAnimator *dynamicAnimator;
-//@property UICollisionBehavior *collisionBehavior;
-
 @end
 
 
-//------------------------------------------------
+#pragma mark - view life cycle //------------------------------------------------
 
-
-
-#pragma mark - view life cycle
 @implementation ChatEventViewController
 
 - (id)initWithCoder:(NSCoder *)coder
@@ -56,7 +49,7 @@
 
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
-    self.view.backgroundColor = [UIColor blackColor];
+    //self.view.backgroundColor = [UIColor blackColor];
 
     //Scroll opposite
     [self.commentTableView setScrollsToTop:YES];
@@ -91,9 +84,7 @@
 
 
 
-
-
-#pragma mark - notifications
+#pragma mark - notifications //------------------------------------------------
 - (void)receiveNotification: (NSNotification *) notification
 {
     if ([[notification name] isEqualToString:@"Test1"])
@@ -105,10 +96,7 @@
 
 
 
-
-
-
-#pragma mark - send button  CGAFFINE!!!!!
+#pragma mark - send button  CGAFFINE!!!!! //------------------------------------------------
 - (IBAction)sendButtonPressed:(UIButton *)sender
 {
     [self.view endEditing:YES];
@@ -148,7 +136,7 @@
     sender.transform = CGAffineTransformMakeScale(.5f, .5f);
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDelegate:self];
-    [UIView setAnimationDuration:1.3];
+    [UIView setAnimationDuration:0.8];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     CGAffineTransform scaleTrans  = CGAffineTransformMakeScale(1.0f, 1.0f);
     CGAffineTransform lefttorightTrans  = CGAffineTransformMakeTranslation(0.0f,0.0f);
@@ -158,7 +146,7 @@
 
 
 
-#pragma mark - Getting from parse
+#pragma mark - Getting from parse //------------------------------------------------
 - (void)retrieveCommentsFromParse
 {
     PFQuery *commentQuery = [PFQuery queryWithClassName:@"ChatMessage"];
@@ -194,70 +182,13 @@
 
 
 
-#pragma mark - TableView del methods
 
-////FInish me
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    CustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
-//    return 60;
-//}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    self.commentTableView.backgroundColor = [UIColor blackColor];
-    return self.chatRoomMessagesArray.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    CustomTableViewCell *cell = [[CustomTableViewCell alloc] init];
-    PFObject *message = [self.chatRoomMessagesArray objectAtIndex:indexPath.row];
-    PFObject *author = [self.authorsArray objectAtIndex:indexPath.row];
-    self.usernamePlaceHolder = [author objectForKey:@"author"];
-
-    if ([self.usernamePlaceHolder isEqualToString:[PFUser currentUser].username])
-    {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"UserCommentCell"];
-
-    }
-    else
-    {
-        // use the Comment Cell (Dequeue here)
-        cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
-    }
-
-    [cell.commentTextLabel setText:[message objectForKey:@"chatText"]];
-
-//    [cell.usernameLabelInCell setText:[[author objectForKey:@"author"] objectForKey:@"username"]];
-    cell.usernameLabelInCell.text = self.usernamePlaceHolder;
-
-    cell.usernameLabelInCell.textColor = [UIColor orangeColor];
-    cell.commentTextLabel.textColor = [UIColor whiteColor];
-    cell.backgroundColor = [UIColor blackColor];
-
-    //Avatar pic stuff
-    cell.imageInCell.image = [UIImage imageNamed:@"pic.jpg"];
-    cell.imageInCell.layer.borderWidth = 1.0f;
-    cell.imageInCell.layer.cornerRadius = 14.2;
-    cell.imageInCell.layer.masksToBounds = YES;
-    cell.imageInCell.layer.borderColor = [[UIColor whiteColor] CGColor];
-
-    //Rotate the cell too
-    cell.transform = CGAffineTransformMakeRotation(M_PI);
-
-    return cell;
-}
+#pragma mark - Reload stuff //------------------------------------------------
 
 
 
 
-#pragma mark - Reload stuff
-
-
-
-
-#pragma mark - (scroll methods) Method to figure out if scrolling up or down
+#pragma mark - (scroll methods) Method to figure out if scrolling up or down //-------------------------
 -(void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
 
     if (velocity.y > 0)
@@ -278,7 +209,7 @@
 }
 
 
-#pragma mark - Keyboard animation stuff
+#pragma mark - Keyboard animation stuff //------------------------------------------------
 
 //new style keyboard animation
 - (void) keyboardDidShow:(NSNotification *)notification
@@ -335,8 +266,58 @@
 
 
 
+#pragma mark - TableView del methods //------------------------------------------------
 
+////FInish me
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    CustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
+//    return 60;
+//}
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    //self.commentTableView.backgroundColor = [UIColor blackColor];
+    return self.chatRoomMessagesArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CustomTableViewCell *cell = [[CustomTableViewCell alloc] init];
+    PFObject *message = [self.chatRoomMessagesArray objectAtIndex:indexPath.row];
+    PFObject *author = [self.authorsArray objectAtIndex:indexPath.row];
+    self.usernamePlaceHolder = [author objectForKey:@"author"];
+
+    if ([self.usernamePlaceHolder isEqualToString:[PFUser currentUser].username])
+    {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"UserCommentCell"];
+
+    }
+    else
+    {
+        // use the Comment Cell (Dequeue here)
+        cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
+    }
+
+    [cell.commentTextLabel setText:[message objectForKey:@"chatText"]];
+
+    cell.usernameLabelInCell.text = self.usernamePlaceHolder;
+
+    cell.usernameLabelInCell.textColor = [UIColor orangeColor];
+    //cell.commentTextLabel.textColor = [UIColor blackColor];
+
+    //Avatar pic stuff
+    cell.imageInCell.image = [UIImage imageNamed:@"pacMan.jpg"];
+    cell.imageInCell.layer.borderWidth = 1.0f;
+    cell.imageInCell.layer.cornerRadius = 17.6;
+    cell.imageInCell.layer.masksToBounds = YES;
+    cell.imageInCell.layer.borderColor = [[UIColor whiteColor] CGColor];
+
+    //Rotate the cell too
+    cell.transform = CGAffineTransformMakeRotation(M_PI);
+    
+    return cell;
+}
 
 
 @end
