@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		601F5D8E1951D99A00B6D89C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 601F5D8D1951D99A00B6D89C /* Parse.framework */; };
 		601F5D911951DD8E00B6D89C /* CommentsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 601F5D901951DD8E00B6D89C /* CommentsTableViewCell.m */; };
+		607E90EC19565E8D006F88C8 /* IndividualEventPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 607E90EB19565E8D006F88C8 /* IndividualEventPhoto.m */; };
 		608B6C991950DBCF007D4503 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608B6C961950DBCF007D4503 /* LoginViewController.m */; };
 		608B6C9A1950DBCF007D4503 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608B6C981950DBCF007D4503 /* SignupViewController.m */; };
 		608B6C9E1950FF51007D4503 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608B6C9D1950FF51007D4503 /* CommentsViewController.m */; };
@@ -68,6 +69,8 @@
 		601F5D8D1951D99A00B6D89C /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		601F5D8F1951DD8E00B6D89C /* CommentsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsTableViewCell.h; sourceTree = "<group>"; };
 		601F5D901951DD8E00B6D89C /* CommentsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsTableViewCell.m; sourceTree = "<group>"; };
+		607E90EA19565E8D006F88C8 /* IndividualEventPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualEventPhoto.h; sourceTree = "<group>"; };
+		607E90EB19565E8D006F88C8 /* IndividualEventPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualEventPhoto.m; sourceTree = "<group>"; };
 		608B6C951950DBCF007D4503 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		608B6C961950DBCF007D4503 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		608B6C971950DBCF007D4503 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
@@ -248,6 +251,8 @@
 				60C72096194FAFC200ADE5DF /* StreamTableViewCell.m */,
 				60C72092194F692000ADE5DF /* StreamEventViewController.h */,
 				60C72093194F692000ADE5DF /* StreamEventViewController.m */,
+				607E90EA19565E8D006F88C8 /* IndividualEventPhoto.h */,
+				607E90EB19565E8D006F88C8 /* IndividualEventPhoto.m */,
 				608B6C9C1950FF51007D4503 /* CommentsViewController.h */,
 				608B6C9D1950FF51007D4503 /* CommentsViewController.m */,
 				601F5D8F1951DD8E00B6D89C /* CommentsTableViewCell.h */,
@@ -415,6 +420,7 @@
 				60C72085194F677300ADE5DF /* ChatEventViewController.m in Sources */,
 				608B6C991950DBCF007D4503 /* LoginViewController.m in Sources */,
 				60F47AB2194E5223007422E7 /* HomeTableViewCell.m in Sources */,
+				607E90EC19565E8D006F88C8 /* IndividualEventPhoto.m in Sources */,
 				93513A6119528A9000302A54 /* ChooseEventLocationViewController.m in Sources */,
 				93952FCD194D7318001AA3E4 /* CreateEventViewController.m in Sources */,
 				60C72097194FAFC200ADE5DF /* StreamTableViewCell.m in Sources */,
