@@ -34,6 +34,7 @@
 		9375544719509CAA008AAD45 /* InvitesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9375544619509CAA008AAD45 /* InvitesViewController.m */; };
 		9375544A1950A5BF008AAD45 /* FindFriendsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 937554491950A5BF008AAD45 /* FindFriendsTableViewCell.m */; };
 		9375544D1950B883008AAD45 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9375544C1950B883008AAD45 /* EditProfileViewController.m */; };
+		93802209195659A0004B492D /* DateAndTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93802208195659A0004B492D /* DateAndTimeViewController.m */; };
 		93952F8E194D5D4C001AA3E4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93952F8D194D5D4C001AA3E4 /* Foundation.framework */; };
 		93952F90194D5D4C001AA3E4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93952F8F194D5D4C001AA3E4 /* CoreGraphics.framework */; };
 		93952F92194D5D4C001AA3E4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93952F91194D5D4C001AA3E4 /* UIKit.framework */; };
@@ -108,6 +109,8 @@
 		937554491950A5BF008AAD45 /* FindFriendsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendsTableViewCell.m; sourceTree = "<group>"; };
 		9375544B1950B883008AAD45 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
 		9375544C1950B883008AAD45 /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
+		93802207195659A0004B492D /* DateAndTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateAndTimeViewController.h; sourceTree = "<group>"; };
+		93802208195659A0004B492D /* DateAndTimeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateAndTimeViewController.m; sourceTree = "<group>"; };
 		93952F8A194D5D4C001AA3E4 /* With_v0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = With_v0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93952F8D194D5D4C001AA3E4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		93952F8F194D5D4C001AA3E4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -264,6 +267,8 @@
 				93952FCC194D7318001AA3E4 /* CreateEventViewController.m */,
 				93513A5F19528A9000302A54 /* ChooseEventLocationViewController.h */,
 				93513A6019528A9000302A54 /* ChooseEventLocationViewController.m */,
+				93802207195659A0004B492D /* DateAndTimeViewController.h */,
+				93802208195659A0004B492D /* DateAndTimeViewController.m */,
 				93513A621952902C00302A54 /* FSVenue.h */,
 				93513A631952902C00302A54 /* FSVenue.m */,
 				93952FCE194D7347001AA3E4 /* FindFriendsViewController.h */,
@@ -433,6 +438,7 @@
 				601F5D911951DD8E00B6D89C /* CommentsTableViewCell.m in Sources */,
 				9375544D1950B883008AAD45 /* EditProfileViewController.m in Sources */,
 				93952FC4194D6BEA001AA3E4 /* HomeViewController.m in Sources */,
+				93802209195659A0004B492D /* DateAndTimeViewController.m in Sources */,
 				60C7208E194F689400ADE5DF /* PageViewController.m in Sources */,
 				9375544719509CAA008AAD45 /* InvitesViewController.m in Sources */,
 			);
