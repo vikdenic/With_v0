@@ -174,7 +174,14 @@
         //here I should resize the image to the size of the imageView so it looks good and normal before saving it?
         //maybe this might make it weird in the other image views it goes in
 
-        self.themeImageView.image = self.themeImagePicked;
+        CGSize scaledSize = CGSizeMake(320, 160);
+        UIGraphicsBeginImageContextWithOptions(scaledSize, NO, 2.0);
+
+        [self.themeImagePicked drawInRect:(CGRect){.size = scaledSize}];
+        UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+
+        self.themeImageView.image = resizedImage;
 
         NSData *themeImageData = UIImagePNGRepresentation(self.themeImagePicked);
         self.themeImagePicker = [PFFile fileWithData:themeImageData];
