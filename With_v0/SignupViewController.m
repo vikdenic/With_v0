@@ -35,9 +35,12 @@
     }
     else {
         PFUser *newUser = [PFUser user];
+
+        [newUser setValue:self.name.text forKey:@"name"];
+        newUser.email = email;
+
         newUser.username = username;
         newUser.password = password;
-        newUser.email = email;
         
         [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (error) {
@@ -47,7 +50,10 @@
                 [alertView show];
             }
             else {
+                [self dismissViewControllerAnimated:YES completion:^{
+                }];
                 [self.navigationController popToRootViewControllerAnimated:YES];
+                [self.tabBarController setSelectedIndex:0];
             }
         }];
     }

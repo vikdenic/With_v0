@@ -33,7 +33,6 @@
     [self.passwordField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
 
     self.navigationController.navigationBarHidden = YES;
-
 }
 
 // Dismisses billTextField's keyboard upon tap-away
@@ -72,6 +71,7 @@
                 //TRYING TO GET TO HOME FEED
                 [self.navigationController popToRootViewControllerAnimated:YES];
                 [self.tabBarController setSelectedIndex:0];
+                self.navigationController.navigationBarHidden = NO;
             }
         }];
     }
