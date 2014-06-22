@@ -29,6 +29,9 @@
 		60F47AAF194E237C007422E7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47AAE194E237C007422E7 /* SystemConfiguration.framework */; };
 		60F47AB2194E5223007422E7 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F47AB1194E5223007422E7 /* HomeTableViewCell.m */; };
 		60F47AB5194E7653007422E7 /* IndividualEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F47AB4194E7653007422E7 /* IndividualEventViewController.m */; };
+		60F5B34019574C6500A80467 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F5B33F19574C6500A80467 /* MapKit.framework */; };
+		60F5B3461957537200A80467 /* ExploreEventAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F5B3451957537200A80467 /* ExploreEventAnnotationView.m */; };
+		60F5B34C1957555E00A80467 /* ExploreAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F5B34B1957555E00A80467 /* ExploreAnnotation.m */; };
 		810C1EC3195605B70046DFB1 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 810C1EC1195605B70046DFB1 /* CustomTableViewCell.m */; };
 		93513A6119528A9000302A54 /* ChooseEventLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93513A6019528A9000302A54 /* ChooseEventLocationViewController.m */; };
 		93513A641952902C00302A54 /* FSVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 93513A631952902C00302A54 /* FSVenue.m */; };
@@ -100,6 +103,11 @@
 		60F47AB1194E5223007422E7 /* HomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewCell.m; sourceTree = "<group>"; };
 		60F47AB3194E7653007422E7 /* IndividualEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualEventViewController.h; sourceTree = "<group>"; };
 		60F47AB4194E7653007422E7 /* IndividualEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualEventViewController.m; sourceTree = "<group>"; };
+		60F5B33F19574C6500A80467 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		60F5B3441957537200A80467 /* ExploreEventAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreEventAnnotationView.h; sourceTree = "<group>"; };
+		60F5B3451957537200A80467 /* ExploreEventAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploreEventAnnotationView.m; sourceTree = "<group>"; };
+		60F5B34A1957555E00A80467 /* ExploreAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExploreAnnotation.h; path = ../ExploreAnnotation.h; sourceTree = "<group>"; };
+		60F5B34B1957555E00A80467 /* ExploreAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExploreAnnotation.m; path = ../ExploreAnnotation.m; sourceTree = "<group>"; };
 		810C1EC0195605B70046DFB1 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		810C1EC1195605B70046DFB1 /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
 		93513A5F19528A9000302A54 /* ChooseEventLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseEventLocationViewController.h; sourceTree = "<group>"; };
@@ -148,6 +156,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60F5B34019574C6500A80467 /* MapKit.framework in Frameworks */,
 				60F47AA7194E2364007422E7 /* MobileCoreServices.framework in Frameworks */,
 				60C72099194FC53500ADE5DF /* MediaPlayer.framework in Frameworks */,
 				60F47AAF194E237C007422E7 /* SystemConfiguration.framework in Frameworks */,
@@ -222,6 +231,7 @@
 		93952F8C194D5D4C001AA3E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				60F5B33F19574C6500A80467 /* MapKit.framework */,
 				601F5D8D1951D99A00B6D89C /* Parse.framework */,
 				60C72098194FC53500ADE5DF /* MediaPlayer.framework */,
 				60F47AAE194E237C007422E7 /* SystemConfiguration.framework */,
@@ -268,6 +278,10 @@
 				60F47AB4194E7653007422E7 /* IndividualEventViewController.m */,
 				93952FC8194D7241001AA3E4 /* ExploreViewController.h */,
 				93952FC9194D7241001AA3E4 /* ExploreViewController.m */,
+				60F5B34A1957555E00A80467 /* ExploreAnnotation.h */,
+				60F5B34B1957555E00A80467 /* ExploreAnnotation.m */,
+				60F5B3441957537200A80467 /* ExploreEventAnnotationView.h */,
+				60F5B3451957537200A80467 /* ExploreEventAnnotationView.m */,
 				93952FCB194D7318001AA3E4 /* CreateEventViewController.h */,
 				93952FCC194D7318001AA3E4 /* CreateEventViewController.m */,
 				93513A5F19528A9000302A54 /* ChooseEventLocationViewController.h */,
@@ -430,6 +444,7 @@
 				60F47AB2194E5223007422E7 /* HomeTableViewCell.m in Sources */,
 				607E90EC19565E8D006F88C8 /* IndividualEventPhoto.m in Sources */,
 				93513A6119528A9000302A54 /* ChooseEventLocationViewController.m in Sources */,
+				60F5B3461957537200A80467 /* ExploreEventAnnotationView.m in Sources */,
 				93952FCD194D7318001AA3E4 /* CreateEventViewController.m in Sources */,
 				60C72097194FAFC200ADE5DF /* StreamTableViewCell.m in Sources */,
 				608B6C9E1950FF51007D4503 /* CommentsViewController.m in Sources */,
@@ -444,6 +459,7 @@
 				601F5D911951DD8E00B6D89C /* CommentsTableViewCell.m in Sources */,
 				9375544D1950B883008AAD45 /* EditProfileViewController.m in Sources */,
 				93952FC4194D6BEA001AA3E4 /* HomeViewController.m in Sources */,
+				60F5B34C1957555E00A80467 /* ExploreAnnotation.m in Sources */,
 				93802209195659A0004B492D /* DateAndTimeViewController.m in Sources */,
 				60C7208E194F689400ADE5DF /* PageViewController.m in Sources */,
 				9375544719509CAA008AAD45 /* InvitesViewController.m in Sources */,
