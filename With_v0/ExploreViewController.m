@@ -30,38 +30,12 @@
 
     self.eventObjects = [NSMutableArray array];
 
-    //should this be here
-    PFGeoPoint *userGeoPoint = [PFGeoPoint geoPointWithLatitude:self.location.coordinate.latitude longitude:self.location.coordinate.longitude];
+    self.navigationController.navigationBarHidden = YES;
 
-    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
-    [query whereKey:@"locationGeoPoint" nearGeoPoint:userGeoPoint withinMiles:1000];
+    //user double clicks and event and a uiview pops up and bounces like on ifunny that shows the user all the info about the event and they can click buttons like going or no and see the address and all that and can click a button that will take them to the actual event page
 
-    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-    {
-        [self.eventObjects addObjectsFromArray:objects];
+    //in the view - title, details, number of people and pic for now?
 
-        for (PFObject *object in self.eventObjects)
-        {
-            ExploreAnnotation *exploreAnnotation = [[ExploreAnnotation alloc] init];
-
-            exploreAnnotation.geoPoint = [object objectForKey:@"locationGeoPoint"];
-            exploreAnnotation.coordinate = CLLocationCoordinate2DMake(exploreAnnotation.geoPoint.latitude, exploreAnnotation.geoPoint.longitude);
-            exploreAnnotation.title = [object objectForKey:@"title"];
-            exploreAnnotation.details = [object objectForKey:@"details"];
-            exploreAnnotation.object = object;
-            exploreAnnotation.creator = [object objectForKey:@"creator"];
-            exploreAnnotation.location = [object objectForKey:@"location"];
-
-            exploreAnnotation.themeFile = [object objectForKey:@"themeImage"];
-            [exploreAnnotation.themeFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-
-                exploreAnnotation.themeImage = [UIImage imageWithData:data];
-            }];
-
-            [self.mapView addAnnotation:exploreAnnotation];
-        }
-    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -73,6 +47,42 @@
     self.locationManager.distanceFilter = kCLDistanceFilterNone;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     [self.locationManager startUpdatingLocation];
+}
+
+- (void)queryForEvents: (PFGeoPoint *)userGeoPoint
+{
+
+
+    //need to make this so user can search around and also see events not around their current location?
+
+    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
+    [query whereKey:@"locationGeoPoint" nearGeoPoint:userGeoPoint withinMiles:20];
+    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         [self.eventObjects addObjectsFromArray:objects];
+
+         for (PFObject *object in self.eventObjects)
+         {
+             ExploreAnnotation *exploreAnnotation = [[ExploreAnnotation alloc] init];
+
+             exploreAnnotation.geoPoint = [object objectForKey:@"locationGeoPoint"];
+             exploreAnnotation.coordinate = CLLocationCoordinate2DMake(exploreAnnotation.geoPoint.latitude, exploreAnnotation.geoPoint.longitude);
+             exploreAnnotation.title = [object objectForKey:@"title"];
+             exploreAnnotation.details = [object objectForKey:@"details"];
+             exploreAnnotation.object = object;
+             exploreAnnotation.creator = [object objectForKey:@"creator"];
+             exploreAnnotation.location = [object objectForKey:@"location"];
+
+             exploreAnnotation.themeFile = [object objectForKey:@"themeImage"];
+             [exploreAnnotation.themeFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+
+                 exploreAnnotation.themeImage = [UIImage imageWithData:data];
+             }];
+
+             [self.mapView addAnnotation:exploreAnnotation];
+         }
+     }];
 }
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
@@ -87,17 +97,21 @@
 
     self.location = [self.locationManager location];
 
+    PFGeoPoint *userGeoPoint = [PFGeoPoint geoPointWithLatitude:self.location.coordinate.latitude longitude:self.location.coordinate.longitude];
+
+    [self queryForEvents:userGeoPoint];
+
     [self performSelector:@selector(delayForZoom)
                withObject:nil
-               afterDelay:1.0];
+               afterDelay:2.0];
 }
 
 - (void)delayForZoom
 {
     MKCoordinateRegion mapRegion;
     mapRegion.center = self.location.coordinate;
-    mapRegion.span.latitudeDelta = 0.25;
-    mapRegion.span.longitudeDelta = 0.25;
+    mapRegion.span.latitudeDelta = 0.10;
+    mapRegion.span.longitudeDelta = 0.10;
     [self.mapView setRegion:mapRegion animated: YES];
 }
 
@@ -119,12 +133,12 @@
     UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
 
     annotationView.image = resizedImage;
-    annotationView.layer.cornerRadius = exploreAnnotation.themeImage.size.width/2;
+    annotationView.layer.cornerRadius = resizedImage.size.width/2;
     annotationView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
     annotationView.layer.borderWidth = 2.0;
     annotationView.clipsToBounds = YES;
 
-    //double tap to expand?
+//    //double tap to expand?
 //    if (annotationView.gestureRecognizers.count == 0)
 //    {
 //        UITapGestureRecognizer *tapping = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapTap:)];
