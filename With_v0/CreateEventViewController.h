@@ -15,4 +15,6 @@
 
 @property CLLocationCoordinate2D coordinate;
 
+@property (strong, nonatomic) NSString *dateString;
+
 @end

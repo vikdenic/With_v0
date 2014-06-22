@@ -27,8 +27,19 @@
 
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"cccc, MMM d, hh:mm aa"];
-    NSString *prettyVersion = [dateFormat stringFromDate:myDate];
-    NSLog(@"%@", prettyVersion);
+    self.dateString = [dateFormat stringFromDate:myDate];
+    NSLog(@"Disappear: %@", self.dateString);
 }
+
+- (IBAction)onBackPressed:(id)sender
+{
+    NSDate *myDate = self.datePicker.date;
+
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"cccc, MMM d, hh:mm aa"];
+    self.dateString = [dateFormat stringFromDate:myDate];
+    NSLog(@"Disappear: %@", self.dateString);
+}
+
 
 @end
