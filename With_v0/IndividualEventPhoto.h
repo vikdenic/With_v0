@@ -15,5 +15,7 @@
 @property PFFile *photo;
 @property NSMutableArray *comments;
 @property PFObject *object;
+@property PFFile *photographerPhoto;
+@property NSString *username;
 
 @end

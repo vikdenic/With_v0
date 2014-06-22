@@ -23,9 +23,7 @@
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
 
 @property UIRefreshControl *refreshControl;
-@property NSMutableArray *pictureAndVideoArray;
-@property NSMutableArray *imagesArray;
-@property NSMutableArray *numberOfLikes;
+
 
 @property NSMutableArray *theLegitArrayOfEverything;
 
@@ -37,9 +35,6 @@
 {
     [super viewDidLoad];
 
-    self.pictureAndVideoArray = [NSMutableArray array];
-    self.imagesArray = [NSMutableArray array];
-    self.numberOfLikes = [NSMutableArray array];
     self.theLegitArrayOfEverything = [NSMutableArray array];
 
     [self queryForImages];
@@ -52,18 +47,10 @@
     [self.tableView addSubview:refreshControl];
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
 #pragma mark - Getting Pictures and Videos
 
 - (void)queryForImages
 {
-//    [self.pictureAndVideoArray removeAllObjects];
-//    [self.imagesArray removeAllObjects];
-
     [self.theLegitArrayOfEverything removeAllObjects];
 
     PFRelation *relation = [self.event relationForKey:@"eventPhotos"];
@@ -72,17 +59,12 @@
     [query includeKey:@"createdAt"];
     [query orderByDescending:@"createdAt"];
 
-
-
     query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-
     [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
      {
         if (!error)
         {
-            NSMutableArray *array = [NSMutableArray arrayWithArray:results];
-
-            for (PFObject *object in array)
+            for (PFObject *object in results)
             {
                 PFRelation *relation2 = [object relationForKey:@"likeActivity"];
                 PFQuery *query2 = [relation2 query];
@@ -97,9 +79,10 @@
                      PFFile *file = [object objectForKey:@"photo"];
                      individualEventPhoto.photo = file;
                      individualEventPhoto.object = object;
+                     individualEventPhoto.photographerPhoto = [[object objectForKey:@"photographer"] objectForKey:@"userProfilePhoto"];
+                     individualEventPhoto.username = [[object objectForKey:@"photographer"] objectForKey:@"username"];
 
                      [self.theLegitArrayOfEverything addObject:individualEventPhoto];
-                     //now everything is in this array and I can use it in cell for row at index path
                  }];
             }
         }
@@ -109,102 +92,94 @@
 
 #pragma mark - Action Methods
 
-- (IBAction)onLikeButtonTapped:(UIButton *)sender
-{
-    //still work to do here
-    PFObject *object = [self.pictureAndVideoArray objectAtIndex:sender.tag];
-    PFUser *picturePhotographer = [object objectForKey:@"photographer"];
+//- (IBAction)onLikeButtonTapped:(UIButton *)sender
+//{
+//    //still work to do here
+//    PFObject *object = [self.pictureAndVideoArray objectAtIndex:sender.tag];
+//    PFUser *picturePhotographer = [object objectForKey:@"photographer"];
+//
+//    PFObject *like = [PFObject objectWithClassName:@"LikeActivity"];
+//    like[@"fromUser"] = [PFUser currentUser];
+//    like[@"toUser"] = picturePhotographer;
+//    like[@"photo"] = object;
+//    [like saveInBackground];
+//}
 
-    PFObject *like = [PFObject objectWithClassName:@"LikeActivity"];
-    like[@"fromUser"] = [PFUser currentUser];
-    like[@"toUser"] = picturePhotographer;
-    like[@"photo"] = object;
-    [like saveInBackground];
-}
+///fix storyboard with the like button issue and here as well- do the same thing in the comments view controller as I did above with the likes thing- only the photo we passed from eventPhotos
 
-- (IBAction)onCommentButtonTapped:(UIButton *)sender
-{
-    PFObject *object = [self.pictureAndVideoArray objectAtIndex:sender.tag];
-    self.commentObject = object;
-}
+//- (IBAction)onCommentButtonTapped:(UIButton *)sender
+//{
+//    //convert to individual thing
+//    PFObject *object = [self.pictureAndVideoArray objectAtIndex:sender.tag];
+//    self.commentObject = object;
+//}
 
 #pragma mark - Table View
 
-//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    CGRect frame = tableView.frame;
-//
-//    PFObject *object = [self.pictureAndVideoArray objectAtIndex:section];
-//    PFUser *user = [object objectForKey:@"photographer"];
-//
-//
-//    //setting time top right
-//
-//    NSDate *timeOfPicture = [object valueForKey:@"createdAt"];
-//
-//    int seconds = -(int)[timeOfPicture timeIntervalSinceNow];
-//    int minutes = seconds/60;
-//
-//   UILabel *timeInterval = [[UILabel alloc] initWithFrame:CGRectMake(230, 5, 100, 30)];
-//    timeInterval.textColor = [UIColor whiteColor];
-//
-//        if (minutes < 60)
-//        {
-//            timeInterval.text = [NSString stringWithFormat:@"%im", minutes];
-//
-//        } else if (minutes > 60 && minutes < 1440)
-//        {
-//            minutes = minutes/60;
-//
-//            timeInterval.text = [NSString stringWithFormat:@"%ih", minutes];
-//
-//        } else {
-//
-//            minutes = minutes/1440;
-//            timeInterval.text = [NSString stringWithFormat:@"%id", minutes];
-//        }
-//
-//    //setting the username
-//    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
-//    title.text = [NSString stringWithFormat:@"%@", user.username];
-//    title.textColor = [UIColor whiteColor];
-//
-//    PFFile *userProfilePhoto = [user objectForKey:@"userProfilePhoto"];
-//    UIImageView *customImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
-//    [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
-//     {
-//         if (!error)
-//         {
-//             UIImage *image = [UIImage imageWithData:data];
-//             customImageView.image = image;
-//             customImageView.layer.cornerRadius = customImageView.bounds.size.width/2;
-//             customImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
-//             customImageView.layer.borderWidth = 2.0;
-//             customImageView.layer.masksToBounds = YES;
-//         } else {
-//             customImageView.backgroundColor = [UIColor purpleColor];
-//         }
-//     }];
-//
-//    //TRY TO SET THIS HEADERVIEW TO "STREAM_BLUR_IMAGE"
-//    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-//    headerView.alpha = .7;
-//    [headerView addSubview:title];
-//    [headerView addSubview:timeInterval];
-//    [headerView addSubview:customImageView];
-//    headerView.backgroundColor = [UIColor blackColor];
-//
-//    return headerView;
-//}
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    CGRect frame = tableView.frame;
+
+    IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:section];
+
+    //setting time top right
+    NSDate *timeOfPicture = [individualEventPhoto.object valueForKey:@"createdAt"];
+    int seconds = -(int)[timeOfPicture timeIntervalSinceNow];
+    int minutes = seconds/60;
+
+    UILabel *timeInterval = [[UILabel alloc] initWithFrame:CGRectMake(230, 5, 100, 30)];
+    timeInterval.textColor = [UIColor whiteColor];
+
+        if (minutes < 60) {
+            timeInterval.text = [NSString stringWithFormat:@"%im", minutes];
+        } else if (minutes > 60 && minutes < 1440)
+        {
+            minutes = minutes/60;
+            timeInterval.text = [NSString stringWithFormat:@"%ih", minutes];
+        } else {
+            minutes = minutes/1440;
+            timeInterval.text = [NSString stringWithFormat:@"%id", minutes];
+        }
+
+    //setting the username
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
+    title.text = [NSString stringWithFormat:@"%@", individualEventPhoto.username];
+    title.textColor = [UIColor whiteColor];
+
+    UIImageView *customImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
+    customImageView.layer.cornerRadius = customImageView.bounds.size.width/2;
+    customImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
+    customImageView.layer.borderWidth = 2.0;
+    customImageView.layer.masksToBounds = YES;
+    [individualEventPhoto.photographerPhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+     {
+         if (!error)
+         {
+             UIImage *image = [UIImage imageWithData:data];
+             customImageView.image = image;
+         } else {
+             customImageView.backgroundColor = [UIColor purpleColor];
+         }
+     }];
+
+    //TRY TO SET THIS HEADERVIEW TO "STREAM_BLUR_IMAGE"
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+    headerView.alpha = .7;
+    [headerView addSubview:title];
+    [headerView addSubview:timeInterval];
+    [headerView addSubview:customImageView];
+    headerView.backgroundColor = [UIColor blackColor];
+
+    return headerView;
+}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 40;
+    return 45;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//    return self.pictureAndVideoArray.count;
     return self.theLegitArrayOfEverything.count;
 }
 
@@ -216,6 +191,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     StreamTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+
     cell.theImageView.tag = indexPath.section;
     cell.likeButton.tag = indexPath.section;
     cell.likedImageView.hidden = YES;
@@ -223,6 +199,7 @@
 
     IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:indexPath.section];
 
+    //number of likes
     cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)individualEventPhoto.likes.count];
 
     [individualEventPhoto.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
@@ -252,51 +229,9 @@
 
 #pragma mark - Tap Gesture Recognizer
 
-//- (void)tapTap:(UITapGestureRecognizer *)tapGestureRecognizer
-//{
-//    UIImageView *sender = (UIImageView *)tapGestureRecognizer.view;
-//
-//    PFObject *object = [self.pictureAndVideoArray objectAtIndex:sender.tag];
-//    PFUser *picturePhotographer = [object objectForKey:@"photographer"];
-//
-//    PFObject *like = [PFObject objectWithClassName:@"LikeActivity"];
-//    like[@"fromUser"] = [PFUser currentUser];
-//    like[@"toUser"] = picturePhotographer;
-//    like[@"photo"] = object;
-//    [like saveInBackground];
-//
-//    StreamTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sender.tag]];
-//
-//    UIImage *btnImage = [UIImage imageNamed:@"like_selected"];
-//    [cell.likeButton setImage:btnImage forState:UIControlStateNormal];
-//
-//    //increment count
-//    NSString *numberOfLikesString = cell.numberOfLikesLabel.text;
-//    NSInteger numberOfLikesInt = [numberOfLikesString integerValue];
-//    numberOfLikesInt++;
-//    cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
-//
-//    cell.likedImageView.hidden = NO;
-//
-//    cell.likedImageView.alpha = 0;
-//
-//    [UIView animateWithDuration:0.3 animations:^{
-//        cell.likedImageView.alpha = 1;
-//    } completion:^(BOOL finished) {
-//        [UIView animateKeyframesWithDuration:0.3 delay:0.75 options:0 animations:^{
-//            cell.likedImageView.alpha = 0;
-//        } completion:^(BOOL finished) {
-//            cell.likedImageView.hidden = YES;
-//        }];
-//    }];
-//}
-
 - (void)tapTap:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     UIImageView *sender = (UIImageView *)tapGestureRecognizer.view;
-
-//    PFObject *object = [self.pictureAndVideoArray objectAtIndex:sender.tag];
-//    PFUser *picturePhotographer = [object objectForKey:@"photographer"];
 
     IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:sender.tag];
     PFUser *picturePhotographer = [individualEventPhoto.object objectForKey:@"photographer"];
@@ -324,7 +259,6 @@
     cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
 
     cell.likedImageView.hidden = NO;
-
     cell.likedImageView.alpha = 0;
 
     [UIView animateWithDuration:0.3 animations:^{
@@ -420,6 +354,7 @@
                           [self.tableView reloadData];
                       }
                       else {
+                          NSLog(@"Error");
                       }
                   }];
              }
@@ -531,4 +466,110 @@
     //    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
 //    return cell;
+//}
+
+//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    CGRect frame = tableView.frame;
+//
+//    PFObject *object = [self.pictureAndVideoArray objectAtIndex:section];
+//    PFUser *user = [object objectForKey:@"photographer"];
+//
+//
+//    //setting time top right
+//
+//    NSDate *timeOfPicture = [object valueForKey:@"createdAt"];
+//
+//    int seconds = -(int)[timeOfPicture timeIntervalSinceNow];
+//    int minutes = seconds/60;
+//
+//   UILabel *timeInterval = [[UILabel alloc] initWithFrame:CGRectMake(230, 5, 100, 30)];
+//    timeInterval.textColor = [UIColor whiteColor];
+//
+//        if (minutes < 60)
+//        {
+//            timeInterval.text = [NSString stringWithFormat:@"%im", minutes];
+//
+//        } else if (minutes > 60 && minutes < 1440)
+//        {
+//            minutes = minutes/60;
+//
+//            timeInterval.text = [NSString stringWithFormat:@"%ih", minutes];
+//
+//        } else {
+//
+//            minutes = minutes/1440;
+//            timeInterval.text = [NSString stringWithFormat:@"%id", minutes];
+//        }
+//
+//    //setting the username
+//    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
+//    title.text = [NSString stringWithFormat:@"%@", user.username];
+//    title.textColor = [UIColor whiteColor];
+//
+//    PFFile *userProfilePhoto = [user objectForKey:@"userProfilePhoto"];
+//    UIImageView *customImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
+//    [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+//     {
+//         if (!error)
+//         {
+//             UIImage *image = [UIImage imageWithData:data];
+//             customImageView.image = image;
+//             customImageView.layer.cornerRadius = customImageView.bounds.size.width/2;
+//             customImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
+//             customImageView.layer.borderWidth = 2.0;
+//             customImageView.layer.masksToBounds = YES;
+//         } else {
+//             customImageView.backgroundColor = [UIColor purpleColor];
+//         }
+//     }];
+//
+//    //TRY TO SET THIS HEADERVIEW TO "STREAM_BLUR_IMAGE"
+//    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+//    headerView.alpha = .7;
+//    [headerView addSubview:title];
+//    [headerView addSubview:timeInterval];
+//    [headerView addSubview:customImageView];
+//    headerView.backgroundColor = [UIColor blackColor];
+//
+//    return headerView;
+//}
+
+//- (void)tapTap:(UITapGestureRecognizer *)tapGestureRecognizer
+//{
+//    UIImageView *sender = (UIImageView *)tapGestureRecognizer.view;
+//
+//    PFObject *object = [self.pictureAndVideoArray objectAtIndex:sender.tag];
+//    PFUser *picturePhotographer = [object objectForKey:@"photographer"];
+//
+//    PFObject *like = [PFObject objectWithClassName:@"LikeActivity"];
+//    like[@"fromUser"] = [PFUser currentUser];
+//    like[@"toUser"] = picturePhotographer;
+//    like[@"photo"] = object;
+//    [like saveInBackground];
+//
+//    StreamTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sender.tag]];
+//
+//    UIImage *btnImage = [UIImage imageNamed:@"like_selected"];
+//    [cell.likeButton setImage:btnImage forState:UIControlStateNormal];
+//
+//    //increment count
+//    NSString *numberOfLikesString = cell.numberOfLikesLabel.text;
+//    NSInteger numberOfLikesInt = [numberOfLikesString integerValue];
+//    numberOfLikesInt++;
+//    cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
+//
+//    cell.likedImageView.hidden = NO;
+//
+//    cell.likedImageView.alpha = 0;
+//
+//    [UIView animateWithDuration:0.3 animations:^{
+//        cell.likedImageView.alpha = 1;
+//    } completion:^(BOOL finished) {
+//        [UIView animateKeyframesWithDuration:0.3 delay:0.75 options:0 animations:^{
+//            cell.likedImageView.alpha = 0;
+//        } completion:^(BOOL finished) {
+//            cell.likedImageView.hidden = YES;
+//        }];
+//    }];
 //}
