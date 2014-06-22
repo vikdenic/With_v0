@@ -9,6 +9,7 @@
 #import "CreateEventViewController.h"
 #import <Parse/Parse.h>
 #import "ChooseEventLocationViewController.h"
+#import "DateAndTimeViewController.h"
 
 @interface CreateEventViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 
@@ -22,8 +23,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *invitePeopleButton;
 
 @property (weak, nonatomic) IBOutlet UIView *dateAndTimeView;
-@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
-@property NSDate *selectedDate;
 
 @property UIImagePickerController *cameraController;
 @property UIImage *themeImagePicked;
@@ -79,6 +78,17 @@
     {
         [self.locationButton setTitle:@"          Location" forState:UIControlStateNormal];
     }
+
+    //Vik: sets the date & time button text
+    if(self.dateString)
+    {
+    NSString *formattedDateString = [NSString stringWithFormat:@"           %@",self.dateString];
+
+    [self.dateAndTimeButton setTitle:formattedDateString forState:UIControlStateNormal];
+    }
+    else{
+    [self.dateAndTimeButton setTitle:@"          Date and Time" forState:UIControlStateNormal];
+    }
 }
 
 #pragma mark - Action Methods
@@ -88,10 +98,10 @@
     [self.view endEditing:YES];
 }
 
-- (IBAction)onDateAndTimeButtonTapped:(id)sender
-{
-    [self animatePopUpShow];
-}
+//- (IBAction)onDateAndTimeButtonTapped:(id)sender
+//{
+//    [self animatePopUpShow];
+//}
 
 - (IBAction)onLocationButtonTapped:(id)sender
 {
@@ -119,6 +129,7 @@
 
     event[@"themeImage"] = self.themeImagePicker;
     event[@"creator"] = [PFUser currentUser];
+    event[@"eventDate"] = self.dateString;
     [event saveInBackground];
 
     //takes user back to home page
@@ -133,41 +144,6 @@
 }
 
 #pragma mark - Date and Time View Animation
-
-- (void) animatePopUpShow
-{
-    self.dateAndTimeView.hidden = NO;
-
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                         [self.dateAndTimeView setAlpha:1.0f];
-                     }
-     ];
-}
-
-#pragma mark - Date Picker
-
--(IBAction)onDoneButtonTappedForDatePicker:(id)sender
-{
-    self.selectedDate = [self.datePicker date];
-
-//    NSDateFormatter *date = [[NSDateFormatter alloc] init];
-//    [date setDateFormat:@"MM-dd-yyyy-HH-mm"];
-//    NSString *formattedDate = [date stringFromDate:selectedDate];
-
-
-    NSString *dateString = [NSDateFormatter localizedStringFromDate:self.selectedDate
-                                                          dateStyle:NSDateFormatterFullStyle
-                                                          timeStyle:NSDateFormatterShortStyle];
-    [self.dateAndTimeButton setTitle:[NSString stringWithFormat:@"           %@", dateString] forState:UIControlStateNormal];
-    self.dateAndTimeView.hidden = YES;
-
-    [UIView animateWithDuration:0.3f
-                     animations:^{
-                         [self.dateAndTimeView setAlpha:0.0f];
-                     }
-     ];
-}
 
 
 #pragma mark - Tap Gesture Recognizer
@@ -253,8 +229,14 @@
     ChooseEventLocationViewController *chooseVC = sender.sourceViewController;
     self.eventName = chooseVC.eventName;
     self.coordinate = chooseVC.coordinate;
-
     NSLog(@"CREATE: %f %f",self.coordinate.latitude, self.coordinate.longitude);
+}
+
+-(IBAction)unwindDateToCreate:(UIStoryboardSegue *)sender
+{
+    DateAndTimeViewController *dateVC = sender.sourceViewController;
+    self.dateString = dateVC.dateString;
+//    self.dateAndTimeButton.titleLabel.text = [NSString stringWithFormat:@"           %@",self.dateString];
 }
 
 @end

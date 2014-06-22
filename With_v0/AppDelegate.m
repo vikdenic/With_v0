@@ -26,18 +26,6 @@
     return YES;
 }
 
-//- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-//{
-//    [Parse setApplicationId:@"T6Q93YCI5TEs09X2CWRUYqJOLYceftDzIhU2qR6N"
-//                  clientKey:@"HNvrJUv7tN6NJYO7e6fjdGL6qcGFfDwnacZwcDk8"];
-//
-//    [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
-//     UIRemoteNotificationTypeAlert|
-//     UIRemoteNotificationTypeSound];
-//
-//    return YES;
-//}
-
 #pragma mark - Parse push methods
 
 

@@ -16,14 +16,14 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property NSArray *options;
-@property NSArray *detailOptions;
+@property NSMutableArray *options;
+@property NSMutableArray *detailOptions;
 @property NSString *createCustomString;
 @property NSString *findCustomString;
 
 //API stuff
 @property NSArray *venuesArray;
-@property NSArray *imagesArray;
+@property NSMutableArray *imagesArray;
 @property NSMutableArray *retrievedVenuesArray;
 
 //Location stuff
@@ -53,12 +53,12 @@
 
     self.createCustomString = [NSString stringWithFormat:@"Create \"%@\"",self.searchBar.text];
     self.findCustomString = [NSString stringWithFormat:@"Find \"%@\"",self.searchBar.text];
-    self.options = [NSArray arrayWithObjects:self.createCustomString, self.findCustomString, nil];
+    self.options = [NSMutableArray arrayWithObjects:self.createCustomString, self.findCustomString, nil];
 
     NSString *detailCreateString = @"Create this location";
     NSString *detailSearchString = @"Search for this location";
-    self.detailOptions = [NSArray arrayWithObjects:detailCreateString, detailSearchString, nil];
-    self.imagesArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"pin"], [UIImage imageNamed:@"search_image"], nil];
+    self.detailOptions = [NSMutableArray arrayWithObjects:detailCreateString, detailSearchString, nil];
+    self.imagesArray = [NSMutableArray arrayWithObjects:[UIImage imageNamed:@"pin"], [UIImage imageNamed:@"search_image"], nil];
 }
 
 -(void)locationStuff
@@ -137,11 +137,13 @@
 {
     self.isSearching = YES;
 
+    NSLog(@"%d",self.isSearching);
+
     NSString *currentText = [self.searchBar.text stringByReplacingCharactersInRange:range withString:text];
 
     self.createCustomString = [NSString stringWithFormat:@"Create \"%@\"",currentText];
     self.findCustomString = [NSString stringWithFormat:@"Find \"%@\"",currentText];
-    self.options = [NSArray arrayWithObjects:self.createCustomString, self.findCustomString, nil];
+    self.options = [NSMutableArray arrayWithObjects:self.createCustomString, self.findCustomString, nil];
 
     [self.retrievedVenuesArray removeAllObjects];
     [self.tableView reloadData];
@@ -149,14 +151,8 @@
     return YES;
 }
 
-
-
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+-(void)searchForVenue
 {
-//    NSString *customSearchString = [self.searchBar.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-//    NSLog(@"%@", customSearchString);
-    self.isSearching = NO;
-
     NSString *customSearchString = [self.searchBar.text stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
 
     NSString *locationString = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?query=%@&ll=%f,%f&oauth_token=3JZTWOWUCT0SQDKB1MAQ54ILOYNKJXDERR5CLKFSN20GRZIT&v=20140618", customSearchString, self.latitude, self.longitude];
@@ -189,12 +185,22 @@
             venue.lng = [[[venueDictionary objectForKey:@"location"] objectForKey:@"lng"] floatValue];
 
             //            NSLog(@"%@ %f %f", venue.name, venue.lat, venue.lng);
-            
+
             [self.retrievedVenuesArray addObject:venue];
         }
         [self.tableView reloadData];
     }];
     [self.searchBar resignFirstResponder];
+    self.isSearching = NO;
+}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+//    NSString *customSearchString = [self.searchBar.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+//    NSLog(@"%@", customSearchString);
+
+//    NSLog(@"%d",self.isSearching);
+    [self searchForVenue];
 }
 
 #pragma mark - TableView Delegates
@@ -214,26 +220,34 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LocationCell"];
 
+//    NSLog(@"CELLFORROW: %d",self.isSearching);
+
     if(self.isSearching == NO)
     {
         FSVenue *venue = [self.retrievedVenuesArray objectAtIndex:indexPath.row];
 
-        if(venue.address)
+        if (venue.address && venue.city)
         {
             cell.textLabel.text = venue.name;
 
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", venue.address, venue.city];
         }
-        else
+        else if (!venue.address && venue.city)
         {
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", venue.city];
         }
+        else if (!venue.name)
+        {
+            cell.textLabel.text = @"Unnamed";
 
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", venue.address, venue.city];
+        }
+        cell.imageView.image = nil;
     }
 
     //Presents option to create custom location or search
-    else{
-
+    else if(self.isSearching == YES)
+    {
         cell.textLabel.text = [self.options objectAtIndex:indexPath.row];
         cell.detailTextLabel.text = [self.detailOptions objectAtIndex:indexPath.row];
         cell.imageView.image = [self.imagesArray objectAtIndex:indexPath.row];
@@ -242,7 +256,7 @@
     return cell;
 }
 
-//CRUCIAL
+//CRUCIAL?
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 //    FSVenue *venue = [self.retrievedVenuesArray objectAtIndex:indexPath.row];
@@ -250,19 +264,19 @@
 //    self.eventName = venue.name;
 //    NSLog(@"did select row %@",self.eventName);
 
-    if(self.isSearching == YES)
-    {
-        if(indexPath.row == 1)
-        {
-            NSLog(@"Create Custom Location");
-            self.isSearching = NO;
-        }
-        else if(indexPath.row == 2)
-        {
-            [self searchBarSearchButtonClicked:self.searchBar];
-            self.isSearching = NO;
-        }
-    }
+//    if(self.isSearching == YES)
+//    {
+//        if(indexPath.row == 0)
+//        {
+//            NSLog(@"Create Custom Location");
+//            self.isSearching = NO;
+//        }
+//        else if(indexPath.row == 1)
+//        {
+//            [self searchBarSearchButtonClicked:self.searchBar];
+//            self.isSearching = NO;
+//        }
+//    }
 }
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -274,9 +288,26 @@
     self.eventName = venue.name;
 
     self.coordinate = CLLocationCoordinate2DMake(venue.lat, venue.lng);
-    NSLog(@"CHOOSE: %f %f", self.coordinate.latitude, self.coordinate.longitude);
+//    NSLog(@"CHOOSE: %f %f", self.coordinate.latitude, self.coordinate.longitude);
     }
 
+    else
+    {
+        self.isSearching = NO;
+
+        if(indexPath.row == 0)
+        {
+            NSLog(@"Create Custom Location");
+            self.eventName = self.searchBar.text;
+            self.coordinate = CLLocationCoordinate2DMake(self.latitude, self.longitude);
+        }
+
+        else if(indexPath.row == 1)
+        {
+            [self searchForVenue];
+            NSLog(@"Search Custom Location");
+        }
+    }
     return indexPath;
 }
 

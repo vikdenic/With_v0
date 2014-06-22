@@ -46,20 +46,28 @@
 
         [self setUserInfo];
 
+        NSLog(@"did show %@",[PFUser currentUser]);
+
 //    self.usersArray = [[NSArray alloc]init];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    [self setUserInfo];
+
+    NSLog(@"will show %@",[PFUser currentUser]);
+
+
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-//    [self setUserInfo];
-
-}
+//- (void)viewDidAppear:(BOOL)animated
+//{
+//    [super viewDidAppear:animated];
+////    [self setUserInfo];
+//
+//}
 
 #pragma mark - Helpers
 
