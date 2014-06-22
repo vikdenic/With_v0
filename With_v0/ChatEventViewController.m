@@ -35,8 +35,8 @@
 //------------------------------------------------
 
 
-#pragma mark - notifications
 
+#pragma mark - view life cycle
 @implementation ChatEventViewController
 
 - (id)initWithCoder:(NSCoder *)coder
@@ -49,31 +49,14 @@
     return self;
 }
 
-- (void)receiveNotification: (NSNotification *) notification
-{
-    if ([[notification name] isEqualToString:@"Test1"])
-    {
-        [self reload];
-    }
-}
-
-
-
-#pragma mark - view life cycle
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationController.hidesBottomBarWhenPushed = NO;
 
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
     self.view.backgroundColor = [UIColor blackColor];
-
-    //Ugly keyboard animation
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
 
     //Scroll opposite
     [self.commentTableView setScrollsToTop:YES];
@@ -85,32 +68,12 @@
     self.commentTableView.transform=CGAffineTransformMakeRotation(M_PI);
     self.commentTableView.frame = frame;
 
+    //notification for Ugly keyboard animation
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+
     self.navigationController.hidesBottomBarWhenPushed = NO;
-
-
-    //[PFUser logOut];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    self.usernamePlaceHolder = [[NSString alloc] init];
-
-
-//    if (![PFUser currentUser])
-//    {
-//        //Create the log in and sign up view controller
-//        PFLogInViewController *logInViewController = [[PFLogInViewController alloc] init];
-//        [logInViewController setDelegate:self];
-//        PFSignUpViewController *signUpViewController = [[PFSignUpViewController alloc] init];
-//        [signUpViewController setDelegate:self];
-//
-//        //Assign sign up controller to be displayed from the login controller
-//        [logInViewController setSignUpController:signUpViewController];
-//
-//        //Show the log in view controller
-//        [self presentViewController:logInViewController animated:NO completion:NULL];
-//    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -120,9 +83,32 @@
     [self.commentTableView reloadData];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.usernamePlaceHolder = [[NSString alloc] init];
+}
+
+
+
+
+
+#pragma mark - notifications
+- (void)receiveNotification: (NSNotification *) notification
+{
+    if ([[notification name] isEqualToString:@"Test1"])
+    {
+        [self reload];
+    }
+}
+
+
+
+
+
+
 
 #pragma mark - send button  CGAFFINE!!!!!
-///
 - (IBAction)sendButtonPressed:(UIButton *)sender
 {
     [self.view endEditing:YES];
@@ -143,10 +129,10 @@
         if (!error) {
             [self retrieveAuthorsUsernames];
             [self retrieveCommentsFromParse];
-
             [self.commentTableView reloadData];
         }
     }];
+
     self.chatTextFieldOutlet.text = @"";
 
     // Create our Installation query
@@ -158,28 +144,24 @@
                                    withMessage:@"new chat message in \"event name\""];
 
 
-
-//    sender.transform = CGAffineTransformMakeScale(.3f, .3f);
-//    [UIView beginAnimations:nil context:nil];
-//    [UIView setAnimationDelegate:self];
-//    [UIView setAnimationDuration:4];
-//    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-//    CGAffineTransform scaleTrans  = CGAffineTransformMakeScale(2.0f, 2.0f);
-//    CGAffineTransform lefttorightTrans  = CGAffineTransformMakeTranslation(-320.0f,-580.0f);
-//    sender.transform = CGAffineTransformConcat(scaleTrans, lefttorightTrans);
-//    [UIView commitAnimations];
-
+    //Animate the send button
+    sender.transform = CGAffineTransformMakeScale(.5f, .5f);
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDuration:1.3];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    CGAffineTransform scaleTrans  = CGAffineTransformMakeScale(1.0f, 1.0f);
+    CGAffineTransform lefttorightTrans  = CGAffineTransformMakeTranslation(0.0f,0.0f);
+    sender.transform = CGAffineTransformConcat(scaleTrans, lefttorightTrans);
+    [UIView commitAnimations];
 }
 
 
 
 #pragma mark - Getting from parse
-
 - (void)retrieveCommentsFromParse
 {
-    //Create a query
     PFQuery *commentQuery = [PFQuery queryWithClassName:@"ChatMessage"];
-    //[commentQuery includeKey:@"message"];
     [commentQuery orderByDescending:@"createdAt"];
 
     [commentQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -197,9 +179,6 @@
 {
     PFQuery *authorQuery = [PFQuery queryWithClassName:@"ChatMessage"];
     [authorQuery orderByDescending:@"createdAt"];
-
-    //Kevins help
-    //[commentQuery includeKey:@"member"];
 
     [authorQuery findObjectsInBackgroundWithBlock:^(NSArray *authors, NSError *error) {
         if (!error)
@@ -224,14 +203,12 @@
 //    return 60;
 //}
 
-
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     self.commentTableView.backgroundColor = [UIColor blackColor];
     return self.chatRoomMessagesArray.count;
 }
-///
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CustomTableViewCell *cell = [[CustomTableViewCell alloc] init];
@@ -244,10 +221,10 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"UserCommentCell"];
 
     }
-    else{
+    else
+    {
         // use the Comment Cell (Dequeue here)
         cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
-
     }
 
     [cell.commentTextLabel setText:[message objectForKey:@"chatText"]];
@@ -280,8 +257,7 @@
 
 
 
-#pragma mark - Method to figure out if scrolling up or down
-
+#pragma mark - (scroll methods) Method to figure out if scrolling up or down
 -(void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
 
     if (velocity.y > 0)
@@ -296,8 +272,13 @@
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.chatTextFieldOutlet resignFirstResponder];
+}
 
-#pragma mark - Keyboard animation stuff, beware... numbers ahead
+
+#pragma mark - Keyboard animation stuff
 
 //new style keyboard animation
 - (void) keyboardDidShow:(NSNotification *)notification
@@ -351,6 +332,12 @@
 //    NSLog(@"some punk likes the giants");
 //
 //}
+
+
+
+
+
+
 
 @end
 
