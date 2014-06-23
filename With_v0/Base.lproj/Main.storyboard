@@ -327,12 +327,6 @@
                                                     <rect key="frame" x="272" y="8" width="36" height="36"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z26-Xc-Dj6">
-                                                    <rect key="frame" x="20" y="8" width="171" height="52"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYB-iq-KLr">
                                                     <rect key="frame" x="216" y="50" width="92" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -340,10 +334,17 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QXn-JO-pCq">
+                                                    <rect key="frame" x="20" y="8" width="170" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="commentTextLabel" destination="z26-Xc-Dj6" id="j2R-bK-8Rv"/>
+                                            <outlet property="customTextView" destination="QXn-JO-pCq" id="fAQ-db-aJT"/>
                                             <outlet property="imageInCell" destination="6WL-ux-6x2" id="fPZ-pZ-DcY"/>
                                             <outlet property="usernameLabelInCell" destination="dYB-iq-KLr" id="ccF-MM-GDi"/>
                                         </connections>
@@ -366,16 +367,17 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUw-0t-2SO">
-                                                    <rect key="frame" x="130" y="12" width="181" height="54"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0df-pI-NlG">
+                                                    <rect key="frame" x="140" y="7" width="170" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="commentTextLabel" destination="zUw-0t-2SO" id="pWd-Ej-6Xd"/>
+                                            <outlet property="customTextView" destination="0df-pI-NlG" id="BxY-WF-nlH"/>
                                             <outlet property="imageInCell" destination="G1h-DC-yFk" id="5br-9f-2Ki"/>
                                             <outlet property="usernameLabelInCell" destination="yw9-5l-zlu" id="bFV-xO-86Q"/>
                                         </connections>
@@ -397,12 +399,28 @@
                                     <action selector="sendButtonPressed:" destination="ZG1-5c-rcA" eventType="touchUpInside" id="If0-Iz-u2d"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pIz-3a-6Fg">
+                                <rect key="frame" x="85" y="230" width="180" height="284"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uiw-ZD-jZz">
+                                        <rect key="frame" x="5" y="20" width="170" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="chatTextFieldOutlet" destination="EjL-Rf-10x" id="t5E-Ph-0eH"/>
                         <outlet property="commentTableView" destination="r9h-Zq-f1h" id="9AV-aK-Xma"/>
+                        <outlet property="hiddenTextView" destination="uiw-ZD-jZz" id="Rlj-Xz-kuI"/>
+                        <outlet property="hiddenView" destination="pIz-3a-6Fg" id="P13-dQ-Rer"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sAz-JN-cVC" userLabel="First Responder" sceneMemberID="firstResponder"/>
