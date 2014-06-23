@@ -19,6 +19,8 @@
 @property UIRefreshControl *refreshControl;
 
 @property NSMutableArray *eventArray;
+@property NSMutableArray *indexPathArray;
+
 
 @end
 
@@ -29,6 +31,7 @@
     [super viewDidLoad];
 
     self.eventArray = [NSMutableArray array];
+    self.indexPathArray = [NSMutableArray array];
 
     self.tabBarController.tabBar.tintColor = [UIColor orangeColor];
 
@@ -63,6 +66,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+
+    if (cell == nil) {
+        cell = [[HomeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    }
+
     PFObject *object = [self.eventArray objectAtIndex:indexPath.row];
 
     ///do dispatch_queue thing here too
@@ -130,17 +138,24 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+
+
 #pragma mark - Query for Events
 
 - (void)queryForEvents
 {
-//    [self.eventArray removeAllObjects];
-
-
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
     [query includeKey:@"creator"];
     query.limit = 4;
-    query.skip = self.eventArray.count;
+
+    if (self.eventArray.count == 0)
+    {
+        query.skip = 0;
+
+    } else
+    {
+        query.skip = self.eventArray.count;
+    }
 
 //    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
@@ -152,9 +167,27 @@
 
          } else if (self.eventArray.count >= 3)
          {
+             int theCount = (int)self.eventArray.count;
              [self.eventArray addObjectsFromArray:objects];
 
              //however many objects come back- loop over them and make the index paths but the rows of the index paths will be the count of the self.eventArray - 1 because of the zero based thing
+
+//             NSInteger objectCount = objects.count;
+//             NSInteger eventCount = self.eventArray.count;
+//
+//             NSInteger difference = eventCount - objectCount;
+
+             for (int i = theCount; i <= self.eventArray.count-1; i++)
+             {
+                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+                 [self.indexPathArray addObject:indexPath];
+             }
+
+//             [self.tableView beginUpdates];
+             [self.tableView insertRowsAtIndexPaths:self.indexPathArray withRowAnimation:UITableViewRowAnimationFade];
+             [self.indexPathArray removeAllObjects];
+
+//             [self.tableView endUpdates];
 
              //nsarray enumerateObjectsUsingBlock:-inside the for loop- it gives you the index
 
