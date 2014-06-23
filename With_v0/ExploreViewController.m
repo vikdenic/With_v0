@@ -99,7 +99,7 @@
              exploreAnnotation.location = [object objectForKey:@"location"];
              exploreAnnotation.date = [object objectForKey:@"eventDate"];
 
-             exploreAnnotation.themeFile = [object objectForKey:@"themeImage"];
+             exploreAnnotation.themeFile = [object objectForKey:@"mapThemeImage"];
              [exploreAnnotation.themeFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
 
                  exploreAnnotation.themeImage = [UIImage imageWithData:data];
@@ -156,14 +156,20 @@
 
     ExploreEventAnnotationView *annotationView = [[ExploreEventAnnotationView alloc]initWithAnnotation:exploreAnnotation reuseIdentifier:nil];
 
-    CGSize sacleSize = CGSizeMake(75, 75);
-    UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
-    [exploreAnnotation.themeImage drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
-    UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+//    CGSize sacleSize = CGSizeMake(100, 50);
+//    UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
+//    [exploreAnnotation.themeImage drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
+//    UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+//
+//    annotationView.image = resizedImage;
+//    annotationView.layer.cornerRadius = resizedImage.size.width/3.14;
 
-    annotationView.image = resizedImage;
-    annotationView.layer.cornerRadius = resizedImage.size.width/2;
-    annotationView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
+    annotationView.image = exploreAnnotation.themeImage;
+    annotationView.layer.cornerRadius = annotationView.image.size.height/2;
+
+
+//    annotationView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
+    annotationView.layer.borderColor = [[UIColor orangeColor] CGColor];
     annotationView.layer.borderWidth = 2.0;
     annotationView.clipsToBounds = YES;
     annotationView.geoPoint = exploreAnnotation.geoPoint;
