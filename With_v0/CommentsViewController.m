@@ -73,6 +73,11 @@ query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     return self.commentsArray.count;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PFObject *comment = [self.commentsArray objectAtIndex:indexPath.row];

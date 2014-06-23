@@ -49,7 +49,9 @@
 
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
 
-    [self queryForEvents];
+//    [self queryForEvents];
+
+
 
 //    PFUser *currentUser = [PFUser currentUser];
 //
@@ -75,15 +77,10 @@
 
 }
 
-//-(void)viewDidAppear:(BOOL)animated
-//{
-//    PFUser *currentUser = [PFUser currentUser];
-//
-//    if (currentUser)
-//    {
-//        self.navigationController.hidesBottomBarWhenPushed = NO;
-//    }
-//}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self queryForEvents];
+}
 
 #pragma mark - Table View
 

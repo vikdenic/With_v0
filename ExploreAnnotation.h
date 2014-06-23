@@ -20,5 +20,6 @@
 @property NSString *location;
 @property PFFile *themeFile;
 @property UIImage *themeImage;
+@property NSString *date;
 
 @end

@@ -12,5 +12,7 @@
 @interface IndividualEventViewController : UIViewController
 
 @property PFObject *event;
+@property PFObject *eventObject;
+
 
 @end

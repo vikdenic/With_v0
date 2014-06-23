@@ -11,14 +11,25 @@
 #import <MapKit/MapKit.h>
 #import "ExploreEventAnnotationView.h"
 #import "ExploreAnnotation.h"
+#import "IndividualEventViewController.h"
 
 @interface ExploreViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
 
-@property (nonatomic, weak)IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
 @property CLLocation *location;
 
 @property NSMutableArray *eventObjects;
+@property NSMutableArray *comparisonExploreAnnotationArray;
+
+//pop up view
+@property (weak, nonatomic) IBOutlet UIView *individualEventView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
+@property (weak, nonatomic) IBOutlet UITextView *detailsTextView;
+
+
 
 @end
 
@@ -28,7 +39,20 @@
 {
     [super viewDidLoad];
 
+
+    UITapGestureRecognizer *mapTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(theMapTap:)];
+        mapTap.numberOfTapsRequired = 1;
+        [self.mapView addGestureRecognizer:mapTap];
+        self.mapView.userInteractionEnabled = YES;
+
+//    UIPanGestureRecognizer *mapTap2 = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(theMapTap2:)];
+//    mapTap2.minimumNumberOfTouches = 1;
+//    [self.mapView addGestureRecognizer:mapTap2];
+
     self.eventObjects = [NSMutableArray array];
+    self.comparisonExploreAnnotationArray = [NSMutableArray array];
+
+    self.individualEventView.hidden = YES;
 
     self.navigationController.navigationBarHidden = YES;
 
@@ -73,14 +97,19 @@
              exploreAnnotation.object = object;
              exploreAnnotation.creator = [object objectForKey:@"creator"];
              exploreAnnotation.location = [object objectForKey:@"location"];
+             exploreAnnotation.date = [object objectForKey:@"eventDate"];
 
              exploreAnnotation.themeFile = [object objectForKey:@"themeImage"];
              [exploreAnnotation.themeFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
 
                  exploreAnnotation.themeImage = [UIImage imageWithData:data];
+
+                 [self.comparisonExploreAnnotationArray addObject:exploreAnnotation];
+                 [self.mapView addAnnotation:exploreAnnotation];
+
              }];
 
-             [self.mapView addAnnotation:exploreAnnotation];
+//             [self.mapView addAnnotation:exploreAnnotation];
          }
      }];
 }
@@ -125,9 +154,9 @@
 
     ExploreAnnotation *exploreAnnotation = (ExploreAnnotation *)annotation;
 
-    MKAnnotationView *annotationView = [[MKAnnotationView alloc]initWithAnnotation:exploreAnnotation reuseIdentifier:nil];
+    ExploreEventAnnotationView *annotationView = [[ExploreEventAnnotationView alloc]initWithAnnotation:exploreAnnotation reuseIdentifier:nil];
 
-    CGSize sacleSize = CGSizeMake(50, 50);
+    CGSize sacleSize = CGSizeMake(75, 75);
     UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
     [exploreAnnotation.themeImage drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
     UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -137,15 +166,18 @@
     annotationView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
     annotationView.layer.borderWidth = 2.0;
     annotationView.clipsToBounds = YES;
+    annotationView.geoPoint = exploreAnnotation.geoPoint;
 
-//    //double tap to expand?
-//    if (annotationView.gestureRecognizers.count == 0)
-//    {
-//        UITapGestureRecognizer *tapping = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapTap:)];
-//        tapping.numberOfTapsRequired = 2;
-//        [annotationView addGestureRecognizer:tapping];
-//        annotationView.userInteractionEnabled = YES;
-//    }
+
+
+    //double tap to expand?
+    if (annotationView.gestureRecognizers.count == 0)
+    {
+        UITapGestureRecognizer *tapping = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapTap:)];
+        tapping.numberOfTapsRequired = 2;
+        [annotationView addGestureRecognizer:tapping];
+        annotationView.userInteractionEnabled = YES;
+    }
 
     return annotationView;
 
@@ -153,20 +185,62 @@
 
 #pragma mark - Tap Gesture Recognizer
 
-//- (void)tapTap:(UITapGestureRecognizer *)tapGestureRecognizer
+- (void)tapTap:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    ExploreEventAnnotationView *annotationView = (ExploreEventAnnotationView *)tapGestureRecognizer.view;
+
+    self.individualEventView.hidden = NO;
+
+    for (ExploreAnnotation *exploreAnnotation in self.comparisonExploreAnnotationArray)
+    {
+        if ([annotationView.geoPoint isEqual:exploreAnnotation.geoPoint])
+    {
+
+        self.titleLabel.text = exploreAnnotation.title;
+        self.dateLabel.text = exploreAnnotation.date;
+        self.locationLabel.text = exploreAnnotation.location;
+        self.detailsTextView.text = exploreAnnotation.details;
+        //size to fit this
+
+        self.eventObject = exploreAnnotation.object;
+    } else {
+    }
+
+    }
+}
+
+- (void)theMapTap:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    self.individualEventView.hidden = YES;
+}
+
+//- (void)theMapTap2:(UIPanGestureRecognizer *)panGestureRecognizer
 //{
-//    PicNoteAnnotationView *annotationView = (PicNoteAnnotationView *)tapGestureRecognizer.view;
-//
-//    for (Picnote *picNote in self.mapItems)
+//    if (panGestureRecognizer.state == UIGestureRecognizerStateBegan)
 //    {
-//
-//        if ([annotationView.path isEqualToString:[NSString stringWithFormat:@"%@", picNote.path]])
-//        {
-//            self.thePassedPicNote = picNote;
-//            [self performSegueWithIdentifier:@"MapAllPicsToIndividualSegue" sender:self];
-//        }
+//        self.individualEventView.hidden = YES;
 //    }
 //}
+
+- (IBAction)onExitButtonTapped:(id)sender
+{
+    self.individualEventView.hidden = YES;
+
+}
+
+#pragma mark - Segue
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"FromExploreToIndividualSegue"])
+    {
+        IndividualEventViewController *individualEventViewController = segue.destinationViewController;
+//        individualEventViewController.eventObject = self.eventObject;
+
+        //what is the best way to pass this?
+    }
+}
+
 
 
 @end
