@@ -97,7 +97,7 @@
     [self.dateAndTimeButton setTitle:formattedDateString forState:UIControlStateNormal];
     }
     else{
-    [self.dateAndTimeButton setTitle:@"          Date and Time" forState:UIControlStateNormal];
+    [self.dateAndTimeButton setTitle:@"           Date and Time" forState:UIControlStateNormal];
     }
 }
 
@@ -149,8 +149,8 @@
     self.themeImageView.image = nil;
     self.titleTextField.text = nil;
     self.detailsTextView.text = nil;
+    self.dateAndTimeButton.titleLabel.text = @"           Date and Time";
     self.locationButton.titleLabel.text = @"           Location";
-//    self.dateAndTimeButton.titleLabel.text = nil;
 }
 
 #pragma mark - Date and Time View Animation

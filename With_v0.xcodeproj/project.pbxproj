@@ -454,7 +454,7 @@
 				ORGANIZATIONNAME = "Mobile Makers";
 				TargetAttributes = {
 					93952F89194D5D4C001AA3E4 = {
-						DevelopmentTeam = 368PGMF9QJ;
+						DevelopmentTeam = 3DJPBY6593;
 					};
 					93952FAA194D5D4C001AA3E4 = {
 						TestTargetID = 93952F89194D5D4C001AA3E4;
