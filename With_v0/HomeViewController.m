@@ -28,6 +28,8 @@
 {
     [super viewDidLoad];
 
+    self.eventArray = [NSMutableArray array];
+
     self.tabBarController.tabBar.tintColor = [UIColor orangeColor];
 
     PFUser *currentUser = [PFUser currentUser];
@@ -134,7 +136,6 @@
 {
 //    [self.eventArray removeAllObjects];
 
-    self.eventArray = [NSMutableArray array];
 
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
     [query includeKey:@"creator"];
@@ -144,13 +145,19 @@
 //    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
-//         if (self.eventArray.count < 3)
-//         {
+         if (self.eventArray.count < 3)
+         {
             [self.eventArray addObjectsFromArray:objects];
             [self.tableView reloadData];
 
-//         } else if (self.eventArray.count >= 3)
-//         {
+         } else if (self.eventArray.count >= 3)
+         {
+             [self.eventArray addObjectsFromArray:objects];
+
+             //however many objects come back- loop over them and make the index paths but the rows of the index paths will be the count of the self.eventArray - 1 because of the zero based thing
+
+             //nsarray enumerateObjectsUsingBlock:-inside the for loop- it gives you the index
+
 //             NSInteger num1 = self.eventArray.count -1;
 //             NSInteger num2 = self.eventArray.count -2;
 //             NSInteger num3 = self.eventArray.count -3;
@@ -162,10 +169,10 @@
 //             NSIndexPath* indexPath4 = [NSIndexPath indexPathForRow:num4 inSection:1];
 //
 //             NSArray *indexPathArray = [NSArray arrayWithObjects:indexPath1, indexPath2, indexPath3, indexPath4, nil];
-//
-//             //getting called too soon?
+
+             //getting called too soon?
 //            [self.tableView reloadRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationNone];
-//         }
+         }
     }];
 }
 
