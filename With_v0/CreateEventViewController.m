@@ -10,10 +10,11 @@
 #import <Parse/Parse.h>
 #import "ChooseEventLocationViewController.h"
 #import "DateAndTimeViewController.h"
+#import "GKImagePicker.h"
 
-@interface CreateEventViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate>
+@interface CreateEventViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, GKImagePickerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIImageView *themeImageView;
+@property (nonatomic, strong) IBOutlet UIImageView *themeImageView;
 //@property (weak, nonatomic) IBOutlet UITextView *titleTextView;
 @property (strong, nonatomic) IBOutlet UITextField *titleTextField;
 @property (strong, nonatomic) IBOutlet UITextView *detailsTextView;
@@ -26,13 +27,22 @@
 
 @property UIImagePickerController *cameraController;
 @property UIImage *themeImagePicked;
-@property PFFile *themeImagePicker;
+@property PFFile *themeImageFile;
 @property (weak, nonatomic) IBOutlet UILabel *detailsPlaceholderLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *placeholderLabel;
+
+
+@property (nonatomic, strong) GKImagePicker *imagePicker;
+@property (nonatomic, strong) UIPopoverController *popoverController;
+
+
 @end
 
 @implementation CreateEventViewController
+
+@synthesize imagePicker;
+@synthesize popoverController;
+
 
 - (void)viewDidLoad
 {
@@ -127,7 +137,7 @@
                                                   longitude:self.coordinate.longitude];
     event[@"locationGeoPoint"] = geoPoint;
 
-    event[@"themeImage"] = self.themeImagePicker;
+    event[@"themeImage"] = self.themeImageFile;
     event[@"creator"] = [PFUser currentUser];
     event[@"eventDate"] = self.dateString;
     [event saveInBackground];
@@ -150,7 +160,20 @@
 
 - (void)tapTap:(UITapGestureRecognizer *)tapGestureRecognizer
 {
-    [self presentViewController:self.cameraController animated:NO completion:nil];
+//    [self presentViewController:self.cameraController animated:NO completion:nil];
+    self.imagePicker = [[GKImagePicker alloc] init];
+    self.imagePicker.cropSize = CGSizeMake(320, 160);
+    self.imagePicker.delegate = self;
+
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+
+        self.popoverController = [[UIPopoverController alloc] initWithContentViewController:self.imagePicker.imagePickerController];
+        [self.popoverController presentPopoverFromRect:tapGestureRecognizer.view.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+
+    } else {
+
+        [self presentModalViewController:self.imagePicker.imagePickerController animated:YES];
+    }
 }
 
 #pragma mark - Image Picker
@@ -166,33 +189,63 @@
 //going to put a tap gesture on this so that when the user taps it, modally a view controller comes up that allows the user to select photos from their library to put in as the theme photo
 //might have some sizing issues and stuff here
 
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+-(void)imagePicker:(GKImagePicker *)imagePicker pickedImage:(UIImage *)image
 {
-    [picker dismissViewControllerAnimated:NO completion:^{
-
-        self.themeImagePicked = [info valueForKey:UIImagePickerControllerOriginalImage];
-        //here I should resize the image to the size of the imageView so it looks good and normal before saving it?
-        //maybe this might make it weird in the other image views it goes in
+//    self.themeImageView.image = image;
 
         CGSize scaledSize = CGSizeMake(320, 160);
         UIGraphicsBeginImageContextWithOptions(scaledSize, NO, 2.0);
 
-        [self.themeImagePicked drawInRect:(CGRect){.size = scaledSize}];
+        [image drawInRect:(CGRect){.size = scaledSize}];
         UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
 
         self.themeImageView.image = resizedImage;
 
-        NSData *themeImageData = UIImagePNGRepresentation(self.themeImagePicked);
-        self.themeImagePicker = [PFFile fileWithData:themeImageData];
+        NSData *themeImageData = UIImagePNGRepresentation(resizedImage);
+        self.themeImageFile = [PFFile fileWithData:themeImageData];
 
-        if (self.themeImageView.image)
-        {
-            self.changeThemeButton.hidden = YES;
-        }
-        [self dismissViewControllerAnimated:NO completion:nil];
-    }];
+    [self hideImagePicker];
 }
+
+- (void)hideImagePicker{
+    if (UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+
+        [self.popoverController dismissPopoverAnimated:YES];
+
+    } else {
+
+        [self.imagePicker.imagePickerController dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+//-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+//{
+//    [picker dismissViewControllerAnimated:NO completion:^{
+//
+//        self.themeImagePicked = [info valueForKey:UIImagePickerControllerOriginalImage];
+//        //here I should resize the image to the size of the imageView so it looks good and normal before saving it?
+//        //maybe this might make it weird in the other image views it goes in
+//
+//        CGSize scaledSize = CGSizeMake(320, 160);
+//        UIGraphicsBeginImageContextWithOptions(scaledSize, NO, 2.0);
+//
+//        [self.themeImagePicked drawInRect:(CGRect){.size = scaledSize}];
+//        UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+//        UIGraphicsEndImageContext();
+//
+//        self.themeImageView.image = resizedImage;
+//
+//        NSData *themeImageData = UIImagePNGRepresentation(self.themeImagePicked);
+//        self.themeImagePicker = [PFFile fileWithData:themeImageData];
+//
+//        if (self.themeImageView.image)
+//        {
+//            self.changeThemeButton.hidden = YES;
+//        }
+//        [self dismissViewControllerAnimated:NO completion:nil];
+//    }];
+//}
 
 #pragma mark - Text View
 

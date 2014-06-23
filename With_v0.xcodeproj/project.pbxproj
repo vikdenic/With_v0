@@ -33,6 +33,20 @@
 		60F5B3461957537200A80467 /* ExploreEventAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F5B3451957537200A80467 /* ExploreEventAnnotationView.m */; };
 		60F5B34C1957555E00A80467 /* ExploreAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F5B34B1957555E00A80467 /* ExploreAnnotation.m */; };
 		810C1EC3195605B70046DFB1 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 810C1EC1195605B70046DFB1 /* CustomTableViewCell.m */; };
+		930D190F195886DC00AE4AE1 /* GKImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 930D1904195886DC00AE4AE1 /* GKImagePicker.m */; };
+		930D1910195886DC00AE4AE1 /* GKImageCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 930D1906195886DC00AE4AE1 /* GKImageCropViewController.m */; };
+		930D1911195886DC00AE4AE1 /* GKImageCropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 930D1908195886DC00AE4AE1 /* GKImageCropView.m */; };
+		930D1912195886DC00AE4AE1 /* GKImageCropOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 930D190A195886DC00AE4AE1 /* GKImageCropOverlayView.m */; };
+		930D1913195886DC00AE4AE1 /* GKCropBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 930D190C195886DC00AE4AE1 /* GKCropBorderView.m */; };
+		930D1914195886DC00AE4AE1 /* GKResizeableCropOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 930D190E195886DC00AE4AE1 /* GKResizeableCropOverlayView.m */; };
+		930D191D195886E700AE4AE1 /* PLCameraSheetButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 930D1915195886E700AE4AE1 /* PLCameraSheetButton@2x.png */; };
+		930D191E195886E700AE4AE1 /* PLCameraSheetButtonPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 930D1916195886E700AE4AE1 /* PLCameraSheetButtonPressed@2x.png */; };
+		930D191F195886E700AE4AE1 /* PLCameraSheetDoneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 930D1917195886E700AE4AE1 /* PLCameraSheetDoneButton@2x.png */; };
+		930D1920195886E700AE4AE1 /* PLCameraSheetDoneButtonPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 930D1918195886E700AE4AE1 /* PLCameraSheetDoneButtonPressed@2x.png */; };
+		930D1921195886E700AE4AE1 /* PLCameraSheetButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 930D1919195886E700AE4AE1 /* PLCameraSheetButton.png */; };
+		930D1922195886E700AE4AE1 /* PLCameraSheetButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 930D191A195886E700AE4AE1 /* PLCameraSheetButtonPressed.png */; };
+		930D1923195886E700AE4AE1 /* PLCameraSheetDoneButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 930D191B195886E700AE4AE1 /* PLCameraSheetDoneButton.png */; };
+		930D1924195886E700AE4AE1 /* PLCameraSheetDoneButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 930D191C195886E700AE4AE1 /* PLCameraSheetDoneButtonPressed.png */; };
 		93513A6119528A9000302A54 /* ChooseEventLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93513A6019528A9000302A54 /* ChooseEventLocationViewController.m */; };
 		93513A641952902C00302A54 /* FSVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 93513A631952902C00302A54 /* FSVenue.m */; };
 		9375544719509CAA008AAD45 /* InvitesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9375544619509CAA008AAD45 /* InvitesViewController.m */; };
@@ -110,6 +124,26 @@
 		60F5B34B1957555E00A80467 /* ExploreAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExploreAnnotation.m; path = ../ExploreAnnotation.m; sourceTree = "<group>"; };
 		810C1EC0195605B70046DFB1 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		810C1EC1195605B70046DFB1 /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
+		930D1903195886DC00AE4AE1 /* GKImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKImagePicker.h; sourceTree = "<group>"; };
+		930D1904195886DC00AE4AE1 /* GKImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKImagePicker.m; sourceTree = "<group>"; };
+		930D1905195886DC00AE4AE1 /* GKImageCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKImageCropViewController.h; sourceTree = "<group>"; };
+		930D1906195886DC00AE4AE1 /* GKImageCropViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKImageCropViewController.m; sourceTree = "<group>"; };
+		930D1907195886DC00AE4AE1 /* GKImageCropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKImageCropView.h; sourceTree = "<group>"; };
+		930D1908195886DC00AE4AE1 /* GKImageCropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKImageCropView.m; sourceTree = "<group>"; };
+		930D1909195886DC00AE4AE1 /* GKImageCropOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKImageCropOverlayView.h; sourceTree = "<group>"; };
+		930D190A195886DC00AE4AE1 /* GKImageCropOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKImageCropOverlayView.m; sourceTree = "<group>"; };
+		930D190B195886DC00AE4AE1 /* GKCropBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKCropBorderView.h; sourceTree = "<group>"; };
+		930D190C195886DC00AE4AE1 /* GKCropBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKCropBorderView.m; sourceTree = "<group>"; };
+		930D190D195886DC00AE4AE1 /* GKResizeableCropOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKResizeableCropOverlayView.h; sourceTree = "<group>"; };
+		930D190E195886DC00AE4AE1 /* GKResizeableCropOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKResizeableCropOverlayView.m; sourceTree = "<group>"; };
+		930D1915195886E700AE4AE1 /* PLCameraSheetButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PLCameraSheetButton@2x.png"; sourceTree = "<group>"; };
+		930D1916195886E700AE4AE1 /* PLCameraSheetButtonPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PLCameraSheetButtonPressed@2x.png"; sourceTree = "<group>"; };
+		930D1917195886E700AE4AE1 /* PLCameraSheetDoneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PLCameraSheetDoneButton@2x.png"; sourceTree = "<group>"; };
+		930D1918195886E700AE4AE1 /* PLCameraSheetDoneButtonPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PLCameraSheetDoneButtonPressed@2x.png"; sourceTree = "<group>"; };
+		930D1919195886E700AE4AE1 /* PLCameraSheetButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLCameraSheetButton.png; sourceTree = "<group>"; };
+		930D191A195886E700AE4AE1 /* PLCameraSheetButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLCameraSheetButtonPressed.png; sourceTree = "<group>"; };
+		930D191B195886E700AE4AE1 /* PLCameraSheetDoneButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLCameraSheetDoneButton.png; sourceTree = "<group>"; };
+		930D191C195886E700AE4AE1 /* PLCameraSheetDoneButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLCameraSheetDoneButtonPressed.png; sourceTree = "<group>"; };
 		93513A5F19528A9000302A54 /* ChooseEventLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseEventLocationViewController.h; sourceTree = "<group>"; };
 		93513A6019528A9000302A54 /* ChooseEventLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseEventLocationViewController.m; sourceTree = "<group>"; };
 		93513A621952902C00302A54 /* FSVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSVenue.h; sourceTree = "<group>"; };
@@ -209,6 +243,41 @@
 			name = ChatFolder;
 			sourceTree = "<group>";
 		};
+		930D1901195886BE00AE4AE1 /* GK Classes */ = {
+			isa = PBXGroup;
+			children = (
+				930D1902195886CC00AE4AE1 /* images */,
+				930D1903195886DC00AE4AE1 /* GKImagePicker.h */,
+				930D1904195886DC00AE4AE1 /* GKImagePicker.m */,
+				930D1905195886DC00AE4AE1 /* GKImageCropViewController.h */,
+				930D1906195886DC00AE4AE1 /* GKImageCropViewController.m */,
+				930D1907195886DC00AE4AE1 /* GKImageCropView.h */,
+				930D1908195886DC00AE4AE1 /* GKImageCropView.m */,
+				930D1909195886DC00AE4AE1 /* GKImageCropOverlayView.h */,
+				930D190A195886DC00AE4AE1 /* GKImageCropOverlayView.m */,
+				930D190B195886DC00AE4AE1 /* GKCropBorderView.h */,
+				930D190C195886DC00AE4AE1 /* GKCropBorderView.m */,
+				930D190D195886DC00AE4AE1 /* GKResizeableCropOverlayView.h */,
+				930D190E195886DC00AE4AE1 /* GKResizeableCropOverlayView.m */,
+			);
+			name = "GK Classes";
+			sourceTree = "<group>";
+		};
+		930D1902195886CC00AE4AE1 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				930D1915195886E700AE4AE1 /* PLCameraSheetButton@2x.png */,
+				930D1916195886E700AE4AE1 /* PLCameraSheetButtonPressed@2x.png */,
+				930D1917195886E700AE4AE1 /* PLCameraSheetDoneButton@2x.png */,
+				930D1918195886E700AE4AE1 /* PLCameraSheetDoneButtonPressed@2x.png */,
+				930D1919195886E700AE4AE1 /* PLCameraSheetButton.png */,
+				930D191A195886E700AE4AE1 /* PLCameraSheetButtonPressed.png */,
+				930D191B195886E700AE4AE1 /* PLCameraSheetDoneButton.png */,
+				930D191C195886E700AE4AE1 /* PLCameraSheetDoneButtonPressed.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
 		93952F81194D5D4C001AA3E4 = {
 			isa = PBXGroup;
 			children = (
@@ -282,6 +351,7 @@
 				60F5B34B1957555E00A80467 /* ExploreAnnotation.m */,
 				60F5B3441957537200A80467 /* ExploreEventAnnotationView.h */,
 				60F5B3451957537200A80467 /* ExploreEventAnnotationView.m */,
+				930D1901195886BE00AE4AE1 /* GK Classes */,
 				93952FCB194D7318001AA3E4 /* CreateEventViewController.h */,
 				93952FCC194D7318001AA3E4 /* CreateEventViewController.m */,
 				93513A5F19528A9000302A54 /* ChooseEventLocationViewController.h */,
@@ -384,7 +454,7 @@
 				ORGANIZATIONNAME = "Mobile Makers";
 				TargetAttributes = {
 					93952F89194D5D4C001AA3E4 = {
-						DevelopmentTeam = ZNAFR9K9ZC;
+						DevelopmentTeam = 3DJPBY6593;
 					};
 					93952FAA194D5D4C001AA3E4 = {
 						TestTargetID = 93952F89194D5D4C001AA3E4;
@@ -416,8 +486,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				93952FA6194D5D4C001AA3E4 /* Images.xcassets in Resources */,
+				930D191F195886E700AE4AE1 /* PLCameraSheetDoneButton@2x.png in Resources */,
+				930D191D195886E700AE4AE1 /* PLCameraSheetButton@2x.png in Resources */,
+				930D191E195886E700AE4AE1 /* PLCameraSheetButtonPressed@2x.png in Resources */,
+				930D1924195886E700AE4AE1 /* PLCameraSheetDoneButtonPressed.png in Resources */,
+				930D1921195886E700AE4AE1 /* PLCameraSheetButton.png in Resources */,
 				93952F98194D5D4C001AA3E4 /* InfoPlist.strings in Resources */,
+				930D1920195886E700AE4AE1 /* PLCameraSheetDoneButtonPressed@2x.png in Resources */,
 				93952FA1194D5D4C001AA3E4 /* Main.storyboard in Resources */,
+				930D1923195886E700AE4AE1 /* PLCameraSheetDoneButton.png in Resources */,
+				930D1922195886E700AE4AE1 /* PLCameraSheetButtonPressed.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,16 +514,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				930D1910195886DC00AE4AE1 /* GKImageCropViewController.m in Sources */,
 				93952FD0194D7347001AA3E4 /* FindFriendsViewController.m in Sources */,
 				60F47AB5194E7653007422E7 /* IndividualEventViewController.m in Sources */,
 				93952FCA194D7241001AA3E4 /* ExploreViewController.m in Sources */,
 				60C72085194F677300ADE5DF /* ChatEventViewController.m in Sources */,
 				608B6C991950DBCF007D4503 /* LoginViewController.m in Sources */,
+				930D190F195886DC00AE4AE1 /* GKImagePicker.m in Sources */,
+				930D1914195886DC00AE4AE1 /* GKResizeableCropOverlayView.m in Sources */,
 				60F47AB2194E5223007422E7 /* HomeTableViewCell.m in Sources */,
 				607E90EC19565E8D006F88C8 /* IndividualEventPhoto.m in Sources */,
 				93513A6119528A9000302A54 /* ChooseEventLocationViewController.m in Sources */,
 				60F5B3461957537200A80467 /* ExploreEventAnnotationView.m in Sources */,
 				93952FCD194D7318001AA3E4 /* CreateEventViewController.m in Sources */,
+				930D1913195886DC00AE4AE1 /* GKCropBorderView.m in Sources */,
 				60C72097194FAFC200ADE5DF /* StreamTableViewCell.m in Sources */,
 				608B6C9E1950FF51007D4503 /* CommentsViewController.m in Sources */,
 				9375544A1950A5BF008AAD45 /* FindFriendsTableViewCell.m in Sources */,
@@ -456,8 +538,10 @@
 				60C72094194F692000ADE5DF /* StreamEventViewController.m in Sources */,
 				93952F9A194D5D4C001AA3E4 /* main.m in Sources */,
 				93952FC7194D6BFC001AA3E4 /* ProfileViewController.m in Sources */,
+				930D1912195886DC00AE4AE1 /* GKImageCropOverlayView.m in Sources */,
 				601F5D911951DD8E00B6D89C /* CommentsTableViewCell.m in Sources */,
 				9375544D1950B883008AAD45 /* EditProfileViewController.m in Sources */,
+				930D1911195886DC00AE4AE1 /* GKImageCropView.m in Sources */,
 				93952FC4194D6BEA001AA3E4 /* HomeViewController.m in Sources */,
 				60F5B34C1957555E00A80467 /* ExploreAnnotation.m in Sources */,
 				93802209195659A0004B492D /* DateAndTimeViewController.m in Sources */,
