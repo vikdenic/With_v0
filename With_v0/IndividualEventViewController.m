@@ -70,6 +70,12 @@
 
     self.yesButtonTapped = NO;
     self.noButtonTapped = NO;
+
+//    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
+//    [query whereKey:@"objectId" equalTo:self.event.objectId];
+//    [query includeKey:@"usersAttending"];
+//    [query]
+
 }
 
 #pragma mark- Helper Methods
