@@ -25,6 +25,18 @@
 
 @property NSString *usernamePlaceHolder;
 
+@property CGRect *tempCGRect;
+
+@property CGFloat height;
+
+@property CGFloat tempHeightOfLabel;
+@property CGFloat width;
+
+
+@property (weak, nonatomic) IBOutlet UITextView *hiddenTextView;
+
+@property (weak, nonatomic) IBOutlet UIView *hiddenView;
+
 @end
 
 
@@ -67,6 +79,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
 
     self.navigationController.hidesBottomBarWhenPushed = NO;
+
+    self.width = self.hiddenTextView.frame.size.width;
+    self.tempHeightOfLabel = self.hiddenTextView.frame.size.height;
+
+    self.hiddenView.hidden = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -101,7 +118,23 @@
 {
     [self.view endEditing:YES];
 
+
+    ///
+    self.hiddenTextView.text = self.chatTextFieldOutlet.text;
+    [self.hiddenTextView sizeToFit];
+
+    self.height = self.hiddenTextView.frame.size.height;
+
+    NSLog(@"%f", self.height);
+
     self.enteredText = self.chatTextFieldOutlet.text;
+
+    self.tempHeightOfLabel = self.hiddenTextView.frame.size.height;
+
+    self.hiddenTextView.frame = CGRectMake(0, 0, self.width, self.height);
+    ///
+
+
 
     //Create Comment Object
     PFObject *chatComment = [PFObject objectWithClassName:@"ChatMessage"];
@@ -115,6 +148,7 @@
     //Save comment
     [chatComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
+
             [self retrieveAuthorsUsernames];
             [self retrieveCommentsFromParse];
             [self.commentTableView reloadData];
@@ -193,13 +227,13 @@
 
     if (velocity.y > 0)
     {
-        [self reload];
+        //[self reload];
         NSLog(@"up");
     }
     if (velocity.y < 0)
     {
         NSLog(@"down");
-        [self reload];
+        //[self reload];
     }
 }
 
@@ -268,17 +302,34 @@
 
 #pragma mark - TableView del methods //------------------------------------------------
 
-////FInish me
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    CustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
-//    return 60;
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CustomTableViewCell *cell = [[CustomTableViewCell alloc] init];
+
+    cell.customTextView.frame = CGRectMake(0, 0, self.hiddenTextView.frame.size.width, self.height);
+
+    [cell.customTextView sizeToFit];
+
+    CGFloat cellSeperation = 10;
+
+    if (self.height < 80) {
+        return 80;
+    } else {
+        cellSeperation = 10;
+        return self.height + cellSeperation;
+    }
+
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //self.commentTableView.backgroundColor = [UIColor blackColor];
     return self.chatRoomMessagesArray.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -288,37 +339,39 @@
     PFObject *author = [self.authorsArray objectAtIndex:indexPath.row];
     self.usernamePlaceHolder = [author objectForKey:@"author"];
 
+    ///
+    cell.customTextView.text = self.enteredText;
+    cell.customTextView.frame = CGRectMake(0, 0, self.hiddenTextView.frame.size.width, self.height);
+
+    [cell.customTextView sizeToFit];
+    ///
+
     if ([self.usernamePlaceHolder isEqualToString:[PFUser currentUser].username])
     {
         cell = [tableView dequeueReusableCellWithIdentifier:@"UserCommentCell"];
 
-    }
-    else
-    {
-        // use the Comment Cell (Dequeue here)
+    } else {
         cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
     }
 
-    [cell.commentTextLabel setText:[message objectForKey:@"chatText"]];
+    [cell.customTextView setText:[message objectForKey:@"chatText"]];
 
     cell.usernameLabelInCell.text = self.usernamePlaceHolder;
 
     cell.usernameLabelInCell.textColor = [UIColor orangeColor];
-    //cell.commentTextLabel.textColor = [UIColor blackColor];
 
     //Avatar pic stuff
     cell.imageInCell.image = [UIImage imageNamed:@"pacMan.jpg"];
     cell.imageInCell.layer.borderWidth = 1.0f;
-    cell.imageInCell.layer.cornerRadius = 17.6;
+    cell.imageInCell.layer.cornerRadius = 14.6;
     cell.imageInCell.layer.masksToBounds = YES;
-    cell.imageInCell.layer.borderColor = [[UIColor whiteColor] CGColor];
-
+    cell.imageInCell.layer.borderColor = [[UIColor blackColor] CGColor];
+    
     //Rotate the cell too
     cell.transform = CGAffineTransformMakeRotation(M_PI);
     
     return cell;
 }
-
 
 @end
 

@@ -6,9 +6,10 @@
 #import <UIKit/UIKit.h>
 
 @interface CustomTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UITextView *customTextView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageInCell;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabelInCell;
-@property (weak, nonatomic) IBOutlet UITextView *commentTextView;
-@property (weak, nonatomic) IBOutlet UILabel *commentTextLabel;
+
+
 
 @end
