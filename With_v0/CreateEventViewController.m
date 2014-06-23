@@ -27,7 +27,7 @@
 
 @property UIImagePickerController *cameraController;
 @property UIImage *themeImagePicked;
-@property PFFile *themeImagePicker;
+@property PFFile *themeImageFile;
 @property (weak, nonatomic) IBOutlet UILabel *detailsPlaceholderLabel;
 @property (weak, nonatomic) IBOutlet UILabel *placeholderLabel;
 
@@ -137,7 +137,7 @@
                                                   longitude:self.coordinate.longitude];
     event[@"locationGeoPoint"] = geoPoint;
 
-    event[@"themeImage"] = self.themeImagePicker;
+    event[@"themeImage"] = self.themeImageFile;
     event[@"creator"] = [PFUser currentUser];
     event[@"eventDate"] = self.dateString;
     [event saveInBackground];
@@ -173,7 +173,6 @@
     } else {
 
         [self presentModalViewController:self.imagePicker.imagePickerController animated:YES];
-
     }
 }
 
@@ -192,7 +191,20 @@
 
 -(void)imagePicker:(GKImagePicker *)imagePicker pickedImage:(UIImage *)image
 {
-    self.themeImageView.image = image;
+//    self.themeImageView.image = image;
+
+        CGSize scaledSize = CGSizeMake(320, 160);
+        UIGraphicsBeginImageContextWithOptions(scaledSize, NO, 2.0);
+
+        [image drawInRect:(CGRect){.size = scaledSize}];
+        UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+
+        self.themeImageView.image = resizedImage;
+
+        NSData *themeImageData = UIImagePNGRepresentation(resizedImage);
+        self.themeImageFile = [PFFile fileWithData:themeImageData];
+
     [self hideImagePicker];
 }
 
