@@ -50,7 +50,7 @@
     //pass title of event to nav bar title
 
     self.detailsTextView.text = self.event[@"details"];
-    self.addressTextView.text = self.event[@"address"];
+    self.addressTextView.text = self.event[@"location"];
     self.dateAndTimeTextView.text = self.event[@"eventDate"];
 
     //need to have a place holder if stuff is empty so it doesn't crash
