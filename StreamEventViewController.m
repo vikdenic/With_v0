@@ -50,7 +50,7 @@
 
     self.theLegitArrayOfEverything = [NSMutableArray array];
 
-    [self queryForImages];
+//    [self queryForImages];
 
     //pull to refresh
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
