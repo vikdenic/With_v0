@@ -27,7 +27,10 @@
 
 @property UIImagePickerController *cameraController;
 @property UIImage *themeImagePicked;
+
 @property PFFile *themeImageFile;
+@property PFFile *mapThemeImageFile;
+
 @property (weak, nonatomic) IBOutlet UILabel *detailsPlaceholderLabel;
 @property (weak, nonatomic) IBOutlet UILabel *placeholderLabel;
 
@@ -97,7 +100,7 @@
     [self.dateAndTimeButton setTitle:formattedDateString forState:UIControlStateNormal];
     }
     else{
-    [self.dateAndTimeButton setTitle:@"          Date and Time" forState:UIControlStateNormal];
+    [self.dateAndTimeButton setTitle:@"           Date and Time" forState:UIControlStateNormal];
     }
 }
 
@@ -138,6 +141,7 @@
     event[@"locationGeoPoint"] = geoPoint;
 
     event[@"themeImage"] = self.themeImageFile;
+    event[@"mapThemeImage"] = self.mapThemeImageFile;
     event[@"creator"] = [PFUser currentUser];
     event[@"eventDate"] = self.dateString;
     [event saveInBackground];
@@ -149,8 +153,8 @@
     self.themeImageView.image = nil;
     self.titleTextField.text = nil;
     self.detailsTextView.text = nil;
+    self.dateAndTimeButton.titleLabel.text = @"           Date and Time";
     self.locationButton.titleLabel.text = @"           Location";
-//    self.dateAndTimeButton.titleLabel.text = nil;
 }
 
 #pragma mark - Date and Time View Animation
@@ -192,7 +196,9 @@
 -(void)imagePicker:(GKImagePicker *)imagePicker pickedImage:(UIImage *)image
 {
 //    self.themeImageView.image = image;
+    UIImage *tempImage = image;
 
+        //THEME IMAGE FOR HOMEPAGE
         CGSize scaledSize = CGSizeMake(320, 160);
         UIGraphicsBeginImageContextWithOptions(scaledSize, NO, 2.0);
 
@@ -204,8 +210,22 @@
 
         NSData *themeImageData = UIImagePNGRepresentation(resizedImage);
         self.themeImageFile = [PFFile fileWithData:themeImageData];
+        //
 
-    [self hideImagePicker];
+
+        //THEME IMAGE FOR MAP
+        CGSize tempScaledSize = CGSizeMake(60, 30);
+        UIGraphicsBeginImageContextWithOptions(tempScaledSize, NO, 2.0);
+
+        [tempImage drawInRect:(CGRect){.size = tempScaledSize}];
+        UIImage *resizedMapImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+
+        NSData *mapThemeImageData = UIImagePNGRepresentation(resizedMapImage);
+        self.mapThemeImageFile = [PFFile fileWithData:mapThemeImageData];
+        //
+
+        [self hideImagePicker];
 }
 
 - (void)hideImagePicker{

@@ -169,6 +169,7 @@
     exploreAnnotation.themeImageView.clipsToBounds = YES;
 
     annotationView.layer.borderColor = [[UIColor orangeColor]CGColor];
+
     annotationView.layer.borderWidth = 2.0;
 
     [annotationView addSubview:exploreAnnotation.themeImageView];
