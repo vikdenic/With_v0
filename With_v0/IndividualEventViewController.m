@@ -38,6 +38,7 @@
     [super viewDidLoad];
 
     [self checkingUsersEventStatus];
+    [self checkingUsersAttending];
 
     self.yesButtonTapped = NO;
     self.noButtonTapped = NO;
@@ -47,15 +48,9 @@
 {
     [super viewWillAppear:animated];
 
-    //pass title of event to nav bar title
-
     self.detailsTextView.text = self.event[@"details"];
     self.addressTextView.text = self.event[@"location"];
     self.dateAndTimeTextView.text = self.event[@"eventDate"];
-
-    //need to have a place holder if stuff is empty so it doesn't crash
-
-    //I could just pass the image since it's the same one they click on
 
     PFUser *user =  [self.event objectForKey:@"creator"];
     self.creatorLabel.text = [NSString stringWithFormat:@"%@", user.username];
@@ -76,15 +71,6 @@
              self.themeImageView.image = resizedImage;
          }
      }];
-
-    PFRelation *relation = [self.event relationForKey:@"usersAttending"];
-    PFQuery *query1 = [relation query];
-    [query1 countObjectsInBackgroundWithBlock:^(int number, NSError *error)
-     {
-         self.topGoingButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-         self.topGoingButton.titleLabel.textAlignment = NSTextAlignmentCenter; 
-         [self.topGoingButton setTitle:[NSString stringWithFormat:@"%i\nGoing", number] forState:UIControlStateNormal];
-    }];
 }
 
 #pragma mark - Action methods
@@ -105,6 +91,7 @@
         PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
         [relation2 removeObject:[PFUser currentUser]];
         [self.event saveInBackground];
+        [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:2.2];
 
     } else {
         self.yesButtonTapped = NO;
@@ -116,6 +103,7 @@
         PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
         [relation2 removeObject:[PFUser currentUser]];
         [self.event saveInBackground];
+        [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:2.2];
     }
 }
 
@@ -128,14 +116,13 @@
         self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
         self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
 
-        //removes current user from going
         PFRelation *relation = [self.event relationForKey:@"usersAttending"];
         [relation removeObject:[PFUser currentUser]];
 
-        //adds current user to not going relation
         PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
         [relation2 addObject:[PFUser currentUser]];
         [self.event saveInBackground];
+        [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:1.2];
 
     } else {
 
@@ -148,6 +135,8 @@
         PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
         [relation2 removeObject:[PFUser currentUser]];
         [self.event saveInBackground];
+        [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:1.2];
+
     }
 }
 
@@ -155,7 +144,6 @@
 
 - (void)checkingUsersEventStatus
 {
-    //check to see if user is going to the event
     PFRelation *relation = [self.event relationforKey:@"usersAttending"];
 
     [[relation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -198,6 +186,18 @@
             }
         }
     }];
+}
+
+- (void)checkingUsersAttending
+{
+    PFRelation *relation = [self.event relationForKey:@"usersAttending"];
+    PFQuery *query1 = [relation query];
+    [query1 countObjectsInBackgroundWithBlock:^(int number, NSError *error)
+     {
+         self.topGoingButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+         self.topGoingButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+         [self.topGoingButton setTitle:[NSString stringWithFormat:@"%i\nGoing", number] forState:UIControlStateNormal];
+     }];
 }
 
 #pragma mark - Segue

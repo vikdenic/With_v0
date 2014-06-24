@@ -36,7 +36,6 @@
     [super viewDidLoad];
 
     //add a uiimageview and then on viewDidAppear I remove it or animate it out after 1.2 seconds
-
     self.theLegitArrayOfEverything = [NSMutableArray array];
 
     //pull to refresh
@@ -98,22 +97,40 @@
 
 #pragma mark - Action Methods
 
-- (IBAction)onLikeButtonTapped:(UIButton *)sender
-{
-//    PFObject *object = [self.pictureAndVideoArray objectAtIndex:sender.tag];
-//    PFUser *picturePhotographer = [object objectForKey:@"photographer"];
+//- (IBAction)onLikeButtonTapped:(UIButton *)sender
+//{
+//    if ([sender.currentBackgroundImage isEqual:[UIImage imageNamed:@"like_unselected"]])
+//    {
 //
-//    PFObject *like = [PFObject objectWithClassName:@"LikeActivity"];
-//    like[@"fromUser"] = [PFUser currentUser];
-//    like[@"toUser"] = picturePhotographer;
-//    like[@"photo"] = object;
-//    [like saveInBackground];
-
-    ///if its already selected unselect it and vice versa
-
-    UIImage *btnImage = [UIImage imageNamed:@"like_selected"];
-    [sender setImage:btnImage forState:UIControlStateNormal];
-}
+//        NSLog(@"No");
+//        
+//        UIImage *btnImage = [UIImage imageNamed:@"like_selected"];
+//        [sender setImage:btnImage forState:UIControlStateNormal];
+//
+//        IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:sender.tag];
+//        PFUser *picturePhotographer = [individualEventPhoto.object objectForKey:@"photographer"];
+//
+//        PFObject *like = [PFObject objectWithClassName:@"LikeActivity"];
+//        like[@"fromUser"] = [PFUser currentUser];
+//        like[@"toUser"] = picturePhotographer;
+//        like[@"photo"] = individualEventPhoto.object;
+//        [like saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+//         {
+//             PFRelation *relation = [individualEventPhoto.object relationforKey:@"likeActivity"];
+//             [relation addObject:like];
+//             [individualEventPhoto.object saveInBackground];
+//         }];
+//
+//    }
+//    else if ([sender.currentBackgroundImage isEqual:[UIImage imageNamed:@"like_selected"]])
+//    {
+//
+//        NSLog(@"Yep");
+//        UIImage *btnImage = [UIImage imageNamed:@"like_unselected"];
+//        [sender setImage:btnImage forState:UIControlStateNormal];
+//        ///need to remove relation
+//    }
+//}
 
 - (IBAction)onCommentButtonTapped:(UIButton *)sender
 {
@@ -209,12 +226,8 @@
     //number of likes
     cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)individualEventPhoto.likes.count];
 
-    ///need to do this here so it updates here as well as in the tap gesture
-
-//    NSString *numberOfLikesString = cell.numberOfLikesLabel.text;
-//    NSInteger numberOfLikesInt = [numberOfLikesString integerValue];
-//    numberOfLikesInt++;
-//    cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
+    ///need to requery and down below actually add the count
+    ///this isn't cutting it, so just query here again for the count of the likes- it's quick- do like above
 
     [individualEventPhoto.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
      {
@@ -226,6 +239,8 @@
      }];
 
     //checking to see if current user has liked photo
+    UIImage *btnImage = [UIImage imageNamed:@"like_unselected"];
+    [cell.likeButton setImage:btnImage forState:UIControlStateNormal];
 
     for (PFObject *object in individualEventPhoto.likes)
     {
@@ -236,9 +251,7 @@
         {
             UIImage *btnImage = [UIImage imageNamed:@"like_selected"];
             [cell.likeButton setImage:btnImage forState:UIControlStateNormal];
-
-        } else {
-            //picture should already be set in storyboard to unliked
+            break;
         }
     }
 
@@ -399,10 +412,6 @@
         CommentsViewController *commentsViewController = segue.destinationViewController;
         commentsViewController.individualEventPhoto = self.individualEventPhoto;
     }
-//    else if ([segue.identifier isEqualToString:@"ToPhotoEditingPage"])
-//    {
-//        //pass the image here
-//    }
 }
 
 - (IBAction)unwindSegueToStreamEventViewController:(UIStoryboardSegue *)sender
@@ -425,6 +434,18 @@
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

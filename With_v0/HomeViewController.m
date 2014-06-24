@@ -21,7 +21,6 @@
 @property NSMutableArray *eventArray;
 @property NSMutableArray *indexPathArray;
 
-
 @end
 
 @implementation HomeViewController
@@ -94,9 +93,6 @@
         });
      }];
 
-    ///basically doing all this image getting right here is drastically slowing down the app. Use NSCatche?
-
-
     //this gets the image not on the main thread
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
     PFFile *file = [object objectForKey:@"themeImage"];
@@ -117,7 +113,7 @@
 
     //event Name and Date;
     cell.eventNameLabel.text = object[@"title"];
-    cell.eventDateLabel.text = @"Saturday. June 25, 5pm";
+    cell.eventDateLabel.text = object[@"eventDate"];
 
     cell.accessoryType = UITableViewCellAccessoryNone;
 
@@ -125,7 +121,6 @@
     NSInteger rowsAmount = [tableView numberOfRowsInSection:[indexPath section]];
     if ([indexPath section] == sectionsAmount - 1 && [indexPath row] == rowsAmount - 1)
     {
-
         //do this before the user gets to the bottom, so like 4 before the bottom
         [self queryForEvents];
     }
@@ -138,8 +133,6 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-
-
 #pragma mark - Query for Events
 
 - (void)queryForEvents
@@ -148,16 +141,9 @@
     [query includeKey:@"creator"];
     query.limit = 4;
 
-    if (self.eventArray.count == 0)
-    {
-        query.skip = 0;
+    query.skip = self.eventArray.count;
 
-    } else
-    {
-        query.skip = self.eventArray.count;
-    }
-
-//    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (self.eventArray.count < 3)
@@ -170,41 +156,14 @@
              int theCount = (int)self.eventArray.count;
              [self.eventArray addObjectsFromArray:objects];
 
-             //however many objects come back- loop over them and make the index paths but the rows of the index paths will be the count of the self.eventArray - 1 because of the zero based thing
-
-//             NSInteger objectCount = objects.count;
-//             NSInteger eventCount = self.eventArray.count;
-//
-//             NSInteger difference = eventCount - objectCount;
-
              for (int i = theCount; i <= self.eventArray.count-1; i++)
              {
                  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
                  [self.indexPathArray addObject:indexPath];
              }
 
-//             [self.tableView beginUpdates];
              [self.tableView insertRowsAtIndexPaths:self.indexPathArray withRowAnimation:UITableViewRowAnimationFade];
              [self.indexPathArray removeAllObjects];
-
-//             [self.tableView endUpdates];
-
-             //nsarray enumerateObjectsUsingBlock:-inside the for loop- it gives you the index
-
-//             NSInteger num1 = self.eventArray.count -1;
-//             NSInteger num2 = self.eventArray.count -2;
-//             NSInteger num3 = self.eventArray.count -3;
-//             NSInteger num4 = self.eventArray.count -4;
-//
-//             NSIndexPath* indexPath1 = [NSIndexPath indexPathForRow:num1 inSection:1];
-//             NSIndexPath* indexPath2 = [NSIndexPath indexPathForRow:num2 inSection:1];
-//             NSIndexPath* indexPath3 = [NSIndexPath indexPathForRow:num3 inSection:1];
-//             NSIndexPath* indexPath4 = [NSIndexPath indexPathForRow:num4 inSection:1];
-//
-//             NSArray *indexPathArray = [NSArray arrayWithObjects:indexPath1, indexPath2, indexPath3, indexPath4, nil];
-
-             //getting called too soon?
-//            [self.tableView reloadRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationNone];
          }
     }];
 }
@@ -249,6 +208,16 @@
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
 
 
 
