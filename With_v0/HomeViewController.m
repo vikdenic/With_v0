@@ -21,6 +21,8 @@
 @property NSMutableArray *eventArray;
 @property NSMutableArray *indexPathArray;
 
+@property BOOL doingTheQuery;
+
 @end
 
 @implementation HomeViewController
@@ -120,8 +122,10 @@
     NSInteger rowsAmount = [tableView numberOfRowsInSection:[indexPath section]];
     if ([indexPath section] == sectionsAmount - 1 && [indexPath row] == rowsAmount - 1)
     {
-        //do this before the user gets to the bottom, so like 4 before the bottom
-        [self queryForEvents];
+        if (!self.doingTheQuery)
+        {
+            [self queryForEvents];
+        }
 
         ///so what if it's the bottom and there is no more, how to stop it from continually doing this- only do it once
     }
@@ -150,9 +154,14 @@
     {
         query.skip = self.eventArray.count;
     }
-    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+
+    ///if less than 4 it is doubling for some reasons
+
+//    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
+         self.doingTheQuery = YES;
+
          if (self.eventArray.count < 3)
          {
             [self.eventArray addObjectsFromArray:objects];
@@ -172,6 +181,7 @@
              [self.tableView insertRowsAtIndexPaths:self.indexPathArray withRowAnimation:UITableViewRowAnimationFade];
              [self.indexPathArray removeAllObjects];
          }
+         self.doingTheQuery = NO;
     }];
 }
 
