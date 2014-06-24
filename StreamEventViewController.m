@@ -223,11 +223,18 @@
 
     IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:indexPath.section];
 
-    //number of likes
-    cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)individualEventPhoto.likes.count];
+//    //number of likes
+//    cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)individualEventPhoto.likes.count];
+//
+//    ///need to requery and down below actually add the count
+//    ///this isn't cutting it, so just query here again for the count of the likes- it's quick- do like above
 
-    ///need to requery and down below actually add the count
-    ///this isn't cutting it, so just query here again for the count of the likes- it's quick- do like above
+    PFRelation *relation2 = [individualEventPhoto.object relationForKey:@"likeActivity"];
+    PFQuery *query2 = [relation2 query];
+    [query2 countObjectsInBackgroundWithBlock:^(int number, NSError *error)
+    {
+        cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%i likes", number];
+    }];
 
     [individualEventPhoto.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
      {

@@ -72,7 +72,6 @@
 
     PFObject *object = [self.eventArray objectAtIndex:indexPath.row];
 
-    ///do dispatch_queue thing here too
     dispatch_queue_t queue2 = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
 
     PFFile *userProfilePhoto = [[object objectForKey:@"creator"] objectForKey:@"userProfilePhoto"];
@@ -85,7 +84,7 @@
          cell.creatorImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
          cell.creatorImageView.layer.borderWidth = 2.0;
          cell.creatorImageView.layer.masksToBounds = YES;
-         cell.creatorImageView.backgroundColor = [UIColor redColor];
+//         cell.creatorImageView.backgroundColor = [UIColor redColor];
 
          dispatch_sync(dispatch_get_main_queue(), ^{
              cell.creatorImageView.image = temporaryImage;
@@ -123,6 +122,8 @@
     {
         //do this before the user gets to the bottom, so like 4 before the bottom
         [self queryForEvents];
+
+        ///so what if it's the bottom and there is no more, how to stop it from continually doing this- only do it once
     }
 
     return cell;
@@ -141,8 +142,14 @@
     [query includeKey:@"creator"];
     query.limit = 4;
 
-    query.skip = self.eventArray.count;
+    if (self.eventArray.count == 0)
+    {
+        query.skip = 0;
 
+    } else
+    {
+        query.skip = self.eventArray.count;
+    }
     query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {

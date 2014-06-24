@@ -69,6 +69,9 @@
              cell.profilePictureImageView.image = temporaryImage;
      }];
 
+    cell.accessoryView = [[ UIImageView alloc ]
+                            initWithImage:[UIImage imageNamed:@"like_selected"]];
+
     return cell;
 }
 
