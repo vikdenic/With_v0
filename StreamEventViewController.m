@@ -35,28 +35,22 @@
 {
     [super viewDidLoad];
 
-
-
-
-
-
     //add a uiimageview and then on viewDidAppear I remove it or animate it out after 1.2 seconds
 
-
-
-
-
-
-
     self.theLegitArrayOfEverything = [NSMutableArray array];
-
-//    [self queryForImages];
 
     //pull to refresh
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
     [self.tableView addSubview:refreshControl];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    [self queryForImages];
 }
 
 #pragma mark - Getting Pictures and Videos
@@ -104,9 +98,8 @@
 
 #pragma mark - Action Methods
 
-//- (IBAction)onLikeButtonTapped:(UIButton *)sender
-//{
-//    //still work to do here
+- (IBAction)onLikeButtonTapped:(UIButton *)sender
+{
 //    PFObject *object = [self.pictureAndVideoArray objectAtIndex:sender.tag];
 //    PFUser *picturePhotographer = [object objectForKey:@"photographer"];
 //
@@ -115,13 +108,15 @@
 //    like[@"toUser"] = picturePhotographer;
 //    like[@"photo"] = object;
 //    [like saveInBackground];
-//}
 
-///fix storyboard with the like button issue and here as well- do the same thing in the comments view controller as I did above with the likes thing- only the photo we passed from eventPhotos
+    ///if its already selected unselect it and vice versa
+
+    UIImage *btnImage = [UIImage imageNamed:@"like_selected"];
+    [sender setImage:btnImage forState:UIControlStateNormal];
+}
 
 - (IBAction)onCommentButtonTapped:(UIButton *)sender
 {
-    //convert to individual thing
     IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:sender.tag];
     self.individualEventPhoto = individualEventPhoto;
 }
@@ -214,6 +209,13 @@
     //number of likes
     cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)individualEventPhoto.likes.count];
 
+    ///need to do this here so it updates here as well as in the tap gesture
+
+//    NSString *numberOfLikesString = cell.numberOfLikesLabel.text;
+//    NSInteger numberOfLikesInt = [numberOfLikesString integerValue];
+//    numberOfLikesInt++;
+//    cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
+
     [individualEventPhoto.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
      {
          if (!error)
@@ -221,10 +223,24 @@
              UIImage *temporaryImage = [UIImage imageWithData:data];
              cell.theImageView.image = temporaryImage;
          }
-         else {
-             NSLog(@"Alert!");
-         }
      }];
+
+    //checking to see if current user has liked photo
+
+    for (PFObject *object in individualEventPhoto.likes)
+    {
+        NSString *fromUserObjectId = [[object objectForKey:@"fromUser"] objectId];
+        NSString *currentUser = [[PFUser currentUser] objectId];
+
+        if ([fromUserObjectId isEqualToString:currentUser])
+        {
+            UIImage *btnImage = [UIImage imageNamed:@"like_selected"];
+            [cell.likeButton setImage:btnImage forState:UIControlStateNormal];
+
+        } else {
+            //picture should already be set in storyboard to unliked
+        }
+    }
 
     //double tap to like
     if (cell.theImageView.gestureRecognizers.count == 0)
