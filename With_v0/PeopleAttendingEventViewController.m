@@ -69,15 +69,28 @@
              cell.profilePictureImageView.image = temporaryImage;
      }];
 
-    cell.accessoryView = [[ UIImageView alloc ]
-                            initWithImage:[UIImage imageNamed:@"like_selected"]];
+    //set it in storyboard and do the for thing like max showed me earlier so set it to no and then if they are friend switch it
+    UIButton *button = [[UIButton alloc]init];
+    [button setImage:[UIImage imageNamed:@"like_selected"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(ontapped:) forControlEvents:UIControlEventTouchUpInside];
+    button.tag = indexPath.row;
+    cell.accessoryView = button;
 
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+- (void)ontapped:(UIButton *)sender
 {
-    //need to get the user at the current indexPath and then give them a relation to the current user and add them to the current users friend relation
+    [sender setImage:[UIImage imageNamed:@"like_unselected"] forState:UIControlStateNormal];
+
+    ///here we need to actually create the relation between the users
+
+    //             PFRelation *relation = [individualEventPhoto.object relationforKey:@"likeActivity"];
+    //             [relation addObject:like];
+    //             [individualEventPhoto.object saveInBackground];
+
+
 }
+
 
 @end

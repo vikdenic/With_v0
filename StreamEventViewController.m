@@ -306,6 +306,14 @@
     numberOfLikesInt++;
     cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
 
+//    PFRelation *relation = [individualEventPhoto.object relationForKey:@"likeActivity"];
+//    PFQuery *query1 = [relation query];
+//    [query1 countObjectsInBackgroundWithBlock:^(int number, NSError *error)
+//     {
+//        cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%i likes", number];
+//     }];
+
+
     cell.likedImageView.hidden = NO;
     cell.likedImageView.alpha = 0;
 
