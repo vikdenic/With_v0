@@ -99,7 +99,7 @@
              exploreAnnotation.location = [object objectForKey:@"location"];
              exploreAnnotation.date = [object objectForKey:@"eventDate"];
 
-             exploreAnnotation.themeFile = [object objectForKey:@"themeImage"];
+             exploreAnnotation.themeFile = [object objectForKey:@"mapThemeImage"];
              [exploreAnnotation.themeFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
 
                  exploreAnnotation.themeImage = [UIImage imageWithData:data];
@@ -156,19 +156,25 @@
 
     ExploreEventAnnotationView *annotationView = [[ExploreEventAnnotationView alloc]initWithAnnotation:exploreAnnotation reuseIdentifier:nil];
 
-    CGSize sacleSize = CGSizeMake(75, 75);
-    UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
-    [exploreAnnotation.themeImage drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
-    UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+    //VIK: Circular annotation
+    exploreAnnotation.themeImageView = [[UIImageView alloc] initWithImage:exploreAnnotation.themeImage];
 
-    annotationView.image = resizedImage;
-    annotationView.layer.cornerRadius = resizedImage.size.width/2;
-    annotationView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
+    exploreAnnotation.themeImageView.frame = CGRectMake(0,0,60,60);
+
+    exploreAnnotation.themeImageView.contentMode = UIViewContentModeScaleAspectFill;
+
+    exploreAnnotation.themeImageView.layer.cornerRadius = exploreAnnotation.themeImageView.image.size.height/2;
+
+    exploreAnnotation.themeImageView.layer.masksToBounds = YES;
+    exploreAnnotation.themeImageView.clipsToBounds = YES;
+
+    annotationView.layer.borderColor = [[UIColor orangeColor]CGColor];
     annotationView.layer.borderWidth = 2.0;
-    annotationView.clipsToBounds = YES;
+
+    [annotationView addSubview:exploreAnnotation.themeImageView];
+    //
+
     annotationView.geoPoint = exploreAnnotation.geoPoint;
-
-
 
     //double tap to expand?
     if (annotationView.gestureRecognizers.count == 0)
