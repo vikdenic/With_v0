@@ -35,15 +35,9 @@
 {
     [super viewDidLoad];
 
-    self.avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
+//    self.avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
 
-    self.avatarImageView.layer.cornerRadius = self.avatarImageView.layer.bounds.size.width /2;
 
-    self.avatarImageView.clipsToBounds = YES;
-
-    self.avatarImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
-
-    self.avatarImageView.layer.borderWidth = 2.0;
 
     NSLog(@"EDIT %f  %f",self.avatarImageView.frame.size.width, self.avatarImageView.frame.size.height);
 
@@ -59,6 +53,11 @@
     tapping.numberOfTapsRequired = 1;
     [self.avatarImageView addGestureRecognizer:tapping];
     self.avatarImageView.userInteractionEnabled = YES;
+
+    self.avatarImageView.layer.cornerRadius = self.avatarImageView.layer.bounds.size.width /2;
+    self.avatarImageView.clipsToBounds = YES;
+    self.avatarImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
+    self.avatarImageView.layer.borderWidth = 2.0;
 
 //    [self setUserInfo];
 }
@@ -119,6 +118,8 @@
 
 - (void)tapTap:(UITapGestureRecognizer *)tapGestureRecognizer
 {
+
+    NSLog(@"TAPTAP");
     //    [self presentViewController:self.cameraController animated:NO completion:nil];
     self.imagePicker = [[GKImagePicker alloc] init];
     self.imagePicker.cropSize = CGSizeMake(320, 320);
@@ -131,7 +132,7 @@
 
     } else {
 
-//        [self presentModalViewController:self.imagePicker.imagePickerController animated:YES];
+        [self presentModalViewController:self.imagePicker.imagePickerController animated:YES];
     }
 }
 
@@ -150,6 +151,9 @@
 
 -(void)imagePicker:(GKImagePicker *)imagePicker pickedImage:(UIImage *)image
 {
+
+    NSLog(@"IMAGEPICKED");
+
     //    self.themeImageView.image = image;
     UIImage *tempImage = image;
 
@@ -157,7 +161,7 @@
     CGSize scaledSize = CGSizeMake(70, 70);
     UIGraphicsBeginImageContextWithOptions(scaledSize, NO, 2.0);
 
-    [image drawInRect:(CGRect){.size = scaledSize}];
+    [tempImage drawInRect:(CGRect){.size = scaledSize}];
     UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
