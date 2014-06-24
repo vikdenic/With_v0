@@ -7,19 +7,20 @@
 //
 
 #import "IndividualEventViewController.h"
+#import "PeopleAttendingEventViewController.h"
 
 @interface IndividualEventViewController ()
 
-@property (weak ,nonatomic) IBOutlet UILabel *eventNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *themeImageView;
-@property (weak, nonatomic) IBOutlet UILabel *goingLabel;
-@property (weak, nonatomic) IBOutlet UILabel *invitedLabel;
+@property (weak, nonatomic) IBOutlet UIButton *topGoingButton;
+@property (weak, nonatomic) IBOutlet UIButton *invitedButton;
 @property (weak, nonatomic) IBOutlet UIButton *inviteButton;
 @property (weak, nonatomic) IBOutlet UIButton *goingButton;
 @property (weak, nonatomic) IBOutlet UIButton *notGoingButton;
 @property (weak, nonatomic) IBOutlet UITextView *addressTextView;
 @property (weak, nonatomic) IBOutlet UITextView *dateAndTimeTextView;
 @property (weak, nonatomic) IBOutlet UITextView *detailsTextView;
+@property (weak, nonatomic) IBOutlet UILabel *creatorLabel;
 
 @property BOOL yesButtonTapped;
 @property BOOL noButtonTapped;
@@ -32,24 +33,32 @@
 
 @implementation IndividualEventViewController
 
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    [self checkingUsersEventStatus];
+
+    self.yesButtonTapped = NO;
+    self.noButtonTapped = NO;
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 
-    [self checkingUsersEventStatus];
+    //pass title of event to nav bar title
 
-//    [[self navigationController] setNavigationBarHidden:YES animated:YES];
-
-        self.eventNameLabel.text = self.event[@"title"];
-        [self.eventNameLabel sizeToFit];
-        self.detailsTextView.text = self.event[@"details"];
-        self.addressTextView.text = @"Address";
-        self.dateAndTimeTextView.text = @"Date and Time";
+    self.detailsTextView.text = self.event[@"details"];
+    self.addressTextView.text = self.event[@"address"];
+    self.dateAndTimeTextView.text = self.event[@"eventDate"];
 
     //need to have a place holder if stuff is empty so it doesn't crash
 
+    //I could just pass the image since it's the same one they click on
+
     PFUser *user =  [self.event objectForKey:@"creator"];
-    NSLog(@"Creator of Event: %@", user.username);
+    self.creatorLabel.text = [NSString stringWithFormat:@"%@", user.username];
 
     PFFile *file = self.event[@"themeImage"];
     [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
@@ -68,18 +77,81 @@
          }
      }];
 
-    self.yesButtonTapped = NO;
-    self.noButtonTapped = NO;
-
-//    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
-//    [query whereKey:@"objectId" equalTo:self.event.objectId];
-//    [query includeKey:@"usersAttending"];
-//    [query]
-
+    PFRelation *relation = [self.event relationForKey:@"usersAttending"];
+    PFQuery *query1 = [relation query];
+    [query1 countObjectsInBackgroundWithBlock:^(int number, NSError *error)
+     {
+         self.topGoingButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+         self.topGoingButton.titleLabel.textAlignment = NSTextAlignmentCenter; 
+         [self.topGoingButton setTitle:[NSString stringWithFormat:@"%i\nGoing", number] forState:UIControlStateNormal];
+    }];
 }
 
-#pragma mark- Helper Methods
+#pragma mark - Action methods
 
+- (IBAction)onYesButtonTapped:(UIButton *)sender
+{
+
+    if (self.yesButtonTapped == NO)
+    {
+        self.yesButtonTapped = YES;
+
+        self.yesImageView.image = [UIImage imageNamed:@"Yes_Button_Selected"];
+        self.noImageView.image = [UIImage imageNamed:@"No_Button"];
+
+        PFRelation *relation = [self.event relationforKey:@"usersAttending"];
+        [relation addObject:[PFUser currentUser]];
+
+        PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
+        [relation2 removeObject:[PFUser currentUser]];
+        [self.event saveInBackground];
+
+    } else {
+        self.yesButtonTapped = NO;
+        self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
+
+        PFRelation *relation = [self.event relationforKey:@"usersAttending"];
+        [relation removeObject:[PFUser currentUser]];
+
+        PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
+        [relation2 removeObject:[PFUser currentUser]];
+        [self.event saveInBackground];
+    }
+}
+
+- (IBAction)onNoButtonTapped:(id)sender
+{
+
+    if (self.noButtonTapped == NO)
+    {
+        self.noButtonTapped = YES;
+        self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
+        self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
+
+        //removes current user from going
+        PFRelation *relation = [self.event relationForKey:@"usersAttending"];
+        [relation removeObject:[PFUser currentUser]];
+
+        //adds current user to not going relation
+        PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
+        [relation2 addObject:[PFUser currentUser]];
+        [self.event saveInBackground];
+
+    } else {
+
+        self.noButtonTapped = NO;
+        self.noImageView.image = [UIImage imageNamed:@"No_Button"];
+
+        PFRelation *relation = [self.event relationforKey:@"usersAttending"];
+        [relation removeObject:[PFUser currentUser]];
+
+        PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
+        [relation2 removeObject:[PFUser currentUser]];
+        [self.event saveInBackground];
+    }
+}
+
+#pragma mark- Checking users status
 
 - (void)checkingUsersEventStatus
 {
@@ -98,7 +170,6 @@
                 self.noImageView.image = [UIImage imageNamed:@"No_Button"];
 
             } else {
-                //should query both going and not going because the user might not have decided Yet
 
                 self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
                 self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
@@ -129,80 +200,20 @@
     }];
 }
 
-#pragma mark - Action methods
-
-- (IBAction)onYesButtonTapped:(UIButton *)sender
-{
-
-    if (self.yesButtonTapped == NO)
-    {
-        self.yesButtonTapped = YES;
-
-        self.yesImageView.image = [UIImage imageNamed:@"Yes_Button_Selected"];
-        self.noImageView.image = [UIImage imageNamed:@"No_Button"];
-
-        //adds current user to going to the event
-        PFRelation *relation = [self.event relationforKey:@"usersAttending"];
-        [relation addObject:[PFUser currentUser]];
-
-        //adds current user to not going relation
-        PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
-        [relation2 removeObject:[PFUser currentUser]];
-
-        [self.event saveInBackground];
-
-    } else {
-
-        self.yesButtonTapped = NO;
-
-        self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
-        self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
-    }
-}
-
-- (IBAction)onNoButtonTapped:(id)sender
-{
-
-    if (self.noButtonTapped == NO)
-    {
-        self.noButtonTapped = YES;
-        self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
-        self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
-
-        //removes current user from going
-        PFRelation *relation = [self.event relationForKey:@"usersAttending"];
-        [relation removeObject:[PFUser currentUser]];
-
-        //adds current user to not going relation
-        PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
-        [relation2 addObject:[PFUser currentUser]];
-
-        [self.event saveInBackground];
-
-    } else {
-
-        self.noButtonTapped = NO;
-        self.noImageView.image = [UIImage imageNamed:@"No_Button"];
-        self.yesImageView.image = [UIImage imageNamed:@"Yes_Button_Selected"];
-    }
-}
-
 #pragma mark - Segue
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"topGoingButtonToPeopleAttendingSegue"])
+    {
+        PeopleAttendingEventViewController *peopleAttendingEventViewController = segue.destinationViewController;
+        peopleAttendingEventViewController.event = self.event;
+    }
+}
 
 - (IBAction)unwindSegueToIndividualViewController:(UIStoryboardSegue *)sender
 {
     
 }
-
-
-
-
-
-
-
-
-
-
-
 
 @end
