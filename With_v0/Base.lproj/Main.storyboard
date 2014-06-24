@@ -1457,6 +1457,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LKX-XF-lAC">
                                 <rect key="frame" x="128" y="82" width="65" height="65"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="vvo-it-Fug" appends="YES" id="nIM-FC-tnd"/>
+                                </connections>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nAc-J0-z6D">
                                 <rect key="frame" x="90" y="169" width="210" height="30"/>
@@ -1541,6 +1545,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyy-Vv-6WC" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Qdg-RS-8oG" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer id="vvo-it-Fug"/>
             </objects>
             <point key="canvasLocation" x="1647" y="961"/>
         </scene>
@@ -1882,6 +1887,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="YVC-aR-cB7"/>
+        <segue reference="stH-2g-YYg"/>
     </inferredMetricsTieBreakers>
 </document>
