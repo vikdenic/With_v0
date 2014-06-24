@@ -22,4 +22,6 @@
 @property UIImage *themeImage;
 @property NSString *date;
 
+@property UIImageView *themeImageView;
+
 @end
