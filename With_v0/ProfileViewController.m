@@ -46,6 +46,14 @@
 
         [self setUserInfo];
 
+        self.profileAvatar.layer.cornerRadius = self.profileAvatar.layer.bounds.size.width /2;
+
+        self.profileAvatar.clipsToBounds = YES;
+
+        self.profileAvatar.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
+
+        self.profileAvatar.layer.borderWidth = 2.0;
+
         NSLog(@"did show %@",[PFUser currentUser]);
 
 //    self.usersArray = [[NSArray alloc]init];

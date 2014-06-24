@@ -214,7 +214,7 @@
 
 
         //THEME IMAGE FOR MAP
-        CGSize tempScaledSize = CGSizeMake(60, 30);
+        CGSize tempScaledSize = CGSizeMake(70, 35);
         UIGraphicsBeginImageContextWithOptions(tempScaledSize, NO, 2.0);
 
         [tempImage drawInRect:(CGRect){.size = tempScaledSize}];

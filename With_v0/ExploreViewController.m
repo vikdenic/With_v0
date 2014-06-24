@@ -159,18 +159,18 @@
     //VIK: Circular annotation
     exploreAnnotation.themeImageView = [[UIImageView alloc] initWithImage:exploreAnnotation.themeImage];
 
-    exploreAnnotation.themeImageView.frame = CGRectMake(0,0,60,60);
+    exploreAnnotation.themeImageView.frame = CGRectMake(0,0,70,70);
 
     exploreAnnotation.themeImageView.contentMode = UIViewContentModeScaleAspectFill;
 
     exploreAnnotation.themeImageView.layer.cornerRadius = exploreAnnotation.themeImageView.image.size.height/2;
 
-    exploreAnnotation.themeImageView.layer.masksToBounds = YES;
+//    exploreAnnotation.themeImageView.layer.masksToBounds = YES;
     exploreAnnotation.themeImageView.clipsToBounds = YES;
 
-    annotationView.layer.borderColor = [[UIColor orangeColor]CGColor];
+    exploreAnnotation.themeImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
 
-    annotationView.layer.borderWidth = 2.0;
+    exploreAnnotation.themeImageView.layer.borderWidth = 2.0;
 
     [annotationView addSubview:exploreAnnotation.themeImageView];
     //

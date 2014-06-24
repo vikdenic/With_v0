@@ -35,6 +35,18 @@
 {
     [super viewDidLoad];
 
+    self.avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
+
+    self.avatarImageView.layer.cornerRadius = self.avatarImageView.layer.bounds.size.width /2;
+
+    self.avatarImageView.clipsToBounds = YES;
+
+    self.avatarImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
+
+    self.avatarImageView.layer.borderWidth = 2.0;
+
+    NSLog(@"EDIT %f  %f",self.avatarImageView.frame.size.width, self.avatarImageView.frame.size.height);
+
     [self setUserInfo];
 }
 
@@ -48,7 +60,7 @@
     [self.avatarImageView addGestureRecognizer:tapping];
     self.avatarImageView.userInteractionEnabled = YES;
 
-    [self setUserInfo];
+//    [self setUserInfo];
 }
 
 #pragma mark - Helpers
@@ -119,7 +131,7 @@
 
     } else {
 
-        [self presentModalViewController:self.imagePicker.imagePickerController animated:YES];
+//        [self presentModalViewController:self.imagePicker.imagePickerController animated:YES];
     }
 }
 
@@ -167,6 +179,15 @@
     NSData *miniAvatarImageData = UIImagePNGRepresentation(resizedMiniImage);
     self.miniAvatarImageFile = [PFFile fileWithData:miniAvatarImageData];
     //
+
+    ////VIK: SAVE TO PARSE
+    PFUser *user = [PFUser currentUser];
+    [user setValue:self.avatarImageFile forKey:@"userProfilePhoto"];
+    [user setValue:self.miniAvatarImageFile forKey:@"miniProfilePhoto"];
+    [user saveInBackground];
+    //
+
+    [self setUserInfo];
 
     [self hideImagePicker];
 }
