@@ -1,5 +1,5 @@
 //
-//  PendingFriendRequestsCustomTableViewCell.h
+//  ApprovedFriendsTableViewCell.h
 //  With_v0
 //
 //  Created by Blake Mitchell on 6/25/14.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PendingFriendRequestsCustomTableViewCell : UITableViewCell
+@interface ApprovedFriendsTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureImageView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;

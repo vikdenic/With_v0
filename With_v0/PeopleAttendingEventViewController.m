@@ -83,22 +83,13 @@
 {
     [sender setTitle:@"F" forState:UIControlStateNormal];
 
-    ///so this will need to create a pending friend invite between the two people and then put the current user in a pending array of friends for the other user
-
-     PFUser *user = [self.usersAttendingArray objectAtIndex:sender.tag];
+    PFUser *user = [self.usersAttendingArray objectAtIndex:sender.tag];
 
     PFObject *friendship = [PFObject objectWithClassName:@"Friendship"];
     friendship[@"fromUser"] = [PFUser currentUser];
     friendship[@"toUser"] = user;
     friendship[@"status"] = @"Pending";
-    [friendship saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-     {
-//         PFRelation *relation = [user relationforKey:@"friendship"];
-//         [relation addObject:friendship];
-//         [user saveInBackground];
-     }];
-
-
+    [friendship saveInBackground];
 
     ///check this on parse
 
