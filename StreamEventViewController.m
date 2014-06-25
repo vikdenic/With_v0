@@ -118,6 +118,22 @@
              [individualEventPhoto.object saveInBackground];
          }];
 
+        StreamTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sender.tag]];
+
+        //increment count
+        NSString *numberOfLikesString = cell.numberOfLikesLabel.text;
+        NSInteger numberOfLikesInt = [numberOfLikesString integerValue];
+
+        if (numberOfLikesInt == 0)
+        {
+            numberOfLikesInt++;
+            cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li like", (long)numberOfLikesInt];
+        } else
+        {
+            numberOfLikesInt++;
+            cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
+        }
+
     }
     else if ([sender.imageView.image isEqual:[UIImage imageNamed:@"like_selected"]])
     {
@@ -135,10 +151,29 @@
              {
                  [object deleteInBackground];
              }
+             
         }];
 
+        StreamTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sender.tag]];
 
+        //decrement count
+        NSString *numberOfLikesString = cell.numberOfLikesLabel.text;
+        NSInteger numberOfLikesInt = [numberOfLikesString integerValue];
 
+        if (numberOfLikesInt == 1)
+        {
+            numberOfLikesInt--;
+            cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
+        }else if (numberOfLikesInt == 2)
+        {
+            numberOfLikesInt--;
+            cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li like", (long)numberOfLikesInt];
+        }
+        else
+        {
+            numberOfLikesInt--;
+            cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
+        }
 
         ///need to remove relation
     }
@@ -163,7 +198,7 @@
     int seconds = -(int)[timeOfPicture timeIntervalSinceNow];
     int minutes = seconds/60;
 
-    UILabel *timeInterval = [[UILabel alloc] initWithFrame:CGRectMake(230, 5, 100, 30)];
+    UILabel *timeInterval = [[UILabel alloc] initWithFrame:CGRectMake(280, 5, 60, 30)];
     timeInterval.textColor = [UIColor whiteColor];
 
         if (minutes < 60) {
@@ -245,7 +280,14 @@
     PFQuery *query2 = [relation2 query];
     [query2 countObjectsInBackgroundWithBlock:^(int number, NSError *error)
     {
-        cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%i likes", number];
+        if (number == 1)
+        {
+          cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%i like", number];
+
+        } else
+        {
+          cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%i likes", number];
+        }
     }];
 
     [individualEventPhoto.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
@@ -323,8 +365,16 @@
         //increment count
         NSString *numberOfLikesString = cell.numberOfLikesLabel.text;
         NSInteger numberOfLikesInt = [numberOfLikesString integerValue];
-        numberOfLikesInt++;
-        cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
+
+        if (numberOfLikesInt == 0)
+        {
+            numberOfLikesInt++;
+            cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li like", (long)numberOfLikesInt];
+        } else
+        {
+            numberOfLikesInt++;
+            cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
+        }
 
     //    PFRelation *relation = [individualEventPhoto.object relationForKey:@"likeActivity"];
     //    PFQuery *query1 = [relation query];
