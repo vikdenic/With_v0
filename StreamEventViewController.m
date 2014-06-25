@@ -121,8 +121,6 @@
     }
     else if ([sender.imageView.image isEqual:[UIImage imageNamed:@"like_selected"]])
     {
-
-        NSLog(@"Yep");
         UIImage *btnImage = [UIImage imageNamed:@"like_unselected"];
         [sender setImage:btnImage forState:UIControlStateNormal];
 

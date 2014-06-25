@@ -29,8 +29,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UITextView *detailsTextView;
 
-
-
 @end
 
 @implementation ExploreViewController
@@ -173,9 +171,10 @@
     exploreAnnotation.themeImageView.layer.borderWidth = 2.0;
 
     [annotationView addSubview:exploreAnnotation.themeImageView];
-    //
 
     annotationView.geoPoint = exploreAnnotation.geoPoint;
+
+    ///I think you should just manipulate the actual annotation view itself in ExploreEventAnnotationView.h - add a new property
 
     //double tap to expand?
     if (annotationView.gestureRecognizers.count == 0)
@@ -194,6 +193,9 @@
 
 - (void)tapTap:(UITapGestureRecognizer *)tapGestureRecognizer
 {
+
+    NSLog(@"Tap Tap Tap");
+
     ExploreEventAnnotationView *annotationView = (ExploreEventAnnotationView *)tapGestureRecognizer.view;
 
     self.individualEventView.hidden = NO;
