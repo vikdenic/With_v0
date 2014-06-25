@@ -155,22 +155,22 @@
     ExploreEventAnnotationView *annotationView = [[ExploreEventAnnotationView alloc]initWithAnnotation:exploreAnnotation reuseIdentifier:nil];
 
     //VIK: Circular annotation
-    exploreAnnotation.themeImageView = [[UIImageView alloc] initWithImage:exploreAnnotation.themeImage];
+    annotationView.image = exploreAnnotation.themeImage;
 
-    exploreAnnotation.themeImageView.frame = CGRectMake(0,0,70,70);
+    annotationView.frame = CGRectMake(0,0,70,70);
 
-    exploreAnnotation.themeImageView.contentMode = UIViewContentModeScaleAspectFill;
+    annotationView.contentMode = UIViewContentModeScaleAspectFill;
 
-    exploreAnnotation.themeImageView.layer.cornerRadius = exploreAnnotation.themeImageView.image.size.height/2;
+    annotationView.layer.cornerRadius = 35;
 
-//    exploreAnnotation.themeImageView.layer.masksToBounds = YES;
-    exploreAnnotation.themeImageView.clipsToBounds = YES;
 
-    exploreAnnotation.themeImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
+    annotationView.clipsToBounds = YES;
 
-    exploreAnnotation.themeImageView.layer.borderWidth = 2.0;
+    annotationView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
 
-    [annotationView addSubview:exploreAnnotation.themeImageView];
+    annotationView.layer.borderWidth = 2.0;
+    //
+
 
     annotationView.geoPoint = exploreAnnotation.geoPoint;
 
@@ -185,8 +185,8 @@
         annotationView.userInteractionEnabled = YES;
     }
 
-    return annotationView;
 
+    return annotationView;
 }
 
 #pragma mark - Tap Gesture Recognizer
