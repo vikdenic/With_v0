@@ -87,9 +87,18 @@
 
      PFUser *user = [self.usersAttendingArray objectAtIndex:sender.tag];
 
-     PFRelation *relation = [user relationforKey:@"pendingFriends"];
-     [relation addObject:[PFUser currentUser]];
-     [user saveInBackground];
+    PFObject *friendship = [PFObject objectWithClassName:@"Friendship"];
+    friendship[@"fromUser"] = [PFUser currentUser];
+    friendship[@"toUser"] = user;
+    friendship[@"status"] = @"Pending";
+    [friendship saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+     {
+//         PFRelation *relation = [user relationforKey:@"friendship"];
+//         [relation addObject:friendship];
+//         [user saveInBackground];
+     }];
+
+
 
     ///check this on parse
 
