@@ -45,6 +45,8 @@
      {
          self.usersAttendingArray = [NSMutableArray arrayWithArray:results];
          [self.tableView reloadData];
+
+//         PFQuery *friendQuery = [PFQuery queryWithClassName:@"Friendship"];
      }];
 }
 
