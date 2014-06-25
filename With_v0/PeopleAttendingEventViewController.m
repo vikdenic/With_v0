@@ -83,13 +83,16 @@
 {
     [sender setImage:[UIImage imageNamed:@"like_unselected"] forState:UIControlStateNormal];
 
-    ///here we need to actually create the relation between the users
+    ///so this will need to create a pending friend invite between the two people and then put the current user in a pending array of friends for the other user
 
-    //             PFRelation *relation = [individualEventPhoto.object relationforKey:@"likeActivity"];
-    //             [relation addObject:like];
-    //             [individualEventPhoto.object saveInBackground];
+     PFUser *user = [self.usersAttendingArray objectAtIndex:sender.tag];
 
+     PFRelation *relation = [user relationforKey:@"pendingFriends"];
+     [relation addObject:[PFUser currentUser]];
+     [user saveInBackground];
+    ///check this on parse
 
+    ///once a user is accepted or denied from pending friends then they will be moved to friends if the other user accepted it
 }
 
 
