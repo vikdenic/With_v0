@@ -24,7 +24,6 @@
 
 @property UIRefreshControl *refreshControl;
 
-
 @property NSMutableArray *theLegitArrayOfEverything;
 
 @end
@@ -38,6 +37,8 @@
     //add a uiimageview and then on viewDidAppear I remove it or animate it out after 1.2 seconds
     self.theLegitArrayOfEverything = [NSMutableArray array];
 
+    [self queryForImages];
+
     //pull to refresh
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
@@ -48,8 +49,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-    [self queryForImages];
 }
 
 #pragma mark - Getting Pictures and Videos
@@ -97,40 +96,52 @@
 
 #pragma mark - Action Methods
 
-//- (IBAction)onLikeButtonTapped:(UIButton *)sender
-//{
-//    if ([sender.currentBackgroundImage isEqual:[UIImage imageNamed:@"like_unselected"]])
-//    {
-//
-//        NSLog(@"No");
-//        
-//        UIImage *btnImage = [UIImage imageNamed:@"like_selected"];
-//        [sender setImage:btnImage forState:UIControlStateNormal];
-//
-//        IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:sender.tag];
+- (IBAction)onLikeButtonTapped:(UIButton *)sender
+{
+    if ([sender.imageView.image isEqual:[UIImage imageNamed:@"like_unselected"]])
+    {
+
+        UIImage *btnImage = [UIImage imageNamed:@"like_selected"];
+        [sender setImage:btnImage forState:UIControlStateNormal];
+
+        IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:sender.tag];
+        PFUser *picturePhotographer = [individualEventPhoto.object objectForKey:@"photographer"];
+
+        PFObject *like = [PFObject objectWithClassName:@"LikeActivity"];
+        like[@"fromUser"] = [PFUser currentUser];
+        like[@"toUser"] = picturePhotographer;
+        like[@"photo"] = individualEventPhoto.object;
+        [like saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             PFRelation *relation = [individualEventPhoto.object relationforKey:@"likeActivity"];
+             [relation addObject:like];
+             [individualEventPhoto.object saveInBackground];
+         }];
+
+    }
+    else if ([sender.imageView.image isEqual:[UIImage imageNamed:@"like_selected"]])
+    {
+        UIImage *btnImage = [UIImage imageNamed:@"like_unselected"];
+        [sender setImage:btnImage forState:UIControlStateNormal];
+
+        IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:sender.tag];
 //        PFUser *picturePhotographer = [individualEventPhoto.object objectForKey:@"photographer"];
-//
-//        PFObject *like = [PFObject objectWithClassName:@"LikeActivity"];
-//        like[@"fromUser"] = [PFUser currentUser];
-//        like[@"toUser"] = picturePhotographer;
-//        like[@"photo"] = individualEventPhoto.object;
-//        [like saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-//         {
-//             PFRelation *relation = [individualEventPhoto.object relationforKey:@"likeActivity"];
-//             [relation addObject:like];
-//             [individualEventPhoto.object saveInBackground];
-//         }];
-//
-//    }
-//    else if ([sender.currentBackgroundImage isEqual:[UIImage imageNamed:@"like_selected"]])
-//    {
-//
-//        NSLog(@"Yep");
-//        UIImage *btnImage = [UIImage imageNamed:@"like_unselected"];
-//        [sender setImage:btnImage forState:UIControlStateNormal];
-//        ///need to remove relation
-//    }
-//}
+
+        PFRelation *relation2 = [individualEventPhoto.object relationForKey:@"likeActivity"];
+        PFQuery *query2 = [relation2 query];
+        [query2 findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             for (PFObject *object in objects)
+             {
+                 [object deleteInBackground];
+             }
+        }];
+
+
+
+        ///need to remove relation
+    }
+}
 
 - (IBAction)onCommentButtonTapped:(UIButton *)sender
 {
@@ -281,43 +292,60 @@
 {
     UIImageView *sender = (UIImageView *)tapGestureRecognizer.view;
 
-    IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:sender.tag];
-    PFUser *picturePhotographer = [individualEventPhoto.object objectForKey:@"photographer"];
-
-    PFObject *like = [PFObject objectWithClassName:@"LikeActivity"];
-    like[@"fromUser"] = [PFUser currentUser];
-    like[@"toUser"] = picturePhotographer;
-    like[@"photo"] = individualEventPhoto.object;
-    [like saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-     {
-         PFRelation *relation = [individualEventPhoto.object relationforKey:@"likeActivity"];
-         [relation addObject:like];
-         [individualEventPhoto.object saveInBackground];
-     }];
-
     StreamTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sender.tag]];
 
-    UIImage *btnImage = [UIImage imageNamed:@"like_selected"];
-    [cell.likeButton setImage:btnImage forState:UIControlStateNormal];
+    if ([cell.likeButton.imageView.image isEqual:[UIImage imageNamed:@"like_selected"]])
+    {
 
-    //increment count
-    NSString *numberOfLikesString = cell.numberOfLikesLabel.text;
-    NSInteger numberOfLikesInt = [numberOfLikesString integerValue];
-    numberOfLikesInt++;
-    cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
+    } else {
+        UIImageView *sender = (UIImageView *)tapGestureRecognizer.view;
 
-    cell.likedImageView.hidden = NO;
-    cell.likedImageView.alpha = 0;
+        IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:sender.tag];
+        PFUser *picturePhotographer = [individualEventPhoto.object objectForKey:@"photographer"];
 
-    [UIView animateWithDuration:0.3 animations:^{
-        cell.likedImageView.alpha = 1;
-    } completion:^(BOOL finished) {
-        [UIView animateKeyframesWithDuration:0.3 delay:0.75 options:0 animations:^{
-            cell.likedImageView.alpha = 0;
+        PFObject *like = [PFObject objectWithClassName:@"LikeActivity"];
+        like[@"fromUser"] = [PFUser currentUser];
+        like[@"toUser"] = picturePhotographer;
+        like[@"photo"] = individualEventPhoto.object;
+        [like saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             PFRelation *relation = [individualEventPhoto.object relationforKey:@"likeActivity"];
+             [relation addObject:like];
+             [individualEventPhoto.object saveInBackground];
+         }];
+
+//        StreamTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sender.tag]];
+
+        UIImage *btnImage = [UIImage imageNamed:@"like_selected"];
+        [cell.likeButton setImage:btnImage forState:UIControlStateNormal];
+
+        //increment count
+        NSString *numberOfLikesString = cell.numberOfLikesLabel.text;
+        NSInteger numberOfLikesInt = [numberOfLikesString integerValue];
+        numberOfLikesInt++;
+        cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
+
+    //    PFRelation *relation = [individualEventPhoto.object relationForKey:@"likeActivity"];
+    //    PFQuery *query1 = [relation query];
+    //    [query1 countObjectsInBackgroundWithBlock:^(int number, NSError *error)
+    //     {
+    //        cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%i likes", number];
+    //     }];
+
+
+        cell.likedImageView.hidden = NO;
+        cell.likedImageView.alpha = 0;
+
+        [UIView animateWithDuration:0.3 animations:^{
+            cell.likedImageView.alpha = 1;
         } completion:^(BOOL finished) {
-            cell.likedImageView.hidden = YES;
+            [UIView animateKeyframesWithDuration:0.3 delay:0.75 options:0 animations:^{
+                cell.likedImageView.alpha = 0;
+            } completion:^(BOOL finished) {
+                cell.likedImageView.hidden = YES;
+            }];
         }];
-    }];
+    }
 }
 
 #pragma mark - Helper Method

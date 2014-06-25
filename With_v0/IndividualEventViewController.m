@@ -91,7 +91,7 @@
         PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
         [relation2 removeObject:[PFUser currentUser]];
         [self.event saveInBackground];
-        [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:2.2];
+        [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:0.8];
 
     } else {
         self.yesButtonTapped = NO;
@@ -103,7 +103,7 @@
         PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
         [relation2 removeObject:[PFUser currentUser]];
         [self.event saveInBackground];
-        [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:2.2];
+        [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:0.8];
     }
 }
 

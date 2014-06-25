@@ -91,7 +91,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="With" id="vKJ-AE-kfH"/>
+                    <navigationItem key="navigationItem" title="With" id="vKJ-AE-kfH">
+                        <barButtonItem key="rightBarButtonItem" title="Invites" id="GdG-ZO-7Lb"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="Mkh-Fn-K4e" id="gYr-cY-OaB"/>
                         <segue destination="THh-Us-tVf" kind="push" identifier="showLogin" id="64y-b2-ZaC"/>
@@ -271,14 +273,14 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" rowHeight="56" id="4Ix-6b-oJ6" customClass="PeopleAttendingTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="56" id="4Ix-6b-oJ6" customClass="PeopleAttendingTableViewCell">
                                         <rect key="frame" x="0.0" y="86" width="322" height="56"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4Ix-6b-oJ6" id="cMC-Tv-2fL">
-                                            <rect key="frame" x="0.0" y="0.0" width="289" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="322" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31U-I4-NWW">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31U-I4-NWW">
                                                     <rect key="frame" x="98" y="17" width="126" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -288,9 +290,17 @@
                                                     <rect key="frame" x="20" y="13" width="32" height="32"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fTp-Zj-6Ha">
+                                                    <rect key="frame" x="256" y="13" width="46" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="Button">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="friendButton" destination="fTp-Zj-6Ha" id="Vhp-Wv-lhq"/>
                                             <outlet property="profilePictureImageView" destination="dCE-UT-rE4" id="bDf-Yd-xyJ"/>
                                             <outlet property="usernameLabel" destination="31U-I4-NWW" id="Ggq-09-wxR"/>
                                         </connections>
@@ -484,7 +494,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sAz-JN-cVC" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="LlM-hN-ylt" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2488" y="-1422"/>
+            <point key="canvasLocation" x="2624" y="-1422"/>
         </scene>
         <!--Stream Event View Controller-->
         <scene sceneID="xjN-aj-x1a">

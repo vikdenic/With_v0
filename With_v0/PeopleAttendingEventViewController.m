@@ -36,6 +36,8 @@
 
 - (void)usersAttendingQuery
 {
+    [self.usersAttendingArray removeAllObjects];
+
     PFRelation *relation = [self.event relationForKey:@"usersAttending"];
     PFQuery *query = [relation query];
 
@@ -69,15 +71,30 @@
              cell.profilePictureImageView.image = temporaryImage;
      }];
 
-    cell.accessoryView = [[ UIImageView alloc ]
-                            initWithImage:[UIImage imageNamed:@"like_selected"]];
+    cell.friendButton.tag = indexPath.row;
+    //set it in storyboard and do the for thing like max showed me earlier so set it to no and then if they are friend switch it
+    [cell.friendButton addTarget:self action:@selector(ontapped:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.friendButton setTitle:@"NF" forState:UIControlStateNormal];
 
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+- (void)ontapped:(UIButton *)sender
 {
-    //need to get the user at the current indexPath and then give them a relation to the current user and add them to the current users friend relation
+    [sender setTitle:@"F" forState:UIControlStateNormal];
+
+    ///so this will need to create a pending friend invite between the two people and then put the current user in a pending array of friends for the other user
+
+     PFUser *user = [self.usersAttendingArray objectAtIndex:sender.tag];
+
+     PFRelation *relation = [user relationforKey:@"pendingFriends"];
+     [relation addObject:[PFUser currentUser]];
+     [user saveInBackground];
+
+    ///check this on parse
+
+    ///once a user is accepted or denied from pending friends then they will be moved to friends if the other user accepted it
 }
+
 
 @end
