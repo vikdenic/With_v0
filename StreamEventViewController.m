@@ -45,12 +45,12 @@
 {
     [super viewDidLoad];
 
+    [self queryForImages];
+
     self.originalFrame = self.tabBarController.tabBar.frame;
 
     //add a uiimageview and then on viewDidAppear I remove it or animate it out after 1.2 seconds
     self.theLegitArrayOfEverything = [NSMutableArray array];
-
-    [self queryForImages];
 
     //pull to refresh
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
