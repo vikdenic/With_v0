@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PeopleAttendingFriendButton.h"
 
 @interface PeopleAttendingTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureImageView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (weak, nonatomic) IBOutlet UIButton *friendButton;
+@property (weak, nonatomic) IBOutlet PeopleAttendingFriendButton *friendButton;
 
 @end

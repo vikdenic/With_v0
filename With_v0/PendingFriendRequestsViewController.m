@@ -77,12 +77,12 @@
     //No Friend Button
     cell.friendButtonNo.tag = indexPath.row;
     [cell.friendButtonNo addTarget:self action:@selector(ontappedNo:) forControlEvents:UIControlEventTouchUpInside];
-    [cell.friendButtonNo setTitle:@"NF" forState:UIControlStateNormal];
+    [cell.friendButtonNo setTitle:@"No" forState:UIControlStateNormal];
 
     //Yes Friend Button
     cell.friendButtonYes.tag = indexPath.row;
     [cell.friendButtonYes addTarget:self action:@selector(ontappedYes:) forControlEvents:UIControlEventTouchUpInside];
-    [cell.friendButtonYes setTitle:@"NF" forState:UIControlStateNormal];
+    [cell.friendButtonYes setTitle:@"Yes" forState:UIControlStateNormal];
 
     return cell;
 }
@@ -90,10 +90,12 @@
 - (void)ontappedNo:(UIButton *)sender
 {
     [sender setTitle:@"D" forState:UIControlStateNormal];
+    ///fade it a bigger YES Button
 
     PFObject *friendship = [self.pendingFriendships objectAtIndex:sender.tag];
     friendship[@"status"] = @"Denied";
     [friendship saveInBackground];
+
 }
 
 - (void)ontappedYes:(UIButton *)sender

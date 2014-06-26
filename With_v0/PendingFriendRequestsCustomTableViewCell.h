@@ -15,4 +15,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *friendButtonNo;
 @property (weak, nonatomic) IBOutlet UIButton *friendButtonYes;
 
+
 @end
