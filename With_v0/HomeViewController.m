@@ -13,6 +13,9 @@
 #import "PageViewController.h"
 #import "LoginViewController.h"
 
+#import <QuartzCore/QuartzCore.h>
+#import <CoreImage/CoreImage.h>
+
 @interface HomeViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -56,6 +59,41 @@
 
     [self queryForEvents];
 }
+
+//-(void)viewWillAppear:(BOOL)animated
+//{
+//    [self performSelectorInBackground:@selector(captureBlur) withObject:nil];
+//}
+
+#pragma mark - Blur
+
+//- (void) captureBlur {
+//    HomeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
+//
+//    //Get a UIImage from the UIView
+//    NSLog(@"blur capture");
+//    UIGraphicsBeginImageContext(cell.themeImageView.bounds.size);
+//    [cell.themeImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
+//    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//
+//    //Blur the UIImage
+//    CIImage *imageToBlur = [CIImage imageWithCGImage:viewImage.CGImage];
+//    CIFilter *gaussianBlurFilter = [CIFilter filterWithName: @"CIGaussianBlur"];
+//    [gaussianBlurFilter setValue:imageToBlur forKey: @"inputImage"];
+//    [gaussianBlurFilter setValue:[NSNumber numberWithFloat: 10] forKey: @"inputRadius"]; //change number to increase/decrease blur
+//    CIImage *resultImage = [gaussianBlurFilter valueForKey: @"outputImage"];
+//
+//    //create UIImage from filtered image
+//    UIImage *blurrredImage = [[UIImage alloc] initWithCIImage:resultImage];
+//
+//    //Place the UIImage in a UIImageView
+//    UIImageView *newView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+//    newView.image = blurrredImage;
+//
+//    //insert blur UIImageView below transparent view inside the blur image container
+//    [cell.blurContainerView insertSubview:newView belowSubview:cell.transparentView];
+//}
 
 #pragma mark - Table View
 
@@ -225,19 +263,6 @@
 }
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //    PFUser *currentUser = [PFUser currentUser];

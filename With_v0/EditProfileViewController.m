@@ -153,6 +153,17 @@
 -(void)imagePicker:(GKImagePicker *)imagePicker pickedImage:(UIImage *)image
 {
 
+    //THEME IMAGE FOR HOMEPAGE
+//    CGSize scaledSize = CGSizeMake(320, 320);
+//    UIGraphicsBeginImageContextWithOptions(scaledSize, NO, 2.0);
+//
+//    [image drawInRect:(CGRect){.size = scaledSize}];
+//    UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//
+//    NSData *imageData = UIImagePNGRepresentation(resizedImage);
+//    PFFile *imageFile = [PFFile fileWithData:imageData];
+
 //    NSLog(@"IMAGEPICKED");
 
     //    self.themeImageView.image = image;
@@ -194,12 +205,24 @@
 
 //    [self setUserInfo];
 
-    PFUser *user = [PFUser currentUser];
+//    PFUser *user = [PFUser currentUser];
+//
+//    [user setValue:self.avatarImageFile forKey:@"userProfilePhoto"];
+//    [user setValue:self.miniAvatarImageFile forKey:@"miniProfilePhoto"];
+//
+//    [user saveInBackground];
 
-    [user setValue:self.avatarImageFile forKey:@"userProfilePhoto"];
-    [user setValue:self.miniAvatarImageFile forKey:@"miniProfilePhoto"];
+    // Save PFFile
+    [self.avatarImageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+     {
+        PFUser *user = [PFUser currentUser];
 
-    [user saveInBackground];
+        [user setValue:self.avatarImageFile forKey:@"userProfilePhoto"];
+        [user setValue:self.miniAvatarImageFile forKey:@"miniProfilePhoto"];
+
+        [user saveInBackground];
+
+     }];
 
     [self hideImagePicker];
 }

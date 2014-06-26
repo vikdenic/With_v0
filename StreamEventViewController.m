@@ -13,8 +13,9 @@
 #import <Parse/Parse.h>
 #import "CommentsViewController.h"
 #import "IndividualEventPhoto.h"
+#import "GKImagePicker.h"
 
-@interface StreamEventViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface StreamEventViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, GKImagePickerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property UIImagePickerController *cameraController;
@@ -26,9 +27,17 @@
 
 @property NSMutableArray *theLegitArrayOfEverything;
 
+@property (nonatomic, strong) GKImagePicker *imagePicker;
+@property (nonatomic, strong) UIPopoverController *popoverController;
+
+@property PFFile *selectedImageFile;
+
 @end
 
 @implementation StreamEventViewController
+
+@synthesize imagePicker;
+@synthesize popoverController;
 
 - (void)viewDidLoad
 {
@@ -399,39 +408,100 @@
     }
 }
 
-#pragma mark - Helper Method
+//#pragma mark - Helper Method
+//
+//- (void)cameraSetUp
+//{
+//    self.cameraController = [[UIImagePickerController alloc] init];
+//    self.cameraController.delegate = self;
+//    self.cameraController.allowsEditing = YES;
+//    self.cameraController.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+//    self.cameraController.videoMaximumDuration = 11;
+//}
 
-- (void)cameraSetUp
-{
-    self.cameraController = [[UIImagePickerController alloc] init];
-    self.cameraController.delegate = self;
-    self.cameraController.allowsEditing = YES;
-    self.cameraController.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
-    self.cameraController.videoMaximumDuration = 11;
-}
-
-#pragma mark - Image Picker
-
-- (IBAction)onPickerButtonTapped:(id)sender
-{
-    [self cameraSetUp];
-
-    self.cameraController.sourceType = UIImagePickerControllerSourceTypeCamera;
-
-    [self presentViewController:self.cameraController animated:NO completion:^{
-        //
-    }];
-}
+//#pragma mark - Image Picker
+//
+//- (IBAction)onPickerButtonTapped:(id)sender
+//{
+//    [self cameraSetUp];
+//
+//    self.cameraController.sourceType = UIImagePickerControllerSourceTypeCamera;
+//
+//    [self presentViewController:self.cameraController animated:NO completion:^{
+//        //
+//    }];
+//}
 
 - (IBAction)onPhotoLibraryButtonTapped:(id)sender
 {
-    [self cameraSetUp];
+    //    [self presentViewController:self.cameraController animated:NO completion:nil];
+    self.imagePicker = [[GKImagePicker alloc] init];
+    self.imagePicker.cropSize = CGSizeMake(320, 320);
+    self.imagePicker.delegate = self;
 
-    self.cameraController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 
-    [self presentViewController:self.cameraController animated:YES completion:^{
-        //
-    }];
+        self.popoverController = [[UIPopoverController alloc] initWithContentViewController:self.imagePicker.imagePickerController];
+//        [self.popoverController presentPopoverFromRect:tapGestureRecognizer.view.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+
+    } else {
+
+        [self presentModalViewController:self.imagePicker.imagePickerController animated:YES];
+    }
+}
+
+-(void)imagePicker:(GKImagePicker *)imagePicker pickedImage:(UIImage *)image
+{
+    //THEME IMAGE FOR HOMEPAGE
+    CGSize scaledSize = CGSizeMake(320, 320);
+    UIGraphicsBeginImageContextWithOptions(scaledSize, NO, 2.0);
+
+    [image drawInRect:(CGRect){.size = scaledSize}];
+    UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    NSData *imageData = UIImagePNGRepresentation(resizedImage);
+    PFFile *imageFile = [PFFile fileWithData:imageData];
+
+    // Save PFFile
+    [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+     {
+         if (!error) {
+             PFObject *photoTaken = [PFObject objectWithClassName:@"Photo"];
+             [photoTaken setObject:imageFile forKey:@"photo"];
+             [photoTaken setObject:[PFUser currentUser] forKey:@"photographer"];
+             //                 photoTaken[@"caption"] = //
+
+             [photoTaken saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+              {
+                  if (!error) {
+
+                      PFRelation *relation = [self.event relationforKey:@"eventPhotos"];
+                      [relation addObject:photoTaken];
+                      [self.event saveInBackground];
+
+                      //[self dismissViewControllerAnimated:NO completion:nil];
+
+                      [self.tableView reloadData];
+                  }
+                  else {
+                      NSLog(@"Error");
+                  }
+              }];
+         }
+     }];
+    [self hideImagePicker];
+}
+
+- (void)hideImagePicker{
+    if (UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+
+        [self.popoverController dismissPopoverAnimated:YES];
+
+    } else {
+
+        [self.imagePicker.imagePickerController dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -442,52 +512,52 @@
      }];
 }
 
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    [picker dismissViewControllerAnimated:YES completion:^{
-
-        //NEED TO FIGURE OUT HOW TO SAVE VIDEOS DIFFERENTLY- THIS MIGHT BE TRICKY
-        UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-
-        CGSize sacleSize = CGSizeMake(320, 320);
-        UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
-        [image drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
-        UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-
-        NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.05f);
-        PFFile *imageFile = [PFFile fileWithData:imageData];
-
-        // Save PFFile
-        [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-         {
-             if (!error) {
-
-                 PFObject *photoTaken = [PFObject objectWithClassName:@"Photo"];
-                 [photoTaken setObject:imageFile forKey:@"photo"];
-                 [photoTaken setObject:[PFUser currentUser] forKey:@"photographer"];
-//                 photoTaken[@"caption"] = //
-
-                 [photoTaken saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-                  {
-                      if (!error) {
-
-                          PFRelation *relation = [self.event relationforKey:@"eventPhotos"];
-                          [relation addObject:photoTaken];
-                          [self.event saveInBackground];
-
-                          //[self dismissViewControllerAnimated:NO completion:nil];
-
-                          [self.tableView reloadData];
-                      }
-                      else {
-                          NSLog(@"Error");
-                      }
-                  }];
-             }
-         }];
-    }];
-}
+//-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+//{
+//    [picker dismissViewControllerAnimated:YES completion:^{
+//
+//        //NEED TO FIGURE OUT HOW TO SAVE VIDEOS DIFFERENTLY- THIS MIGHT BE TRICKY
+//        UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+//
+//        CGSize sacleSize = CGSizeMake(320, 320);
+//        UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
+//        [image drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
+//        UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+//        UIGraphicsEndImageContext();
+//
+//        NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.05f);
+//        PFFile *imageFile = [PFFile fileWithData:imageData];
+//
+//        // Save PFFile
+//        [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+//         {
+//             if (!error) {
+//
+//                 PFObject *photoTaken = [PFObject objectWithClassName:@"Photo"];
+//                 [photoTaken setObject:imageFile forKey:@"photo"];
+//                 [photoTaken setObject:[PFUser currentUser] forKey:@"photographer"];
+////                 photoTaken[@"caption"] = //
+//
+//                 [photoTaken saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+//                  {
+//                      if (!error) {
+//
+//                          PFRelation *relation = [self.event relationforKey:@"eventPhotos"];
+//                          [relation addObject:photoTaken];
+//                          [self.event saveInBackground];
+//
+//                          //[self dismissViewControllerAnimated:NO completion:nil];
+//
+//                          [self.tableView reloadData];
+//                      }
+//                      else {
+//                          NSLog(@"Error");
+//                      }
+//                  }];
+//             }
+//         }];
+//    }];
+//}
 
 #pragma mark - Segue
 

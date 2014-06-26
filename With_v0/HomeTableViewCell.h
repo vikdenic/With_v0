@@ -16,4 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventDateLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *blurContainerView;
+@property (weak, nonatomic) IBOutlet UIView *transparentView;
+
 @end

@@ -59,6 +59,7 @@
 		9375544A1950A5BF008AAD45 /* FindFriendsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 937554491950A5BF008AAD45 /* FindFriendsTableViewCell.m */; };
 		9375544D1950B883008AAD45 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9375544C1950B883008AAD45 /* EditProfileViewController.m */; };
 		93802209195659A0004B492D /* DateAndTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93802208195659A0004B492D /* DateAndTimeViewController.m */; };
+		9391EEC4195BD25C00554584 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9391EEC3195BD25C00554584 /* CoreImage.framework */; };
 		93952F8E194D5D4C001AA3E4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93952F8D194D5D4C001AA3E4 /* Foundation.framework */; };
 		93952F90194D5D4C001AA3E4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93952F8F194D5D4C001AA3E4 /* CoreGraphics.framework */; };
 		93952F92194D5D4C001AA3E4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93952F91194D5D4C001AA3E4 /* UIKit.framework */; };
@@ -172,6 +173,7 @@
 		9375544C1950B883008AAD45 /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
 		93802207195659A0004B492D /* DateAndTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateAndTimeViewController.h; sourceTree = "<group>"; };
 		93802208195659A0004B492D /* DateAndTimeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateAndTimeViewController.m; sourceTree = "<group>"; };
+		9391EEC3195BD25C00554584 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		93952F8A194D5D4C001AA3E4 /* With_v0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = With_v0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93952F8D194D5D4C001AA3E4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		93952F8F194D5D4C001AA3E4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -206,6 +208,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9391EEC4195BD25C00554584 /* CoreImage.framework in Frameworks */,
 				6091D1ED195B1A68001A371E /* AddressBook.framework in Frameworks */,
 				6091D1EE195B1A68001A371E /* AddressBookUI.framework in Frameworks */,
 				60F5B34019574C6500A80467 /* MapKit.framework in Frameworks */,
@@ -318,6 +321,7 @@
 		93952F8C194D5D4C001AA3E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9391EEC3195BD25C00554584 /* CoreImage.framework */,
 				6091D1EB195B1A68001A371E /* AddressBook.framework */,
 				6091D1EC195B1A68001A371E /* AddressBookUI.framework */,
 				60F5B33F19574C6500A80467 /* MapKit.framework */,
