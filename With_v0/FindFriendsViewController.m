@@ -12,27 +12,15 @@
 
 @interface FindFriendsViewController () <UITableViewDelegate, UITableViewDataSource>
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 @end
 
 @implementation FindFriendsViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-- (IBAction)onPeopleYouMayKnowButtonPressed:(id)sender
-{
-
 }
 
 #pragma mark - TableView
@@ -44,9 +32,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    FindFriendsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FindCell"];
-
-
+    FindFriendsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     return cell;
 }
 

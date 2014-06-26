@@ -10,14 +10,8 @@
 
 @interface FindFriendsTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
-
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-
-@property (weak, nonatomic) IBOutlet UILabel *cityStateLabel;
-
-@property (weak, nonatomic) IBOutlet UIImageView *addImageView;
-
-@property (weak, nonatomic) IBOutlet UIButton *addButton;
+@property (weak, nonatomic) IBOutlet UIImageView *profilePictureImageView;
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *friendButton;
 
 @end
