@@ -115,6 +115,8 @@
     self.nameTextField.text = nil;
     self.locationTextField.text = nil;
     self.bioTextView.text = nil;
+
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 #pragma mark - Tap Gesture Recognizer
 
