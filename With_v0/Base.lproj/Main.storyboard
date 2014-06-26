@@ -367,6 +367,8 @@
         <!--Chat Event View Controller-->
         <scene sceneID="7J6-Oh-bDP">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sAz-JN-cVC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="LlM-hN-ylt" userLabel="Exit" sceneMemberID="exit"/>
                 <viewController storyboardIdentifier="ChatEventViewController" id="ZG1-5c-rcA" customClass="ChatEventViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yPn-pJ-jmw"/>
@@ -406,72 +408,102 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" rowHeight="88" id="dOy-rD-pDx" customClass="CustomTableViewCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="88"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserChatCell" rowHeight="66" id="dOy-rD-pDx" customClass="CustomTableViewCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="66"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dOy-rD-pDx" id="z1Z-Cr-PBP">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="87"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6WL-ux-6x2">
-                                                    <rect key="frame" x="278" y="8" width="30" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYB-iq-KLr">
-                                                    <rect key="frame" x="216" y="41" width="92" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bTT-ln-CLo">
+                                                    <rect key="frame" x="10" y="7" width="267" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" red="1" green="0.50196081399917603" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="290" translatesAutoresizingMaskIntoConstraints="NO" id="s73-a7-W2s">
+                                                    <rect key="frame" x="14" y="37" width="290" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QXn-JO-pCq">
-                                                    <rect key="frame" x="12" y="8" width="188" height="44"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nah-Lh-W4w">
+                                                    <rect key="frame" x="289" y="6" width="24" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                    <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
-                                                </textView>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="24" id="L8R-VD-iMO"/>
+                                                        <constraint firstAttribute="width" constant="24" id="ZYc-P2-8SI"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="nah-Lh-W4w" firstAttribute="top" secondItem="z1Z-Cr-PBP" secondAttribute="top" constant="6" id="1jg-VP-X9s"/>
+                                                <constraint firstItem="s73-a7-W2s" firstAttribute="top" secondItem="nah-Lh-W4w" secondAttribute="bottom" constant="7" id="2nx-c0-SVC"/>
+                                                <constraint firstAttribute="trailing" secondItem="s73-a7-W2s" secondAttribute="trailing" constant="16" id="AgY-BA-2n4"/>
+                                                <constraint firstItem="nah-Lh-W4w" firstAttribute="leading" secondItem="bTT-ln-CLo" secondAttribute="trailing" constant="12" id="UpO-s5-OH7"/>
+                                                <constraint firstItem="bTT-ln-CLo" firstAttribute="leading" secondItem="z1Z-Cr-PBP" secondAttribute="leading" constant="10" id="XCY-Cd-qsd"/>
+                                                <constraint firstItem="s73-a7-W2s" firstAttribute="leading" secondItem="z1Z-Cr-PBP" secondAttribute="leading" constant="14" id="bEj-lG-3I5"/>
+                                                <constraint firstAttribute="bottom" secondItem="s73-a7-W2s" secondAttribute="bottom" constant="8" id="g8V-Dc-cDp"/>
+                                                <constraint firstAttribute="trailing" secondItem="nah-Lh-W4w" secondAttribute="trailing" constant="7" id="pQc-TF-SFt"/>
+                                                <constraint firstItem="s73-a7-W2s" firstAttribute="top" secondItem="bTT-ln-CLo" secondAttribute="bottom" constant="8" id="scj-fC-Xa0"/>
+                                                <constraint firstItem="bTT-ln-CLo" firstAttribute="top" secondItem="z1Z-Cr-PBP" secondAttribute="top" constant="7" id="zqB-MU-R3L"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="customTextView" destination="QXn-JO-pCq" id="fAQ-db-aJT"/>
-                                            <outlet property="imageInCell" destination="6WL-ux-6x2" id="fPZ-pZ-DcY"/>
-                                            <outlet property="usernameLabelInCell" destination="dYB-iq-KLr" id="ccF-MM-GDi"/>
+                                            <outlet property="chatAvatarImage" destination="nah-Lh-W4w" id="5ZY-57-95u"/>
+                                            <outlet property="chatMessageCellLabel" destination="s73-a7-W2s" id="fPj-pc-RBg"/>
+                                            <outlet property="usernameChatCellLabel" destination="bTT-ln-CLo" id="HRe-cE-7JG"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserCommentCell" rowHeight="88" id="ezJ-A0-mUd" customClass="CustomTableViewCell">
-                                        <rect key="frame" x="0.0" y="110" width="320" height="88"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatroomCell" rowHeight="66" id="ezJ-A0-mUd" customClass="CustomTableViewCell">
+                                        <rect key="frame" x="0.0" y="88" width="320" height="66"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ezJ-A0-mUd" id="5Lz-ah-5KY">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="87"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G1h-DC-yFk">
-                                                    <rect key="frame" x="8" y="7" width="30" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yw9-5l-zlu">
-                                                    <rect key="frame" x="8" y="40" width="98" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4VH-0t-YGU">
+                                                    <rect key="frame" x="40" y="7" width="276" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" red="0.25098040700000002" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="286" translatesAutoresizingMaskIntoConstraints="NO" id="Je7-Ot-Mil">
+                                                    <rect key="frame" x="14" y="37" width="286" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="0df-pI-NlG">
-                                                    <rect key="frame" x="120" y="7" width="188" height="44"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jme-hR-YQC">
+                                                    <rect key="frame" x="7" y="6" width="24" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                    <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
-                                                </textView>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="24" id="718-8n-Bo2"/>
+                                                        <constraint firstAttribute="height" constant="24" id="yqD-de-vft"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Je7-Ot-Mil" firstAttribute="top" secondItem="4VH-0t-YGU" secondAttribute="bottom" constant="8" id="22V-Ge-pwF"/>
+                                                <constraint firstItem="4VH-0t-YGU" firstAttribute="top" secondItem="5Lz-ah-5KY" secondAttribute="top" constant="7" id="DSa-nU-IDA"/>
+                                                <constraint firstAttribute="trailing" secondItem="Je7-Ot-Mil" secondAttribute="trailing" constant="20" id="FhO-tz-O4K"/>
+                                                <constraint firstAttribute="trailing" secondItem="4VH-0t-YGU" secondAttribute="trailing" constant="8" id="OiR-mZ-Emk"/>
+                                                <constraint firstItem="Je7-Ot-Mil" firstAttribute="top" secondItem="jme-hR-YQC" secondAttribute="bottom" constant="7" id="UBw-FY-5Zt"/>
+                                                <constraint firstItem="Je7-Ot-Mil" firstAttribute="leading" secondItem="5Lz-ah-5KY" secondAttribute="leading" constant="14" id="Wmb-5m-L3F"/>
+                                                <constraint firstAttribute="bottom" secondItem="Je7-Ot-Mil" secondAttribute="bottom" constant="8" id="XbP-No-TP2"/>
+                                                <constraint firstItem="jme-hR-YQC" firstAttribute="top" secondItem="5Lz-ah-5KY" secondAttribute="top" constant="6" id="fc7-1P-KHa"/>
+                                                <constraint firstItem="4VH-0t-YGU" firstAttribute="leading" secondItem="jme-hR-YQC" secondAttribute="trailing" constant="9" id="jyC-39-bTG"/>
+                                                <constraint firstItem="jme-hR-YQC" firstAttribute="leading" secondItem="5Lz-ah-5KY" secondAttribute="leading" constant="7" id="o71-xl-Kwf"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="customTextView" destination="0df-pI-NlG" id="BxY-WF-nlH"/>
-                                            <outlet property="imageInCell" destination="G1h-DC-yFk" id="5br-9f-2Ki"/>
-                                            <outlet property="usernameLabelInCell" destination="yw9-5l-zlu" id="bFV-xO-86Q"/>
+                                            <outlet property="chatAvatarImage" destination="jme-hR-YQC" id="nQw-93-aZu"/>
+                                            <outlet property="chatMessageCellLabel" destination="Je7-Ot-Mil" id="7Id-yL-kxC"/>
+                                            <outlet property="usernameChatCellLabel" destination="4VH-0t-YGU" id="SZW-77-a2A"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -491,34 +523,16 @@
                                     <action selector="sendButtonPressed:" destination="ZG1-5c-rcA" eventType="touchUpInside" id="If0-Iz-u2d"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pIz-3a-6Fg">
-                                <rect key="frame" x="85" y="230" width="180" height="284"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uiw-ZD-jZz">
-                                        <rect key="frame" x="5" y="20" width="170" height="60"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="chatTextFieldOutlet" destination="EjL-Rf-10x" id="t5E-Ph-0eH"/>
                         <outlet property="commentTableView" destination="r9h-Zq-f1h" id="9AV-aK-Xma"/>
-                        <outlet property="hiddenTextView" destination="uiw-ZD-jZz" id="Rlj-Xz-kuI"/>
-                        <outlet property="hiddenView" destination="pIz-3a-6Fg" id="P13-dQ-Rer"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sAz-JN-cVC" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="LlM-hN-ylt" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2624" y="-1422"/>
+            <point key="canvasLocation" x="2698" y="-1430"/>
         </scene>
         <!--Stream Event View Controller-->
         <scene sceneID="xjN-aj-x1a">

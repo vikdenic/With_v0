@@ -21,21 +21,12 @@
 @property NSString *enteredText;
 @property NSArray *chatRoomMessagesArray;
 @property NSArray *authorsArray;
-@property NSArray *messagesArray;
+@property NSArray *messagesArray5000;
+
+@property (strong, nonatomic) CustomTableViewCell *customCell;
 
 @property NSString *usernamePlaceHolder;
 
-@property CGRect *tempCGRect;
-
-@property CGFloat height;
-
-@property CGFloat tempHeightOfLabel;
-@property CGFloat width;
-
-
-@property (weak, nonatomic) IBOutlet UITextView *hiddenTextView;
-
-@property (weak, nonatomic) IBOutlet UIView *hiddenView;
 
 @end
 
@@ -61,8 +52,6 @@
 
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
-    //self.view.backgroundColor = [UIColor blackColor];
-
     //Scroll opposite
     [self.commentTableView setScrollsToTop:YES];
 
@@ -79,18 +68,12 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
 
     self.navigationController.hidesBottomBarWhenPushed = NO;
-
-    self.width = self.hiddenTextView.frame.size.width;
-    self.tempHeightOfLabel = self.hiddenTextView.frame.size.height;
-
-    self.hiddenView.hidden = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [self retrieveAuthorsUsernames];
     [self retrieveCommentsFromParse];
-    [self.commentTableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -98,7 +81,6 @@
     [super viewDidAppear:animated];
     self.usernamePlaceHolder = [[NSString alloc] init];
 }
-
 
 
 #pragma mark - notifications //------------------------------------------------
@@ -111,30 +93,12 @@
 }
 
 
-
-
 #pragma mark - send button  CGAFFINE!!!!! //------------------------------------------------
 - (IBAction)sendButtonPressed:(UIButton *)sender
 {
     [self.view endEditing:YES];
 
-
-    ///
-    self.hiddenTextView.text = self.chatTextFieldOutlet.text;
-    [self.hiddenTextView sizeToFit];
-
-    self.height = self.hiddenTextView.frame.size.height;
-
-    NSLog(@"%f", self.height);
-
     self.enteredText = self.chatTextFieldOutlet.text;
-
-    self.tempHeightOfLabel = self.hiddenTextView.frame.size.height;
-
-    self.hiddenTextView.frame = CGRectMake(0, 0, self.width, self.height);
-    ///
-
-
 
     //Create Comment Object
     PFObject *chatComment = [PFObject objectWithClassName:@"ChatMessage"];
@@ -151,7 +115,7 @@
 
             [self retrieveAuthorsUsernames];
             [self retrieveCommentsFromParse];
-            [self.commentTableView reloadData];
+            //[self.commentTableView reloadData];
         }
     }];
 
@@ -177,49 +141,6 @@
     sender.transform = CGAffineTransformConcat(scaleTrans, lefttorightTrans);
     [UIView commitAnimations];
 }
-
-
-
-#pragma mark - Getting from parse //------------------------------------------------
-- (void)retrieveCommentsFromParse
-{
-    PFQuery *commentQuery = [PFQuery queryWithClassName:@"ChatMessage"];
-    [commentQuery orderByDescending:@"createdAt"];
-
-    [commentQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            [objects.lastObject objectForKey:@"chatText"]; //objectForKey:@"chatText"];
-
-            self.chatRoomMessagesArray = objects;
-
-            [self.commentTableView reloadData];
-        }
-    }];
-}
-
-- (void)retrieveAuthorsUsernames
-{
-    PFQuery *authorQuery = [PFQuery queryWithClassName:@"ChatMessage"];
-    [authorQuery orderByDescending:@"createdAt"];
-
-    [authorQuery findObjectsInBackgroundWithBlock:^(NSArray *authors, NSError *error) {
-        if (!error)
-        {
-            [authors.lastObject objectForKey:@"author"];
-
-            self.authorsArray = authors;
-
-            [self.commentTableView reloadData];
-        }
-    }];
-}
-
-
-
-
-#pragma mark - Reload stuff //------------------------------------------------
-
-
 
 
 #pragma mark - (scroll methods) Method to figure out if scrolling up or down //-------------------------
@@ -300,72 +221,114 @@
 
 
 
+#pragma mark - Getting from parse //------------------------------------------------
+- (void)retrieveCommentsFromParse
+{
+    PFQuery *commentQuery = [PFQuery queryWithClassName:@"ChatMessage"];
+    [commentQuery orderByDescending:@"createdAt"];
+
+    [commentQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error)
+        {
+            [objects.lastObject objectForKey:@"chatText"]; //objectForKey:@"chatText"];
+
+            self.messagesArray5000 = objects;
+
+            NSLog(@"%@", self.messagesArray5000);
+
+            [self.commentTableView reloadData];
+        }
+    }];
+}
+
+- (void)retrieveAuthorsUsernames
+{
+    PFQuery *authorQuery = [PFQuery queryWithClassName:@"ChatMessage"];
+    [authorQuery orderByDescending:@"createdAt"];
+
+    [authorQuery findObjectsInBackgroundWithBlock:^(NSArray *authors, NSError *error) {
+        if (!error)
+        {
+            [authors.lastObject objectForKey:@"author"];
+
+            self.authorsArray = authors;
+
+            [self.commentTableView reloadData];
+        }
+    }];
+}
+
+
 #pragma mark - TableView del methods //------------------------------------------------
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CustomTableViewCell *cell = [[CustomTableViewCell alloc] init];
-
-    cell.customTextView.frame = CGRectMake(0, 0, self.hiddenTextView.frame.size.width, self.height);
-
-    [cell.customTextView sizeToFit];
-
-    CGFloat cellSeperation = 10;
-
-    if (self.height < 80) {
-        return 80;
-    } else {
-        cellSeperation = 10;
-        return self.height + cellSeperation;
+    if (!self.customCell) {
+        self.customCell = [tableView dequeueReusableCellWithIdentifier:@"ChatroomCell"];
     }
 
+    ///configure the cell pain in thee ass
+    PFObject *message = [self.messagesArray5000 objectAtIndex:indexPath.row];
+
+    [self.customCell.chatMessageCellLabel setText:[message objectForKey:@"chatText"]];
+
+    ///layout cell
+    [self.customCell layoutIfNeeded];
+
+    //get height mofo
+    CGFloat height = [self.customCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+
+    return height;
 }
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //self.commentTableView.backgroundColor = [UIColor blackColor];
-    return self.chatRoomMessagesArray.count;
+    return self.messagesArray5000.count;  //10;//self.chatRoomMessagesArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60;
+    return 80;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CustomTableViewCell *cell = [[CustomTableViewCell alloc] init];
-    PFObject *message = [self.chatRoomMessagesArray objectAtIndex:indexPath.row];
+    PFObject *message = [self.messagesArray5000 objectAtIndex:indexPath.row];
     PFObject *author = [self.authorsArray objectAtIndex:indexPath.row];
     self.usernamePlaceHolder = [author objectForKey:@"author"];
 
-    ///
-    cell.customTextView.text = self.enteredText;
-    cell.customTextView.frame = CGRectMake(0, 0, self.hiddenTextView.frame.size.width, self.height);
+    cell.chatMessageCellLabel.text = self.enteredText;
 
-    [cell.customTextView sizeToFit];
+    //[cell.chatMessageCellLabel sizeToFit];
+
+
+
     ///
+    //cell = [tableView dequeueReusableCellWithIdentifier:@"ChatroomCell"];
+
 
     if ([self.usernamePlaceHolder isEqualToString:[PFUser currentUser].username])
     {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"UserCommentCell"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"ChatroomCell"];
+        cell.usernameChatCellLabel.textColor = [UIColor orangeColor];
+
 
     } else {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"UserChatCell"];///change later
     }
 
-    [cell.customTextView setText:[message objectForKey:@"chatText"]];
+    [cell.chatMessageCellLabel setText:[message objectForKey:@"chatText"]];
 
-    cell.usernameLabelInCell.text = self.usernamePlaceHolder;
-
-    cell.usernameLabelInCell.textColor = [UIColor orangeColor];
+    cell.usernameChatCellLabel.text = self.usernamePlaceHolder;
 
     //Avatar pic stuff
-    cell.imageInCell.image = [UIImage imageNamed:@"pacMan.jpg"];
-    cell.imageInCell.layer.borderWidth = 1.0f;
-    cell.imageInCell.layer.cornerRadius = 14.6;
-    cell.imageInCell.layer.masksToBounds = YES;
-    cell.imageInCell.layer.borderColor = [[UIColor blackColor] CGColor];
+    cell.chatAvatarImage.image = [UIImage imageNamed:@"pacMan.jpg"];
+    cell.chatAvatarImage.layer.borderWidth = 1.0f;
+    cell.chatAvatarImage.layer.cornerRadius = 11.7;
+    cell.chatAvatarImage.layer.masksToBounds = YES;
+    cell.chatAvatarImage.layer.borderColor = [[UIColor blackColor] CGColor];
     
     //Rotate the cell too
     cell.transform = CGAffineTransformMakeRotation(M_PI);
@@ -374,4 +337,3 @@
 }
 
 @end
-
