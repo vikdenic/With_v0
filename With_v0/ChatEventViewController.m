@@ -22,6 +22,8 @@
 @property NSArray *chatRoomMessagesArray;
 @property NSArray *authorsArray;
 @property NSArray *messagesArray5000;
+@property NSArray *imageFilesArray;
+@property NSMutableArray *imagesArray;
 
 @property (strong, nonatomic) CustomTableViewCell *customCell;
 
@@ -48,6 +50,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.imagesArray = [[NSMutableArray alloc] init];
+
     self.navigationController.hidesBottomBarWhenPushed = NO;
 
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
@@ -74,6 +79,7 @@
 {
     [self retrieveAuthorsUsernames];
     [self retrieveCommentsFromParse];
+    //[self retrieveAuthorsAvatarImages];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -107,6 +113,7 @@
     [chatComment setObject:self.enteredText forKey:@"chatText"];
 
     //This Creates relationship to the user!
+
     [chatComment setObject:[PFUser currentUser].username forKey:@"author"];
 
     //Save comment
@@ -115,6 +122,7 @@
 
             [self retrieveAuthorsUsernames];
             [self retrieveCommentsFromParse];
+            //[self retrieveAuthorsAvatarImages];
             //[self.commentTableView reloadData];
         }
     }];
@@ -205,6 +213,7 @@
 {
     [self retrieveCommentsFromParse];
     [self retrieveAuthorsUsernames];
+    //[self retrieveAuthorsAvatarImages];
     [self.commentTableView reloadData];
 }
 
@@ -234,8 +243,6 @@
 
             self.messagesArray5000 = objects;
 
-            NSLog(@"%@", self.messagesArray5000);
-
             [self.commentTableView reloadData];
         }
     }];
@@ -245,18 +252,50 @@
 {
     PFQuery *authorQuery = [PFQuery queryWithClassName:@"ChatMessage"];
     [authorQuery orderByDescending:@"createdAt"];
+    [authorQuery includeKey:@"author2"];
 
-    [authorQuery findObjectsInBackgroundWithBlock:^(NSArray *authors, NSError *error) {
+    [authorQuery findObjectsInBackgroundWithBlock:^(NSArray *users, NSError *error) {
         if (!error)
         {
-            [authors.lastObject objectForKey:@"author"];
+            [[users.lastObject objectForKey:@"author2"] objectForKey:@"username"];
 
-            self.authorsArray = authors;
+            self.authorsArray = users;
+
+            NSLog(@"%@", self.authorsArray);
 
             [self.commentTableView reloadData];
         }
     }];
 }
+
+//- (void)retrieveAuthorsAvatarImages
+//{
+//    PFQuery *avatarQuery = [PFQuery queryWithClassName:@"ChatMessage"];
+//    [avatarQuery orderByDescending:@"createdAt"];
+//    [avatarQuery includeKey:@"author2"];
+//
+//    [avatarQuery findObjectsInBackgroundWithBlock:^(NSArray *imageFiles, NSError *error) {
+//        if (!error)
+//        {
+//            [[imageFiles.lastObject objectForKey:@"author2"] objectForKey:@"miniProfilePhoto"];
+//
+//            self.imageFilesArray = imageFiles;
+//
+//            for (PFFile *file in self.imageFilesArray) {
+//                [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+//                    UIImage *finalImage = [UIImage imageWithData:data];
+//                    [self.imagesArray addObject:finalImage];
+//
+//                    NSLog(@"FINAL IMAGE: %@",finalImage);
+//                }];
+//
+//            }
+//
+//            [self.commentTableView reloadData];
+//        }
+//    }];
+//}
+
 
 
 #pragma mark - TableView del methods //------------------------------------------------
@@ -297,26 +336,20 @@
     CustomTableViewCell *cell = [[CustomTableViewCell alloc] init];
     PFObject *message = [self.messagesArray5000 objectAtIndex:indexPath.row];
     PFObject *author = [self.authorsArray objectAtIndex:indexPath.row];
+
     self.usernamePlaceHolder = [author objectForKey:@"author"];
 
     cell.chatMessageCellLabel.text = self.enteredText;
 
-    //[cell.chatMessageCellLabel sizeToFit];
-
-
-
-    ///
-    //cell = [tableView dequeueReusableCellWithIdentifier:@"ChatroomCell"];
-
 
     if ([self.usernamePlaceHolder isEqualToString:[PFUser currentUser].username])
     {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"ChatroomCell"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"UserChatCell"];
         cell.usernameChatCellLabel.textColor = [UIColor orangeColor];
 
 
     } else {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"UserChatCell"];///change later
+        cell = [tableView dequeueReusableCellWithIdentifier:@"ChatroomCell"];///change later
     }
 
     [cell.chatMessageCellLabel setText:[message objectForKey:@"chatText"]];
@@ -324,7 +357,8 @@
     cell.usernameChatCellLabel.text = self.usernamePlaceHolder;
 
     //Avatar pic stuff
-    cell.chatAvatarImage.image = [UIImage imageNamed:@"pacMan.jpg"];
+    //cell.chatAvatarImage.image = [UIImage imageNamed:@"pacMan.jpg"];
+    //cell.chatAvatarImage.image = [self.imagesArray objectAtIndex:indexPath.row];
     cell.chatAvatarImage.layer.borderWidth = 1.0f;
     cell.chatAvatarImage.layer.cornerRadius = 11.7;
     cell.chatAvatarImage.layer.masksToBounds = YES;
