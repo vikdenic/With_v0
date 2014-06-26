@@ -132,11 +132,11 @@ static CGRect GKScaleRect(CGRect rect, CGFloat scale)
     CGFloat scale = 0.0f;
     
     if (self.cropSize.width > self.cropSize.height) {
-        scale = (self.imageToCrop.size.width < self.imageToCrop.size.height ?
+        scale = (self.imageToCrop.size.width <= self.imageToCrop.size.height ?
                  MAX(scaleWidth, scaleHeight) :
                  MIN(scaleWidth, scaleHeight));
     }else{
-        scale = (self.imageToCrop.size.width < self.imageToCrop.size.height ?
+        scale = (self.imageToCrop.size.width <= self.imageToCrop.size.height ?
                  MIN(scaleWidth, scaleHeight) :
                  MAX(scaleWidth, scaleHeight));
     }

@@ -63,6 +63,10 @@
 {
     [super viewWillAppear:animated];
 
+    self.nameLabel.numberOfLines = 0;
+    self.cityStateLabel.numberOfLines = 0;
+    [self.bioTextView sizeToFit];
+
     [self setUserInfo];
 
     NSLog(@"will show %@",[PFUser currentUser]);
@@ -106,10 +110,6 @@
                 UIImage *image = [UIImage imageWithData:data];
                 self.profileAvatar.image = image;
             }];
-
-            [self.nameLabel sizeToFit];
-            [self.cityStateLabel sizeToFit];
-            [self.bioTextView sizeToFit];
 
 //            self.followersLabel.text = [user objectForKey:@"followersCount"]; ?
 //            self.followingLabel.text = [user objectForKey:@"followingCount"]; ?

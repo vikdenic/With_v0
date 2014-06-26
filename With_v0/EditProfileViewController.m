@@ -10,7 +10,7 @@
 #import <Parse/Parse.h>
 #import "GKImagePicker.h"
 
-@interface EditProfileViewController () <GKImagePickerDelegate>
+@interface EditProfileViewController () <GKImagePickerDelegate, UIImagePickerControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 
@@ -37,16 +37,7 @@
 
 //    self.avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
 
-
-
     NSLog(@"EDIT %f  %f",self.avatarImageView.frame.size.width, self.avatarImageView.frame.size.height);
-
-    [self setUserInfo];
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
 
     //tap on themImageView to open Image Picker
     UITapGestureRecognizer *tapping = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapTap:)];
@@ -58,6 +49,13 @@
     self.avatarImageView.clipsToBounds = YES;
     self.avatarImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
     self.avatarImageView.layer.borderWidth = 2.0;
+
+    [self setUserInfo];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
 
 //    [self setUserInfo];
 }
@@ -96,13 +94,17 @@
 
 -(IBAction)onSaveButtonPressed:(id)sender
 {
-            PFUser *user = [PFUser currentUser];
-            [user setValue:self.nameTextField.text forKey:@"name"];
-            [user setValue:self.locationTextField.text forKey:@"userCityState"];
-            [user setValue:self.bioTextView.text forKey:@"userBio"];
-            [user saveInBackground];
+    PFUser *user = [PFUser currentUser];
+    [user setValue:self.nameTextField.text forKey:@"name"];
+    [user setValue:self.locationTextField.text forKey:@"userCityState"];
+    [user setValue:self.bioTextView.text forKey:@"userBio"];
 
-    NSLog(@"%@", [user objectForKey:@"name"]);
+    [user setValue:self.avatarImageFile forKey:@"userProfilePhoto"];
+    [user setValue:self.miniAvatarImageFile forKey:@"miniProfilePhoto"];
+
+    [user saveInBackground];
+
+//    NSLog(@"%@", [user objectForKey:@"name"]);
 }
 
 - (IBAction)onLogOutButtonTapped:(id)sender
@@ -119,7 +121,7 @@
 - (void)tapTap:(UITapGestureRecognizer *)tapGestureRecognizer
 {
 
-    NSLog(@"TAPTAP");
+//    NSLog(@"TAPTAP");
     //    [self presentViewController:self.cameraController animated:NO completion:nil];
     self.imagePicker = [[GKImagePicker alloc] init];
     self.imagePicker.cropSize = CGSizeMake(320, 320);
@@ -131,7 +133,6 @@
         [self.popoverController presentPopoverFromRect:tapGestureRecognizer.view.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 
     } else {
-
         [self presentModalViewController:self.imagePicker.imagePickerController animated:YES];
     }
 }
@@ -145,23 +146,22 @@
     }];
 }
 
-#pragma mark - Theme Image View Tapped
+#pragma mark - Profile Pic Tapped
 //going to put a tap gesture on this so that when the user taps it, modally a view controller comes up that allows the user to select photos from their library to put in as the theme photo
 //might have some sizing issues and stuff here
 
 -(void)imagePicker:(GKImagePicker *)imagePicker pickedImage:(UIImage *)image
 {
 
-    NSLog(@"IMAGEPICKED");
+//    NSLog(@"IMAGEPICKED");
 
     //    self.themeImageView.image = image;
-    UIImage *tempImage = image;
 
     //THEME IMAGE FOR HOMEPAGE
     CGSize scaledSize = CGSizeMake(70, 70);
     UIGraphicsBeginImageContextWithOptions(scaledSize, NO, 2.0);
 
-    [tempImage drawInRect:(CGRect){.size = scaledSize}];
+    [image drawInRect:(CGRect){.size = scaledSize}];
     UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
@@ -172,11 +172,13 @@
     //
 
 
+    UIImage *miniTempImage = image;
+
     //THEME IMAGE FOR MAP
     CGSize tempScaledSize = CGSizeMake(32, 32);
     UIGraphicsBeginImageContextWithOptions(tempScaledSize, NO, 2.0);
 
-    [tempImage drawInRect:(CGRect){.size = tempScaledSize}];
+    [miniTempImage drawInRect:(CGRect){.size = tempScaledSize}];
     UIImage *resizedMiniImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
@@ -184,14 +186,20 @@
     self.miniAvatarImageFile = [PFFile fileWithData:miniAvatarImageData];
     //
 
-    ////VIK: SAVE TO PARSE
+//    ////VIK: SAVE TO PARSE
+//    PFUser *user = [PFUser currentUser];
+//    [user setValue:self.avatarImageFile forKey:@"userProfilePhoto"];
+//    [user setValue:self.miniAvatarImageFile forKey:@"miniProfilePhoto"];
+//    [user saveInBackground];
+
+//    [self setUserInfo];
+
     PFUser *user = [PFUser currentUser];
+
     [user setValue:self.avatarImageFile forKey:@"userProfilePhoto"];
     [user setValue:self.miniAvatarImageFile forKey:@"miniProfilePhoto"];
-    [user saveInBackground];
-    //
 
-    [self setUserInfo];
+    [user saveInBackground];
 
     [self hideImagePicker];
 }
