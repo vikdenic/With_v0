@@ -26,6 +26,8 @@
 
 @property BOOL doingTheQuery;
 
+@property (nonatomic) CGRect originalFrame;
+
 @end
 
 @implementation HomeViewController
@@ -33,6 +35,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.originalFrame = self.tabBarController.tabBar.frame;
 
     self.eventArray = [NSMutableArray array];
     self.indexPathArray = [NSMutableArray array];
@@ -64,6 +68,16 @@
 //{
 //    [self performSelectorInBackground:@selector(captureBlur) withObject:nil];
 //}
+
+#pragma mark - Hide TabBar
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    UITabBar *tb = self.tabBarController.tabBar;
+    NSInteger yOffset = scrollView.contentOffset.y;
+    if (yOffset > 0) {
+        tb.frame = CGRectMake(tb.frame.origin.x, self.originalFrame.origin.y + yOffset, tb.frame.size.width, tb.frame.size.height);
+    }
+    if (yOffset < 1) tb.frame = self.originalFrame;
+}
 
 #pragma mark - Blur
 

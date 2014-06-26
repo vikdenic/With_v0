@@ -32,6 +32,8 @@
 
 @property PFFile *selectedImageFile;
 
+@property (nonatomic) CGRect originalFrame;
+
 @end
 
 @implementation StreamEventViewController
@@ -42,6 +44,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.originalFrame = self.tabBarController.tabBar.frame;
 
     //add a uiimageview and then on viewDidAppear I remove it or animate it out after 1.2 seconds
     self.theLegitArrayOfEverything = [NSMutableArray array];
@@ -58,6 +62,17 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+}
+
+#pragma mark - Hide TabBar
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    UITabBar *tb = self.tabBarController.tabBar;
+    NSInteger yOffset = scrollView.contentOffset.y;
+    if (yOffset > 0) {
+        tb.frame = CGRectMake(tb.frame.origin.x, self.originalFrame.origin.y + yOffset, tb.frame.size.width, tb.frame.size.height);
+    }
+    if (yOffset < 1) tb.frame = self.originalFrame;
 }
 
 #pragma mark - Getting Pictures and Videos

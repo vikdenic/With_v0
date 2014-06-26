@@ -218,10 +218,21 @@
         PFUser *user = [PFUser currentUser];
 
         [user setValue:self.avatarImageFile forKey:@"userProfilePhoto"];
-        [user setValue:self.miniAvatarImageFile forKey:@"miniProfilePhoto"];
+//        [user setValue:self.miniAvatarImageFile forKey:@"miniProfilePhoto"];
 
         [user saveInBackground];
 
+     }];
+
+    [self.miniAvatarImageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+     {
+         PFUser *user = [PFUser currentUser];
+
+//         [user setValue:self.avatarImageFile forKey:@"userProfilePhoto"];
+        [user setValue:self.miniAvatarImageFile forKey:@"miniProfilePhoto"];
+
+         [user saveInBackground];
+         
      }];
 
     [self hideImagePicker];
