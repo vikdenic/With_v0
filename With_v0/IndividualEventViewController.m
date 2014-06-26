@@ -160,7 +160,8 @@
             } else {
 
                 self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
-                self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
+//                self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
+                self.noImageView.image = [UIImage imageNamed:@"No_Button"];
             }
         }
     }];
@@ -179,10 +180,10 @@
                 self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
 
             } else {
-                //should query both going and not going because the user might not have decided Yet
 
-                self.yesImageView.image = [UIImage imageNamed:@"Yes_Button_Selected"];
-                self.noImageView.image = [UIImage imageNamed:@"No_Button"];
+                self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
+//              self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
+                self.noImageView.image = [UIImage imageNamed:@"No)Button"];
             }
         }
     }];

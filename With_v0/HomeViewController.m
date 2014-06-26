@@ -206,10 +206,7 @@
     {
         query.skip = self.eventArray.count;
     }
-
-    ///if less than 4 it is doubling for some reasons
-
-//    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+//  query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          self.doingTheQuery = YES;

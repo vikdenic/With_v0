@@ -87,34 +87,39 @@
     [query includeKey:@"createdAt"];
     [query orderByDescending:@"createdAt"];
 
-    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    //query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
      {
-        if (!error)
-        {
-            for (PFObject *object in results)
-            {
-                PFRelation *relation2 = [object relationForKey:@"likeActivity"];
-                PFQuery *query2 = [relation2 query];
-                [query includeKey:@"fromUser"];
+         if (!error)
+         {
+             for (PFObject *object in results)
+             {
+                 PFRelation *relation2 = [object relationForKey:@"likeActivity"];
+                 PFQuery *query2 = [relation2 query];
+                 [query includeKey:@"fromUser"];
 
-                [query2 findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-                 {
-                     IndividualEventPhoto *individualEventPhoto = [[IndividualEventPhoto alloc]init];
+                 [query2 findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+                  {
+                      IndividualEventPhoto *individualEventPhoto = [[IndividualEventPhoto alloc]init];
 
-                     individualEventPhoto.likes = [objects mutableCopy];
+                      individualEventPhoto.likes = [objects mutableCopy];
 
-                     PFFile *file = [object objectForKey:@"photo"];
-                     individualEventPhoto.photo = file;
-                     individualEventPhoto.object = object;
-                     individualEventPhoto.photographerPhoto = [[object objectForKey:@"photographer"] objectForKey:@"userProfilePhoto"];
-                     individualEventPhoto.username = [[object objectForKey:@"photographer"] objectForKey:@"username"];
+                      PFFile *file = [object objectForKey:@"photo"];
+                      individualEventPhoto.photo = file;
+                      individualEventPhoto.object = object;
+                      individualEventPhoto.photographerPhoto = [[object objectForKey:@"photographer"] objectForKey:@"userProfilePhoto"];
+                      individualEventPhoto.username = [[object objectForKey:@"photographer"] objectForKey:@"username"];
 
-                     [self.theLegitArrayOfEverything addObject:individualEventPhoto];
+                      [self.theLegitArrayOfEverything addObject:individualEventPhoto];
+                      ///if statement here to only reload once count equals count
+
+                      if (self.theLegitArrayOfEverything.count == results.count)
+                      {
+                          [self.tableView reloadData];
+                      }
                  }];
             }
         }
-         [self.tableView reloadData];
     }];
 }
 
@@ -469,13 +474,13 @@
 {
     //THEME IMAGE FOR HOMEPAGE
     CGSize scaledSize = CGSizeMake(320, 320);
-    UIGraphicsBeginImageContextWithOptions(scaledSize, NO, 2.0);
+    UIGraphicsBeginImageContextWithOptions(scaledSize, NO, 0.0);
 
-    [image drawInRect:(CGRect){.size = scaledSize}];
+    [image drawInRect:CGRectMake(0, 0, scaledSize.width, scaledSize.height)];
     UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    NSData *imageData = UIImagePNGRepresentation(resizedImage);
+    NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.05f);
     PFFile *imageFile = [PFFile fileWithData:imageData];
 
     // Save PFFile
