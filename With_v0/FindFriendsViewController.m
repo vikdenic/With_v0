@@ -10,10 +10,13 @@
 #import <Parse/Parse.h>
 #import "FindFriendsTableViewCell.h"
 
-@interface FindFriendsViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface FindFriendsViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSMutableArray *approvedFriendships;
+
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UIButton *searchButton;
 
 @end
 
@@ -38,25 +41,12 @@
 {
     FindFriendsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
 
-    PFObject *friendship = [self.approvedFriendships objectAtIndex:indexPath.row];
-
-    PFUser *user = [friendship objectForKey:@"fromUser"];
-
-    cell.usernameLabel.text = [NSString stringWithFormat:@"%@", user.username];
-
-
-
-
-
-
-
-
 
 
     cell.friendButton.tag = indexPath.row;
     [cell.friendButton addTarget:self action:@selector(ontapped:) forControlEvents:UIControlEventTouchUpInside];
 
-    UIImage *btnImage = [UIImage imageNamed:@"added_button_image"];
+    UIImage *btnImage = [UIImage imageNamed:@"theaddone"];
     [cell.friendButton setImage:btnImage forState:UIControlStateNormal];
 
     return cell;
