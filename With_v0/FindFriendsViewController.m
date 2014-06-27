@@ -13,7 +13,7 @@
 @interface FindFriendsViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property NSMutableArray *friendsArray;
+@property NSMutableArray *approvedFriendships;
 
 @end
 
@@ -23,7 +23,7 @@
 {
     [super viewDidLoad];
 
-    self.friendsArray = [NSMutableArray array];
+    self.approvedFriendships = [NSMutableArray array];
     [self queryForFriends];
 }
 
@@ -31,16 +31,27 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.friendsArray.count;
+    return self.approvedFriendships.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FindFriendsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
 
-    PFUser *user = [self.friendsArray objectAtIndex:indexPath.row];
+    PFObject *friendship = [self.approvedFriendships objectAtIndex:indexPath.row];
+
+    PFUser *user = [friendship objectForKey:@"fromUser"];
 
     cell.usernameLabel.text = [NSString stringWithFormat:@"%@", user.username];
+
+
+
+
+
+
+
+
+
 
     cell.friendButton.tag = indexPath.row;
     [cell.friendButton addTarget:self action:@selector(ontapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -58,7 +69,7 @@
 
 - (void)ontapped:(FindFriendsFriendButton *)sender
 {
-    PFUser *user = [self.friendsArray objectAtIndex:sender.tag];
+    PFUser *user = [self.approvedFriendships objectAtIndex:sender.tag];
 
     if ([sender.imageView.image isEqual:[UIImage imageNamed:@"add_friend_button_image"]])
     {
@@ -99,15 +110,15 @@
 
 - (void)queryForFriends
 {
-    [self.friendsArray removeAllObjects];
+    [self.approvedFriendships removeAllObjects];
 
     PFQuery *query = [PFQuery queryWithClassName:@"Friendship"];
-//    [query whereKey:@"fromUser" equalTo:[PFUser currentUser]];
+    [query whereKey:@"fromUser" equalTo:[PFUser currentUser]];
     [query whereKey:@"toUser" equalTo:[PFUser currentUser]];
     [query whereKey:@"status" equalTo:@"Approved"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
-         self.friendsArray = [NSMutableArray arrayWithArray:objects];
+         self.approvedFriendships = [NSMutableArray arrayWithArray:objects];
         [self.tableView reloadData];
     }];
 

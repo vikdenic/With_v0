@@ -16,7 +16,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <CoreImage/CoreImage.h>
 
-@interface HomeViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface HomeViewController () <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property UIRefreshControl *refreshControl;
@@ -62,12 +62,14 @@
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
 
     [self queryForEvents];
-}
 
-//-(void)viewWillAppear:(BOOL)animated
-//{
-//    [self performSelectorInBackground:@selector(captureBlur) withObject:nil];
-//}
+    UIBarButtonItem *newBackButton =
+    [[UIBarButtonItem alloc] initWithTitle:@"Home"
+                                     style:UIBarButtonItemStyleBordered
+                                    target:nil
+                                    action:nil];
+    [[self navigationItem] setBackBarButtonItem:newBackButton];
+}
 
 #pragma mark - Hide TabBar
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -265,6 +267,29 @@
             LoginViewController *loginVC = segue.destinationViewController;
             loginVC.hidesBottomBarWhenPushed = YES;
         }
+    }
+}
+
+- (IBAction)showActionSheet:(id)sender
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Report", nil];
+
+    [actionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+
+    NSString *theButtonIndex = [actionSheet buttonTitleAtIndex:buttonIndex];
+
+    if ([theButtonIndex isEqualToString:@"Cancel"])
+    {
+        //dismiss
+
+    } else if ([theButtonIndex isEqualToString:@"Report"])
+    {
+        ///if it is reported- this button is clicked- we need to notify ourselves somehow?
+        ///send them a uialert to tell them it has been reported
     }
 }
 
