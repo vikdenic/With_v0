@@ -13,7 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+//@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UITextField *commentTextFieldOutlet;
 
 @property NSMutableArray *commentsArray;
@@ -40,7 +40,7 @@
     [picComment setObject:self.enteredText forKey:@"commentContent"];
 
     //This Creates relationship to the user!
-    //[picComment setObject:[PFUser currentUser].username forKey:@"author"];
+    [picComment setObject:[PFUser currentUser].username forKey:@"fromUser"];
 
     //Save comment
     [picComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -109,7 +109,7 @@
          {
              UIImage *temporaryImage = [UIImage imageWithData:data];
 
-             self.imageView.image = temporaryImage;
+             //self.imageView.image = temporaryImage;
          }
      }];
 
