@@ -29,6 +29,13 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *editEventButton;
 
+@property UIImage *yesButtonSelected;
+@property UIImage *yesButtonUnselected;
+@property UIImage *noButtonSelected;
+@property UIImage *noButtonUnselected;
+@property BOOL isTheUserAttending;
+
+
 @end
 
 @implementation IndividualEventViewController
@@ -42,6 +49,11 @@
 
     self.yesButtonTapped = NO;
     self.noButtonTapped = NO;
+
+    self.yesButtonSelected = [UIImage imageNamed:@"Yes_Button_Selected"];
+    self.yesButtonUnselected = [UIImage imageNamed:@"Yes_Button"];
+    self.noButtonSelected = [UIImage imageNamed:@"no_button_selected"];
+    self.noButtonUnselected = [UIImage imageNamed:@"No_Button"];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -82,8 +94,8 @@
     {
         self.yesButtonTapped = YES;
 
-        self.yesImageView.image = [UIImage imageNamed:@"Yes_Button_Selected"];
-        self.noImageView.image = [UIImage imageNamed:@"No_Button"];
+        [self.goingButton setImage:self.yesButtonSelected forState:UIControlStateNormal];
+        [self.notGoingButton setImage:self.noButtonUnselected forState:UIControlStateNormal];
 
         PFRelation *relation = [self.event relationforKey:@"usersAttending"];
         [relation addObject:[PFUser currentUser]];
@@ -94,8 +106,10 @@
         [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:0.8];
 
     } else {
+
         self.yesButtonTapped = NO;
-        self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
+        [self.goingButton setImage:self.yesButtonUnselected forState:UIControlStateNormal];
+
 
         PFRelation *relation = [self.event relationforKey:@"usersAttending"];
         [relation removeObject:[PFUser currentUser]];
@@ -116,6 +130,10 @@
         self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
         self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
 
+        [self.notGoingButton setImage:self.noButtonSelected forState:UIControlStateNormal];
+        [self.goingButton setImage:self.yesButtonUnselected forState:UIControlStateNormal];
+
+
         PFRelation *relation = [self.event relationForKey:@"usersAttending"];
         [relation removeObject:[PFUser currentUser]];
 
@@ -127,7 +145,7 @@
     } else {
 
         self.noButtonTapped = NO;
-        self.noImageView.image = [UIImage imageNamed:@"No_Button"];
+        [self.notGoingButton setImage:self.noButtonUnselected forState:UIControlStateNormal];
 
         PFRelation *relation = [self.event relationforKey:@"usersAttending"];
         [relation removeObject:[PFUser currentUser]];
@@ -144,6 +162,7 @@
 
 - (void)checkingUsersEventStatus
 {
+
     PFRelation *relation = [self.event relationforKey:@"usersAttending"];
 
     [[relation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -154,39 +173,49 @@
 
             if ([user.objectId isEqualToString:currentUser])
             {
-                self.yesImageView.image = [UIImage imageNamed:@"Yes_Button_Selected"];
-                self.noImageView.image = [UIImage imageNamed:@"No_Button"];
+                self.isTheUserAttending = YES;
+                [self.goingButton setImage:self.yesButtonSelected forState:UIControlStateNormal];
+                [self.notGoingButton setImage:self.noButtonUnselected forState:UIControlStateNormal];
+                break;
 
             } else {
 
-                self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
-//                self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
-                self.noImageView.image = [UIImage imageNamed:@"No_Button"];
+                [self.goingButton setImage:self.yesButtonUnselected forState:UIControlStateNormal];
+                [self.goingButton setImage:self.noButtonUnselected forState:UIControlStateNormal];
             }
         }
     }];
 
-    PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
 
-    [[relation2 query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 
-        for (PFUser *user in objects)
-        {
-            NSString *currentUser = [[PFUser currentUser] objectId];
+    if (!self.isTheUserAttending)
+    {
 
-            if ([user.objectId isEqualToString:currentUser])
+        PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
+
+        [[relation2 query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+
+            for (PFUser *user in objects)
             {
-                self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
-                self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
+                NSString *currentUser = [[PFUser currentUser] objectId];
 
-            } else {
+                if ([user.objectId isEqualToString:currentUser])
+                {
+                    self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
+                    self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
 
-                self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
-//              self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
-                self.noImageView.image = [UIImage imageNamed:@"No)Button"];
+                    [self.goingButton setImage:self.yesButtonUnselected forState:UIControlStateNormal];
+                    [self.notGoingButton setImage:self.noButtonSelected forState:UIControlStateNormal];
+                    break;
+
+                } else {
+
+                    [self.goingButton setImage:self.yesButtonUnselected forState:UIControlStateNormal];
+                    [self.goingButton setImage:self.noButtonUnselected forState:UIControlStateNormal];
+                }
             }
-        }
-    }];
+        }];
+    }
 }
 
 - (void)checkingUsersAttending

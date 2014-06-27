@@ -32,7 +32,6 @@
     [super viewWillAppear:animated];
 
     [self usersAttendingQuery];
-
 }
 
 - (void)usersAttendingQuery
@@ -89,91 +88,80 @@
     [query whereKey:@"toUser" equalTo:user];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error)
      {
+
+         cell.friendButton.friendshipObject = object;
+
          if ([[object objectForKey:@"status"] isEqualToString:@"Approved"])
          {
              UIImage *btnImage = [UIImage imageNamed:@"added_button_image"];
              [cell.friendButton setImage:btnImage forState:UIControlStateNormal];
-             
-             cell.friendButton.friendshipObject = object;
-
-             NSLog(@"%@", cell.friendButton.friendshipObject);
 
          } else if ([[object objectForKey:@"status"] isEqualToString:@"Pending"])
          {
              UIImage *btnImage = [UIImage imageNamed:@"pending_image"];
              [cell.friendButton setImage:btnImage forState:UIControlStateNormal];
-             cell.friendButton.friendshipObject = object;
-             NSLog(@"%@", cell.friendButton.friendshipObject);
 
          } else if ([[object objectForKey:@"status"] isEqualToString:@"Denied"])
          {
              UIImage *btnImage = [UIImage imageNamed:@"add_friend_button_image"];
              [cell.friendButton setImage:btnImage forState:UIControlStateNormal];
-             cell.friendButton.friendshipObject = object;
-             NSLog(@"%@", cell.friendButton.friendshipObject);
          }
-         else {
-             cell.friendButton.friendshipObject = nil;
-             ///if it's nil this is going to be an issue
+
+         if ([cell.usernameLabel.text isEqualToString:[PFUser currentUser].username])
+         {
+             [cell.friendButton setImage:nil forState:UIControlStateNormal];
+             cell.friendButton.userInteractionEnabled = NO;
          }
+
     }];
 
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 - (void)ontapped:(PeopleAttendingFriendButton *)sender
 {
-    NSLog(@"%@", sender.friendshipObject);
-
-
-    ///so in all these, we need to see if the friendship object already exists, if it does we alter it, if not, we create it.
-
-    ///We will know if it exists because it will be either pending or approved- those two images - if it is nothing then we will have deleted the object and nothing will be there
+    PFUser *user = [self.usersAttendingArray objectAtIndex:sender.tag];
 
     if ([sender.imageView.image isEqual:[UIImage imageNamed:@"add_friend_button_image"]])
     {
-        UIImage *btnImage = [UIImage imageNamed:@"added_button_image"];
+        UIImage *btnImage = [UIImage imageNamed:@"pending_image"];
         [sender setImage:btnImage forState:UIControlStateNormal];
 
-        PFUser *user = [self.usersAttendingArray objectAtIndex:sender.tag];
+        if (sender.friendshipObject == nil)
+        {
+            PFObject *friendship = [PFObject objectWithClassName:@"Friendship"];
+            friendship[@"fromUser"] = [PFUser currentUser];
+            friendship[@"toUser"] = user;
+            friendship[@"status"] = @"Pending";
+            [friendship saveInBackground];
 
-        ///do this for all of these and do the appropriate action- if it's nil, I will need to create one
-        sender.friendshipObject[@"fromUser"] = [PFUser currentUser];
-        sender.friendshipObject[@"toUser"] = user;
-        sender.friendshipObject[@"status"] = @"Pending";
-        [sender.friendshipObject saveInBackground];
-
-        //this is where we need to create the new object?????????
-
-        ///change it to pending- because the current user is asking the other use to be friends
+        } else {
+            sender.friendshipObject[@"status"] = @"Pending";
+            [sender.friendshipObject saveInBackground];
+        }
 
     } else if ([sender.imageView.image isEqual:[UIImage imageNamed:@"added_button_image"]])
     {
         UIImage *btnImage = [UIImage imageNamed:@"add_friend_button_image"];
         [sender setImage:btnImage forState:UIControlStateNormal];
 
-        ///change it to add_friend_button_image and set the status to denied because they were friends and not the user has decided to defriend them- do we delete the relation?
-        
+        sender.friendshipObject[@"status"] = @"Denied";
+        [sender.friendshipObject saveInBackground];
+
     } else if ([sender.imageView.image isEqual:[UIImage imageNamed:@"pending_image"]])
     {
         UIImage *btnImage = [UIImage imageNamed:@"add_friend_button_image"];
         [sender setImage:btnImage forState:UIControlStateNormal];
-        ///That's not a real image yet. If it's pending and then they click it, it will go back to add_friend_button_image because they don't want it to be pending
 
-        ///delete the object
+        sender.friendshipObject[@"status"] = @"Denied";
+        [sender.friendshipObject saveInBackground];
+
     }
-
-
-//    PFUser *user = [self.usersAttendingArray objectAtIndex:sender.tag];
-//
-//    PFObject *friendship = [PFObject objectWithClassName:@"Friendship"];
-//    friendship[@"fromUser"] = [PFUser currentUser];
-//    friendship[@"toUser"] = user;
-//    friendship[@"status"] = @"Pending";
-//    [friendship saveInBackground];
-
-    ///once a user is accepted or denied from pending friends then they will be moved to friends if the other user accepted it
 }
-
 
 @end
