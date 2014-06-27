@@ -14,16 +14,90 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UITextField *commentTextFieldOutlet;
 
 @property NSMutableArray *commentsArray;
+
+///
+@property NSString *enteredText;
 
 @end
 
 @implementation CommentsViewController
 
+
+#pragma mark - send button  CGAFFINE!!!!! //------------------------------------------------
+- (IBAction)sendButtonPressed:(UIButton *)sender
+{
+    [self.view endEditing:YES];
+
+    self.enteredText = self.commentTextFieldOutlet.text;
+
+    //Create Comment Object
+    PFObject *picComment = [PFObject objectWithClassName:@"CommentActivity"];
+
+    //this adds the text into parse key textContent
+    [picComment setObject:self.enteredText forKey:@"commentContent"];
+
+    //This Creates relationship to the user!
+    //[picComment setObject:[PFUser currentUser].username forKey:@"author"];
+
+    //Save comment
+    [picComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            [self gettingComments];
+            [self.tableView reloadData];
+
+        }
+    }];
+
+    self.commentTextFieldOutlet.text = @"";
+
+//    // Create our Installation query
+//    PFQuery *pushQuery = [PFInstallation query];
+//    [pushQuery whereKey:@"deviceType" equalTo:@"ios"];
+//
+//    // Send push notification to query
+//    [PFPush sendPushMessageToQueryInBackground:pushQuery
+//                                   withMessage:@"new chat message in \"event name\""];
+
+
+    //Animate the send button
+    sender.transform = CGAffineTransformMakeScale(.5f, .5f);
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDuration:0.8];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    CGAffineTransform scaleTrans  = CGAffineTransformMakeScale(1.0f, 1.0f);
+    CGAffineTransform lefttorightTrans  = CGAffineTransformMakeTranslation(0.0f,0.0f);
+    sender.transform = CGAffineTransformConcat(scaleTrans, lefttorightTrans);
+    [UIView commitAnimations];
+
+    [self.commentTextFieldOutlet resignFirstResponder];
+}
+
+
+
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    //Scroll opposite
+    [self.tableView setScrollsToTop:YES];
+
+    //Save tableview frame
+    CGRect frame = self.tableView.frame;
+
+    //Apply the transform
+    self.tableView.transform=CGAffineTransformMakeRotation(M_PI);
+    self.tableView.frame = frame;
+
+    //notification for Ugly keyboard animation
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
 
     self.commentsArray = [NSMutableArray array];
 
@@ -133,26 +207,31 @@ query.cachePolicy = kPFCachePolicyCacheThenNetwork;
 //input accesorry view- view attached to the top of the keyboard
 
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField
+//-(BOOL)textFieldShouldReturn:(UITextField *)textField
+//{
+////    PFObject *object = self.commentObject;
+//    PFUser *picturePhotographer = [self.individualEventPhoto.object objectForKey:@"photographer"];
+//
+//    PFObject *comment = [PFObject objectWithClassName:@"CommentActivity"];
+//    comment[@"fromUser"] = [PFUser currentUser];
+//    comment[@"toUser"] = picturePhotographer;
+//    comment[@"photo"] = self.individualEventPhoto.object;
+//    comment[@"commentContent"] = self.textField.text;
+//    [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+//     {
+//         PFRelation *relation = [self.individualEventPhoto.object relationForKey:@"commentActivity"];
+//         [relation addObject:comment];
+//         [self.individualEventPhoto.object saveInBackground];
+//    }];
+//
+//    [self.commentTextFieldOutlet resignFirstResponder];
+//
+//    return YES;
+//}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-//    PFObject *object = self.commentObject;
-    PFUser *picturePhotographer = [self.individualEventPhoto.object objectForKey:@"photographer"];
-
-    PFObject *comment = [PFObject objectWithClassName:@"CommentActivity"];
-    comment[@"fromUser"] = [PFUser currentUser];
-    comment[@"toUser"] = picturePhotographer;
-    comment[@"photo"] = self.individualEventPhoto.object;
-    comment[@"commentContent"] = self.textField.text;
-    [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-     {
-         PFRelation *relation = [self.individualEventPhoto.object relationForKey:@"commentActivity"];
-         [relation addObject:comment];
-         [self.individualEventPhoto.object saveInBackground];
-    }];
-
-    [self.textField resignFirstResponder];
-
-    return YES;
+    [self.commentTextFieldOutlet resignFirstResponder];
 }
 
 
@@ -161,13 +240,41 @@ query.cachePolicy = kPFCachePolicyCacheThenNetwork;
 
 
 
+#pragma mark - Keyboard animation stuff //------------------------------------------------
+
+//new style keyboard animation
+- (void) keyboardDidShow:(NSNotification *)notification
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationCurve:[notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue]];
+    [UIView setAnimationDuration:[notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] intValue]];
 
 
+    if ([[UIScreen mainScreen] bounds].size.height == 1136)
+    {
+        [self.view setFrame:CGRectMake(0, -220, 640, 1120)];
+    } else {
+        [self.view setFrame:CGRectMake(0, -220, 640, 920)];
+    }
+
+    [UIView commitAnimations];
+}
 
 
-
-
-
+//Old style
+- (void) keyboardDidHide:(NSNotification *)notification
+{
+    if ([[UIScreen mainScreen] bounds].size.height == 1136)
+    {
+        [UIView animateWithDuration:0.25 animations:^{
+            [self.view setFrame:CGRectMake(0, 0, 640, 1120)];
+        }];
+    } else {
+        [UIView animateWithDuration:0.25 animations:^{
+            [self.view setFrame:CGRectMake(0, 0, 640, 920)];
+        }];
+    }
+}
 
 
 

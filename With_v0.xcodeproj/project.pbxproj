@@ -33,7 +33,6 @@
 		60F47AA7194E2364007422E7 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47AA6194E2364007422E7 /* MobileCoreServices.framework */; };
 		60F47AA9194E236A007422E7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47AA8194E236A007422E7 /* QuartzCore.framework */; };
 		60F47AAB194E2370007422E7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47AAA194E236F007422E7 /* Security.framework */; };
-		60F47AAD194E2375007422E7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47AAC194E2375007422E7 /* StoreKit.framework */; };
 		60F47AAF194E237C007422E7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F47AAE194E237C007422E7 /* SystemConfiguration.framework */; };
 		60F47AB2194E5223007422E7 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F47AB1194E5223007422E7 /* HomeTableViewCell.m */; };
 		60F47AB5194E7653007422E7 /* IndividualEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F47AB4194E7653007422E7 /* IndividualEventViewController.m */; };
@@ -134,7 +133,6 @@
 		60F47AA6194E2364007422E7 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		60F47AA8194E236A007422E7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		60F47AAA194E236F007422E7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		60F47AAC194E2375007422E7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		60F47AAE194E237C007422E7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		60F47AB0194E5223007422E7 /* HomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCell.h; sourceTree = "<group>"; };
 		60F47AB1194E5223007422E7 /* HomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewCell.m; sourceTree = "<group>"; };
@@ -147,6 +145,7 @@
 		60F5B34B1957555E00A80467 /* ExploreAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExploreAnnotation.m; path = ../ExploreAnnotation.m; sourceTree = "<group>"; };
 		810C1EC0195605B70046DFB1 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		810C1EC1195605B70046DFB1 /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
+		81885A6B195E214400925965 /* BlakeAaron.mobileprovision */ = {isa = PBXFileReference; lastKnownFileType = file; path = BlakeAaron.mobileprovision; sourceTree = "<group>"; };
 		930D1903195886DC00AE4AE1 /* GKImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKImagePicker.h; sourceTree = "<group>"; };
 		930D1904195886DC00AE4AE1 /* GKImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKImagePicker.m; sourceTree = "<group>"; };
 		930D1905195886DC00AE4AE1 /* GKImageCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKImageCropViewController.h; sourceTree = "<group>"; };
@@ -221,7 +220,6 @@
 				60F47AA7194E2364007422E7 /* MobileCoreServices.framework in Frameworks */,
 				60C72099194FC53500ADE5DF /* MediaPlayer.framework in Frameworks */,
 				60F47AAF194E237C007422E7 /* SystemConfiguration.framework in Frameworks */,
-				60F47AAD194E2375007422E7 /* StoreKit.framework in Frameworks */,
 				60F47AAB194E2370007422E7 /* Security.framework in Frameworks */,
 				60F47AA9194E236A007422E7 /* QuartzCore.framework in Frameworks */,
 				60F47AA5194E235F007422E7 /* libz.dylib in Frameworks */,
@@ -308,6 +306,7 @@
 		93952F81194D5D4C001AA3E4 = {
 			isa = PBXGroup;
 			children = (
+				81885A6B195E214400925965 /* BlakeAaron.mobileprovision */,
 				93952F93194D5D4C001AA3E4 /* With_v0 */,
 				93952FB2194D5D4C001AA3E4 /* With_v0Tests */,
 				93952F8C194D5D4C001AA3E4 /* Frameworks */,
@@ -334,7 +333,6 @@
 				601F5D8D1951D99A00B6D89C /* Parse.framework */,
 				60C72098194FC53500ADE5DF /* MediaPlayer.framework */,
 				60F47AAE194E237C007422E7 /* SystemConfiguration.framework */,
-				60F47AAC194E2375007422E7 /* StoreKit.framework */,
 				60F47AAA194E236F007422E7 /* Security.framework */,
 				60F47AA8194E236A007422E7 /* QuartzCore.framework */,
 				60F47AA6194E2364007422E7 /* MobileCoreServices.framework */,
@@ -496,7 +494,12 @@
 				ORGANIZATIONNAME = "Mobile Makers";
 				TargetAttributes = {
 					93952F89194D5D4C001AA3E4 = {
-						DevelopmentTeam = ZNAFR9K9ZC;
+						DevelopmentTeam = 368PGMF9QJ;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+						};
 					};
 					93952FAA194D5D4C001AA3E4 = {
 						TestTargetID = 93952F89194D5D4C001AA3E4;
@@ -660,8 +663,6 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Development IOS Push Services: com.With-v0";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development IOS Push Services: com.With-v0";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -679,7 +680,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "9EFAA747-F932-4C8D-A683-09ACC154B6E1";
+				PROVISIONING_PROFILE = "4F388611-84D3-4841-8E83-D833BE176A9E";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -700,8 +701,6 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Development IOS Push Services: com.With-v0";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development IOS Push Services: com.With-v0";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -712,7 +711,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PROVISIONING_PROFILE = "9EFAA747-F932-4C8D-A683-09ACC154B6E1";
+				PROVISIONING_PROFILE = "4F388611-84D3-4841-8E83-D833BE176A9E";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -734,7 +733,7 @@
 				GCC_PREFIX_HEADER = "With_v0/With_v0-Prefix.pch";
 				INFOPLIST_FILE = "With_v0/With_v0-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4F388611-84D3-4841-8E83-D833BE176A9E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -755,7 +754,7 @@
 				GCC_PREFIX_HEADER = "With_v0/With_v0-Prefix.pch";
 				INFOPLIST_FILE = "With_v0/With_v0-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4F388611-84D3-4841-8E83-D833BE176A9E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

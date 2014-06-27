@@ -119,6 +119,16 @@
         [self.event saveInBackground];
         [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:0.8];
     }
+///
+    sender.transform = CGAffineTransformMakeScale(.5f, .5f);
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDuration:0.8];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    CGAffineTransform scaleTrans  = CGAffineTransformMakeScale(1.0f, 1.0f);
+    CGAffineTransform lefttorightTrans  = CGAffineTransformMakeTranslation(0.0f,0.0f);
+    sender.transform = CGAffineTransformConcat(scaleTrans, lefttorightTrans);
+    [UIView commitAnimations];
 }
 
 - (IBAction)onNoButtonTapped:(id)sender
@@ -142,6 +152,8 @@
         [self.event saveInBackground];
         [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:1.2];
 
+        
+
     } else {
 
         self.noButtonTapped = NO;
@@ -156,6 +168,16 @@
         [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:1.2];
 
     }
+///
+//    sender.transform = CGAffineTransformMakeScale(.5f, .5f);
+//    [UIView beginAnimations:nil context:nil];
+//    [UIView setAnimationDelegate:self];
+//    [UIView setAnimationDuration:0.8];
+//    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+//    CGAffineTransform scaleTrans  = CGAffineTransformMakeScale(1.0f, 1.0f);
+//    CGAffineTransform lefttorightTrans  = CGAffineTransformMakeTranslation(0.0f,0.0f);
+//    sender.transform = CGAffineTransformConcat(scaleTrans, lefttorightTrans);
+//    [UIView commitAnimations];
 }
 
 #pragma mark- Checking users status
