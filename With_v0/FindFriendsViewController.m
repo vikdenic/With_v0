@@ -112,20 +112,45 @@
 {
     [self.approvedFriendships removeAllObjects];
 
-    PFQuery *query = [PFQuery queryWithClassName:@"Friendship"];
-    [query whereKey:@"fromUser" equalTo:[PFUser currentUser]];
-    [query whereKey:@"toUser" equalTo:[PFUser currentUser]];
-    [query whereKey:@"status" equalTo:@"Approved"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-     {
-         self.approvedFriendships = [NSMutableArray arrayWithArray:objects];
-        [self.tableView reloadData];
+//    PFQuery *query = [PFQuery queryWithClassName:@"Friendship"];
+//    [query whereKey:@"fromUser" equalTo:[PFUser currentUser]];
+//    [query whereKey:@"toUser" equalTo:[PFUser currentUser]];
+//    [query whereKey:@"status" equalTo:@"Approved"];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+//     {
+//         self.approvedFriendships = [NSMutableArray arrayWithArray:objects];
+//        [self.tableView reloadData];
+//    }];
+
+
+
+
+    ///this code is going into profile, a button where you see all your friends
+    PFQuery *toUserQuery = [PFQuery queryWithClassName:@"Friendship"];
+    [toUserQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
+    [toUserQuery whereKey:@"status" equalTo:@"Approved"];
+
+    PFQuery *fromUserQuery = [PFQuery queryWithClassName:@"Friendship"];
+    [fromUserQuery whereKey:@"fromUser" equalTo:[PFUser currentUser]];
+    [fromUserQuery whereKey:@"status" equalTo:@"Approved"];
+
+    PFQuery *combinedQuery = [PFQuery orQueryWithSubqueries:@[toUserQuery,fromUserQuery]];
+    [combinedQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    {
+        ///this should give me the users friends
     }];
 
-    ///so what I have in this query is the list of friendship objects, I need to get the user from it
 
-    ///I also need to find a way to combine from and to with status approved
-    //two separate queries and then compare the objects within it?
+
+
+
+
+
+
+
+
+
+
 }
 
 @end
