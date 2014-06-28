@@ -28,6 +28,13 @@
 
     self.approvedFriendships = [NSMutableArray array];
     [self queryForFriends];
+
+    UIBarButtonItem *newBackButton =
+    [[UIBarButtonItem alloc] initWithTitle:@"Find Friends"
+                                     style:UIBarButtonItemStyleBordered
+                                    target:nil
+                                    action:nil];
+    [[self navigationItem] setBackBarButtonItem:newBackButton];
 }
 
 #pragma mark - TableView

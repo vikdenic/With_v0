@@ -26,6 +26,11 @@
     [super viewDidLoad];
 
     self.approvedFriendships = [NSMutableArray array];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
 
     [self queryForFriends];
 }
@@ -43,7 +48,10 @@
 
     cell.friendButton.friendshipObject = friendship;
 
-    if ([[friendship objectForKey:@"fromUser"] isEqual:[PFUser currentUser]])
+    NSString *fromUser = [[friendship objectForKey:@"fromUser"] objectId];
+    NSString *currentUser = [[PFUser currentUser] objectId];
+
+    if ([fromUser isEqualToString:currentUser])
     {
         PFUser *user = [friendship objectForKey:@"toUser"];
 

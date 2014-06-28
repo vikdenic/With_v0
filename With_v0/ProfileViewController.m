@@ -56,6 +56,13 @@
 
         NSLog(@"did show %@",[PFUser currentUser]);
 
+    UIBarButtonItem *newBackButton =
+    [[UIBarButtonItem alloc] initWithTitle:@"Profile"
+                                     style:UIBarButtonItemStyleBordered
+                                    target:nil
+                                    action:nil];
+    [[self navigationItem] setBackBarButtonItem:newBackButton];
+
 //    self.usersArray = [[NSArray alloc]init];
 }
 
