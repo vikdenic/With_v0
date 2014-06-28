@@ -170,7 +170,7 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="213" id="r3x-Pk-mZD" customClass="InvitesTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="213" id="r3x-Pk-mZD" customClass="InvitesTableViewCell">
                                         <rect key="frame" x="0.0" y="66" width="320" height="213"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="r3x-Pk-mZD" id="qte-eL-BG9">
@@ -224,10 +224,17 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Vdk-Mo-UU7" id="Ydy-Ih-BYY"/>
+                                    <outlet property="delegate" destination="Vdk-Mo-UU7" id="KgO-O2-w35"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="256-Lm-tT8" id="Lug-SQ-m6A"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tnZ-Ut-4MM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
