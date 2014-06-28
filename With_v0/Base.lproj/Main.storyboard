@@ -803,17 +803,16 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="sendButtPushed:" destination="rAX-Uk-ZyW" eventType="touchUpInside" id="iz8-HT-upi"/>
                                     <action selector="sendButtonPressed:" destination="ZG1-5c-rcA" eventType="touchUpInside" id="Bg6-YZ-fil"/>
-                                    <action selector="sendButtonPressed:" destination="rAX-Uk-ZyW" eventType="touchUpInside" id="rid-S2-9NW"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="commentTextFieldOutlet" destination="Zp3-Z5-SVc" id="Ujb-Ke-slt"/>
-                        <outlet property="tableView" destination="TXT-0c-RLs" id="ypj-Yp-IFi"/>
-                        <outlet property="textField" destination="Zp3-Z5-SVc" id="D5E-ha-XNX"/>
+                        <outlet property="tableView" destination="TXT-0c-RLs" id="pnF-Cy-bXh"/>
+                        <outlet property="textField" destination="Zp3-Z5-SVc" id="c7x-HF-0DQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w8z-Vr-mmB" userLabel="First Responder" sceneMemberID="firstResponder"/>
