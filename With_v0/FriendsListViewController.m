@@ -113,14 +113,7 @@
     {
         UIImage *btnImage = [UIImage imageNamed:@"add_friend_button_image"];
         [sender setImage:btnImage forState:UIControlStateNormal];
-        [sender.friendshipObject deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-        {
-            PFObject *friendship = [PFObject objectWithClassName:@"Friendship"];
-            friendship[@"fromUser"] = [PFUser currentUser];
-            friendship[@"toUser"] = sender.otherUser;
-            friendship[@"status"] = @"Pending";
-            [friendship saveInBackground];
-        }];
+        [sender.friendshipObject deleteInBackground];
 
     } else if ([sender.imageView.image isEqual:[UIImage imageNamed:@"add_friend_button_image"]])
     {
