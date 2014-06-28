@@ -67,7 +67,6 @@
 
     [self checkIfFormsComplete];
 
-
 //    Vik: we will nil these properties on Create button tapped
 //    self.themeImageView.image = nil;
 //    self.titleTextView.text = nil;
@@ -131,7 +130,7 @@
         self.canCreateEvent = NO;
     }
 
-    else if (self.themeImageView.image && ![self.titleTextField.text isEqualToString:@""] && self.dateString && self.coordinate.latitude)
+    else if (self.themeImageView.image && ![self.titleTextField.text isEqualToString:@""] && self.dateString && !(self.coordinate.latitude == 0.0))
     {
         self.createButton.titleLabel.textColor = [UIColor orangeColor];
 
@@ -310,6 +309,10 @@
     [self checkIfFormsComplete];
 }
 
+- (IBAction)onTitleEditingChanged:(id)sender
+{
+    [self checkIfFormsComplete];
+}
 
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
