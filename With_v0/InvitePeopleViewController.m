@@ -25,13 +25,13 @@
     [super viewDidLoad];
 
     self.usersFriends = [NSMutableArray array];
+
+    [self queryForFriends];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-    [self queryForFriends];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -56,10 +56,14 @@
 
         cell.usernameLabel.text = [NSString stringWithFormat:@"%@", user[@"username"]];
 
-        PFFile *userProfilePhoto = [user objectForKey:@"userProfilePhoto"];
+        PFFile *userProfilePhoto = [user objectForKey:@"miniProfilePhoto"];
         [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
          {
              UIImage *temporaryImage = [UIImage imageWithData:data];
+             cell.profilePictureImageView.layer.cornerRadius = cell.profilePictureImageView.bounds.size.width/2;
+             cell.profilePictureImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
+             cell.profilePictureImageView.layer.borderWidth = 2.0;
+             cell.profilePictureImageView.layer.masksToBounds = YES;
              cell.profilePictureImageView.image = temporaryImage;
 
              ///if nil, set it to something we create
@@ -83,6 +87,7 @@
     }
 
     UIImage *btnImage = [UIImage imageNamed:@"invite_image"];
+    cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [cell.inviteButton setImage:btnImage forState:UIControlStateNormal];
     cell.inviteButton.tag = indexPath.row;
     [cell.inviteButton addTarget:self action:@selector(ontapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -105,11 +110,20 @@
     ///maybe this is easier to pass an array of PFUser's that the user selects through the segue then on create fast enumerate through them and add create the event invite object? I think that would be easier so if the user modifys it then we won't do it till create it clicked- so just fake the buttons and all that- basically each button that is green needs to be in the array
 
 
-//    if ([sender.imageView.image isEqual:[UIImage imageNamed:@"invite_image"]])
-//    {
-//        UIImage *btnImage = [UIImage imageNamed:@"invite_selected_image"];
-//        [sender setImage:btnImage forState:UIControlStateNormal];
-//
+    if ([sender.imageView.image isEqual:[UIImage imageNamed:@"invite_image"]])
+    {
+        UIImage *btnImage = [UIImage imageNamed:@"invite_selected_image"];
+        [sender setImage:btnImage forState:UIControlStateNormal];
+        //add them to array
+
+    } else if ([sender.imageView.image isEqual:[UIImage imageNamed:@"invite_selected_image"]])
+    {
+        UIImage *btnImage = [UIImage imageNamed:@"invite_image"];
+        [sender setImage:btnImage forState:UIControlStateNormal];
+        //remove them from array
+        ///what if they go back and fourth and stuff?
+    }
+
 //        PFObject *eventInvite = [PFObject objectWithClassName:@"EventInvite"];
 //        eventInvite[@"toUser"] = sender.otherUser;
 //        eventInvite[@"event"] = //here I am going to have to have the event object from the previous screen- the one that is supposed to get made on create- tricky....

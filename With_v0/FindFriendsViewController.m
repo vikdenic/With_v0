@@ -83,6 +83,8 @@
         return cell;
     }
 
+    self.tableView.separatorColor = [UIColor grayColor];
+
     PFUser *user = [self.results objectAtIndex:indexPath.row];
     cell.friendButton.otherUser = user;
 
@@ -228,8 +230,8 @@
     [self.results removeAllObjects];
 
     PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-    NSString *searchString = [self.textField.text lowercaseString];
-    [query whereKey:@"username" containsString:searchString];
+//    NSString *searchString = [self.textField.text lowercaseString];
+    [query whereKey:@"username" containsString:self.textField.text];
     ///trim white space?
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
