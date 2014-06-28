@@ -40,6 +40,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *createButton;
 
+@property BOOL canCreateEvent;
+
 @end
 
 @implementation CreateEventViewController
@@ -54,11 +56,17 @@
 
     //Vik
     self.eventName = @"Location";
+
+//    self.canCreateEvent = NO;
+    [self checkIfFormsComplete];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    [self checkIfFormsComplete];
+
 
 //    Vik: we will nil these properties on Create button tapped
 //    self.themeImageView.image = nil;
@@ -104,19 +112,30 @@
     [self.dateAndTimeButton setTitle:@"           Date and Time" forState:UIControlStateNormal];
     }
 
-    [self.createButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [self.createButton setTitleColor:[UIColor greenColor] forState:UIControlStateSelected];
-    [self.createButton addTarget:self action:@selector(onCreateButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.createButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+////    [self.createButton setTitleColor:[UIColor greenColor] forState:UIControlStateSelected];
+//    [self.createButton addTarget:self action:@selector(onCreateButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 
     //Vik: Create button disabled until fields filled out
-    if(self.eventName == nil || [self.dateString isEqual:nil] || self.coordinate.latitude == 0.0)
+    [self checkIfFormsComplete];
+}
+
+#pragma mark - Helpers
+
+-(void)checkIfFormsComplete
+{
+    if( !self.themeImageView.image || [self.titleTextField.text isEqualToString:@""] || [self.dateString isEqual:nil] || self.coordinate.latitude == 0.0)
     {
         self.createButton.titleLabel.textColor = [UIColor grayColor];
+
+        self.canCreateEvent = NO;
     }
 
-    else if (!(self.eventName == nil) || ![self.dateString isEqual:nil] || !self.coordinate.latitude == 0.0)
+    else if (self.themeImageView.image && ![self.titleTextField.text isEqualToString:@""] && self.dateString && self.coordinate.latitude)
     {
         self.createButton.titleLabel.textColor = [UIColor orangeColor];
+
+        self.canCreateEvent = YES;
     }
 }
 
@@ -144,6 +163,8 @@
 - (IBAction)onCreateButtonTapped:(id)sender
 {
 
+    if (self.canCreateEvent == YES)
+    {
     //if statement here requiring certain fields
 
     PFObject *event = [PFObject objectWithClassName:@"Event"];
@@ -170,8 +191,13 @@
     self.themeImageView.image = nil;
     self.titleTextField.text = nil;
     self.detailsTextView.text = nil;
+    self.coordinate = CLLocationCoordinate2DMake(0.0, 0.0);
+
     self.dateAndTimeButton.titleLabel.text = @"           Date and Time";
     self.locationButton.titleLabel.text = @"           Location";
+
+        self.canCreateEvent = NO;
+    }
 }
 
 #pragma mark - Date and Time View Animation
@@ -205,6 +231,8 @@
     [picker dismissViewControllerAnimated:YES completion:^{
         //back to Create Events View Controller
     }];
+
+    [self checkIfFormsComplete];
 }
 
 #pragma mark - Theme Image View Tapped
@@ -244,6 +272,8 @@
         //
 
         [self hideImagePicker];
+
+    [self checkIfFormsComplete];
 }
 
 - (void)hideImagePicker{
@@ -255,35 +285,9 @@
 
         [self.imagePicker.imagePickerController dismissViewControllerAnimated:YES completion:nil];
     }
-}
 
-//-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-//{
-//    [picker dismissViewControllerAnimated:NO completion:^{
-//
-//        self.themeImagePicked = [info valueForKey:UIImagePickerControllerOriginalImage];
-//        //here I should resize the image to the size of the imageView so it looks good and normal before saving it?
-//        //maybe this might make it weird in the other image views it goes in
-//
-//        CGSize scaledSize = CGSizeMake(320, 160);
-//        UIGraphicsBeginImageContextWithOptions(scaledSize, NO, 2.0);
-//
-//        [self.themeImagePicked drawInRect:(CGRect){.size = scaledSize}];
-//        UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
-//        UIGraphicsEndImageContext();
-//
-//        self.themeImageView.image = resizedImage;
-//
-//        NSData *themeImageData = UIImagePNGRepresentation(self.themeImagePicked);
-//        self.themeImagePicker = [PFFile fileWithData:themeImageData];
-//
-//        if (self.themeImageView.image)
-//        {
-//            self.changeThemeButton.hidden = YES;
-//        }
-//        [self dismissViewControllerAnimated:NO completion:nil];
-//    }];
-//}
+    [self checkIfFormsComplete];
+}
 
 #pragma mark - Text View
 
@@ -291,22 +295,26 @@
 - (IBAction)onTitleTextViewDidBeginEditing:(id)sender
 {
     self.placeholderLabel.hidden = YES;
+    [self checkIfFormsComplete];
 }
 
 - (IBAction)onTitleTextViewDidChange:(id)sender
 {
     self.placeholderLabel.hidden = ([self.titleTextField.text length] > 0);
+    [self checkIfFormsComplete];
 }
 
 - (IBAction)onTitleTextViewDidEnd:(id)sender
 {
     self.placeholderLabel.hidden = ([self.titleTextField.text length] > 0);
+    [self checkIfFormsComplete];
 }
 
 
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
     self.detailsPlaceholderLabel.hidden = YES;
+    [self checkIfFormsComplete];
 }
 
 //this could be an issue
@@ -317,6 +325,7 @@
         return NO;
     }
 
+    [self checkIfFormsComplete];
     return YES;
 }
 
@@ -327,6 +336,8 @@
     ChooseEventLocationViewController *chooseVC = sender.sourceViewController;
     self.eventName = chooseVC.eventName;
     self.coordinate = chooseVC.coordinate;
+
+    [self checkIfFormsComplete];
 }
 
 -(IBAction)unwindDateToCreate:(UIStoryboardSegue *)sender
@@ -334,6 +345,8 @@
     DateAndTimeViewController *dateVC = sender.sourceViewController;
     self.dateString = dateVC.dateString;
 //    self.dateAndTimeButton.titleLabel.text = [NSString stringWithFormat:@"           %@",self.dateString];
+
+    [self checkIfFormsComplete];
 }
 
 @end
