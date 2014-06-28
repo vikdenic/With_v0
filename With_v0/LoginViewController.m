@@ -22,6 +22,13 @@
     [super viewDidLoad];
 
     self.navigationItem.hidesBackButton = YES;
+
+    UIBarButtonItem *newBackButton =
+    [[UIBarButtonItem alloc] initWithTitle:@"Log In"
+                                     style:UIBarButtonItemStyleBordered
+                                    target:nil
+                                    action:nil];
+    [[self navigationItem] setBackBarButtonItem:newBackButton];
 }
 
 -(void)viewDidAppear:(BOOL)animated
