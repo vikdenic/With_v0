@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Mobile Makers. All rights reserved.
 //
 
+
 #import "CommentsViewController.h"
 #import "CommentsTableViewCell.h"
 
@@ -13,72 +14,13 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
-//@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UITextField *commentTextFieldOutlet;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @property NSMutableArray *commentsArray;
-
-///
-@property NSString *enteredText;
 
 @end
 
 @implementation CommentsViewController
-
-
-#pragma mark - send button  CGAFFINE!!!!! //------------------------------------------------
-- (IBAction)sendButtonPressed:(UIButton *)sender
-{
-    [self.view endEditing:YES];
-
-    self.enteredText = self.commentTextFieldOutlet.text;
-
-    //Create Comment Object
-    PFObject *picComment = [PFObject objectWithClassName:@"CommentActivity"];
-
-    //this adds the text into parse key textContent
-    [picComment setObject:self.enteredText forKey:@"commentContent"];
-
-    //This Creates relationship to the user!
-    [picComment setObject:[PFUser currentUser].username forKey:@"fromUser"];
-
-    //Save comment
-    [picComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-            [self gettingComments];
-            [self.tableView reloadData];
-
-        }
-    }];
-
-    self.commentTextFieldOutlet.text = @"";
-
-//    // Create our Installation query
-//    PFQuery *pushQuery = [PFInstallation query];
-//    [pushQuery whereKey:@"deviceType" equalTo:@"ios"];
-//
-//    // Send push notification to query
-//    [PFPush sendPushMessageToQueryInBackground:pushQuery
-//                                   withMessage:@"new chat message in \"event name\""];
-
-
-    //Animate the send button
-    sender.transform = CGAffineTransformMakeScale(.5f, .5f);
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDuration:0.8];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    CGAffineTransform scaleTrans  = CGAffineTransformMakeScale(1.0f, 1.0f);
-    CGAffineTransform lefttorightTrans  = CGAffineTransformMakeTranslation(0.0f,0.0f);
-    sender.transform = CGAffineTransformConcat(scaleTrans, lefttorightTrans);
-    [UIView commitAnimations];
-
-    [self.commentTextFieldOutlet resignFirstResponder];
-}
-
-
-
-
 
 - (void)viewDidLoad
 {
@@ -94,10 +36,8 @@
     self.tableView.transform=CGAffineTransformMakeRotation(M_PI);
     self.tableView.frame = frame;
 
-    //notification for Ugly keyboard animation
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+
 
     self.commentsArray = [NSMutableArray array];
 
@@ -109,16 +49,20 @@
          {
              UIImage *temporaryImage = [UIImage imageWithData:data];
 
-             //self.imageView.image = temporaryImage;
+             self.imageView.image = temporaryImage;
          }
      }];
+
+    //notification for Ugly keyboard animation
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
 
     [self.textField becomeFirstResponder];
 }
 
 - (void)gettingComments
 {
-
     [self.commentsArray removeAllObjects];
 
     PFRelation *relation = [self.individualEventPhoto.object relationForKey:@"commentActivity"];
@@ -127,16 +71,16 @@
     [query includeKey:@"createdAt"];
     [query orderByAscending:@"createdAt"];
 
-query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-[query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
- {
-     if (!error)
+    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
      {
+         if (!error)
+         {
 
-         [self.commentsArray addObjectsFromArray:results];
-     }
-     [self.tableView reloadData];
- }];
+             [self.commentsArray addObjectsFromArray:results];
+         }
+         [self.tableView reloadData];
+     }];
 
 }
 
@@ -145,11 +89,6 @@ query.cachePolicy = kPFCachePolicyCacheThenNetwork;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.commentsArray.count;
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -198,7 +137,12 @@ query.cachePolicy = kPFCachePolicyCacheThenNetwork;
          } else {
              cell.theImageView.image = [UIImage imageNamed:@"clock"];
          }
-    }];
+     }];
+
+
+    //Rotate the cell too
+    cell.transform = CGAffineTransformMakeRotation(M_PI);
+
     return cell;
 }
 
@@ -209,7 +153,7 @@ query.cachePolicy = kPFCachePolicyCacheThenNetwork;
 
 //-(BOOL)textFieldShouldReturn:(UITextField *)textField
 //{
-////    PFObject *object = self.commentObject;
+//    //    PFObject *object = self.commentObject;
 //    PFUser *picturePhotographer = [self.individualEventPhoto.object objectForKey:@"photographer"];
 //
 //    PFObject *comment = [PFObject objectWithClassName:@"CommentActivity"];
@@ -222,23 +166,12 @@ query.cachePolicy = kPFCachePolicyCacheThenNetwork;
 //         PFRelation *relation = [self.individualEventPhoto.object relationForKey:@"commentActivity"];
 //         [relation addObject:comment];
 //         [self.individualEventPhoto.object saveInBackground];
-//    }];
+//     }];
 //
-//    [self.commentTextFieldOutlet resignFirstResponder];
+//    [self.textField resignFirstResponder];
 //
 //    return YES;
 //}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [self.commentTextFieldOutlet resignFirstResponder];
-}
-
-
-
-
-
-
 
 #pragma mark - Keyboard animation stuff //------------------------------------------------
 
@@ -275,6 +208,55 @@ query.cachePolicy = kPFCachePolicyCacheThenNetwork;
         }];
     }
 }
+
+
+#pragma mark - (scroll methods) Method to figure out if scrolling up or down //-------------------------
+-(void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
+
+    if (velocity.y > 0)
+    {
+        //[self reloadTable];
+        NSLog(@"up");
+    }
+    if (velocity.y < 0)
+    {
+        NSLog(@"down");
+        //[self reloadTable];
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.textField resignFirstResponder];
+}
+
+
+- (IBAction)sendButtPushed:(UIButton *)sender {
+    //    PFObject *object = self.commentObject;
+    PFUser *picturePhotographer = [self.individualEventPhoto.object objectForKey:@"photographer"];
+
+    PFObject *comment = [PFObject objectWithClassName:@"CommentActivity"];
+    comment[@"fromUser"] = [PFUser currentUser];
+    comment[@"toUser"] = picturePhotographer;
+    comment[@"photo"] = self.individualEventPhoto.object;
+    comment[@"commentContent"] = self.textField.text;
+    [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+     {
+         PFRelation *relation = [self.individualEventPhoto.object relationForKey:@"commentActivity"];
+         [relation addObject:comment];
+         [self.individualEventPhoto.object saveInBackground];
+     }];
+
+    self.textField.text = @"";
+    [self.textField resignFirstResponder];
+    [self.tableView reloadData];
+}
+
+
+
+
+
+
 
 
 
