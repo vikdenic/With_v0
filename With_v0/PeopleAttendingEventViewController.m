@@ -76,11 +76,10 @@
     cell.friendButton.tag = indexPath.row;
     [cell.friendButton addTarget:self action:@selector(ontapped:) forControlEvents:UIControlEventTouchUpInside];
 
-    ///this selector might not be hooked up to them all?
-
-    ///I need to somehow pass this query object and alter it? Just query again?
 
 
+    ///I am not sure this isn't just getting the wrong first object
+    
     PFQuery *query = [PFQuery queryWithClassName:@"Friendship"];
     [query whereKey:@"fromUser" equalTo:user];
     [query whereKey:@"toUser" equalTo:[PFUser currentUser]];

@@ -9,14 +9,15 @@
 #import "FindFriendsViewController.h"
 #import <Parse/Parse.h>
 #import "FindFriendsTableViewCell.h"
+#import "FriendsListFriendButton.h"
 
 @interface FindFriendsViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property NSMutableArray *approvedFriendships;
+@property NSMutableArray *results;
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (weak, nonatomic) IBOutlet UIButton *searchButton;
+@property (weak, nonatomic) NSString *userSearch;
 
 @end
 
@@ -26,8 +27,8 @@
 {
     [super viewDidLoad];
 
-    self.approvedFriendships = [NSMutableArray array];
-    [self queryForFriends];
+    self.results = [NSMutableArray array];
+    self.textField.text = nil;
 
     UIBarButtonItem *newBackButton =
     [[UIBarButtonItem alloc] initWithTitle:@"Find Friends"
@@ -35,13 +36,23 @@
                                     target:nil
                                     action:nil];
     [[self navigationItem] setBackBarButtonItem:newBackButton];
+
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.tableView addGestureRecognizer:gestureRecognizer];
 }
+
+- (IBAction)onSearchButtonTapped:(id)sender
+{
+    [self searchForFriends];
+    [self.textField resignFirstResponder];
+}
+
 
 #pragma mark - TableView
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.approvedFriendships.count;
+    return self.results.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -49,12 +60,67 @@
     FindFriendsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
 
 
+    PFUser *user = [self.results objectAtIndex:indexPath.row];
+    cell.friendButton.otherUser = user;
+
+    cell.usernameLabel.text = [NSString stringWithFormat:@"%@", user.username];
+
+    PFFile *userProfilePhoto = [user objectForKey:@"userProfilePhoto"];
+    [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+     {
+         UIImage *temporaryImage = [UIImage imageWithData:data];
+         cell.profilePictureImageView.image = temporaryImage;
+
+         ///if nil, set it to something we create
+     }];
 
     cell.friendButton.tag = indexPath.row;
     [cell.friendButton addTarget:self action:@selector(ontapped:) forControlEvents:UIControlEventTouchUpInside];
 
-    UIImage *btnImage = [UIImage imageNamed:@"theaddone"];
-    [cell.friendButton setImage:btnImage forState:UIControlStateNormal];
+    PFQuery *toUserQuery = [PFQuery queryWithClassName:@"Friendship"];
+    [toUserQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
+    [toUserQuery whereKey:@"fromUser" equalTo:user];
+
+    PFQuery *fromUserQuery = [PFQuery queryWithClassName:@"Friendship"];
+    [fromUserQuery whereKey:@"fromUser" equalTo:[PFUser currentUser]];
+    [fromUserQuery whereKey:@"toUser" equalTo:user];
+
+    PFQuery *combinedQuery = [PFQuery orQueryWithSubqueries:@[toUserQuery,fromUserQuery]];
+    [combinedQuery includeKey:@"fromUser"];
+    [combinedQuery includeKey:@"toUser"];
+
+    [combinedQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error)
+    {
+
+         cell.friendButton.friendshipObject = object;
+
+         if ([[object objectForKey:@"status"] isEqualToString:@"Approved"])
+         {
+             UIImage *btnImage = [UIImage imageNamed:@"added_button_image"];
+             [cell.friendButton setImage:btnImage forState:UIControlStateNormal];
+
+         } else if ([[object objectForKey:@"status"] isEqualToString:@"Pending"])
+         {
+             UIImage *btnImage = [UIImage imageNamed:@"pending_image"];
+             [cell.friendButton setImage:btnImage forState:UIControlStateNormal];
+
+         } else if ([[object objectForKey:@"status"] isEqualToString:@"Denied"])
+         {
+             UIImage *btnImage = [UIImage imageNamed:@"add_friend_button_image"];
+             [cell.friendButton setImage:btnImage forState:UIControlStateNormal];
+         } else {
+             
+             UIImage *btnImage = [UIImage imageNamed:@"add_friend_button_image"];
+             [cell.friendButton setImage:btnImage forState:UIControlStateNormal];
+         }
+
+         if ([cell.usernameLabel.text isEqualToString:[PFUser currentUser].username])
+         {
+             [cell.friendButton setImage:nil forState:UIControlStateNormal];
+             cell.friendButton.userInteractionEnabled = NO;
+         }
+
+     }];
 
     return cell;
 }
@@ -66,7 +132,7 @@
 
 - (void)ontapped:(FindFriendsFriendButton *)sender
 {
-    PFUser *user = [self.approvedFriendships objectAtIndex:sender.tag];
+    PFUser *user = [self.results objectAtIndex:sender.tag];
 
     if ([sender.imageView.image isEqual:[UIImage imageNamed:@"add_friend_button_image"]])
     {
@@ -90,9 +156,16 @@
     {
         UIImage *btnImage = [UIImage imageNamed:@"add_friend_button_image"];
         [sender setImage:btnImage forState:UIControlStateNormal];
-
-        sender.friendshipObject[@"status"] = @"Denied";
-        [sender.friendshipObject saveInBackground];
+        {
+            [sender.friendshipObject deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+             {
+                 PFObject *friendship = [PFObject objectWithClassName:@"Friendship"];
+                 friendship[@"fromUser"] = [PFUser currentUser];
+                 friendship[@"toUser"] = sender.otherUser;
+                 friendship[@"status"] = @"Denied";
+                 [friendship saveInBackground];
+             }];
+        }
 
     } else if ([sender.imageView.image isEqual:[UIImage imageNamed:@"pending_image"]])
     {
@@ -105,49 +178,38 @@
     }
 }
 
-- (void)queryForFriends
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self.approvedFriendships removeAllObjects];
+    [textField resignFirstResponder];
+    return YES;
+}
 
-//    PFQuery *query = [PFQuery queryWithClassName:@"Friendship"];
-//    [query whereKey:@"fromUser" equalTo:[PFUser currentUser]];
-//    [query whereKey:@"toUser" equalTo:[PFUser currentUser]];
-//    [query whereKey:@"status" equalTo:@"Approved"];
-//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-//     {
-//         self.approvedFriendships = [NSMutableArray arrayWithArray:objects];
-//        [self.tableView reloadData];
-//    }];
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    self.textField.text = nil;
+    return YES;
+}
 
+- (void)searchForFriends
+{
+    //Say no users found if nothing comes back? so if count is zero or nil
 
+    [self.results removeAllObjects];
 
-
-    ///this code is going into profile, a button where you see all your friends
-    PFQuery *toUserQuery = [PFQuery queryWithClassName:@"Friendship"];
-    [toUserQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
-    [toUserQuery whereKey:@"status" equalTo:@"Approved"];
-
-    PFQuery *fromUserQuery = [PFQuery queryWithClassName:@"Friendship"];
-    [fromUserQuery whereKey:@"fromUser" equalTo:[PFUser currentUser]];
-    [fromUserQuery whereKey:@"status" equalTo:@"Approved"];
-
-    PFQuery *combinedQuery = [PFQuery orQueryWithSubqueries:@[toUserQuery,fromUserQuery]];
-    [combinedQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-    {
-        ///this should give me the users friends
+    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
+    [query whereKey:@"username" containsString:self.textField.text];
+    //trim white space?
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         [self.results addObjectsFromArray:objects];
+         [self.tableView reloadData];
     }];
+}
 
+#pragma mark - Tap Gesture
 
-
-
-
-
-
-
-
-
-
-
+- (void) hideKeyboard {
+    [self.textField resignFirstResponder];
 }
 
 @end

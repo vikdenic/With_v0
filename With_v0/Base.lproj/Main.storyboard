@@ -1318,6 +1318,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <state key="normal" title="Search">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="onSearchButtonTapped:" destination="kKl-Ph-QLm" eventType="touchUpInside" id="Y5l-3V-EY7"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -1330,7 +1333,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="searchButton" destination="BjJ-9A-nHv" id="d0L-Fx-KDB"/>
                         <outlet property="tableView" destination="OGf-Um-Et5" id="lPF-6W-c9L"/>
                         <outlet property="textField" destination="rRE-lD-wh3" id="Z5f-24-60D"/>
                     </connections>

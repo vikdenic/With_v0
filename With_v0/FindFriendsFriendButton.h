@@ -12,5 +12,6 @@
 @interface FindFriendsFriendButton : UIButton
 
 @property PFObject *friendshipObject;
+@property PFUser *otherUser;
 
 @end
