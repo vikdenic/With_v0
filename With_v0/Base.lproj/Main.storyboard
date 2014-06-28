@@ -1014,6 +1014,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
+                                    <action selector="onTitleEditingChanged:" destination="slZ-Mk-xvY" eventType="editingChanged" id="aUj-WW-Ts0"/>
                                     <action selector="onTitleTextViewDidBeginEditing:" destination="slZ-Mk-xvY" eventType="editingDidBegin" id="8lb-bC-hFx"/>
                                     <action selector="onTitleTextViewDidChange:" destination="slZ-Mk-xvY" eventType="editingDidEnd" id="QbP-86-VRe"/>
                                     <action selector="onTitleTextViewDidEnd:" destination="slZ-Mk-xvY" eventType="editingDidEnd" id="JM8-zb-jub"/>
