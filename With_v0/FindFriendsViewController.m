@@ -18,6 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) NSString *userSearch;
+@property BOOL resultsToDisplay;
 
 @end
 
@@ -28,7 +29,6 @@
     [super viewDidLoad];
 
     self.results = [NSMutableArray array];
-    self.textField.text = nil;
 
     UIBarButtonItem *newBackButton =
     [[UIBarButtonItem alloc] initWithTitle:@"Find Friends"
@@ -39,26 +39,49 @@
 
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
+
+    self.resultsToDisplay = YES;
+    self.tableView.separatorColor = [UIColor whiteColor];
+    [self.textField becomeFirstResponder];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    self.textField.text = nil;
 }
 
 - (IBAction)onSearchButtonTapped:(id)sender
 {
+    self.tableView.backgroundColor = [UIColor whiteColor];
+
     [self searchForFriends];
     [self.textField resignFirstResponder];
 }
-
 
 #pragma mark - TableView
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.results.count;
+    if (self.resultsToDisplay == YES)
+    {
+        return self.results.count;
+    } else {
+        return 1;
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FindFriendsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
 
+    if (self.resultsToDisplay == NO)
+    {
+        cell.usernameLabel.text = @"No Results";
+        self.tableView.separatorColor = [UIColor whiteColor];
+        return cell;
+    }
 
     PFUser *user = [self.results objectAtIndex:indexPath.row];
     cell.friendButton.otherUser = user;
@@ -181,12 +204,20 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
+
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.separatorColor = [UIColor whiteColor];
+
     return YES;
 }
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     self.textField.text = nil;
+
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.separatorColor = [UIColor whiteColor];
+
     return YES;
 }
 
@@ -197,12 +228,21 @@
     [self.results removeAllObjects];
 
     PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-    [query whereKey:@"username" containsString:self.textField.text];
-    //trim white space?
+    NSString *searchString = [self.textField.text lowercaseString];
+    [query whereKey:@"username" containsString:searchString];
+    ///trim white space?
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
-         [self.results addObjectsFromArray:objects];
-         [self.tableView reloadData];
+         if (objects.count >= 1)
+         {
+             [self.results addObjectsFromArray:objects];
+             [self.tableView reloadData];
+             self.resultsToDisplay = YES;
+         } else {
+             self.resultsToDisplay = NO;
+             [self.tableView reloadData];
+             self.textField.text = nil;
+         }
     }];
 }
 
@@ -210,6 +250,7 @@
 
 - (void) hideKeyboard {
     [self.textField resignFirstResponder];
+    self.tableView.backgroundColor = [UIColor whiteColor];
 }
 
 @end
