@@ -102,6 +102,13 @@
     else{
     [self.dateAndTimeButton setTitle:@"           Date and Time" forState:UIControlStateNormal];
     }
+
+    //Vik: Create button disabled until fields filled out
+    if(self.eventName == nil || [self.dateString isEqual:nil] || self.coordinate.latitude == 0.0)
+    {
+        
+    }
+
 }
 
 #pragma mark - Action Methods
@@ -176,7 +183,8 @@
 
     } else {
 
-        [self presentModalViewController:self.imagePicker.imagePickerController animated:YES];
+//        [self presentModalViewController:self.imagePicker.imagePickerController animated:YES];
+        [self presentViewController:self.imagePicker.imagePickerController animated:YES completion:nil];
     }
 }
 
@@ -309,7 +317,6 @@
     ChooseEventLocationViewController *chooseVC = sender.sourceViewController;
     self.eventName = chooseVC.eventName;
     self.coordinate = chooseVC.coordinate;
-    NSLog(@"CREATE: %f %f",self.coordinate.latitude, self.coordinate.longitude);
 }
 
 -(IBAction)unwindDateToCreate:(UIStoryboardSegue *)sender
