@@ -38,6 +38,7 @@
 @property (nonatomic, strong) GKImagePicker *imagePicker;
 @property (nonatomic, strong) UIPopoverController *popoverController;
 
+@property (weak, nonatomic) IBOutlet UIButton *createButton;
 
 @end
 
@@ -103,12 +104,20 @@
     [self.dateAndTimeButton setTitle:@"           Date and Time" forState:UIControlStateNormal];
     }
 
+    [self.createButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [self.createButton setTitleColor:[UIColor greenColor] forState:UIControlStateSelected];
+    [self.createButton addTarget:self action:@selector(onCreateButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+
     //Vik: Create button disabled until fields filled out
     if(self.eventName == nil || [self.dateString isEqual:nil] || self.coordinate.latitude == 0.0)
     {
-        
+        self.createButton.titleLabel.textColor = [UIColor grayColor];
     }
 
+    else if (!(self.eventName == nil) || ![self.dateString isEqual:nil] || !self.coordinate.latitude == 0.0)
+    {
+        self.createButton.titleLabel.textColor = [UIColor orangeColor];
+    }
 }
 
 #pragma mark - Action Methods
@@ -134,6 +143,7 @@
 }
 - (IBAction)onCreateButtonTapped:(id)sender
 {
+
     //if statement here requiring certain fields
 
     PFObject *event = [PFObject objectWithClassName:@"Event"];

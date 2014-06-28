@@ -1111,12 +1111,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="Create Event" id="suv-hu-U5g">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="c1l-i0-MrE">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5oF-D6-yhx">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" enabled="NO" highlighted="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5oF-D6-yhx">
                                 <rect key="frame" x="233" y="5" width="71" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <state key="normal" title="Create">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="onCreateButtonTapped:" destination="slZ-Mk-xvY" eventType="touchUpInside" id="W83-fa-eb3"/>
@@ -1126,6 +1127,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="changeThemeButton" destination="ZMX-EF-D4I" id="EFP-wa-4ua"/>
+                        <outlet property="createButton" destination="5oF-D6-yhx" id="jRY-Jp-cgE"/>
                         <outlet property="dateAndTimeButton" destination="goa-9d-jMz" id="sfU-xx-He5"/>
                         <outlet property="detailsPlaceholderLabel" destination="E78-e0-wwE" id="viv-RE-0pu"/>
                         <outlet property="detailsTextView" destination="Icf-pK-GzR" id="dvl-8O-9Us"/>
