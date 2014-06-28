@@ -21,6 +21,8 @@
 		6091D1F4195B28F6001A371E /* PendingFriendRequestsCustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6091D1F3195B28F6001A371E /* PendingFriendRequestsCustomTableViewCell.m */; };
 		60A7DACF195E2E73003258F0 /* FriendsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60A7DACE195E2E73003258F0 /* FriendsListViewController.m */; };
 		60A7DAD2195E2EE3003258F0 /* FriendsListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 60A7DAD1195E2EE3003258F0 /* FriendsListTableViewCell.m */; };
+		60A7DADE195E32BA003258F0 /* InvitesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60A7DADD195E32BA003258F0 /* InvitesViewController.m */; };
+		60A7DAE1195E3E55003258F0 /* FriendsListFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 60A7DAE0195E3E55003258F0 /* FriendsListFriendButton.m */; };
 		60B954531959C95900AE363D /* PeopleAttendingEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B954521959C95800AE363D /* PeopleAttendingEventViewController.m */; };
 		60B954561959CA9300AE363D /* PeopleAttendingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B954551959CA9300AE363D /* PeopleAttendingTableViewCell.m */; };
 		60C72085194F677300ADE5DF /* ChatEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C72084194F677300ADE5DF /* ChatEventViewController.m */; };
@@ -118,6 +120,10 @@
 		60A7DACE195E2E73003258F0 /* FriendsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsListViewController.m; sourceTree = "<group>"; };
 		60A7DAD0195E2EE3003258F0 /* FriendsListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsListTableViewCell.h; sourceTree = "<group>"; };
 		60A7DAD1195E2EE3003258F0 /* FriendsListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsListTableViewCell.m; sourceTree = "<group>"; };
+		60A7DADC195E32BA003258F0 /* InvitesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InvitesViewController.h; path = ../InvitesViewController.h; sourceTree = "<group>"; };
+		60A7DADD195E32BA003258F0 /* InvitesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InvitesViewController.m; path = ../InvitesViewController.m; sourceTree = "<group>"; };
+		60A7DADF195E3E55003258F0 /* FriendsListFriendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsListFriendButton.h; sourceTree = "<group>"; };
+		60A7DAE0195E3E55003258F0 /* FriendsListFriendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsListFriendButton.m; sourceTree = "<group>"; };
 		60B954511959C95800AE363D /* PeopleAttendingEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleAttendingEventViewController.h; sourceTree = "<group>"; };
 		60B954521959C95800AE363D /* PeopleAttendingEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleAttendingEventViewController.m; sourceTree = "<group>"; };
 		60B954541959CA9300AE363D /* PeopleAttendingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleAttendingTableViewCell.h; sourceTree = "<group>"; };
@@ -266,6 +272,8 @@
 				60F47AB1194E5223007422E7 /* HomeTableViewCell.m */,
 				93952FC2194D6BEA001AA3E4 /* HomeViewController.h */,
 				93952FC3194D6BEA001AA3E4 /* HomeViewController.m */,
+				60A7DADC195E32BA003258F0 /* InvitesViewController.h */,
+				60A7DADD195E32BA003258F0 /* InvitesViewController.m */,
 				60C7208C194F689400ADE5DF /* PageViewController.h */,
 				60C7208D194F689400ADE5DF /* PageViewController.m */,
 				607E90EA19565E8D006F88C8 /* IndividualEventPhoto.h */,
@@ -323,9 +331,9 @@
 			children = (
 				937554481950A5BF008AAD45 /* FindFriendsTableViewCell.h */,
 				937554491950A5BF008AAD45 /* FindFriendsTableViewCell.m */,
-				93952FCE194D7347001AA3E4 /* FindFriendsViewController.h */,
 				605ADBE4195CF36400254B92 /* FindFriendsFriendButton.h */,
 				605ADBE5195CF36400254B92 /* FindFriendsFriendButton.m */,
+				93952FCE194D7347001AA3E4 /* FindFriendsViewController.h */,
 				93952FCF194D7347001AA3E4 /* FindFriendsViewController.m */,
 				6091D1F2195B28F6001A371E /* PendingFriendRequestsCustomTableViewCell.h */,
 				6091D1F3195B28F6001A371E /* PendingFriendRequestsCustomTableViewCell.m */,
@@ -340,9 +348,11 @@
 			children = (
 				93952FC5194D6BFC001AA3E4 /* ProfileViewController.h */,
 				93952FC6194D6BFC001AA3E4 /* ProfileViewController.m */,
-				60A7DACD195E2E73003258F0 /* FriendsListViewController.h */,
 				60A7DAD0195E2EE3003258F0 /* FriendsListTableViewCell.h */,
 				60A7DAD1195E2EE3003258F0 /* FriendsListTableViewCell.m */,
+				60A7DADF195E3E55003258F0 /* FriendsListFriendButton.h */,
+				60A7DAE0195E3E55003258F0 /* FriendsListFriendButton.m */,
+				60A7DACD195E2E73003258F0 /* FriendsListViewController.h */,
 				60A7DACE195E2E73003258F0 /* FriendsListViewController.m */,
 				9375544B1950B883008AAD45 /* EditProfileViewController.h */,
 				9375544C1950B883008AAD45 /* EditProfileViewController.m */,
@@ -451,8 +461,8 @@
 				60A7DAD4195E3053003258F0 /* Explore */,
 				60A7DAD5195E3071003258F0 /* Create */,
 				930D1901195886BE00AE4AE1 /* GK Classes */,
-				60A7DAD7195E310B003258F0 /* Find Friends */,
 				60A7DAD8195E3155003258F0 /* Profile */,
+				60A7DAD7195E310B003258F0 /* Find Friends */,
 				608B6C9B1950DE61007D4503 /* Login and SignUp */,
 				93952FA5194D5D4C001AA3E4 /* Images.xcassets */,
 				93952F94194D5D4C001AA3E4 /* Supporting Files */,
@@ -611,11 +621,13 @@
 				608B6C991950DBCF007D4503 /* LoginViewController.m in Sources */,
 				930D190F195886DC00AE4AE1 /* GKImagePicker.m in Sources */,
 				60A7DAD2195E2EE3003258F0 /* FriendsListTableViewCell.m in Sources */,
+				60A7DAE1195E3E55003258F0 /* FriendsListFriendButton.m in Sources */,
 				930D1914195886DC00AE4AE1 /* GKResizeableCropOverlayView.m in Sources */,
 				60B954561959CA9300AE363D /* PeopleAttendingTableViewCell.m in Sources */,
 				60F47AB2194E5223007422E7 /* HomeTableViewCell.m in Sources */,
 				607E90EC19565E8D006F88C8 /* IndividualEventPhoto.m in Sources */,
 				60A7DACF195E2E73003258F0 /* FriendsListViewController.m in Sources */,
+				60A7DADE195E32BA003258F0 /* InvitesViewController.m in Sources */,
 				93513A6119528A9000302A54 /* ChooseEventLocationViewController.m in Sources */,
 				60F5B3461957537200A80467 /* ExploreEventAnnotationView.m in Sources */,
 				93952FCD194D7318001AA3E4 /* CreateEventViewController.m in Sources */,
