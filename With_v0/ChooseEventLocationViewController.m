@@ -297,7 +297,7 @@
 
         if(indexPath.row == 0)
         {
-            NSLog(@"Create Custom Location");
+//            NSLog(@"Create Custom Location");
             self.eventName = self.searchBar.text;
             self.coordinate = CLLocationCoordinate2DMake(self.latitude, self.longitude);
         }
@@ -305,7 +305,7 @@
         else if(indexPath.row == 1)
         {
             [self searchForVenue];
-            NSLog(@"Search Custom Location");
+//            NSLog(@"Search Custom Location");
         }
     }
     return indexPath;

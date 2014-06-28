@@ -56,6 +56,7 @@
 
     //Vik
     self.eventName = @"Location";
+    self.dateString = nil;
 
 //    self.canCreateEvent = NO;
     [self checkIfFormsComplete];
@@ -65,7 +66,7 @@
 {
     [super viewWillAppear:animated];
 
-    [self checkIfFormsComplete];
+//    [self checkIfFormsComplete];
 
 //    Vik: we will nil these properties on Create button tapped
 //    self.themeImageView.image = nil;
@@ -117,22 +118,25 @@
 
     //Vik: Create button disabled until fields filled out
     [self checkIfFormsComplete];
+//    NSLog(@"APPEAR: %d", self.canCreateEvent);
 }
 
 #pragma mark - Helpers
 
 -(void)checkIfFormsComplete
 {
-    if( !self.themeImageView.image || [self.titleTextField.text isEqualToString:@""] || [self.dateString isEqual:nil] || self.coordinate.latitude == 0.0)
+    if( !self.themeImageView.image || [self.titleTextField.text isEqualToString:@""] || !self.dateString || self.coordinate.latitude == 0.0)
     {
-        self.createButton.titleLabel.textColor = [UIColor grayColor];
+//        self.createButton.titleLabel.textColor = [UIColor grayColor];
+        [self.createButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
 
         self.canCreateEvent = NO;
     }
 
-    else if (self.themeImageView.image && ![self.titleTextField.text isEqualToString:@""] && self.dateString && !(self.coordinate.latitude == 0.0))
+    if (self.themeImageView.image && ![self.titleTextField.text isEqualToString:@""] && self.dateString && !(self.coordinate.latitude == 0.0) )
     {
-        self.createButton.titleLabel.textColor = [UIColor orangeColor];
+//        self.createButton.titleLabel.textColor = [UIColor orangeColor];
+    [self.createButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
 
         self.canCreateEvent = YES;
     }
@@ -327,7 +331,6 @@
         [textView resignFirstResponder];
         return NO;
     }
-
     [self checkIfFormsComplete];
     return YES;
 }
@@ -341,6 +344,8 @@
     self.coordinate = chooseVC.coordinate;
 
     [self checkIfFormsComplete];
+//    NSLog(@"LOCATION UNWIND: %d", self.canCreateEvent);
+//    [self viewWillAppear:YES];
 }
 
 -(IBAction)unwindDateToCreate:(UIStoryboardSegue *)sender
@@ -350,6 +355,8 @@
 //    self.dateAndTimeButton.titleLabel.text = [NSString stringWithFormat:@"           %@",self.dateString];
 
     [self checkIfFormsComplete];
+//    NSLog(@"DATE UNWIND: %d", self.canCreateEvent);
+//    [self viewWillAppear:YES];
 }
 
 @end
