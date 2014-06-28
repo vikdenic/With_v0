@@ -28,7 +28,6 @@
     [super viewDidLoad];
 
     self.results = [NSMutableArray array];
-    self.textField.text = nil;
 
     UIBarButtonItem *newBackButton =
     [[UIBarButtonItem alloc] initWithTitle:@"Find Friends"
@@ -41,12 +40,19 @@
     [self.tableView addGestureRecognizer:gestureRecognizer];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    self.textField.text = nil;
+}
+
 - (IBAction)onSearchButtonTapped:(id)sender
 {
+    self.tableView.backgroundColor = [UIColor whiteColor];
     [self searchForFriends];
     [self.textField resignFirstResponder];
 }
-
 
 #pragma mark - TableView
 
@@ -187,6 +193,8 @@
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     self.textField.text = nil;
+
+    self.tableView.backgroundColor = [UIColor grayColor];
     return YES;
 }
 
@@ -197,8 +205,9 @@
     [self.results removeAllObjects];
 
     PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-    [query whereKey:@"username" containsString:self.textField.text];
-    //trim white space?
+    NSString *searchString = [self.textField.text lowercaseString];
+    [query whereKey:@"username" containsString:searchString];
+    ///trim white space?
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          [self.results addObjectsFromArray:objects];
