@@ -27,6 +27,11 @@
 
     self.eventArray = [NSMutableArray array];
     self.eventInviteArray = [NSMutableArray array];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
 
     [self queryForEvents];
 }
@@ -132,24 +137,23 @@
 
 - (void)onYesTapped:(InvitesButton *)sender
 {
-
     InvitesTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 
     if ([sender.imageView.image isEqual:[UIImage imageNamed:@"yes_image_unselected"]])
     {
         UIImage *btnImage = [UIImage imageNamed:@"yes_image_selected"];
         [sender setImage:btnImage forState:UIControlStateNormal];
-        //add the relation to the event and put them in the usersGoing
 
-        //relation to going
-        PFRelation *goingRelation = [sender.eventObject relationForKey:@"usersAttending"];
-        [goingRelation addObject:[PFUser currentUser]];
-        [sender.eventObject saveInBackground];
-
+        PFRelation *eventRelation = [[PFUser currentUser] relationForKey:@"eventsAttending"];
+        [eventRelation addObject:sender.eventObject];
+        [[PFUser currentUser] saveInBackground];
+        ///need to remove this if no is touched, below if yes unselected too
+        
         sender.eventInviteObject[@"statusOfUser"] = @"Going";
         [sender.eventInviteObject saveInBackground];
 
-        //remove them from not going if they were there
+        PFRelation *goingRelation = [sender.eventObject relationForKey:@"usersAttending"];
+        [goingRelation addObject:[PFUser currentUser]];
         PFRelation *notGoingRelation = [sender.eventObject relationForKey:@"usersNotAttending"];
         [notGoingRelation removeObject:[PFUser currentUser]];
         [sender.eventObject saveInBackground];
