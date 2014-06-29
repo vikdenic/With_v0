@@ -12,5 +12,6 @@
 @interface InvitesButton : UIButton
 
 @property PFObject *eventObject;
+@property PFObject *eventInviteObject;
 
 @end

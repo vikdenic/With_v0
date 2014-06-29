@@ -52,26 +52,24 @@
 
 -(void)setUserInfo
 {
+    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
 
-    PFQuery *retrieveUsers = [PFQuery queryWithClassName:@"User"];
+    PFUser *theUser = self.userToPass;
+    NSString *theUserObjectId = theUser.objectId;
 
-    [retrieveUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            PFUser *user = [PFUser currentUser];
-            self.nameLabel.text = [user objectForKey:@"name"];
-            self.cityStateLabel.text = [user objectForKey:@"userCityState"];
-            self.bioTextView.text = [user objectForKey:@"userBio"];
+    [query getObjectInBackgroundWithId:theUserObjectId block:^(PFObject *object, NSError *error) {
 
-            PFFile *imageFile = [user objectForKey:@"userProfilePhoto"];
+        self.nameLabel.text = [object objectForKey:@"username"];
+//        self.cityStateLabel.text = [object objectForKey:@"userCityState"];
+//        self.bioTextView.text = [object objectForKey:@"userBio"];
 
-            [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-                UIImage *image = [UIImage imageWithData:data];
-                self.profileAvatar.image = image;
-            }];
+        PFFile *imageFile = [object objectForKey:@"userProfilePhoto"];
 
-            //            self.followersLabel.text = [user objectForKey:@"followersCount"]; ?
-            //            self.followingLabel.text = [user objectForKey:@"followingCount"]; ?
-        }
+        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            UIImage *image = [UIImage imageWithData:data];
+            self.profileAvatar.image = image;
+
+        }];
     }];
 }
 

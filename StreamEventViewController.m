@@ -16,7 +16,7 @@
 #import "GKImagePicker.h"
 #import "StreamProfileViewController.h"
 
-@interface StreamEventViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, GKImagePickerDelegate>
+@interface StreamEventViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, GKImagePickerDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property UIImagePickerController *cameraController;
@@ -34,6 +34,8 @@
 @property PFFile *selectedImageFile;
 
 @property (nonatomic) CGRect originalFrame;
+
+@property int section;
 
 @end
 
@@ -111,7 +113,7 @@
                       individualEventPhoto.photographerPhoto = [[object objectForKey:@"photographer"] objectForKey:@"userProfilePhoto"];
                       individualEventPhoto.username = [[object objectForKey:@"photographer"] objectForKey:@"username"];
 
-                      PFObject *photographer = [object objectForKey:@"photographer"];
+                      PFUser *photographer = [object objectForKey:@"photographer"];
                       individualEventPhoto.photographer = photographer;
 
                       [self.theLegitArrayOfEverything addObject:individualEventPhoto];
@@ -246,14 +248,23 @@
         }
 
     //setting the username
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
-    title.text = [NSString stringWithFormat:@"%@", individualEventPhoto.username];
-    title.textColor = [UIColor whiteColor];
+//    StreamEventTitleLabel *title = [[StreamEventTitleLabel alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
+//    title.text = [NSString stringWithFormat:@"%@", individualEventPhoto.username];
+//    title.textColor = [UIColor whiteColor];
+//    title.section = (int)section;
 
-    //allows the segue to profile
-    UITapGestureRecognizer *tapping = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnUsername:)];
-    [title addGestureRecognizer:tapping];
-    title.userInteractionEnabled = YES;
+    //setting the username
+    UIButton *title = [[UIButton alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
+    [title setTitle:[NSString stringWithFormat:@"%@", individualEventPhoto.username] forState:UIControlStateNormal];
+    [title setTintColor:[UIColor whiteColor]];
+    title.tag = section;
+    [title addTarget:self action:@selector(onButtonTitlePressed:) forControlEvents:UIControlEventTouchUpInside];
+
+
+//    //allows the segue to profile
+//    UITapGestureRecognizer *tapping = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnUsername:)];
+//    [title addGestureRecognizer:tapping];
+//    title.userInteractionEnabled = YES;
 
     UIImageView *customImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
     customImageView.layer.cornerRadius = customImageView.bounds.size.width/2;
@@ -437,10 +448,10 @@
     }
 }
 
-- (void)tapOnUsername:(id)sender
+- (void)onButtonTitlePressed:(UIButton *)sender
 {
-    NSLog(@"Tap Tap");
-    [self performSegueWithIdentifier:@"StreamToProfile" sender:sender];
+    self.section = (int)sender.tag;
+    [self performSegueWithIdentifier:@"StreamToProfile" sender:self];
 }
 
 //#pragma mark - Helper Method
@@ -606,11 +617,9 @@
     } else if ([segue.identifier isEqualToString:@"StreamToProfile"])
     {
         StreamProfileViewController *streamProfileViewController = segue.destinationViewController;
-        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-        IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:selectedIndexPath.section];
-
-        streamProfileViewController.individualEventPhoto = individualEventPhoto;
-        NSLog(@"%@", individualEventPhoto);
+        IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:self.section];
+        PFUser *userToPass = individualEventPhoto.photographer;
+        streamProfileViewController.userToPass = userToPass;
     }
 
 }
@@ -632,6 +641,33 @@
 - (void)stopRefresh
 {
     [self.refreshControl endRefreshing];
+}
+
+#pragma mark - Action Sheet
+
+///if the current user is the one who took the photo then show the delete button, but they can still report it
+
+- (IBAction)showActionSheet:(id)sender
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Report", nil];
+
+    [actionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+
+    NSString *theButtonIndex = [actionSheet buttonTitleAtIndex:buttonIndex];
+
+    if ([theButtonIndex isEqualToString:@"Cancel"])
+    {
+        //dismiss
+
+    } else if ([theButtonIndex isEqualToString:@"Report"])
+    {
+        ///if it is reported- this button is clicked- we need to notify ourselves somehow?
+        ///send them a uialert to tell them it has been reported
+    }
 }
 
 @end

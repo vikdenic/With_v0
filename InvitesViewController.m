@@ -14,6 +14,7 @@
 @interface InvitesViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property NSMutableArray *eventArray;
+@property NSMutableArray *eventInviteArray;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
@@ -25,6 +26,7 @@
     [super viewDidLoad];
 
     self.eventArray = [NSMutableArray array];
+    self.eventInviteArray = [NSMutableArray array];
 
     [self queryForEvents];
 }
@@ -40,6 +42,8 @@
          //this is the users events
          for (PFObject *object in objects)
          {
+             [self.eventInviteArray addObject:object];
+
              PFObject *theEvent = [object objectForKey:@"event"];
              NSString *eventId = theEvent.objectId;
 
@@ -65,6 +69,7 @@
     InvitesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
 
     PFObject *object = [self.eventArray objectAtIndex:indexPath.row];
+    PFObject *eventInvite = [self.eventInviteArray objectAtIndex:indexPath.row];
 
     PFFile *userProfilePhoto = [[object objectForKey:@"creator"] objectForKey:@"userProfilePhoto"];
     [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
@@ -103,15 +108,17 @@
 
 
     ///must change all these when Vik gets the images that will appear
-    UIImage *yesButton = [UIImage imageNamed:@"Yes_Button"];
+    UIImage *yesButton = [UIImage imageNamed:@"yes_image_unselected"];
     [cell.yesButton setImage:yesButton forState:UIControlStateNormal];
     cell.yesButton.eventObject = object;
     cell.yesButton.tag = indexPath.row;
+    cell.yesButton.eventInviteObject = eventInvite;
     [cell.yesButton addTarget:self action:@selector(onYesTapped:) forControlEvents:UIControlEventTouchUpInside];
 
-    UIImage *noButton = [UIImage imageNamed:@"No_Button"];
+    UIImage *noButton = [UIImage imageNamed:@"no_image_unselected"];
     [cell.noButton setImage:noButton forState:UIControlStateNormal];
     cell.noButton.eventObject = object;
+    cell.noButton.eventInviteObject = eventInvite;
     cell.noButton.tag = indexPath.row;
     [cell.noButton addTarget:self action:@selector(onNoTapped:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -134,17 +141,37 @@
         [sender setImage:btnImage forState:UIControlStateNormal];
         //add the relation to the event and put them in the usersGoing
 
+        //relation to going
+        PFRelation *goingRelation = [sender.eventObject relationForKey:@"usersAttending"];
+        [goingRelation addObject:[PFUser currentUser]];
+        [sender.eventObject saveInBackground];
+
+        sender.eventInviteObject[@"statusOfUser"] = @"Going";
+        [sender.eventInviteObject saveInBackground];
+
+        //remove them from not going if they were there
+        PFRelation *notGoingRelation = [sender.eventObject relationForKey:@"usersNotAttending"];
+        [notGoingRelation removeObject:[PFUser currentUser]];
+        [sender.eventObject saveInBackground];
+
         ///change the status of event invited and maybe just delete it from that class too? think about this
 
-        UIImage *btnImage2 = [UIImage imageNamed:@"No_button"];
+        UIImage *btnImage2 = [UIImage imageNamed:@"no_image_unselected"];
         [cell.noButton setImage:btnImage2 forState:UIControlStateNormal];
 
     } else if ([sender.imageView.image isEqual:[UIImage imageNamed:@"yes_image_selected"]])
     {
-        UIImage *btnImage = [UIImage imageNamed:@"Yes_button"];
+        UIImage *btnImage = [UIImage imageNamed:@"yes_image_unselected"];
         [sender setImage:btnImage forState:UIControlStateNormal];
-        //remove or delete the relation
 
+        sender.eventInviteObject[@"statusOfUser"] = @"Invited";
+        [sender.eventInviteObject saveInBackground];
+
+        PFRelation *goingRelation = [sender.eventObject relationForKey:@"usersAttending"];
+        [goingRelation removeObject:[PFUser currentUser]];
+        [sender.eventObject saveInBackground];
+
+        //remove or delete the relation
     }
 }
 
@@ -156,12 +183,6 @@
 //[relation2 removeObject:[PFUser currentUser]];
 //[self.event saveInBackground];
 
-
-
-
-
-
-
 - (void)onNoTapped:(InvitesButton *)sender
 {
     InvitesTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
@@ -172,6 +193,17 @@
         [sender setImage:btnImage forState:UIControlStateNormal];
         //add the relation to the event and put them in the usersNotGoing
 
+        PFRelation *goingRelation = [sender.eventObject relationForKey:@"usersAttending"];
+        [goingRelation removeObject:[PFUser currentUser]];
+        [sender.eventObject saveInBackground];
+
+        sender.eventInviteObject[@"statusOfUser"] = @"Denied";
+        [sender.eventInviteObject saveInBackground];
+
+        PFRelation *notGoingRelation = [sender.eventObject relationForKey:@"usersNotAttending"];
+        [notGoingRelation addObject:[PFUser currentUser]];
+        [sender.eventObject saveInBackground];
+
         UIImage *btnImage2 = [UIImage imageNamed:@"yes_image_unselected"];
         [cell.yesButton setImage:btnImage2 forState:UIControlStateNormal];
 
@@ -179,8 +211,13 @@
     {
         UIImage *btnImage = [UIImage imageNamed:@"no_image_unselected"];
         [sender setImage:btnImage forState:UIControlStateNormal];
-        //remove or delete the relation
-        
+
+        sender.eventInviteObject[@"statusOfUser"] = @"Invited";
+        [sender.eventInviteObject saveInBackground];
+
+        PFRelation *goingRelation = [sender.eventObject relationForKey:@"usersNotAttending"];
+        [goingRelation removeObject:[PFUser currentUser]];
+        [sender.eventObject saveInBackground];
     }
 }
 

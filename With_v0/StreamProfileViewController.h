@@ -11,7 +11,7 @@
 
 @interface StreamProfileViewController : UIViewController
 
-@property IndividualEventPhoto *individualEventPhoto;
+@property PFUser *userToPass;
 
 
 @end
