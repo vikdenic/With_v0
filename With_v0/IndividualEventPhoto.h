@@ -17,5 +17,6 @@
 @property PFObject *object;
 @property PFFile *photographerPhoto;
 @property NSString *username;
+@property PFObject *photographer;
 
 @end

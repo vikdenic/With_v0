@@ -115,7 +115,6 @@
     cell.noButton.tag = indexPath.row;
     [cell.noButton addTarget:self action:@selector(onNoTapped:) forControlEvents:UIControlEventTouchUpInside];
 
-
     return cell;
 }
 
@@ -183,6 +182,11 @@
         //remove or delete the relation
         
     }
+}
+
+- (IBAction)onXButtonTapped:(id)sender
+{
+    ///remove the row, remove the event invite- animate this so it's cool
 }
 
 

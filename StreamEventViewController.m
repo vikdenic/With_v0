@@ -14,6 +14,7 @@
 #import "CommentsViewController.h"
 #import "IndividualEventPhoto.h"
 #import "GKImagePicker.h"
+#import "StreamProfileViewController.h"
 
 @interface StreamEventViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, GKImagePickerDelegate>
 
@@ -109,6 +110,9 @@
                       individualEventPhoto.object = object;
                       individualEventPhoto.photographerPhoto = [[object objectForKey:@"photographer"] objectForKey:@"userProfilePhoto"];
                       individualEventPhoto.username = [[object objectForKey:@"photographer"] objectForKey:@"username"];
+
+                      PFObject *photographer = [object objectForKey:@"photographer"];
+                      individualEventPhoto.photographer = photographer;
 
                       [self.theLegitArrayOfEverything addObject:individualEventPhoto];
                       ///if statement here to only reload once count equals count
@@ -245,6 +249,11 @@
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
     title.text = [NSString stringWithFormat:@"%@", individualEventPhoto.username];
     title.textColor = [UIColor whiteColor];
+
+    //allows the segue to profile
+    UITapGestureRecognizer *tapping = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnUsername:)];
+    [title addGestureRecognizer:tapping];
+    title.userInteractionEnabled = YES;
 
     UIImageView *customImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
     customImageView.layer.cornerRadius = customImageView.bounds.size.width/2;
@@ -428,6 +437,12 @@
     }
 }
 
+- (void)tapOnUsername:(id)sender
+{
+    NSLog(@"Tap Tap");
+    [self performSegueWithIdentifier:@"StreamToProfile" sender:sender];
+}
+
 //#pragma mark - Helper Method
 //
 //- (void)cameraSetUp
@@ -587,7 +602,17 @@
     {
         CommentsViewController *commentsViewController = segue.destinationViewController;
         commentsViewController.individualEventPhoto = self.individualEventPhoto;
+
+    } else if ([segue.identifier isEqualToString:@"StreamToProfile"])
+    {
+        StreamProfileViewController *streamProfileViewController = segue.destinationViewController;
+        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+        IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:selectedIndexPath.section];
+
+        streamProfileViewController.individualEventPhoto = individualEventPhoto;
+        NSLog(@"%@", individualEventPhoto);
     }
+
 }
 
 - (IBAction)unwindSegueToStreamEventViewController:(UIStoryboardSegue *)sender
