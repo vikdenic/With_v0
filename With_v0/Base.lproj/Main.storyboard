@@ -2029,16 +2029,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     <action selector="signup:" destination="fF6-si-B0E" eventType="touchUpInside" id="fky-VX-DNP"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JYf-ht-L3v">
-                                <rect key="frame" x="28" y="91" width="265" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
-                                <connections>
-                                    <outlet property="delegate" destination="fF6-si-B0E" id="eG3-By-dyE"/>
-                                </connections>
-                            </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="niL-bc-KbQ">
                                 <rect key="frame" x="28" y="139" width="265" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2059,7 +2049,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <navigationItem key="navigationItem" id="Ywi-T6-vTU"/>
                     <connections>
                         <outlet property="emailField" destination="niL-bc-KbQ" id="O5b-iT-Nvj"/>
-                        <outlet property="name" destination="JYf-ht-L3v" id="cSz-vJ-Cxe"/>
                         <outlet property="passwordField" destination="YyK-lk-CBO" id="wTt-vb-U2Y"/>
                         <outlet property="usernameField" destination="0bF-ao-KMB" id="r55-7V-onI"/>
                     </connections>
