@@ -116,6 +116,7 @@
     self.locationTextField.text = nil;
     self.bioTextView.text = nil;
 
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"Test1" object:self];
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 #pragma mark - Tap Gesture Recognizer
@@ -135,7 +136,8 @@
         [self.popoverController presentPopoverFromRect:tapGestureRecognizer.view.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 
     } else {
-        [self presentModalViewController:self.imagePicker.imagePickerController animated:YES];
+//        [self presentModalViewController:self.imagePicker.imagePickerController animated:YES];
+        [self presentViewController:self.imagePicker.imagePickerController animated:YES completion:nil];
     }
 }
 

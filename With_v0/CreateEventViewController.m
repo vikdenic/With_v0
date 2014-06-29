@@ -55,6 +55,9 @@
 {
     [super viewDidLoad];
 
+    //Vik: Allows this viewController to know when someone log's out
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:@"Test1" object:nil];
+
     //Vik
     self.eventName = @"Location";
     self.dateString = nil;
@@ -120,6 +123,15 @@
     //Vik: Create button disabled until fields filled out
     [self checkIfFormsComplete];
 //    NSLog(@"APPEAR: %d", self.canCreateEvent);
+}
+
+-(void)receiveNotification:(NSNotification *) notification
+{
+   if ([[notification name] isEqualToString:@"Test1"])
+   {
+       NSLog(@"Notification Triggered");
+       [self resetCreateFields];
+    }
 }
 
 #pragma mark - Helpers
@@ -207,17 +219,25 @@
     //takes user back to home page
     [self.tabBarController setSelectedIndex:0];
 
+    [self resetCreateFields];
+    }
+}
+
+-(void)resetCreateFields
+{
     //erases event forms
     self.themeImageView.image = nil;
     self.titleTextField.text = nil;
     self.detailsTextView.text = nil;
+    self.eventName = @"Location";
+//    [self.locationButton setTitle:@"          Location" forState:UIControlStateNormal];
+
     self.coordinate = CLLocationCoordinate2DMake(0.0, 0.0);
 
     self.dateAndTimeButton.titleLabel.text = @"           Date and Time";
-    self.locationButton.titleLabel.text = @"           Location";
+//    self.locationButton.titleLabel.text = @"           Location";
 
-        self.canCreateEvent = NO;
-    }
+    self.canCreateEvent = NO;
 }
 
 #pragma mark - Date and Time View Animation
