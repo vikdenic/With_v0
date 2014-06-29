@@ -11,6 +11,7 @@
 		601F5D911951DD8E00B6D89C /* CommentsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 601F5D901951DD8E00B6D89C /* CommentsTableViewCell.m */; };
 		605ADBE3195CABC000254B92 /* PeopleAttendingFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 605ADBE2195CABBF00254B92 /* PeopleAttendingFriendButton.m */; };
 		605ADBE6195CF36400254B92 /* FindFriendsFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 605ADBE5195CF36400254B92 /* FindFriendsFriendButton.m */; };
+		60694166195FD98F00C8310F /* InvitesButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 60694165195FD98F00C8310F /* InvitesButton.m */; };
 		607E90EC19565E8D006F88C8 /* IndividualEventPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 607E90EB19565E8D006F88C8 /* IndividualEventPhoto.m */; };
 		608B6C991950DBCF007D4503 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608B6C961950DBCF007D4503 /* LoginViewController.m */; };
 		608B6C9A1950DBCF007D4503 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608B6C981950DBCF007D4503 /* SignupViewController.m */; };
@@ -106,6 +107,8 @@
 		605ADBE2195CABBF00254B92 /* PeopleAttendingFriendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleAttendingFriendButton.m; sourceTree = "<group>"; };
 		605ADBE4195CF36400254B92 /* FindFriendsFriendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendsFriendButton.h; sourceTree = "<group>"; };
 		605ADBE5195CF36400254B92 /* FindFriendsFriendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendsFriendButton.m; sourceTree = "<group>"; };
+		60694164195FD98F00C8310F /* InvitesButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitesButton.h; sourceTree = "<group>"; };
+		60694165195FD98F00C8310F /* InvitesButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitesButton.m; sourceTree = "<group>"; };
 		607E90EA19565E8D006F88C8 /* IndividualEventPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualEventPhoto.h; sourceTree = "<group>"; };
 		607E90EB19565E8D006F88C8 /* IndividualEventPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualEventPhoto.m; sourceTree = "<group>"; };
 		608B6C951950DBCF007D4503 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -286,6 +289,8 @@
 				93952FC3194D6BEA001AA3E4 /* HomeViewController.m */,
 				609FDC75195F551100EF7C5B /* InvitesTableViewCell.h */,
 				609FDC76195F551100EF7C5B /* InvitesTableViewCell.m */,
+				60694164195FD98F00C8310F /* InvitesButton.h */,
+				60694165195FD98F00C8310F /* InvitesButton.m */,
 				60A7DADC195E32BA003258F0 /* InvitesViewController.h */,
 				60A7DADD195E32BA003258F0 /* InvitesViewController.m */,
 				60C7208C194F689400ADE5DF /* PageViewController.h */,
@@ -567,7 +572,7 @@
 				ORGANIZATIONNAME = "Mobile Makers";
 				TargetAttributes = {
 					93952F89194D5D4C001AA3E4 = {
-						DevelopmentTeam = 3DJPBY6593;
+						DevelopmentTeam = ZNAFR9K9ZC;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -660,6 +665,7 @@
 				608B6C9E1950FF51007D4503 /* CommentsViewController.m in Sources */,
 				9375544A1950A5BF008AAD45 /* FindFriendsTableViewCell.m in Sources */,
 				93952F9E194D5D4C001AA3E4 /* AppDelegate.m in Sources */,
+				60694166195FD98F00C8310F /* InvitesButton.m in Sources */,
 				93513A641952902C00302A54 /* FSVenue.m in Sources */,
 				608B6C9A1950DBCF007D4503 /* SignupViewController.m in Sources */,
 				609FDC6E195F4C6600EF7C5B /* InvitePeopleViewController.m in Sources */,

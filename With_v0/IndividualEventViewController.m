@@ -54,6 +54,9 @@
     self.yesButtonUnselected = [UIImage imageNamed:@"Yes_Button"];
     self.noButtonSelected = [UIImage imageNamed:@"no_button_selected"];
     self.noButtonUnselected = [UIImage imageNamed:@"No_Button"];
+
+    [self.goingButton setImage:self.yesButtonUnselected forState:UIControlStateNormal];
+    [self.notGoingButton setImage:self.noButtonUnselected forState:UIControlStateNormal];
 }
 
 -(void)viewWillAppear:(BOOL)animated

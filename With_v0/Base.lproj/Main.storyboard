@@ -220,6 +220,20 @@
                                                     <rect key="frame" x="10" y="123" width="70" height="70"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ah0-aG-5Ej" customClass="InvitesButton">
+                                                    <rect key="frame" x="106" y="163" width="79" height="36"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="diY-3X-7WE" customClass="InvitesButton">
+                                                    <rect key="frame" x="224" y="163" width="79" height="36"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
@@ -227,7 +241,9 @@
                                             <outlet property="creatorNameLabel" destination="Eug-cg-vOS" id="3fq-Vy-0TY"/>
                                             <outlet property="eventDateLabel" destination="gci-jC-6KX" id="k9k-ze-G5n"/>
                                             <outlet property="eventNameLabel" destination="kn9-1L-BNL" id="pej-mf-2C4"/>
+                                            <outlet property="noButton" destination="diY-3X-7WE" id="lbc-c4-bN3"/>
                                             <outlet property="themeImageView" destination="vbc-vY-V2e" id="qX8-Bu-AhA"/>
+                                            <outlet property="yesButton" destination="ah0-aG-5Ej" id="2ny-ee-4Bb"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -356,9 +372,6 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="004-Fb-V39">
                                 <rect key="frame" x="51" y="240" width="79" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
                                 <connections>
                                     <action selector="onYesButtonTapped:" destination="7iB-Zu-qxq" eventType="touchUpInside" id="p7l-8R-db3"/>
                                 </connections>
@@ -2205,7 +2218,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         </scene>
     </scenes>
     <resources>
-        <image name="Yes_Button" width="190" height="70"/>
+        <image name="Yes_Button" width="95" height="35"/>
         <image name="album_image" width="34" height="28"/>
         <image name="camera_image" width="34" height="26"/>
         <image name="clock" width="23" height="23"/>
