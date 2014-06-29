@@ -36,11 +36,11 @@
     else {
         PFUser *newUser = [PFUser user];
 
-        [newUser setValue:self.name.text forKey:@"name"];
-        newUser.email = email;
+//        [newUser setValue:self.name.text forKey:@"name"];
+        newUser.email = [email lowercaseString];
 
-        newUser.username = username;
-        newUser.password = password;
+        newUser.username = [username lowercaseString];
+        newUser.password = [password lowercaseString];
         
         [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (error) {
