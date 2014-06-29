@@ -2,12 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "added_button_image.png"
+      "scale" : "1x",
+      "filename" : "green_add_button_40x31.png"
     }
   ],
   "info" : {

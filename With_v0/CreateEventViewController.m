@@ -211,6 +211,17 @@
             [relation addObject:user];
             [event saveInBackground];
         }
+        //puts the event the user created into their events attending and adds them to the going list
+//        PFRelation *relation = [event relationForKey:@"usersInvited"];
+//        [relation addObject:[PFUser currentUser]];
+
+        PFRelation *eventRelation = [[PFUser currentUser] relationForKey:@"eventsAttending"];
+        [eventRelation addObject:event];
+        [[PFUser currentUser] saveInBackground];
+
+        PFRelation *goingToRelation = [event relationForKey:@"usersAttending"];
+        [goingToRelation addObject:[PFUser currentUser]];
+        [event saveInBackground];
     }];
 
 

@@ -225,10 +225,12 @@
     }
 }
 
-- (IBAction)onXButtonTapped:(id)sender
-{
-    ///remove the row, remove the event invite- animate this so it's cool
-}
+//- (IBAction)onXButtonTapped:(id)sender
+//{
+//    ///remove the row, remove the event invite- animate this so it's cool
+//    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
+//
+//}
 
 
 @end

@@ -791,6 +791,7 @@
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
+                                                        <action selector="showActionSheet:" destination="3lK-dd-Z1x" eventType="touchUpInside" id="LrZ-H0-Qoq"/>
                                                         <action selector="showActionSheet:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="XAi-jM-a0M"/>
                                                     </connections>
                                                 </button>
@@ -2373,7 +2374,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="find_tab_image" width="31" height="32"/>
         <image name="home_tab_image" width="32" height="32"/>
         <image name="invite_people" width="33" height="22"/>
-        <image name="like_big" width="173" height="173"/>
+        <image name="like_big" width="202" height="202"/>
         <image name="likes_count_image" width="14" height="12"/>
         <image name="login_background" width="320" height="568"/>
         <image name="login_image" width="149" height="46"/>
