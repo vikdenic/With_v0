@@ -63,6 +63,9 @@
                                     action:nil];
     [[self navigationItem] setBackBarButtonItem:newBackButton];
 
+//    self.title = [PFUser currentUser].username;
+    self.navigationController.navigationBar.topItem.title = [PFUser currentUser].username;
+
 //    self.usersArray = [[NSArray alloc]init];
 }
 
