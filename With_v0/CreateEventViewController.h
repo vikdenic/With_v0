@@ -17,4 +17,6 @@
 
 @property (strong, nonatomic) NSString *dateString;
 
+@property NSMutableArray *usersInvitedArray;
+
 @end

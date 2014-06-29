@@ -133,19 +133,27 @@
     PFFile *userProfilePhoto = [[object objectForKey:@"creator"] objectForKey:@"userProfilePhoto"];
     [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
      {
-         dispatch_async(queue2, ^{
-             UIImage *temporaryImage = [UIImage imageWithData:data];
+         if (data == nil)
+         {
+             cell.creatorImageView.image = nil;
 
-         cell.creatorImageView.layer.cornerRadius = cell.creatorImageView.bounds.size.width/2;
-         cell.creatorImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
-         cell.creatorImageView.layer.borderWidth = 2.0;
-         cell.creatorImageView.layer.masksToBounds = YES;
-//         cell.creatorImageView.backgroundColor = [UIColor redColor];
+         } else
+         {
 
-         dispatch_sync(dispatch_get_main_queue(), ^{
-             cell.creatorImageView.image = temporaryImage;
+             dispatch_async(queue2, ^{
+                 UIImage *temporaryImage = [UIImage imageWithData:data];
+
+             cell.creatorImageView.layer.cornerRadius = cell.creatorImageView.bounds.size.width/2;
+             cell.creatorImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
+             cell.creatorImageView.layer.borderWidth = 2.0;
+             cell.creatorImageView.layer.masksToBounds = YES;
+    //         cell.creatorImageView.backgroundColor = [UIColor redColor];
+
+             dispatch_sync(dispatch_get_main_queue(), ^{
+                 cell.creatorImageView.image = temporaryImage;
+                });
             });
-        });
+         }
      }];
 
     //this gets the image not on the main thread

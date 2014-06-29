@@ -10,4 +10,6 @@
 
 @interface InvitePeopleViewController : UIViewController
 
+@property NSMutableArray *usersInvitedArray;
+
 @end

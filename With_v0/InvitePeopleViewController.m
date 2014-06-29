@@ -25,6 +25,7 @@
     [super viewDidLoad];
 
     self.usersFriends = [NSMutableArray array];
+    self.usersInvitedArray = [NSMutableArray array];
 
     [self queryForFriends];
 }
@@ -114,31 +115,18 @@
     {
         UIImage *btnImage = [UIImage imageNamed:@"invite_selected_image"];
         [sender setImage:btnImage forState:UIControlStateNormal];
-        //add them to array
+
+        [self.usersInvitedArray addObject:sender.otherUser];
 
     } else if ([sender.imageView.image isEqual:[UIImage imageNamed:@"invite_selected_image"]])
     {
         UIImage *btnImage = [UIImage imageNamed:@"invite_image"];
         [sender setImage:btnImage forState:UIControlStateNormal];
-        //remove them from array
+
+        [self.usersInvitedArray removeObject:sender.otherUser];
+
         ///what if they go back and fourth and stuff?
     }
-
-//        PFObject *eventInvite = [PFObject objectWithClassName:@"EventInvite"];
-//        eventInvite[@"toUser"] = sender.otherUser;
-//        eventInvite[@"event"] = //here I am going to have to have the event object from the previous screen- the one that is supposed to get made on create- tricky....
-//        eventInvite[@"statusOfUser"] = @"Invited";
-//        [eventInvite saveInBackground];
-//        sender.inviteObject = eventInvite;
-//
-//        ///so as soon as they are in create event - we need to create the event object and then modify it on create button tapped- that way we can pass that event object in the segue to the invite view controller and save it with the users
-//
-//    } else if ([sender.imageView.image isEqual:[UIImage imageNamed:@"invite_selected_image"]])
-//    {
-//        UIImage *btnImage = [UIImage imageNamed:@"invite_image"];
-//        [sender setImage:btnImage forState:UIControlStateNormal];
-//        [sender.inviteObject deleteInBackground];
-//    }
 }
 
 - (void)queryForFriends

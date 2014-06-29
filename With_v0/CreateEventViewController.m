@@ -11,6 +11,7 @@
 #import "ChooseEventLocationViewController.h"
 #import "DateAndTimeViewController.h"
 #import "GKImagePicker.h"
+#import "InvitePeopleViewController.h"
 
 @interface CreateEventViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, GKImagePickerDelegate>
 
@@ -174,18 +175,34 @@
 //    event[@"title"] = self.titleTextView.text;
     event[@"title"] = self.titleTextField.text;
     event[@"details"] = self.detailsTextView.text;
-
     event[@"location"] = self.eventName;
-
     PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:self.coordinate.latitude
                                                   longitude:self.coordinate.longitude];
     event[@"locationGeoPoint"] = geoPoint;
-
     event[@"themeImage"] = self.themeImageFile;
     event[@"mapThemeImage"] = self.mapThemeImageFile;
     event[@"creator"] = [PFUser currentUser];
     event[@"eventDate"] = self.dateString;
-    [event saveInBackground];
+    [event saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+    {
+        //send invites to people invited
+        for (PFUser *user in self.usersInvitedArray)
+        {
+            PFObject *eventInvite = [PFObject objectWithClassName:@"EventInvite"];
+            eventInvite[@"toUser"] = user;
+            eventInvite[@"event"] = event;
+            eventInvite[@"statusOfUser"] = @"Invited";
+            [eventInvite saveInBackground];
+
+            //creates relations to the event for each user
+            PFRelation *relation = [event relationforKey:@"usersInvited"];
+            [relation addObject:user];
+            [event saveInBackground];
+        }
+    }];
+
+
+
 
     //takes user back to home page
     [self.tabBarController setSelectedIndex:0];
@@ -357,6 +374,13 @@
     [self checkIfFormsComplete];
 //    NSLog(@"DATE UNWIND: %d", self.canCreateEvent);
 //    [self viewWillAppear:YES];
+}
+
+- (IBAction)unwindInviteToCreate:(UIStoryboardSegue *)sender
+{
+    InvitePeopleViewController *invitePeopleViewController = sender.sourceViewController;
+    self.usersInvitedArray = invitePeopleViewController.usersInvitedArray;
+    ///not sure if this is really going to work
 }
 
 @end

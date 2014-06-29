@@ -159,14 +159,6 @@
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="swp-xt-IS0">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Invites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eKJ-ah-OTZ">
-                                            <rect key="frame" x="0.0" y="279" width="61" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </view>
                                 <prototypes>
@@ -1870,12 +1862,19 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Invite Friends" id="iLz-JN-xyW"/>
+                    <navigationItem key="navigationItem" title="Invite Friends" id="iLz-JN-xyW">
+                        <barButtonItem key="leftBarButtonItem" title="&lt;Event" id="LAk-9a-LK8">
+                            <connections>
+                                <segue destination="fsU-Ob-fGE" kind="unwind" unwindAction="unwindInviteToCreate:" id="mjm-gV-3ht"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="W2u-FU-mUG" id="jcO-Hg-t7a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FoZ-S2-NhB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="fsU-Ob-fGE" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2311" y="475"/>
         </scene>

@@ -567,7 +567,6 @@
 				ORGANIZATIONNAME = "Mobile Makers";
 				TargetAttributes = {
 					93952F89194D5D4C001AA3E4 = {
-						DevelopmentTeam = 3DJPBY6593;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -760,7 +759,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "4F388611-84D3-4841-8E83-D833BE176A9E";
+				PROVISIONING_PROFILE = "F978D65F-1EB8-448F-8374-23A9F5A6EE45";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -791,7 +790,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PROVISIONING_PROFILE = "4F388611-84D3-4841-8E83-D833BE176A9E";
+				PROVISIONING_PROFILE = "F978D65F-1EB8-448F-8374-23A9F5A6EE45";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -802,7 +801,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Blake Mitchell (L9VUJP6LGU)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Blake Mitchell (L9VUJP6LGU)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -823,7 +822,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Blake Mitchell (L9VUJP6LGU)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Blake Mitchell (L9VUJP6LGU)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
