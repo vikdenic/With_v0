@@ -51,7 +51,7 @@
     PFQuery *query = [relation query];
     [query includeKey:@"fromUser"];
     [query includeKey:@"createdAt"];
-    [query orderByDescending:@"createdAt"];
+    [query orderByAscending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
      {
          [self.commentsArray addObjectsFromArray:results];
