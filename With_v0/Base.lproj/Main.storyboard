@@ -1098,7 +1098,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e23-dI-9fX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4234" y="48"/>
+            <point key="canvasLocation" x="4025" y="-7"/>
         </scene>
         <!--Comments View Controller-->
         <scene sceneID="PSB-oz-0hx">
@@ -1689,17 +1689,18 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                     <rect key="frame" x="20" y="6" width="32" height="32"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tqo-yI-JIm">
-                                                    <rect key="frame" x="80" y="11" width="116" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6g5-VZ-7Dk" customClass="FindFriendsFriendButton">
                                                     <rect key="frame" x="254" y="8" width="46" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qao-VO-sml">
+                                                    <rect key="frame" x="60" y="7" width="87" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
@@ -1708,7 +1709,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <connections>
                                             <outlet property="friendButton" destination="6g5-VZ-7Dk" id="vHg-Fo-OtD"/>
                                             <outlet property="profilePictureImageView" destination="CbR-jK-rmq" id="j2n-mf-ljC"/>
-                                            <outlet property="usernameLabel" destination="tqo-yI-JIm" id="MRR-ef-8SG"/>
+                                            <outlet property="usernameButton" destination="Qao-VO-sml" id="p3j-MF-8me"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1738,6 +1739,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <connections>
                         <outlet property="searchBar" destination="NP2-8B-HjT" id="gdR-SW-asR"/>
                         <outlet property="tableView" destination="OGf-Um-Et5" id="lPF-6W-c9L"/>
+                        <segue destination="gNK-aH-Xvy" kind="push" identifier="FindFriendToProfile" id="aiq-0h-64W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UZm-Cb-g0Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2658,6 +2660,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="stH-2g-YYg"/>
-        <segue reference="h09-aE-idX"/>
+        <segue reference="aiq-0h-64W"/>
     </inferredMetricsTieBreakers>
 </document>

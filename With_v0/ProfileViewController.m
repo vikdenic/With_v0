@@ -215,7 +215,19 @@
      {
          self.friendButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
          self.friendButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-         [self.friendButton setTitle:[NSString stringWithFormat:@"%i Friends", number] forState:UIControlStateNormal];
+
+         if (number == 0)
+         {
+          [self.friendButton setTitle:[NSString stringWithFormat:@"%i Friends", number] forState:UIControlStateNormal];
+
+         } else if (number == 1)
+         {
+             [self.friendButton setTitle:[NSString stringWithFormat:@"%i Friend", number] forState:UIControlStateNormal];
+
+         } else if (number > 1)
+         {
+             [self.friendButton setTitle:[NSString stringWithFormat:@"%i Friends", number] forState:UIControlStateNormal];
+         }
     }];
 }
 

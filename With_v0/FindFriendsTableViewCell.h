@@ -12,7 +12,7 @@
 @interface FindFriendsTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureImageView;
-@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *usernameButton;
 @property (weak, nonatomic) IBOutlet FindFriendsFriendButton *friendButton;
 
 @end

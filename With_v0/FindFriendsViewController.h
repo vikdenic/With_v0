@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface FindFriendsViewController : UIViewController
+
+@property PFUser *userToPass;
 
 @end
