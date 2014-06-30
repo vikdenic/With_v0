@@ -54,10 +54,14 @@
     NSString *fromUser = [[friendship objectForKey:@"fromUser"] objectId];
     NSString *theUser = self.userToPass.objectId;
 
+    PFUser *userToCompareFriendship;
+
     if ([fromUser isEqualToString:theUser])
     {
         PFUser *user = [friendship objectForKey:@"toUser"];
         [self.usersAttendingArray addObject:user];
+
+        userToCompareFriendship = user;
 
         cell.friendButton.otherUser = user;
 
@@ -85,6 +89,8 @@
         PFUser *user = [friendship objectForKey:@"fromUser"];
         [self.usersAttendingArray addObject:user];
 
+        userToCompareFriendship = user;
+
         cell.friendButton.otherUser = user;
 
         [cell.usernameButton setTitle:[NSString stringWithFormat:@"%@", user[@"username"]] forState:UIControlStateNormal];
@@ -106,8 +112,51 @@
 
     }
 
-    UIImage *btnImage = [UIImage imageNamed:@"added_button_image"];
-    [cell.friendButton setImage:btnImage forState:UIControlStateNormal];
+    //seeing if use is friends with the current user or not
+    PFQuery *query = [PFQuery queryWithClassName:@"Friendship"];
+    [query whereKey:@"fromUser" equalTo:userToCompareFriendship];
+    [query whereKey:@"toUser" equalTo:[PFUser currentUser]];
+
+    PFQuery *query2 = [PFQuery queryWithClassName:@"Friendship"];
+    [query whereKey:@"fromUser" equalTo:[PFUser currentUser]];
+    [query whereKey:@"toUser" equalTo:userToCompareFriendship];
+
+    PFQuery *combinedQuery = [PFQuery orQueryWithSubqueries:@[query,query2]];
+    [combinedQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error)
+     {
+
+         cell.friendButton.friendshipObject = object;
+
+         if ([[object objectForKey:@"status"] isEqualToString:@"Approved"])
+         {
+             UIImage *btnImage = [UIImage imageNamed:@"added_button_image"];
+             [cell.friendButton setImage:btnImage forState:UIControlStateNormal];
+
+         } else if ([[object objectForKey:@"status"] isEqualToString:@"Pending"])
+         {
+             UIImage *btnImage = [UIImage imageNamed:@"pending_image"];
+             [cell.friendButton setImage:btnImage forState:UIControlStateNormal];
+
+         } else if ([[object objectForKey:@"status"] isEqualToString:@"Denied"])
+         {
+             UIImage *btnImage = [UIImage imageNamed:@"add_friend_button_image"];
+             [cell.friendButton setImage:btnImage forState:UIControlStateNormal];
+
+         } else {
+             UIImage *btnImage = [UIImage imageNamed:@"add_friend_button_image"];
+             [cell.friendButton setImage:btnImage forState:UIControlStateNormal];
+         }
+
+         if ([[cell.usernameButton titleForState:UIControlStateNormal] isEqualToString:[PFUser currentUser].username])
+         {
+             [cell.friendButton setImage:nil forState:UIControlStateNormal];
+             cell.friendButton.userInteractionEnabled = NO;
+         }
+         
+     }];
+
+//    UIImage *btnImage = [UIImage imageNamed:@"added_button_image"];
+//    [cell.friendButton setImage:btnImage forState:UIControlStateNormal];
     cell.friendButton.tag = indexPath.row;
     [cell.friendButton addTarget:self action:@selector(ontapped:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -125,29 +174,29 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (void)ontapped:(StreamProfileFriendListFriendButton *)sender
-{
-    if ([sender.imageView.image isEqual:[UIImage imageNamed:@"added_button_image"]])
-    {
-        UIImage *btnImage = [UIImage imageNamed:@"add_friend_button_image"];
-        [sender setImage:btnImage forState:UIControlStateNormal];
-        [sender.friendshipObject deleteInBackground];
-
-    } else if ([sender.imageView.image isEqual:[UIImage imageNamed:@"add_friend_button_image"]])
-    {
-        UIImage *btnImage = [UIImage imageNamed:@"pending_image"];
-        [sender setImage:btnImage forState:UIControlStateNormal];
-
-        [sender.friendshipObject deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-         {
-             PFObject *friendship = [PFObject objectWithClassName:@"Friendship"];
-             friendship[@"fromUser"] = [PFUser currentUser];
-             friendship[@"toUser"] = sender.otherUser;
-             friendship[@"status"] = @"Pending";
-             [friendship saveInBackground];
-         }];
-    }
-}
+//- (void)ontapped:(StreamProfileFriendListFriendButton *)sender
+//{
+//    if ([sender.imageView.image isEqual:[UIImage imageNamed:@"added_button_image"]])
+//    {
+//        UIImage *btnImage = [UIImage imageNamed:@"add_friend_button_image"];
+//        [sender setImage:btnImage forState:UIControlStateNormal];
+//        [sender.friendshipObject deleteInBackground];
+//
+//    } else if ([sender.imageView.image isEqual:[UIImage imageNamed:@"add_friend_button_image"]])
+//    {
+//        UIImage *btnImage = [UIImage imageNamed:@"pending_image"];
+//        [sender setImage:btnImage forState:UIControlStateNormal];
+//
+//        [sender.friendshipObject deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+//         {
+//             PFObject *friendship = [PFObject objectWithClassName:@"Friendship"];
+//             friendship[@"fromUser"] = [PFUser currentUser];
+//             friendship[@"toUser"] = sender.otherUser;
+//             friendship[@"status"] = @"Pending";
+//             [friendship saveInBackground];
+//         }];
+//    }
+//}
 
 - (void)queryForFriends
 {
@@ -181,6 +230,46 @@
     PFUser *userToPass = [self.usersAttendingArray objectAtIndex:self.indexPathRow];
     stream.userToPass = userToPass;
     [self.navigationController pushViewController:stream animated:YES];
+}
+
+- (void)ontapped:(StreamProfileFriendListFriendButton *)sender
+{
+    PFUser *user = [self.usersAttendingArray objectAtIndex:sender.tag];
+
+    if ([sender.imageView.image isEqual:[UIImage imageNamed:@"add_friend_button_image"]])
+    {
+        UIImage *btnImage = [UIImage imageNamed:@"pending_image"];
+        [sender setImage:btnImage forState:UIControlStateNormal];
+
+        if (sender.friendshipObject == nil)
+        {
+            PFObject *friendship = [PFObject objectWithClassName:@"Friendship"];
+            friendship[@"fromUser"] = [PFUser currentUser];
+            friendship[@"toUser"] = user;
+            friendship[@"status"] = @"Pending";
+            [friendship saveInBackground];
+
+        } else {
+            sender.friendshipObject[@"status"] = @"Pending";
+            [sender.friendshipObject saveInBackground];
+        }
+
+    } else if ([sender.imageView.image isEqual:[UIImage imageNamed:@"added_button_image"]])
+    {
+        UIImage *btnImage = [UIImage imageNamed:@"add_friend_button_image"];
+        [sender setImage:btnImage forState:UIControlStateNormal];
+
+        sender.friendshipObject[@"status"] = @"Denied";
+        [sender.friendshipObject saveInBackground];
+
+    } else if ([sender.imageView.image isEqual:[UIImage imageNamed:@"pending_image"]])
+    {
+        UIImage *btnImage = [UIImage imageNamed:@"add_friend_button_image"];
+        [sender setImage:btnImage forState:UIControlStateNormal];
+
+        sender.friendshipObject[@"status"] = @"Denied";
+        [sender.friendshipObject saveInBackground];
+    }
 }
 
 @end
