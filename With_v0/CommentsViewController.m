@@ -37,21 +37,19 @@
     self.tableView.frame = frame;
 
 
-
-
     self.commentsArray = [NSMutableArray array];
 
     [self gettingComments];
 
-    [self.individualEventPhoto.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
-     {
-         if (!error)
-         {
-             UIImage *temporaryImage = [UIImage imageWithData:data];
-
-             self.imageView.image = temporaryImage;
-         }
-     }];
+//    [self.individualEventPhoto.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+//     {
+//         if (!error)
+//         {
+//             UIImage *temporaryImage = [UIImage imageWithData:data];
+//
+//             self.imageView.image = temporaryImage;
+//         }
+//     }];
 
     //notification for Ugly keyboard animation
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -69,16 +67,10 @@
     PFQuery *query = [relation query];
     [query includeKey:@"fromUser"];
     [query includeKey:@"createdAt"];
-    [query orderByAscending:@"createdAt"];
-
-    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
      {
-         if (!error)
-         {
-
-             [self.commentsArray addObjectsFromArray:results];
-         }
+         [self.commentsArray addObjectsFromArray:results];
          [self.tableView reloadData];
      }];
 
@@ -94,7 +86,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PFObject *comment = [self.commentsArray objectAtIndex:indexPath.row];
-
 
     CommentsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     cell.commentLabel.text = [comment objectForKey:@"commentContent"];
@@ -144,6 +135,38 @@
     cell.transform = CGAffineTransformMakeRotation(M_PI);
 
     return cell;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 320)];
+    footer.backgroundColor = [UIColor clearColor];
+
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:footer.frame];
+
+    [self.individualEventPhoto.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+     {
+         if (!error)
+         {
+             UIImage *temporaryImage = [UIImage imageWithData:data];
+             imageView.image = temporaryImage;
+
+
+             self.imageView.image = temporaryImage;
+         }
+     }];
+
+//    UIImageView *imageView = [[UIImageView alloc]initWithFrame:footer.frame];
+//    imageView.backgroundColor = [UIColor redColor];
+//    imageView.image =
+    [footer addSubview:imageView];
+
+    return footer;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 320;
 }
 
 #pragma mark - Text Field
@@ -216,11 +239,9 @@
     if (velocity.y > 0)
     {
         //[self reloadTable];
-        NSLog(@"up");
     }
     if (velocity.y < 0)
     {
-        NSLog(@"down");
         //[self reloadTable];
     }
 }
@@ -249,7 +270,7 @@
 
     self.textField.text = @"";
     [self.textField resignFirstResponder];
-    [self.tableView reloadData];
+    [self gettingComments];
 }
 
 

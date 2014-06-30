@@ -73,8 +73,6 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-
-    NSLog(@"Cancel");
     ///remove all the data and reload tableview
 
     [self.results removeAllObjects];

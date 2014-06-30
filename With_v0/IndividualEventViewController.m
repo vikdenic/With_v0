@@ -8,6 +8,7 @@
 
 #import "IndividualEventViewController.h"
 #import "PeopleAttendingEventViewController.h"
+#import "InvitedPeopleViewController.h"
 
 @interface IndividualEventViewController ()
 
@@ -276,6 +277,12 @@
     {
         PeopleAttendingEventViewController *peopleAttendingEventViewController = segue.destinationViewController;
         peopleAttendingEventViewController.event = self.event;
+    }
+
+    if ([segue.identifier isEqualToString:@"InvitedButtonToPeopleAttendingSegue"])
+    {
+        InvitedPeopleViewController *invitedPeopleViewController = segue.destinationViewController;
+        invitedPeopleViewController.event = self.event;
     }
 }
 
