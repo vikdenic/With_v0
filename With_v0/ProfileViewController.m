@@ -105,27 +105,50 @@
 
 -(void)setUserInfo
 {
-    PFQuery *retrieveUsers = [PFQuery queryWithClassName:@"User"];
 
-    [retrieveUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            PFUser *user = [PFUser currentUser];
-            self.nameLabel.text = [user objectForKey:@"name"];
-            self.cityStateLabel.text = [user objectForKey:@"userCityState"];
-            self.bioTextView.text = [user objectForKey:@"userBio"];
-            
-            PFFile *imageFile = [user objectForKey:@"userProfilePhoto"];
+    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
+
+    PFUser *currentUser = [PFUser currentUser];
+    NSString *currentUserObjectId = currentUser.objectId;
+
+    [query getObjectInBackgroundWithId:currentUserObjectId block:^(PFObject *object, NSError *error) {
+
+            self.nameLabel.text = [object objectForKey:@"name"];
+            self.cityStateLabel.text = [object objectForKey:@"userCityState"];
+            self.bioTextView.text = [object objectForKey:@"userBio"];
+
+            PFFile *imageFile = [object objectForKey:@"userProfilePhoto"];
 
             [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
                 UIImage *image = [UIImage imageWithData:data];
                 self.profileAvatar.image = image;
-            }];
+
+    }];
+    }];
+}
+
+
+//    PFQuery *retrieveUsers = [PFQuery queryWithClassName:@"User"];
+//
+//    [retrieveUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        if (!error) {
+//            PFUser *user = [PFUser currentUser];
+//            self.nameLabel.text = [user objectForKey:@"name"];
+//            self.cityStateLabel.text = [user objectForKey:@"userCityState"];
+//            self.bioTextView.text = [user objectForKey:@"userBio"];
+//            
+//            PFFile *imageFile = [user objectForKey:@"userProfilePhoto"];
+//
+//            [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+//                UIImage *image = [UIImage imageWithData:data];
+//                self.profileAvatar.image = image;
+//            }];
 
 //            self.followersLabel.text = [user objectForKey:@"followersCount"]; ?
 //            self.followingLabel.text = [user objectForKey:@"followingCount"]; ?
-        }
-    }];
-}
+//        }
+//    }];
+
 
 #pragma mark - Actions
 

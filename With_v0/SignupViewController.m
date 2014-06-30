@@ -9,7 +9,7 @@
 #import "SignupViewController.h"
 #import <Parse/Parse.h>
 
-@interface SignupViewController ()
+@interface SignupViewController () <UITextFieldDelegate>
 
 @end
 
@@ -33,6 +33,21 @@
                                                            delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
     }
+    else if([username length] < 3)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops!"
+                                                            message:@"Username must be at least 3 characters."
+                                                           delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
+    }
+    else if([password length] < 5)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops!"
+                                                            message:@"Password must be at least 5 characters."
+                                                           delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
+    }
+    
     else {
         PFUser *newUser = [PFUser user];
 
@@ -56,6 +71,51 @@
                 [self.tabBarController setSelectedIndex:0];
             }
         }];
+    }
+}
+
+#pragma mark - TextField Delegate
+
+#define ACCEPTABLE_CHARACTERS @" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_."
+//control max characters
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(textField == self.usernameField || textField == self.passwordField)
+    {
+        BOOL _isAllowed = YES;
+
+        NSString *tempString = [[textField.text stringByReplacingCharactersInRange:range withString:string] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+
+        if ([textField.text isEqualToString:tempString] || [tempString length] > 18)
+        {
+            _isAllowed =  NO;
+        }
+
+        else
+        {
+            NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:ACCEPTABLE_CHARACTERS] invertedSet];
+
+            NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+
+            _isAllowed = [string isEqualToString:filtered];
+        }
+
+        return _isAllowed;
+    }
+
+    else{
+        BOOL _isAllowed = YES;
+
+        NSString *tempString = [[textField.text stringByReplacingCharactersInRange:range withString:string] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+
+        if ([textField.text isEqualToString:tempString] || [tempString length] > 75)
+        {
+            _isAllowed =  NO;
+        }
+
+        return _isAllowed;
     }
 }
 

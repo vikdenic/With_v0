@@ -204,7 +204,9 @@
 
 - (void)queryForEvents
 {
-    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
+
+    PFRelation *relation = [[PFUser currentUser] relationForKey:@"eventsAttending"];
+    PFQuery *query = [relation query];
     [query includeKey:@"creator"];
     query.limit = 4;
 
@@ -216,15 +218,15 @@
     {
         query.skip = self.eventArray.count;
     }
-//  query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    //  query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          self.doingTheQuery = YES;
 
          if (self.eventArray.count < 3)
          {
-            [self.eventArray addObjectsFromArray:objects];
-            [self.tableView reloadData];
+             [self.eventArray addObjectsFromArray:objects];
+             [self.tableView reloadData];
 
          } else if (self.eventArray.count >= 3)
          {
@@ -241,7 +243,7 @@
              [self.indexPathArray removeAllObjects];
          }
          self.doingTheQuery = NO;
-    }];
+     }];
 }
 
 #pragma mark - Pull To Refresh
@@ -336,5 +338,44 @@
 //
 //    [self queryForEvents];
 
+
+//    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
+//    [query includeKey:@"creator"];
+//    query.limit = 4;
+//
+//    if (self.eventArray.count == 0)
+//    {
+//        query.skip = 0;
+//
+//    } else
+//    {
+//        query.skip = self.eventArray.count;
+//    }
+////  query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+//     {
+//         self.doingTheQuery = YES;
+//
+//         if (self.eventArray.count < 3)
+//         {
+//            [self.eventArray addObjectsFromArray:objects];
+//            [self.tableView reloadData];
+//
+//         } else if (self.eventArray.count >= 3)
+//         {
+//             int theCount = (int)self.eventArray.count;
+//             [self.eventArray addObjectsFromArray:objects];
+//
+//             for (int i = theCount; i <= self.eventArray.count-1; i++)
+//             {
+//                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+//                 [self.indexPathArray addObject:indexPath];
+//             }
+//
+//             [self.tableView insertRowsAtIndexPaths:self.indexPathArray withRowAnimation:UITableViewRowAnimationFade];
+//             [self.indexPathArray removeAllObjects];
+//         }
+//         self.doingTheQuery = NO;
+//    }];
 
 
