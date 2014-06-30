@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *UpcomingLabel;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *friendButton;
 
 //Data
 
@@ -69,6 +70,8 @@
     self.navigationController.navigationBar.topItem.title = [PFUser currentUser].username;
 
 //    self.usersArray = [[NSArray alloc]init];
+
+    [self checkingNumberOfFriends];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -195,6 +198,25 @@
     HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileCell"];
 
     return cell;
+}
+
+- (void)checkingNumberOfFriends;
+{
+    PFQuery *toUserQuery = [PFQuery queryWithClassName:@"Friendship"];
+    [toUserQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
+    [toUserQuery whereKey:@"status" equalTo:@"Approved"];
+
+    PFQuery *fromUserQuery = [PFQuery queryWithClassName:@"Friendship"];
+    [fromUserQuery whereKey:@"fromUser" equalTo:[PFUser currentUser]];
+    [fromUserQuery whereKey:@"status" equalTo:@"Approved"];
+
+    PFQuery *combinedQuery = [PFQuery orQueryWithSubqueries:@[toUserQuery,fromUserQuery]];
+    [combinedQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error)
+     {
+         self.friendButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+         self.friendButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+         [self.friendButton setTitle:[NSString stringWithFormat:@"%i Friends", number] forState:UIControlStateNormal];
+    }];
 }
 
 

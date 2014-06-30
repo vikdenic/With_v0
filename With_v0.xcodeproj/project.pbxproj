@@ -13,6 +13,7 @@
 		605ADBE6195CF36400254B92 /* FindFriendsFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 605ADBE5195CF36400254B92 /* FindFriendsFriendButton.m */; };
 		60694166195FD98F00C8310F /* InvitesButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 60694165195FD98F00C8310F /* InvitesButton.m */; };
 		606DAE311961AB0A003F3AAE /* StreamCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 606DAE301961AB09003F3AAE /* StreamCameraViewController.m */; };
+		606DAE341961B5B7003F3AAE /* CommentsButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 606DAE331961B5B7003F3AAE /* CommentsButton.m */; };
 		607E90EC19565E8D006F88C8 /* IndividualEventPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 607E90EB19565E8D006F88C8 /* IndividualEventPhoto.m */; };
 		608B6C991950DBCF007D4503 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608B6C961950DBCF007D4503 /* LoginViewController.m */; };
 		608B6C9A1950DBCF007D4503 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608B6C981950DBCF007D4503 /* SignupViewController.m */; };
@@ -118,6 +119,8 @@
 		60694165195FD98F00C8310F /* InvitesButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitesButton.m; sourceTree = "<group>"; };
 		606DAE2F1961AB09003F3AAE /* StreamCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamCameraViewController.h; sourceTree = "<group>"; };
 		606DAE301961AB09003F3AAE /* StreamCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamCameraViewController.m; sourceTree = "<group>"; };
+		606DAE321961B5B7003F3AAE /* CommentsButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsButton.h; sourceTree = "<group>"; };
+		606DAE331961B5B7003F3AAE /* CommentsButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsButton.m; sourceTree = "<group>"; };
 		607E90EA19565E8D006F88C8 /* IndividualEventPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualEventPhoto.h; sourceTree = "<group>"; };
 		607E90EB19565E8D006F88C8 /* IndividualEventPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualEventPhoto.m; sourceTree = "<group>"; };
 		608B6C951950DBCF007D4503 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -342,6 +345,8 @@
 				606DAE301961AB09003F3AAE /* StreamCameraViewController.m */,
 				601F5D8F1951DD8E00B6D89C /* CommentsTableViewCell.h */,
 				601F5D901951DD8E00B6D89C /* CommentsTableViewCell.m */,
+				606DAE321961B5B7003F3AAE /* CommentsButton.h */,
+				606DAE331961B5B7003F3AAE /* CommentsButton.m */,
 				608B6C9C1950FF51007D4503 /* CommentsViewController.h */,
 				608B6C9D1950FF51007D4503 /* CommentsViewController.m */,
 			);
@@ -686,6 +691,7 @@
 				60A7DAD2195E2EE3003258F0 /* FriendsListTableViewCell.m in Sources */,
 				60A7DAE1195E3E55003258F0 /* FriendsListFriendButton.m in Sources */,
 				930D1914195886DC00AE4AE1 /* GKResizeableCropOverlayView.m in Sources */,
+				606DAE341961B5B7003F3AAE /* CommentsButton.m in Sources */,
 				609FDC74195F4F6E00EF7C5B /* InvitePeopleInviteButton.m in Sources */,
 				60B954561959CA9300AE363D /* PeopleAttendingTableViewCell.m in Sources */,
 				60F47AB2194E5223007422E7 /* HomeTableViewCell.m in Sources */,

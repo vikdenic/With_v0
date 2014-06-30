@@ -107,7 +107,14 @@
     }
 
     PFObject *userName = [[comment objectForKey:@"fromUser"] objectForKey:@"username"];
-    cell.nameLabel.text = [NSString stringWithFormat:@"%@", userName];
+
+//    PFUser *user = [self.usersAttendingArray objectAtIndex:indexPath.row];
+
+//    [cell.usernameButton setTitle:[NSString stringWithFormat:@"%@", user[@"username"]] forState:UIControlStateNormal];
+    cell.usernameButton.tag = indexPath.row;
+    [cell.usernameButton addTarget:self action:@selector(onButtonTitlePressed:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.usernameButton setTintColor:[UIColor blackColor]];
+//    cell.usernameButton.text = [NSString stringWithFormat:@"%@", userName];
 
 
     PFFile *userProfilePhoto = [[comment objectForKey:@"fromUser"] objectForKey:@"userProfilePhoto"];
@@ -161,6 +168,8 @@
 //    imageView.image =
     [footer addSubview:imageView];
 
+    footer.transform = CGAffineTransformMakeRotation(M_PI);
+    
     return footer;
 }
 

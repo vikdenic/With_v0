@@ -13,5 +13,6 @@
 @interface CommentsViewController : UIViewController
 
 @property IndividualEventPhoto *individualEventPhoto;
+@property PFUser *userToPass;
 
 @end

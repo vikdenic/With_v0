@@ -127,7 +127,7 @@
     cell.noButton.tag = indexPath.row;
     [cell.noButton addTarget:self action:@selector(onNoTapped:) forControlEvents:UIControlEventTouchUpInside];
 
-    cell.theXButton.tag = indexPath;
+//    cell.theXButton.tag = indexPath;
 
     return cell;
 }

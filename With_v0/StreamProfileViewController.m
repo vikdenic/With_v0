@@ -22,6 +22,8 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (weak, nonatomic) IBOutlet UIButton *friendButton;
+
 @end
 
 @implementation StreamProfileViewController
@@ -37,6 +39,8 @@
     self.profileAvatar.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
 
     self.profileAvatar.layer.borderWidth = 2.0;
+
+    [self checkingNumberOfFriends];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -85,6 +89,25 @@
 {
     self.pastLabel.textColor = [UIColor grayColor];
     self.UpcomingLabel.textColor = [UIColor blackColor];
+}
+
+- (void)checkingNumberOfFriends;
+{
+    PFQuery *toUserQuery = [PFQuery queryWithClassName:@"Friendship"];
+    [toUserQuery whereKey:@"toUser" equalTo:self.userToPass];
+    [toUserQuery whereKey:@"status" equalTo:@"Approved"];
+
+    PFQuery *fromUserQuery = [PFQuery queryWithClassName:@"Friendship"];
+    [fromUserQuery whereKey:@"fromUser" equalTo:self.userToPass];
+    [fromUserQuery whereKey:@"status" equalTo:@"Approved"];
+
+    PFQuery *combinedQuery = [PFQuery orQueryWithSubqueries:@[toUserQuery,fromUserQuery]];
+    [combinedQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error)
+     {
+         self.friendButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+         self.friendButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+         [self.friendButton setTitle:[NSString stringWithFormat:@"%i Friends", number] forState:UIControlStateNormal];
+     }];
 }
 
 
