@@ -151,6 +151,25 @@
     return YES;
 }
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    // This method has been called when u enter some text on search or Cancel the search.
+    // so make some condition for example:
+
+    if([searchText isEqualToString:@""] || searchText==nil)
+    {
+        [self retrieveInitialData];
+        self.isSearching = NO;
+        
+//        self.createCustomString = [NSString stringWithFormat:@"Create \"\""];
+//        self.findCustomString = [NSString stringWithFormat:@"Find \"\""];
+//        self.options = [NSMutableArray arrayWithObjects:self.createCustomString, self.findCustomString, nil];
+//
+//        [self.retrievedVenuesArray removeAllObjects];
+//        [self.tableView reloadData];
+//        NSLog(@"cancel");
+    }
+}
+
 -(void)searchForVenue
 {
     NSString *customSearchString = [self.searchBar.text stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
