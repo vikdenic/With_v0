@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CommentsButton.h"
 
 @interface CommentsTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *theImageView;
-@property (weak, nonatomic) IBOutlet CommentsButton *usernameButton;
+@property (weak, nonatomic) IBOutlet UIButton *usernameButton;
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 

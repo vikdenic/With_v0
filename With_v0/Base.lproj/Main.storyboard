@@ -826,7 +826,7 @@
                                                     </state>
                                                     <connections>
                                                         <action selector="onCommentButtonTapped:" destination="3lK-dd-Z1x" eventType="touchUpInside" id="4IJ-Tg-6gj"/>
-                                                        <segue destination="rAX-Uk-ZyW" kind="modal" identifier="ToCommentViewControllerSegue" modalTransitionStyle="crossDissolve" id="uzV-Ue-Okz"/>
+                                                        <segue destination="rAX-Uk-ZyW" kind="push" identifier="ToCommentViewControllerSegue" id="uzV-Ue-Okz"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ian-fY-rGS">
@@ -839,7 +839,7 @@
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JAF-e0-Chq">
                                                     <rect key="frame" x="20" y="327" width="12" height="12"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="Button" image="likes_count_image">
+                                                    <state key="normal" title="Button" image="mini_smiley">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
@@ -1098,7 +1098,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e23-dI-9fX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4056" y="-29"/>
+            <point key="canvasLocation" x="4234" y="48"/>
         </scene>
         <!--Comments View Controller-->
         <scene sceneID="PSB-oz-0hx">
@@ -1112,8 +1112,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="58" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="TXT-0c-RLs">
-                                <rect key="frame" x="0.0" y="47" width="320" height="476"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="58" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="TXT-0c-RLs">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -1133,7 +1133,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6l8-aD-YSB">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6l8-aD-YSB">
                                                     <rect key="frame" x="14" y="37" width="286" height="12"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
@@ -1151,9 +1151,11 @@
                                                     </constraints>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sNC-RN-W1f" customClass="CommentsButton">
-                                                    <rect key="frame" x="48" y="3" width="119" height="30"/>
+                                                    <rect key="frame" x="39" y="3" width="119" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <state key="normal">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
@@ -1174,6 +1176,7 @@
                                             <outlet property="commentLabel" destination="6l8-aD-YSB" id="D8Q-5m-0i2"/>
                                             <outlet property="theImageView" destination="eWq-Rd-QFj" id="LO1-Zo-Jd4"/>
                                             <outlet property="timeLabel" destination="pTV-zl-hYI" id="PkZ-4n-0KI"/>
+                                            <outlet property="usernameButton" destination="sNC-RN-W1f" id="YTG-Ph-eSX"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1182,45 +1185,36 @@
                                     <outlet property="delegate" destination="rAX-Uk-ZyW" id="jeL-3A-mVs"/>
                                 </connections>
                             </tableView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zp3-Z5-SVc">
-                                <rect key="frame" x="18" y="531" width="226" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IJT-dO-4jZ">
+                                <rect key="frame" x="0.0" y="248" width="234" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="rAX-Uk-ZyW" id="EoX-pN-Jm2"/>
+                                </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Na-ED-0hd">
-                                <rect key="frame" x="252" y="531" width="54" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evc-RM-8mH">
+                                <rect key="frame" x="254" y="248" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Send">
-                                    <color key="titleColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="sendButtPushed:" destination="rAX-Uk-ZyW" eventType="touchUpInside" id="IXP-mv-bqs"/>
-                                    <action selector="sendButtonPressed:" destination="ZG1-5c-rcA" eventType="touchUpInside" id="Bg6-YZ-fil"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cpi-Mu-89d">
-                                <rect key="frame" x="18" y="9" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="&lt;Back">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="UJX-Mu-CzN" kind="unwind" unwindAction="unwindSegueToStreamEventViewController:" id="7gx-Kv-YJh"/>
+                                    <action selector="sendButtPushed:" destination="rAX-Uk-ZyW" eventType="touchUpInside" id="cbK-Gd-wHM"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <connections>
                         <outlet property="tableView" destination="TXT-0c-RLs" id="pnF-Cy-bXh"/>
-                        <outlet property="textField" destination="Zp3-Z5-SVc" id="c7x-HF-0DQ"/>
+                        <outlet property="textField" destination="IJT-dO-4jZ" id="Nyg-x2-DpU"/>
                         <segue destination="gNK-aH-Xvy" kind="push" identifier="CommentsToProfile" id="Aev-Fv-gOe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w8z-Vr-mmB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="UJX-Mu-CzN" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3134" y="-1438"/>
         </scene>
@@ -1912,17 +1906,18 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                     <rect key="frame" x="20" y="6" width="32" height="32"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gmk-nX-XwR">
-                                                    <rect key="frame" x="70" y="11" width="128" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hlJ-lB-rag" customClass="FriendsListFriendButton">
                                                     <rect key="frame" x="254" y="7" width="46" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hLu-Ky-gvJ">
+                                                    <rect key="frame" x="60" y="7" width="101" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
@@ -1931,7 +1926,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <connections>
                                             <outlet property="friendButton" destination="hlJ-lB-rag" id="7Hl-p0-Tme"/>
                                             <outlet property="profilePictureImageView" destination="rwp-tk-QSZ" id="FbH-g3-8xt"/>
-                                            <outlet property="usernameLabel" destination="Gmk-nX-XwR" id="Esk-0h-Qkh"/>
+                                            <outlet property="usernameButton" destination="hLu-Ky-gvJ" id="EIG-jm-bSL"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1946,6 +1941,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <navigationItem key="navigationItem" id="Ul2-yY-LwO"/>
                     <connections>
                         <outlet property="tableView" destination="IPg-cl-RN3" id="fKf-te-aVe"/>
+                        <segue destination="gNK-aH-Xvy" kind="push" identifier="FriendsToProfile" id="h09-aE-idX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fv5-0a-lVe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2639,10 +2635,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="invite_people" width="33" height="22"/>
         <image name="lightbulb_image_24x34" width="24" height="35"/>
         <image name="like_big" width="202" height="202"/>
-        <image name="likes_count_image" width="14" height="12"/>
         <image name="login_background" width="320" height="568"/>
         <image name="login_image" width="149" height="46"/>
         <image name="message_image" width="31" height="25"/>
+        <image name="mini_smiley" width="14" height="14"/>
         <image name="nav_bar" width="320" height="64"/>
         <image name="pin" width="18" height="29"/>
         <image name="profile_tab_image" width="36" height="27"/>
@@ -2662,6 +2658,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="stH-2g-YYg"/>
-        <segue reference="Aev-Fv-gOe"/>
+        <segue reference="h09-aE-idX"/>
     </inferredMetricsTieBreakers>
 </document>

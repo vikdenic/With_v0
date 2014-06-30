@@ -9,14 +9,16 @@
 
 #import "CommentsViewController.h"
 #import "CommentsTableViewCell.h"
+#import "StreamProfileViewController.h"
 
 @interface CommentsViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @property NSMutableArray *commentsArray;
+@property NSInteger indexPathRow;
+@property NSMutableArray *usersAttendingArray;
 
 @end
 
@@ -26,35 +28,17 @@
 {
     [super viewDidLoad];
 
-    //Scroll opposite
-    [self.tableView setScrollsToTop:YES];
-
-    //Save tableview frame
-    CGRect frame = self.tableView.frame;
-
-    //Apply the transform
-    self.tableView.transform=CGAffineTransformMakeRotation(M_PI);
-    self.tableView.frame = frame;
-
-
     self.commentsArray = [NSMutableArray array];
-
+    self.usersAttendingArray = [NSMutableArray array];
     [self gettingComments];
 
-//    [self.individualEventPhoto.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
-//     {
-//         if (!error)
-//         {
-//             UIImage *temporaryImage = [UIImage imageWithData:data];
+//    //notification for Ugly keyboard animation
+//    NSLog(@"9");
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+//    NSLog(@"10");
 //
-//             self.imageView.image = temporaryImage;
-//         }
-//     }];
-
-    //notification for Ugly keyboard animation
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+//    NSLog(@"11");
 
     [self.textField becomeFirstResponder];
 }
@@ -108,14 +92,19 @@
 
     PFObject *userName = [[comment objectForKey:@"fromUser"] objectForKey:@"username"];
 
-//    PFUser *user = [self.usersAttendingArray objectAtIndex:indexPath.row];
+    PFUser *user = [comment objectForKey:@"fromUser"];
+    if (user == nil)
+    {
 
-//    [cell.usernameButton setTitle:[NSString stringWithFormat:@"%@", user[@"username"]] forState:UIControlStateNormal];
+    } else
+    {
+        [self.usersAttendingArray addObject:user];
+    }
+
+    [cell.usernameButton setTitle:[NSString stringWithFormat:@"%@", userName] forState:UIControlStateNormal];
     cell.usernameButton.tag = indexPath.row;
     [cell.usernameButton addTarget:self action:@selector(onButtonTitlePressed:) forControlEvents:UIControlEventTouchUpInside];
     [cell.usernameButton setTintColor:[UIColor blackColor]];
-//    cell.usernameButton.text = [NSString stringWithFormat:@"%@", userName];
-
 
     PFFile *userProfilePhoto = [[comment objectForKey:@"fromUser"] objectForKey:@"userProfilePhoto"];
 
@@ -137,48 +126,75 @@
          }
      }];
 
-
-    //Rotate the cell too
-    cell.transform = CGAffineTransformMakeRotation(M_PI);
-
     return cell;
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+
+//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    UIView *header = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 320)];
+//    header.backgroundColor = [UIColor clearColor];
+//
+//    UIImageView *imageView = [[UIImageView alloc]initWithFrame:header.frame];
+//
+//    [self.individualEventPhoto.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+//     {
+//         if (!error)
+//         {
+//             UIImage *temporaryImage = [UIImage imageWithData:data];
+//             imageView.image = temporaryImage;
+//
+//
+//             //             self.imageView.image = temporaryImage;
+//         }
+//     }];
+//
+//    [header addSubview:imageView];
+//
+//    return header;
+//}
+//
+//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 320;
+//}
+
+- (void)onButtonTitlePressed:(UIButton *)sender
 {
-    UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 320)];
-    footer.backgroundColor = [UIColor clearColor];
+    self.indexPathRow = sender.tag;
+    [self performSegueWithIdentifier:@"CommentsToProfile" sender:self];
+}
 
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:footer.frame];
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"CommentsToProfile"])
+    {
+        StreamProfileViewController *streamProfileViewController = segue.destinationViewController;
+        PFUser *userToPass = [self.usersAttendingArray objectAtIndex:self.indexPathRow];
+        streamProfileViewController.userToPass = userToPass;
+    }
+}
 
-    [self.individualEventPhoto.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+- (IBAction)sendButtPushed:(UIButton *)sender {
+    //    PFObject *object = self.commentObject;
+    PFUser *picturePhotographer = [self.individualEventPhoto.object objectForKey:@"photographer"];
+
+    PFObject *comment = [PFObject objectWithClassName:@"CommentActivity"];
+    comment[@"fromUser"] = [PFUser currentUser];
+    comment[@"toUser"] = picturePhotographer;
+    comment[@"photo"] = self.individualEventPhoto.object;
+    comment[@"commentContent"] = self.textField.text;
+    [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
      {
-         if (!error)
-         {
-             UIImage *temporaryImage = [UIImage imageWithData:data];
-             imageView.image = temporaryImage;
-
-
-             self.imageView.image = temporaryImage;
-         }
+         PFRelation *relation = [self.individualEventPhoto.object relationForKey:@"commentActivity"];
+         [relation addObject:comment];
+         [self.individualEventPhoto.object saveInBackground];
      }];
 
-//    UIImageView *imageView = [[UIImageView alloc]initWithFrame:footer.frame];
-//    imageView.backgroundColor = [UIColor redColor];
-//    imageView.image =
-    [footer addSubview:imageView];
-
-    footer.transform = CGAffineTransformMakeRotation(M_PI);
-    
-    return footer;
+    self.textField.text = @"";
+    [self.textField resignFirstResponder];
+    [self gettingComments];
 }
-
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 320;
-}
-
-#pragma mark - Text Field
 
 //input accesorry view- view attached to the top of the keyboard
 
@@ -205,82 +221,79 @@
 //    return YES;
 //}
 
-#pragma mark - Keyboard animation stuff //------------------------------------------------
+//#pragma mark - Keyboard animation stuff //------------------------------------------------
+//
+////new style keyboard animation
+//- (void) keyboardDidShow:(NSNotification *)notification
+//{
+//    [UIView beginAnimations:nil context:nil];
+//    [UIView setAnimationCurve:[notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue]];
+//    [UIView setAnimationDuration:[notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] intValue]];
+//
+//
+//    if ([[UIScreen mainScreen] bounds].size.height == 1136)
+//    {
+//        [self.view setFrame:CGRectMake(0, -220, 640, 1120)];
+//    } else {
+//        [self.view setFrame:CGRectMake(0, -220, 640, 920)];
+//    }
+//
+//    [UIView commitAnimations];
+//}
+//
+//
+////Old style
+//- (void) keyboardDidHide:(NSNotification *)notification
+//{
+//    if ([[UIScreen mainScreen] bounds].size.height == 1136)
+//    {
+//        [UIView animateWithDuration:0.25 animations:^{
+//            [self.view setFrame:CGRectMake(0, 0, 640, 1120)];
+//        }];
+//    } else {
+//        [UIView animateWithDuration:0.25 animations:^{
+//            [self.view setFrame:CGRectMake(0, 0, 640, 920)];
+//        }];
+//    }
+//}
+//
+//
+//#pragma mark - (scroll methods) Method to figure out if scrolling up or down //-------------------------
+//-(BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView
+//{
+//    NSLog(@"scrollViewShouldScrollToTop");
+//    return YES;
+//}
+//
+//
+//-(void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
+//
+//    NSLog(@"scrollViewWillEndDragging");
+//
+//    if (velocity.y > 0)
+//    {
+//        //[self reloadTable];
+//    }
+//    if (velocity.y < 0)
+//    {
+//        //[self reloadTable];
+//    }
+//}
+//
+//-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+//{
+//    NSLog(@"scrollViewDidEndDecelerating");
+//}
+//
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    NSLog(@"self = %@", self);
+//    NSLog(@"scrollView = %@", scrollView);
+//    NSLog(@"textField = %@", self.textField);
+//    [self.textField resignFirstResponder];
+//}
 
-//new style keyboard animation
-- (void) keyboardDidShow:(NSNotification *)notification
-{
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationCurve:[notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue]];
-    [UIView setAnimationDuration:[notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] intValue]];
 
-
-    if ([[UIScreen mainScreen] bounds].size.height == 1136)
-    {
-        [self.view setFrame:CGRectMake(0, -220, 640, 1120)];
-    } else {
-        [self.view setFrame:CGRectMake(0, -220, 640, 920)];
-    }
-
-    [UIView commitAnimations];
-}
-
-
-//Old style
-- (void) keyboardDidHide:(NSNotification *)notification
-{
-    if ([[UIScreen mainScreen] bounds].size.height == 1136)
-    {
-        [UIView animateWithDuration:0.25 animations:^{
-            [self.view setFrame:CGRectMake(0, 0, 640, 1120)];
-        }];
-    } else {
-        [UIView animateWithDuration:0.25 animations:^{
-            [self.view setFrame:CGRectMake(0, 0, 640, 920)];
-        }];
-    }
-}
-
-
-#pragma mark - (scroll methods) Method to figure out if scrolling up or down //-------------------------
--(void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
-
-    if (velocity.y > 0)
-    {
-        //[self reloadTable];
-    }
-    if (velocity.y < 0)
-    {
-        //[self reloadTable];
-    }
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [self.textField resignFirstResponder];
-}
-
-
-- (IBAction)sendButtPushed:(UIButton *)sender {
-    //    PFObject *object = self.commentObject;
-    PFUser *picturePhotographer = [self.individualEventPhoto.object objectForKey:@"photographer"];
-
-    PFObject *comment = [PFObject objectWithClassName:@"CommentActivity"];
-    comment[@"fromUser"] = [PFUser currentUser];
-    comment[@"toUser"] = picturePhotographer;
-    comment[@"photo"] = self.individualEventPhoto.object;
-    comment[@"commentContent"] = self.textField.text;
-    [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-     {
-         PFRelation *relation = [self.individualEventPhoto.object relationForKey:@"commentActivity"];
-         [relation addObject:comment];
-         [self.individualEventPhoto.object saveInBackground];
-     }];
-
-    self.textField.text = @"";
-    [self.textField resignFirstResponder];
-    [self gettingComments];
-}
 
 
 

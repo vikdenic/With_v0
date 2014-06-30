@@ -10,12 +10,15 @@
 #import <Parse/Parse.h>
 #import "FriendsListTableViewCell.h"
 #import "FriendsListFriendButton.h"
+#import "StreamProfileViewController.h"
 
 @interface FriendsListViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property NSMutableArray *approvedFriendships;
+@property NSInteger *indexPathRow;
+@property NSMutableArray *usersAttendingArray;
 
 @end
 
@@ -26,6 +29,7 @@
     [super viewDidLoad];
 
     self.approvedFriendships = [NSMutableArray array];
+    self.usersAttendingArray = [NSMutableArray array];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -54,10 +58,15 @@
     if ([fromUser isEqualToString:currentUser])
     {
         PFUser *user = [friendship objectForKey:@"toUser"];
+        [self.usersAttendingArray addObject:user];
 
         cell.friendButton.otherUser = user;
 
-        cell.usernameLabel.text = [NSString stringWithFormat:@"%@", user[@"username"]];
+        [cell.usernameButton setTitle:[NSString stringWithFormat:@"%@", user[@"username"]] forState:UIControlStateNormal];
+        cell.usernameButton.tag = indexPath.row;
+        [cell.usernameButton addTarget:self action:@selector(onButtonTitlePressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.usernameButton setTintColor:[UIColor blackColor]];
+
 
         PFFile *userProfilePhoto = [user objectForKey:@"userProfilePhoto"];
         [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
@@ -71,10 +80,14 @@
     } else
     {
         PFUser *user = [friendship objectForKey:@"fromUser"];
+        [self.usersAttendingArray addObject:user];
 
         cell.friendButton.otherUser = user;
 
-        cell.usernameLabel.text = [NSString stringWithFormat:@"%@", user[@"username"]];
+        [cell.usernameButton setTitle:[NSString stringWithFormat:@"%@", user[@"username"]] forState:UIControlStateNormal];
+        cell.usernameButton.tag = indexPath.row;
+        [cell.usernameButton addTarget:self action:@selector(onButtonTitlePressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.usernameButton setTintColor:[UIColor blackColor]];
 
         PFFile *userProfilePhoto = [user objectForKey:@"userProfilePhoto"];
         [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
@@ -95,10 +108,7 @@
     cell.friendButton.tag = indexPath.row;
     [cell.friendButton addTarget:self action:@selector(ontapped:) forControlEvents:UIControlEventTouchUpInside];
 
-    PFUser *currentUserUsername = [PFUser currentUser];
-    NSString *usernameString = currentUserUsername.username;
-
-    if ([cell.usernameLabel.text isEqualToString:usernameString])
+    if ([[cell.usernameButton titleForState:UIControlStateNormal] isEqualToString:[PFUser currentUser].username])
     {
         [cell.friendButton setImage:nil forState:UIControlStateNormal];
         cell.friendButton.userInteractionEnabled = NO;
@@ -158,7 +168,22 @@
 
          [self.tableView reloadData];
      }];
+}
 
+- (void)onButtonTitlePressed:(UIButton *)sender
+{
+    self.indexPathRow = sender.tag;
+    [self performSegueWithIdentifier:@"FriendsToProfile" sender:self];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"FriendsToProfile"])
+    {
+        StreamProfileViewController *streamProfileViewController = segue.destinationViewController;
+        PFUser *userToPass = [self.usersAttendingArray objectAtIndex:self.indexPathRow];
+        streamProfileViewController.userToPass = userToPass;
+    }
 }
 
 @end
