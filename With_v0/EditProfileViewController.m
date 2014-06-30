@@ -10,7 +10,7 @@
 #import <Parse/Parse.h>
 #import "GKImagePicker.h"
 
-@interface EditProfileViewController () <GKImagePickerDelegate, UIImagePickerControllerDelegate>
+@interface EditProfileViewController () <GKImagePickerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 
@@ -35,9 +35,13 @@
 {
     [super viewDidLoad];
 
+    self.nameTextField.delegate = self;
+    self.locationTextField.delegate = self;
+    self.bioTextView.delegate = self;
+
 //    self.avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
 
-    NSLog(@"EDIT %f  %f",self.avatarImageView.frame.size.width, self.avatarImageView.frame.size.height);
+//    NSLog(@"EDIT %f  %f",self.avatarImageView.frame.size.width, self.avatarImageView.frame.size.height);
 
     //tap on themImageView to open Image Picker
     UITapGestureRecognizer *tapping = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapTap:)];
@@ -99,11 +103,13 @@
     [user setValue:self.locationTextField.text forKey:@"userCityState"];
     [user setValue:self.bioTextView.text forKey:@"userBio"];
 
-    [user setValue:self.avatarImageFile forKey:@"userProfilePhoto"];
-    [user setValue:self.miniAvatarImageFile forKey:@"miniProfilePhoto"];
+    if(self.avatarImageFile)
+    {
+        [user setValue:self.avatarImageFile forKey:@"userProfilePhoto"];
+        [user setValue:self.miniAvatarImageFile forKey:@"miniProfilePhoto"];
+    }
 
     [user saveInBackground];
-
 //    NSLog(@"%@", [user objectForKey:@"name"]);
 }
 
@@ -250,6 +256,56 @@
     } else {
 
         [self.imagePicker.imagePickerController dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+#pragma mark - UITextFieldDelegate
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    BOOL _isAllowed = YES;
+
+    NSString *tempString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+
+    if(textField == self.nameTextField)
+    {
+        if([textField.text isEqualToString:tempString] || [tempString length] > 24)
+        {
+            _isAllowed = NO;
+        }
+        else{
+            _isAllowed = YES;
+        }
+    }
+
+    else if (textField == self.locationTextField)
+    {
+        if([textField.text isEqualToString:tempString] || [tempString length] > 24)
+        {
+            _isAllowed = NO;
+        }
+        else{
+            _isAllowed = YES;
+        }
+    }
+
+    else{
+        _isAllowed = YES;
+    }
+
+    return _isAllowed;
+}
+
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)string
+{
+
+    NSString *tempString = [textView.text stringByReplacingCharactersInRange:range withString:string];
+
+    if([textView.text isEqualToString:tempString] || [tempString length] > 140)
+    {
+        return NO;
+    }
+    else{
+        return YES;
     }
 }
 

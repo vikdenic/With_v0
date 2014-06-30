@@ -39,6 +39,7 @@
                                                             message:@"Username must be at least 3 characters."
                                                            delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
+        self.usernameField.text = nil;
     }
     else if([password length] < 5)
     {
@@ -46,6 +47,7 @@
                                                             message:@"Password must be at least 5 characters."
                                                            delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
+        self.passwordField.text = nil;
     }
     
     else {

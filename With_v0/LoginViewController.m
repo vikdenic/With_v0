@@ -68,6 +68,7 @@
                                                                     message:[error.userInfo objectForKey:@"error"]
                                                                    delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alertView show];
+                self.passwordField.text = nil;
             }
             else {
 
