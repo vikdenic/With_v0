@@ -12,5 +12,6 @@
 @interface PeopleAttendingEventViewController : UIViewController
 
 @property PFObject *event;
+@property PFUser *userToPass;
 
 @end

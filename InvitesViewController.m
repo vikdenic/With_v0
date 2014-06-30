@@ -127,6 +127,8 @@
     cell.noButton.tag = indexPath.row;
     [cell.noButton addTarget:self action:@selector(onNoTapped:) forControlEvents:UIControlEventTouchUpInside];
 
+    cell.theXButton.tag = indexPath;
+
     return cell;
 }
 
@@ -225,10 +227,18 @@
     }
 }
 
-//- (IBAction)onXButtonTapped:(id)sender
+//- (IBAction)onXButtonTapped:(UIButton *)sender
 //{
-//    ///remove the row, remove the event invite- animate this so it's cool
-//    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
+//    [self.tableView beginUpdates];
+//
+////    [self.eventInviteArray removeObjectAtIndex:sender.tag];=
+//
+////    NSIndexPath *indexPath = [NSIndexPath indexPathForRow: inSection:0];
+//    //pass in actual index path;
+//
+//    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//
+//    [self.tableView endUpdates];
 //
 //}
 

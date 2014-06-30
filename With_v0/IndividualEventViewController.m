@@ -35,7 +35,6 @@
 @property UIImage *noButtonUnselected;
 @property BOOL isTheUserAttending;
 
-
 @end
 
 @implementation IndividualEventViewController
@@ -46,6 +45,8 @@
 
     [self checkingUsersEventStatus];
     [self checkingUsersAttending];
+    [self checkingUsersInvited];
+
 
     self.yesButtonTapped = NO;
     self.noButtonTapped = NO;
@@ -123,15 +124,15 @@
         [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:0.8];
     }
 ///
-    sender.transform = CGAffineTransformMakeScale(.5f, .5f);
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDuration:0.8];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    CGAffineTransform scaleTrans  = CGAffineTransformMakeScale(1.0f, 1.0f);
-    CGAffineTransform lefttorightTrans  = CGAffineTransformMakeTranslation(0.0f,0.0f);
-    sender.transform = CGAffineTransformConcat(scaleTrans, lefttorightTrans);
-    [UIView commitAnimations];
+//    sender.transform = CGAffineTransformMakeScale(.5f, .5f);
+//    [UIView beginAnimations:nil context:nil];
+//    [UIView setAnimationDelegate:self];
+//    [UIView setAnimationDuration:0.8];
+//    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+//    CGAffineTransform scaleTrans  = CGAffineTransformMakeScale(1.0f, 1.0f);
+//    CGAffineTransform lefttorightTrans  = CGAffineTransformMakeTranslation(0.0f,0.0f);
+//    sender.transform = CGAffineTransformConcat(scaleTrans, lefttorightTrans);
+//    [UIView commitAnimations];
 }
 
 - (IBAction)onNoButtonTapped:(id)sender
@@ -252,6 +253,18 @@
          self.topGoingButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
          self.topGoingButton.titleLabel.textAlignment = NSTextAlignmentCenter;
          [self.topGoingButton setTitle:[NSString stringWithFormat:@"%i\nGoing", number] forState:UIControlStateNormal];
+     }];
+}
+
+- (void)checkingUsersInvited
+{
+    PFRelation *relation = [self.event relationForKey:@"usersInvited"];
+    PFQuery *query1 = [relation query];
+    [query1 countObjectsInBackgroundWithBlock:^(int number, NSError *error)
+     {
+         self.invitedButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+         self.invitedButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+         [self.invitedButton setTitle:[NSString stringWithFormat:@"%i\nInvited", number] forState:UIControlStateNormal];
      }];
 }
 

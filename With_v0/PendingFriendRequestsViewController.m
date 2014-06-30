@@ -69,6 +69,11 @@
     [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
      {
          UIImage *temporaryImage = [UIImage imageWithData:data];
+
+         cell.profilePictureImageView.layer.cornerRadius = cell.profilePictureImageView.bounds.size.width/2;
+         cell.profilePictureImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
+         cell.profilePictureImageView.layer.borderWidth = 2.0;
+         cell.profilePictureImageView.layer.masksToBounds = YES;
          cell.profilePictureImageView.image = temporaryImage;
 
          ///if nil, set it to something we create

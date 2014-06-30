@@ -647,28 +647,28 @@
 
 ///if the current user is the one who took the photo then show the delete button, but they can still report it
 
-- (IBAction)showActionSheet:(id)sender
-{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Report", nil];
-
-    [actionSheet showInView:self.view];
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-
-    NSString *theButtonIndex = [actionSheet buttonTitleAtIndex:buttonIndex];
-
-    if ([theButtonIndex isEqualToString:@"Cancel"])
-    {
-        //dismiss
-
-    } else if ([theButtonIndex isEqualToString:@"Report"])
-    {
-        ///if it is reported- this button is clicked- we need to notify ourselves somehow?
-        ///send them a uialert to tell them it has been reported
-    }
-}
+//- (IBAction)showActionSheet:(id)sender
+//{
+//    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Report", nil];
+//
+//    [actionSheet showInView:self.view];
+//}
+//
+//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//
+//    NSString *theButtonIndex = [actionSheet buttonTitleAtIndex:buttonIndex];
+//
+//    if ([theButtonIndex isEqualToString:@"Cancel"])
+//    {
+//        //dismiss
+//
+//    } else if ([theButtonIndex isEqualToString:@"Report"])
+//    {
+//        ///if it is reported- this button is clicked- we need to notify ourselves somehow?
+//        ///send them a uialert to tell them it has been reported
+//    }
+//}
 
 @end
 

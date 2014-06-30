@@ -19,6 +19,7 @@
 
 @property (weak, nonatomic) IBOutlet InvitesButton *yesButton;
 @property (weak, nonatomic) IBOutlet InvitesButton *noButton;
+@property (weak, nonatomic) IBOutlet UIButton *theXButton;
 
 @property (weak, nonatomic) IBOutlet UIView *blurContainerView;
 @property (weak, nonatomic) IBOutlet UIView *transparentView;

@@ -11,14 +11,16 @@
 #import "FindFriendsTableViewCell.h"
 #import "FriendsListFriendButton.h"
 
-@interface FindFriendsViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface FindFriendsViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSMutableArray *results;
 
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) NSString *userSearch;
 @property BOOL resultsToDisplay;
+
 
 @end
 
@@ -31,7 +33,7 @@
     self.results = [NSMutableArray array];
 
     UIBarButtonItem *newBackButton =
-    [[UIBarButtonItem alloc] initWithTitle:@"Find Friends"
+    [[UIBarButtonItem alloc] initWithTitle:@"Find"
                                      style:UIBarButtonItemStyleBordered
                                     target:nil
                                     action:nil];
@@ -42,7 +44,7 @@
 
     self.resultsToDisplay = YES;
     self.tableView.separatorColor = [UIColor whiteColor];
-    [self.textField becomeFirstResponder];
+    [self.searchBar becomeFirstResponder];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -52,12 +54,31 @@
     self.textField.text = nil;
 }
 
-- (IBAction)onSearchButtonTapped:(id)sender
+//-(BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+//{
+//
+//    self.tableView.backgroundColor = [UIColor whiteColor];
+//
+//    [self searchForFriends];
+//
+//    return YES;
+//}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     self.tableView.backgroundColor = [UIColor whiteColor];
 
     [self searchForFriends];
-    [self.textField resignFirstResponder];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+
+    NSLog(@"Cancel");
+    ///remove all the data and reload tableview
+
+    [self.results removeAllObjects];
+    [self.tableView reloadData];
 }
 
 #pragma mark - TableView
@@ -94,9 +115,17 @@
     [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
      {
          UIImage *temporaryImage = [UIImage imageWithData:data];
+
+         cell.profilePictureImageView.layer.cornerRadius = cell.profilePictureImageView.bounds.size.width/2;
+         cell.profilePictureImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
+         cell.profilePictureImageView.layer.borderWidth = 2.0;
+         cell.profilePictureImageView.layer.masksToBounds = YES;
          cell.profilePictureImageView.image = temporaryImage;
 
-         ///if nil, set it to something we create
+         if (data == nil)
+         {
+             cell.profilePictureImageView.image = nil;
+         }
      }];
 
     cell.friendButton.tag = indexPath.row;
@@ -203,26 +232,6 @@
     }
 }
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-
-    self.tableView.backgroundColor = [UIColor whiteColor];
-    self.tableView.separatorColor = [UIColor whiteColor];
-
-    return YES;
-}
-
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    self.textField.text = nil;
-
-    self.tableView.backgroundColor = [UIColor whiteColor];
-    self.tableView.separatorColor = [UIColor whiteColor];
-
-    return YES;
-}
-
 - (void)searchForFriends
 {
     //Say no users found if nothing comes back? so if count is zero or nil
@@ -230,8 +239,8 @@
     [self.results removeAllObjects];
 
     PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-//    NSString *searchString = [self.textField.text lowercaseString];
-    [query whereKey:@"username" containsString:self.textField.text];
+    NSString *searchString = [self.searchBar.text lowercaseString];
+    [query whereKey:@"username" containsString:searchString];
     ///trim white space?
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
@@ -243,7 +252,7 @@
          } else {
              self.resultsToDisplay = NO;
              [self.tableView reloadData];
-             self.textField.text = nil;
+             self.searchBar.text = nil;
          }
     }];
 }
@@ -251,7 +260,7 @@
 #pragma mark - Tap Gesture
 
 - (void) hideKeyboard {
-    [self.textField resignFirstResponder];
+    [self.searchBar resignFirstResponder];
     self.tableView.backgroundColor = [UIColor whiteColor];
 }
 
