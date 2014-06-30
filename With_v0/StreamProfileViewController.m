@@ -8,6 +8,7 @@
 
 #import "StreamProfileViewController.h"
 #import <Parse/Parse.h>
+#import "StreamProfileFriendListViewController.h"
 
 @interface StreamProfileViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -40,7 +41,6 @@
 
     self.profileAvatar.layer.borderWidth = 2.0;
 
-    [self checkingNumberOfFriends];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -51,6 +51,7 @@
     self.cityStateLabel.numberOfLines = 0;
     [self.bioTextView sizeToFit];
 
+    [self checkingNumberOfFriends];
     [self setUserInfo];
 }
 
@@ -106,7 +107,19 @@
      {
          self.friendButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
          self.friendButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-         [self.friendButton setTitle:[NSString stringWithFormat:@"%i Friends", number] forState:UIControlStateNormal];
+         
+         if (number == 0)
+         {
+             [self.friendButton setTitle:[NSString stringWithFormat:@"%i Friends", number] forState:UIControlStateNormal];
+
+         } else if (number == 1)
+         {
+             [self.friendButton setTitle:[NSString stringWithFormat:@"%i Friend", number] forState:UIControlStateNormal];
+
+         } else if (number > 1)
+         {
+             [self.friendButton setTitle:[NSString stringWithFormat:@"%i Friends", number] forState:UIControlStateNormal];
+         }
      }];
 }
 
@@ -125,6 +138,18 @@
 ////    
 ////    return cell;
 //}
+
+#pragma mark - Segue
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"StreamProfileToStreamFriendList"])
+    {
+        //pass the to user object
+        StreamProfileFriendListViewController *streamProfileFriendListViewController = segue.destinationViewController;
+        streamProfileFriendListViewController.userToPass = self.userToPass;
+    }
+}
 
 
 @end
