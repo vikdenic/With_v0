@@ -37,6 +37,7 @@
 
     self.nameTextField.delegate = self;
     self.locationTextField.delegate = self;
+    self.bioTextView.delegate = self;
 
 //    self.avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
 
@@ -292,6 +293,20 @@
     }
 
     return _isAllowed;
+}
+
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)string
+{
+
+    NSString *tempString = [textView.text stringByReplacingCharactersInRange:range withString:string];
+
+    if([textView.text isEqualToString:tempString] || [tempString length] > 140)
+    {
+        return NO;
+    }
+    else{
+        return YES;
+    }
 }
 
 @end
