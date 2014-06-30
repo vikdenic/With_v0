@@ -11,5 +11,6 @@
 @interface IdeasTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *themeImageView;
+@property (weak, nonatomic) IBOutlet UILabel *themeLabel;
 
 @end

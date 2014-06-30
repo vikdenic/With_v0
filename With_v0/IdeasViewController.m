@@ -11,6 +11,8 @@
 
 @interface IdeasViewController () <UITableViewDelegate, UITableViewDataSource>
 
+@property NSArray *ideasArray;
+
 @end
 
 @implementation IdeasViewController
@@ -19,7 +21,7 @@
 {
     [super viewDidLoad];
 
-
+//    self.ideaStrings = [[NSArray alloc]initWithObjects:@", nil
 }
 
 #pragma mark - Action
@@ -43,18 +45,5 @@
 
     return cell;
 }
-
-//#pragma mark - Segue
-//
-//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-//{
-//    if ([segue.identifier isEqualToString:@"IdeasToCreateSegue"])
-//    {
-//        [self dismissViewControllerAnimated:YES completion:^{
-//            
-//        }];
-//    }
-//}
-
 
 @end
