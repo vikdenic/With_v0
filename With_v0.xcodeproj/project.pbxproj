@@ -12,6 +12,7 @@
 		605ADBE3195CABC000254B92 /* PeopleAttendingFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 605ADBE2195CABBF00254B92 /* PeopleAttendingFriendButton.m */; };
 		605ADBE6195CF36400254B92 /* FindFriendsFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 605ADBE5195CF36400254B92 /* FindFriendsFriendButton.m */; };
 		60694166195FD98F00C8310F /* InvitesButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 60694165195FD98F00C8310F /* InvitesButton.m */; };
+		606DAE311961AB0A003F3AAE /* StreamCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 606DAE301961AB09003F3AAE /* StreamCameraViewController.m */; };
 		607E90EC19565E8D006F88C8 /* IndividualEventPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 607E90EB19565E8D006F88C8 /* IndividualEventPhoto.m */; };
 		608B6C991950DBCF007D4503 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608B6C961950DBCF007D4503 /* LoginViewController.m */; };
 		608B6C9A1950DBCF007D4503 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608B6C981950DBCF007D4503 /* SignupViewController.m */; };
@@ -115,6 +116,8 @@
 		605ADBE5195CF36400254B92 /* FindFriendsFriendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendsFriendButton.m; sourceTree = "<group>"; };
 		60694164195FD98F00C8310F /* InvitesButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitesButton.h; sourceTree = "<group>"; };
 		60694165195FD98F00C8310F /* InvitesButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitesButton.m; sourceTree = "<group>"; };
+		606DAE2F1961AB09003F3AAE /* StreamCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamCameraViewController.h; sourceTree = "<group>"; };
+		606DAE301961AB09003F3AAE /* StreamCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamCameraViewController.m; sourceTree = "<group>"; };
 		607E90EA19565E8D006F88C8 /* IndividualEventPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualEventPhoto.h; sourceTree = "<group>"; };
 		607E90EB19565E8D006F88C8 /* IndividualEventPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualEventPhoto.m; sourceTree = "<group>"; };
 		608B6C951950DBCF007D4503 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -335,6 +338,8 @@
 				60C72093194F692000ADE5DF /* StreamEventViewController.m */,
 				60D47AC219608A3E005FB3F4 /* StreamProfileViewController.h */,
 				60D47AC319608A3E005FB3F4 /* StreamProfileViewController.m */,
+				606DAE2F1961AB09003F3AAE /* StreamCameraViewController.h */,
+				606DAE301961AB09003F3AAE /* StreamCameraViewController.m */,
 				601F5D8F1951DD8E00B6D89C /* CommentsTableViewCell.h */,
 				601F5D901951DD8E00B6D89C /* CommentsTableViewCell.m */,
 				608B6C9C1950FF51007D4503 /* CommentsViewController.h */,
@@ -602,7 +607,7 @@
 				ORGANIZATIONNAME = "Mobile Makers";
 				TargetAttributes = {
 					93952F89194D5D4C001AA3E4 = {
-						DevelopmentTeam = 3DJPBY6593;
+						DevelopmentTeam = ZNAFR9K9ZC;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -706,6 +711,7 @@
 				605ADBE3195CABC000254B92 /* PeopleAttendingFriendButton.m in Sources */,
 				60C72094194F692000ADE5DF /* StreamEventViewController.m in Sources */,
 				93952F9A194D5D4C001AA3E4 /* main.m in Sources */,
+				606DAE311961AB0A003F3AAE /* StreamCameraViewController.m in Sources */,
 				60D47AC419608A3E005FB3F4 /* StreamProfileViewController.m in Sources */,
 				93952FC7194D6BFC001AA3E4 /* ProfileViewController.m in Sources */,
 				930D1912195886DC00AE4AE1 /* GKImageCropOverlayView.m in Sources */,
