@@ -54,6 +54,9 @@
 		60F5B3461957537200A80467 /* ExploreEventAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F5B3451957537200A80467 /* ExploreEventAnnotationView.m */; };
 		60F5B34C1957555E00A80467 /* ExploreAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F5B34B1957555E00A80467 /* ExploreAnnotation.m */; };
 		810C1EC3195605B70046DFB1 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 810C1EC1195605B70046DFB1 /* CustomTableViewCell.m */; };
+		813A92211961AD5D00843C6F /* CamPreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 813A92201961AD5D00843C6F /* CamPreView.m */; };
+		813A92231961AEA200843C6F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 813A92221961AEA200843C6F /* AVFoundation.framework */; };
+		813A92251961AEBC00843C6F /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 813A92241961AEBC00843C6F /* AssetsLibrary.framework */; };
 		930D190F195886DC00AE4AE1 /* GKImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 930D1904195886DC00AE4AE1 /* GKImagePicker.m */; };
 		930D1910195886DC00AE4AE1 /* GKImageCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 930D1906195886DC00AE4AE1 /* GKImageCropViewController.m */; };
 		930D1911195886DC00AE4AE1 /* GKImageCropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 930D1908195886DC00AE4AE1 /* GKImageCropView.m */; };
@@ -188,6 +191,10 @@
 		60F5B34B1957555E00A80467 /* ExploreAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExploreAnnotation.m; path = ../ExploreAnnotation.m; sourceTree = "<group>"; };
 		810C1EC0195605B70046DFB1 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		810C1EC1195605B70046DFB1 /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
+		813A921F1961AD5D00843C6F /* CamPreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamPreView.h; sourceTree = "<group>"; };
+		813A92201961AD5D00843C6F /* CamPreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CamPreView.m; sourceTree = "<group>"; };
+		813A92221961AEA200843C6F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		813A92241961AEBC00843C6F /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		930D1903195886DC00AE4AE1 /* GKImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKImagePicker.h; sourceTree = "<group>"; };
 		930D1904195886DC00AE4AE1 /* GKImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKImagePicker.m; sourceTree = "<group>"; };
 		930D1905195886DC00AE4AE1 /* GKImageCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKImageCropViewController.h; sourceTree = "<group>"; };
@@ -257,6 +264,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				813A92251961AEBC00843C6F /* AssetsLibrary.framework in Frameworks */,
+				813A92231961AEA200843C6F /* AVFoundation.framework in Frameworks */,
 				9391EEC4195BD25C00554584 /* CoreImage.framework in Frameworks */,
 				6091D1ED195B1A68001A371E /* AddressBook.framework in Frameworks */,
 				6091D1EE195B1A68001A371E /* AddressBookUI.framework in Frameworks */,
@@ -304,6 +313,8 @@
 		60A7DAD3195E2FBE003258F0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				606DAE2F1961AB09003F3AAE /* StreamCameraViewController.h */,
+				606DAE301961AB09003F3AAE /* StreamCameraViewController.m */,
 				60F47AB0194E5223007422E7 /* HomeTableViewCell.h */,
 				60F47AB1194E5223007422E7 /* HomeTableViewCell.m */,
 				93952FC2194D6BEA001AA3E4 /* HomeViewController.h */,
@@ -338,8 +349,6 @@
 				60C72093194F692000ADE5DF /* StreamEventViewController.m */,
 				60D47AC219608A3E005FB3F4 /* StreamProfileViewController.h */,
 				60D47AC319608A3E005FB3F4 /* StreamProfileViewController.m */,
-				606DAE2F1961AB09003F3AAE /* StreamCameraViewController.h */,
-				606DAE301961AB09003F3AAE /* StreamCameraViewController.m */,
 				601F5D8F1951DD8E00B6D89C /* CommentsTableViewCell.h */,
 				601F5D901951DD8E00B6D89C /* CommentsTableViewCell.m */,
 				608B6C9C1950FF51007D4503 /* CommentsViewController.h */,
@@ -488,6 +497,8 @@
 		93952F8C194D5D4C001AA3E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				813A92241961AEBC00843C6F /* AssetsLibrary.framework */,
+				813A92221961AEA200843C6F /* AVFoundation.framework */,
 				9391EEC3195BD25C00554584 /* CoreImage.framework */,
 				6091D1EB195B1A68001A371E /* AddressBook.framework */,
 				6091D1EC195B1A68001A371E /* AddressBookUI.framework */,
@@ -516,6 +527,8 @@
 				93952F9C194D5D4C001AA3E4 /* AppDelegate.h */,
 				93952F9D194D5D4C001AA3E4 /* AppDelegate.m */,
 				93952F9F194D5D4C001AA3E4 /* Main.storyboard */,
+				813A921F1961AD5D00843C6F /* CamPreView.h */,
+				813A92201961AD5D00843C6F /* CamPreView.m */,
 				60A7DAD3195E2FBE003258F0 /* Home */,
 				810C1EBD1956058A0046DFB1 /* ChatFolder */,
 				60A7DAD4195E3053003258F0 /* Explore */,
@@ -607,7 +620,7 @@
 				ORGANIZATIONNAME = "Mobile Makers";
 				TargetAttributes = {
 					93952F89194D5D4C001AA3E4 = {
-						DevelopmentTeam = ZNAFR9K9ZC;
+						DevelopmentTeam = 368PGMF9QJ;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -676,6 +689,7 @@
 				93CE890819613D15007BA434 /* IdeasTableViewCell.m in Sources */,
 				609FDC77195F551100EF7C5B /* InvitesTableViewCell.m in Sources */,
 				930D1910195886DC00AE4AE1 /* GKImageCropViewController.m in Sources */,
+				813A92211961AD5D00843C6F /* CamPreView.m in Sources */,
 				93952FD0194D7347001AA3E4 /* FindFriendsViewController.m in Sources */,
 				60F47AB5194E7653007422E7 /* IndividualEventViewController.m in Sources */,
 				93952FCA194D7241001AA3E4 /* ExploreViewController.m in Sources */,
