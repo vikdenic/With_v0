@@ -42,6 +42,8 @@
 {
     [super viewDidLoad];
 
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:@"Test1" object:nil];
+
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:nil action:nil];
 
         [self setUserInfo];
@@ -54,7 +56,7 @@
 
         self.profileAvatar.layer.borderWidth = 2.0;
 
-        NSLog(@"did show %@",[PFUser currentUser]);
+//        NSLog(@"did show %@",[PFUser currentUser]);
 
     UIBarButtonItem *newBackButton =
     [[UIBarButtonItem alloc] initWithTitle:@"Profile"
@@ -76,7 +78,7 @@
 
     [self setUserInfo];
 
-    NSLog(@"will show %@",[PFUser currentUser]);
+//    NSLog(@"will show %@",[PFUser currentUser]);
 
 
 }
@@ -87,6 +89,21 @@
 ////    [self setUserInfo];
 //
 //}
+
+#pragma mark - NSNotificationCenter
+-(void)receiveNotification:(NSNotification *) notification
+{
+    if ([[notification name] isEqualToString:@"Test1"])
+    {
+        NSLog(@"Notification Triggered");
+        self.profileAvatar.image = nil;
+        self.nameLabel.text = nil;
+        self.bioTextView.text = nil;
+        self.cityStateLabel.text = nil;
+//        [self.whatEverArrayFillsTheTableView removeAllObjects];
+//        [self.whatEverArrayFillsTheTableView reloadData];
+    }
+}
 
 #pragma mark - Helpers
 

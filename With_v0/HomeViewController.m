@@ -36,6 +36,8 @@
 {
     [super viewDidLoad];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:@"Test1" object:nil];
+
     self.originalFrame = self.tabBarController.tabBar.frame;
 
     self.eventArray = [NSMutableArray array];
@@ -69,6 +71,16 @@
                                     target:nil
                                     action:nil];
     [[self navigationItem] setBackBarButtonItem:newBackButton];
+}
+
+-(void)receiveNotification:(NSNotification *) notification
+{
+    if ([[notification name] isEqualToString:@"Test1"])
+    {
+//        NSLog(@"Notification Triggered");
+        [self.eventArray removeAllObjects];
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - Hide TabBar

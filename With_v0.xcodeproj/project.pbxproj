@@ -91,6 +91,8 @@
 		93952FCA194D7241001AA3E4 /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FC9194D7241001AA3E4 /* ExploreViewController.m */; };
 		93952FCD194D7318001AA3E4 /* CreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FCC194D7318001AA3E4 /* CreateEventViewController.m */; };
 		93952FD0194D7347001AA3E4 /* FindFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FCF194D7347001AA3E4 /* FindFriendsViewController.m */; };
+		93CE89051961399D007BA434 /* IdeasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE89041961399D007BA434 /* IdeasViewController.m */; };
+		93CE890819613D15007BA434 /* IdeasTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE890719613D15007BA434 /* IdeasTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -241,6 +243,10 @@
 		93952FCC194D7318001AA3E4 /* CreateEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateEventViewController.m; sourceTree = "<group>"; };
 		93952FCE194D7347001AA3E4 /* FindFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendsViewController.h; sourceTree = "<group>"; };
 		93952FCF194D7347001AA3E4 /* FindFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendsViewController.m; sourceTree = "<group>"; };
+		93CE89031961399D007BA434 /* IdeasViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeasViewController.h; sourceTree = "<group>"; };
+		93CE89041961399D007BA434 /* IdeasViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdeasViewController.m; sourceTree = "<group>"; };
+		93CE890619613D15007BA434 /* IdeasTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeasTableViewCell.h; sourceTree = "<group>"; };
+		93CE890719613D15007BA434 /* IdeasTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdeasTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -367,6 +373,10 @@
 				609FDC73195F4F6E00EF7C5B /* InvitePeopleInviteButton.m */,
 				609FDC6C195F4C6600EF7C5B /* InvitePeopleViewController.h */,
 				609FDC6D195F4C6600EF7C5B /* InvitePeopleViewController.m */,
+				93CE89031961399D007BA434 /* IdeasViewController.h */,
+				93CE89041961399D007BA434 /* IdeasViewController.m */,
+				93CE890619613D15007BA434 /* IdeasTableViewCell.h */,
+				93CE890719613D15007BA434 /* IdeasTableViewCell.m */,
 			);
 			name = Create;
 			sourceTree = "<group>";
@@ -658,6 +668,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				60D47AD01961066F005FB3F4 /* InvitedPeopleButton.m in Sources */,
+				93CE890819613D15007BA434 /* IdeasTableViewCell.m in Sources */,
 				609FDC77195F551100EF7C5B /* InvitesTableViewCell.m in Sources */,
 				930D1910195886DC00AE4AE1 /* GKImageCropViewController.m in Sources */,
 				93952FD0194D7347001AA3E4 /* FindFriendsViewController.m in Sources */,
@@ -706,6 +717,7 @@
 				93952FC4194D6BEA001AA3E4 /* HomeViewController.m in Sources */,
 				60F5B34C1957555E00A80467 /* ExploreAnnotation.m in Sources */,
 				609FDC71195F4CBB00EF7C5B /* InvitePeopleTableViewCell.m in Sources */,
+				93CE89051961399D007BA434 /* IdeasViewController.m in Sources */,
 				93802209195659A0004B492D /* DateAndTimeViewController.m in Sources */,
 				60C7208E194F689400ADE5DF /* PageViewController.m in Sources */,
 			);

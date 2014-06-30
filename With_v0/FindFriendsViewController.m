@@ -30,6 +30,8 @@
 {
     [super viewDidLoad];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:@"Test1" object:nil];
+
     self.results = [NSMutableArray array];
 
     UIBarButtonItem *newBackButton =
@@ -63,6 +65,21 @@
 //
 //    return YES;
 //}
+
+#pragma mark - NSNotificationCenter
+
+-(void)receiveNotification:(NSNotification *) notification
+{
+    if ([[notification name] isEqualToString:@"Test1"])
+    {
+//        NSLog(@"Notification Triggered");
+        self.searchBar.text = nil;
+        [self.results removeAllObjects];
+        [self.tableView reloadData];
+    }
+}
+
+#pragma mark - UISearchBar
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
