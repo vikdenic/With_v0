@@ -228,11 +228,19 @@
 
         if (self.isEventinviteOnly)
         {
-            event[@"eventPrivate"] = @"YES";
+            event[@"eventPrivate"] = @YES;
+        } else
+        {
+            event[@"eventPrivate"] = @NO;
         }
-        
-    event[@"eventPrivate"] = @"self.isEventinviteOnly";
-    event[@"guestCanInviteOthers"] = @"self.canGuestInviteOthers";
+
+        if (self.canGuestInviteOthers)
+        {
+            event[@"guestCanInviteOthers"] = @YES;
+        } else
+        {
+            event[@"guestCanInviteOthers"] = @NO;
+        }
     [event saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
     {
         //send invites to people invited

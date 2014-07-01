@@ -803,7 +803,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d3p-Ru-jLU">
-                                                    <rect key="frame" x="11" y="351" width="46" height="46"/>
+                                                    <rect key="frame" x="11" y="352" width="46" height="46"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -813,7 +813,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xpE-IH-QSA">
-                                                    <rect key="frame" x="65" y="351" width="46" height="46"/>
+                                                    <rect key="frame" x="65" y="356" width="38" height="38"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" backgroundImage="comment_image">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -824,7 +824,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ian-fY-rGS">
-                                                    <rect key="frame" x="119" y="349" width="46" height="46"/>
+                                                    <rect key="frame" x="124" y="356" width="38" height="38"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" backgroundImage="share_image">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1195,7 +1195,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="nDt-Ws-sQM" customClass="StreamProfileFriendsListTableViewCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nDt-Ws-sQM" id="SP7-yF-Wrs">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -1258,16 +1258,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="58" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="TXT-0c-RLs">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="66" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="TXT-0c-RLs">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="58" id="5HL-20-kEl" customClass="CommentsTableViewCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="58"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="66" id="5HL-20-kEl" customClass="CommentsTableViewCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="66"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5HL-20-kEl" id="wwz-M9-dYW">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="57"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pTV-zl-hYI">
@@ -1279,8 +1279,8 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6l8-aD-YSB">
-                                                    <rect key="frame" x="14" y="37" width="286" height="12"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="286" translatesAutoresizingMaskIntoConstraints="NO" id="6l8-aD-YSB">
+                                                    <rect key="frame" x="14" y="35" width="286" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="286" id="L2b-Lz-Ofc"/>
@@ -1524,6 +1524,9 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="oAR-7V-NmD">
                                 <rect key="frame" x="266" y="478" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="canGuestsInviteOthers:" destination="slZ-Mk-xvY" eventType="valueChanged" id="jGV-op-Kvb"/>
+                                </connections>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="goa-9d-jMz">
                                 <rect key="frame" x="0.0" y="291" width="320" height="41"/>
@@ -1656,6 +1659,7 @@
                         <outlet property="dateAndTimeButton" destination="goa-9d-jMz" id="sfU-xx-He5"/>
                         <outlet property="detailsPlaceholderLabel" destination="E78-e0-wwE" id="viv-RE-0pu"/>
                         <outlet property="detailsTextView" destination="Icf-pK-GzR" id="dvl-8O-9Us"/>
+                        <outlet property="guestCanInviteOthers" destination="oAR-7V-NmD" id="nO1-AO-sQK"/>
                         <outlet property="inviteOnly" destination="91r-nT-LcS" id="AMF-Bg-uBu"/>
                         <outlet property="invitePeopleButton" destination="f3W-tn-PLV" id="A8N-kW-uVw"/>
                         <outlet property="locationButton" destination="RT0-wg-hSx" id="beG-4k-Kzd"/>
@@ -2381,7 +2385,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FoZ-S2-NhB" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="fsU-Ob-fGE" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2311" y="475"/>
+            <point key="canvasLocation" x="2329" y="483"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="h9q-i0-nTZ">
@@ -2814,6 +2818,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="stH-2g-YYg"/>
-        <segue reference="vzp-bc-i1u"/>
+        <segue reference="aiq-0h-64W"/>
     </inferredMetricsTieBreakers>
 </document>
