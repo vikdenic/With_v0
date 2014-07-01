@@ -88,6 +88,16 @@
              self.themeImageView.image = resizedImage;
          }
      }];
+
+    if (self.event[@"guestCanInviteOthers"])
+    {
+        self.inviteButton.hidden = NO;
+        self.inviteButton.userInteractionEnabled = YES;
+
+    } else {
+        self.inviteButton.hidden = YES;
+        self.inviteButton.userInteractionEnabled = NO;
+    }
 }
 
 #pragma mark - Action methods

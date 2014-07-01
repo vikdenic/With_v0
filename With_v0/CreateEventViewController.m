@@ -241,8 +241,6 @@
         {
             event[@"guestCanInviteOthers"] = @NO;
         }
-
-    event[@"guestCanInviteOthers"] = @"self.canGuestInviteOthers";
     [event saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
     {
         //send invites to people invited
