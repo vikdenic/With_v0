@@ -23,8 +23,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *dateAndTimeButton;
 @property (weak, nonatomic) IBOutlet UIButton *locationButton;
 @property (weak, nonatomic) IBOutlet UIButton *invitePeopleButton;
-
 @property (weak, nonatomic) IBOutlet UIView *dateAndTimeView;
+@property (weak, nonatomic) IBOutlet UISwitch *inviteOnly;
+@property (weak, nonatomic) IBOutlet UISwitch *guestCanInviteOthers;
 
 @property UIImagePickerController *cameraController;
 @property UIImage *themeImagePicked;
@@ -42,6 +43,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *createButton;
 
 @property BOOL canCreateEvent;
+@property BOOL isEventinviteOnly;
+@property BOOL canGuestInviteOthers;
 
 @end
 
@@ -61,6 +64,8 @@
     //Vik
     self.eventName = @"Location";
     self.dateString = nil;
+    self.isEventinviteOnly = NO;
+    self.canGuestInviteOthers = NO;
 
 //    self.canCreateEvent = NO;
     [self checkIfFormsComplete];
@@ -176,6 +181,31 @@
 {
     //modally brings up all of the users friends and they can tap them to invite
 }
+
+- (IBAction)onInviteOnlySwitch: (id)sender
+{
+    if (self.inviteOnly.isOn)
+    {
+        self.isEventinviteOnly = YES;
+
+    } else
+    {
+        self.isEventinviteOnly = NO;
+    }
+}
+
+- (IBAction)canGuestsInviteOthers: (id)sender
+{
+    if (self.guestCanInviteOthers.isOn)
+    {
+        self.canGuestInviteOthers = YES;
+
+    } else
+    {
+        self.canGuestInviteOthers = NO;
+    }
+}
+
 - (IBAction)onCreateButtonTapped:(id)sender
 {
 
@@ -195,6 +225,14 @@
     event[@"mapThemeImage"] = self.mapThemeImageFile;
     event[@"creator"] = [PFUser currentUser];
     event[@"eventDate"] = self.dateString;
+
+        if (self.isEventinviteOnly)
+        {
+            event[@"eventPrivate"] = @"YES";
+        }
+        
+    event[@"eventPrivate"] = @"self.isEventinviteOnly";
+    event[@"guestCanInviteOthers"] = @"self.canGuestInviteOthers";
     [event saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
     {
         //send invites to people invited
