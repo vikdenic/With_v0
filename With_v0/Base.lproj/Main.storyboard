@@ -2654,6 +2654,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="themeImageView" destination="xIV-BS-a53" id="zb4-yO-XJz"/>
+                                            <outlet property="themeLabel" destination="utH-34-d9M" id="aUR-vV-NQt"/>
                                             <segue destination="IqI-ey-0Il" kind="unwind" unwindAction="unwindIdeasToCreate:" id="JKp-cO-fz4"/>
                                         </connections>
                                     </tableViewCell>

@@ -118,8 +118,8 @@
     [query whereKey:@"toUser" equalTo:[PFUser currentUser]];
 
     PFQuery *query2 = [PFQuery queryWithClassName:@"Friendship"];
-    [query whereKey:@"fromUser" equalTo:[PFUser currentUser]];
-    [query whereKey:@"toUser" equalTo:userToCompareFriendship];
+    [query2 whereKey:@"fromUser" equalTo:[PFUser currentUser]];
+    [query2 whereKey:@"toUser" equalTo:userToCompareFriendship];
 
     PFQuery *combinedQuery = [PFQuery orQueryWithSubqueries:@[query,query2]];
     [combinedQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error)
