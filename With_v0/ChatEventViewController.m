@@ -314,7 +314,7 @@
     ///layout cell
     [self.customCell layoutIfNeeded];
 
-    //get height mofo
+    //get height
     CGFloat height = [self.customCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
 
     return height;
@@ -323,7 +323,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.messagesArray5000.count;  //10;//self.chatRoomMessagesArray.count;
+    return self.messagesArray5000.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -357,8 +357,8 @@
     cell.usernameChatCellLabel.text = self.usernamePlaceHolder;
 
     //Avatar pic stuff
-    //cell.chatAvatarImage.image = [UIImage imageNamed:@"pacMan.jpg"];
-    //cell.chatAvatarImage.image = [self.imagesArray objectAtIndex:indexPath.row];
+    cell.chatAvatarImage.image = [UIImage imageNamed:@"pacMan.jpg"];
+    cell.chatAvatarImage.image = [self.imagesArray objectAtIndex:indexPath.row];
     cell.chatAvatarImage.layer.borderWidth = 1.0f;
     cell.chatAvatarImage.layer.cornerRadius = 11.7;
     cell.chatAvatarImage.layer.masksToBounds = YES;

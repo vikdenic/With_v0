@@ -24,6 +24,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 @property (nonatomic, weak) IBOutlet UIButton *cameraButton;
 @property (nonatomic, weak) IBOutlet UIButton *stillButton;
 @property (weak, nonatomic) IBOutlet UITextField *descriptionTextField;
+@property (weak, nonatomic) IBOutlet UILabel *tapInstructLabel;
 
 //- (IBAction)toggleMovieRecording:(id)sender;
 - (IBAction)changeCamera:(id)sender;
@@ -61,6 +62,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+
 
 	//Create the AVCaptureSession
 	AVCaptureSession *session = [[AVCaptureSession alloc] init];
@@ -132,11 +134,16 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 		}
 	});
 
+    //notification for keyboard anime
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
 
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+
 	dispatch_async([self sessionQueue], ^{
 		[self addObserver:self forKeyPath:@"sessionRunningAndDeviceAuthorized" options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:SessionRunningAndDeviceAuthorizedContext];
 		[self addObserver:self forKeyPath:@"stillImageOutput.capturingStillImage" options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:CapturingStillImageContext];
@@ -160,6 +167,17 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     //    [stillImageOutput setOutputSettings:outputSettings];
     //
     //    [session addOutput:stillImageOutput];
+}
+
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:2.0];
+    [self.tapInstructLabel setAlpha:0];
+    [UIView commitAnimations];
+
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -235,6 +253,27 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 	{
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+//    PFUser *picturePhotographer = [self.individualEventPhoto.object objectForKey:@"photographer"];
+//
+//    PFObject *comment = [PFObject objectWithClassName:@"CommentActivity"];
+//    comment[@"fromUser"] = [PFUser currentUser];
+//    comment[@"toUser"] = picturePhotographer;
+//    comment[@"photo"] = self.individualEventPhoto.object;
+//    comment[@"commentContent"] = self.textField.text;
+//    [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+//     {
+//         PFRelation *relation = [self.individualEventPhoto.object relationForKey:@"commentActivity"];
+//         [relation addObject:comment];
+//         [self.individualEventPhoto.object saveInBackground];
+//     }];
+
+    [self.descriptionTextField resignFirstResponder];
+
+    return YES;
 }
 
 #pragma mark Actions
@@ -345,14 +384,10 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 			}
 		}];
 	});
-    //    CGSize targetSize = CGSizeMake(320,320);
-    //    UIGraphicsBeginImageContext(targetSize);
 }
 
 - (IBAction)focusAndExposeTap:(UIGestureRecognizer *)gestureRecognizer
 {
-
-
     dispatch_async([self sessionQueue], ^{
 		// Update the orientation on the still image output video connection before capturing.
 		[[[self stillImageOutput] connectionWithMediaType:AVMediaTypeVideo] setVideoOrientation:[[(AVCaptureVideoPreviewLayer *)[[self previewView] layer] connection] videoOrientation]];
@@ -373,6 +408,8 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 	});
 	CGPoint devicePoint = [(AVCaptureVideoPreviewLayer *)[[self previewView] layer] captureDevicePointOfInterestForPoint:[gestureRecognizer locationInView:[gestureRecognizer view]]];
 	[self focusWithMode:AVCaptureFocusModeAutoFocus exposeWithMode:AVCaptureExposureModeAutoExpose atDevicePoint:devicePoint monitorSubjectAreaChange:YES];
+
+    [self.descriptionTextField resignFirstResponder];
 }
 
 - (void)subjectAreaDidChange:(NSNotification *)notification
@@ -486,7 +523,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 	[AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
 		if (granted)
 		{
-			//Granted access baby
+			//Granted access
 			[self setDeviceAuthorized:YES];
 		}
 		else
@@ -505,7 +542,39 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 }
 
 
+//new style keyboard animation
+- (void) keyboardDidShow:(NSNotification *)notification
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationCurve:[notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue]];
+    [UIView setAnimationDuration:[notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] intValue]];
 
+
+    if ([[UIScreen mainScreen] bounds].size.height == 1136)
+    {
+        [self.view setFrame:CGRectMake(0, -220, 640, 1120)];
+    } else {
+        [self.view setFrame:CGRectMake(0, -220, 640, 920)];
+    }
+
+    [UIView commitAnimations];
+}
+
+
+//Old style
+- (void) keyboardDidHide:(NSNotification *)notification
+{
+    if ([[UIScreen mainScreen] bounds].size.height == 1136)
+    {
+        [UIView animateWithDuration:0.25 animations:^{
+            [self.view setFrame:CGRectMake(0, 0, 640, 1120)];
+        }];
+    } else {
+        [UIView animateWithDuration:0.25 animations:^{
+            [self.view setFrame:CGRectMake(0, 0, 640, 920)];
+        }];
+    }
+}
 
 
 //- (BOOL)shouldAutorotate
