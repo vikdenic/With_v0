@@ -139,16 +139,6 @@
         [self.event saveInBackground];
         [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:0.8];
     }
-///
-//    sender.transform = CGAffineTransformMakeScale(.5f, .5f);
-//    [UIView beginAnimations:nil context:nil];
-//    [UIView setAnimationDelegate:self];
-//    [UIView setAnimationDuration:0.8];
-//    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-//    CGAffineTransform scaleTrans  = CGAffineTransformMakeScale(1.0f, 1.0f);
-//    CGAffineTransform lefttorightTrans  = CGAffineTransformMakeTranslation(0.0f,0.0f);
-//    sender.transform = CGAffineTransformConcat(scaleTrans, lefttorightTrans);
-//    [UIView commitAnimations];
 }
 
 - (IBAction)onNoButtonTapped:(id)sender
@@ -157,12 +147,9 @@
     if (self.noButtonTapped == NO)
     {
         self.noButtonTapped = YES;
-        self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
-        self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
 
         [self.notGoingButton setImage:self.noButtonSelected forState:UIControlStateNormal];
         [self.goingButton setImage:self.yesButtonUnselected forState:UIControlStateNormal];
-
 
         PFRelation *relation = [self.event relationForKey:@"usersAttending"];
         [relation removeObject:[PFUser currentUser]];
@@ -171,8 +158,6 @@
         [relation2 addObject:[PFUser currentUser]];
         [self.event saveInBackground];
         [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:1.2];
-
-        
 
     } else {
 
@@ -186,18 +171,7 @@
         [relation2 removeObject:[PFUser currentUser]];
         [self.event saveInBackground];
         [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:1.2];
-
     }
-///
-//    sender.transform = CGAffineTransformMakeScale(.5f, .5f);
-//    [UIView beginAnimations:nil context:nil];
-//    [UIView setAnimationDelegate:self];
-//    [UIView setAnimationDuration:0.8];
-//    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-//    CGAffineTransform scaleTrans  = CGAffineTransformMakeScale(1.0f, 1.0f);
-//    CGAffineTransform lefttorightTrans  = CGAffineTransformMakeTranslation(0.0f,0.0f);
-//    sender.transform = CGAffineTransformConcat(scaleTrans, lefttorightTrans);
-//    [UIView commitAnimations];
 }
 
 #pragma mark- Checking users status
@@ -228,8 +202,6 @@
         }
     }];
 
-
-
     if (!self.isTheUserAttending)
     {
 
@@ -243,9 +215,6 @@
 
                 if ([user.objectId isEqualToString:currentUser])
                 {
-                    self.yesImageView.image = [UIImage imageNamed:@"Yes_Button"];
-                    self.noImageView.image = [UIImage imageNamed:@"no_button_selected"];
-
                     [self.goingButton setImage:self.yesButtonUnselected forState:UIControlStateNormal];
                     [self.notGoingButton setImage:self.noButtonSelected forState:UIControlStateNormal];
                     break;
@@ -302,13 +271,7 @@
     {
         IndividualEventInvitePeopleViewController *individualEventInvitePeopleViewController = segue.destinationViewController;
         individualEventInvitePeopleViewController.event = self.event;
-
     }
-//    else if ([segue.identifier isEqualToString:@"ToChatSegue"])
-//    {
-//        ChatEventViewController *chatEventViewController = segue.destinationViewController;
-//        chatEventViewController.event = self.event;
-//    }
 }
 
 - (IBAction)unwindSegueToIndividualViewController:(UIStoryboardSegue *)sender

@@ -127,8 +127,6 @@
     cell.noButton.tag = indexPath.row;
     [cell.noButton addTarget:self action:@selector(onNoTapped:) forControlEvents:UIControlEventTouchUpInside];
 
-//    cell.theXButton.tag = indexPath;
-
     return cell;
 }
 
@@ -176,18 +174,8 @@
         PFRelation *goingRelation = [sender.eventObject relationForKey:@"usersAttending"];
         [goingRelation removeObject:[PFUser currentUser]];
         [sender.eventObject saveInBackground];
-
-        //remove or delete the relation
     }
 }
-
-
-//PFRelation *relation = [self.event relationforKey:@"usersAttending"];
-//[relation addObject:[PFUser currentUser]];
-//
-//PFRelation *relation2 = [self.event relationforKey:@"usersNotAttending"];
-//[relation2 removeObject:[PFUser currentUser]];
-//[self.event saveInBackground];
 
 - (void)onNoTapped:(InvitesButton *)sender
 {
@@ -226,21 +214,5 @@
         [sender.eventObject saveInBackground];
     }
 }
-
-//- (IBAction)onXButtonTapped:(UIButton *)sender
-//{
-//    [self.tableView beginUpdates];
-//
-////    [self.eventInviteArray removeObjectAtIndex:sender.tag];=
-//
-////    NSIndexPath *indexPath = [NSIndexPath indexPathForRow: inSection:0];
-//    //pass in actual index path;
-//
-//    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//
-//    [self.tableView endUpdates];
-//
-//}
-
 
 @end

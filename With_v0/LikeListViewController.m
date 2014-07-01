@@ -15,9 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property NSMutableArray *usersAttendingArray;
-
 @property NSInteger indexPathRow;
-
 @property UIRefreshControl *refreshControl;
 
 @end
@@ -47,15 +45,6 @@
 - (void)usersAttendingQuery
 {
     [self.usersAttendingArray removeAllObjects];
-
-//    PFRelation *relation = [self.event relationForKey:@"usersInvited"];
-//    PFQuery *query = [relation query];
-//
-//    [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
-//     {
-//         self.usersAttendingArray = [NSMutableArray arrayWithArray:results];
-//         [self.tableView reloadData];
-//     }];
 
     NSMutableArray *thisArray = [NSMutableArray array];
     for (PFObject *likeActivity in self.individualEventPhoto.likes)
@@ -216,7 +205,6 @@
         StreamProfileViewController *streamProfileViewController = segue.destinationViewController;
         PFUser *userToPass = [self.usersAttendingArray objectAtIndex:self.indexPathRow];
         streamProfileViewController.userToPass = userToPass;
-
     }
 }
 

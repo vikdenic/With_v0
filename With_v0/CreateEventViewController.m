@@ -227,7 +227,7 @@
     event[@"creator"] = [PFUser currentUser];
     event[@"eventDate"] = self.dateString;
 
-        if (self.isEventinviteOnly)
+        if (self.isEventinviteOnly == YES)
         {
             event[@"eventPrivate"] = @YES;
         } else
@@ -235,7 +235,7 @@
             event[@"eventPrivate"] = @NO;
         }
 
-        if (self.canGuestInviteOthers)
+        if (self.canGuestInviteOthers == YES)
         {
             event[@"guestCanInviteOthers"] = @YES;
         } else

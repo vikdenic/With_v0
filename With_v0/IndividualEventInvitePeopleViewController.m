@@ -70,8 +70,6 @@
              cell.profilePictureImageView.layer.borderWidth = 2.0;
              cell.profilePictureImageView.layer.masksToBounds = YES;
              cell.profilePictureImageView.image = temporaryImage;
-
-             ///if nil, set it to something we create
          }];
 
     } else
@@ -95,7 +93,6 @@
              cell.profilePictureImageView.layer.masksToBounds = YES;
              cell.profilePictureImageView.image = temporaryImage;
          }];
-
     }
 
     for (PFUser *alreadyInvitedUser in self.usersAlreadyAttendingArray)
@@ -113,19 +110,15 @@
             cell.inviteButton.userInteractionEnabled = NO;
             break;
 
-            ///if this is so, disable this button so the user can't change it or invite them
         } else {
 
             //means the user has the option to invite them
             UIImage *btnImage = [UIImage imageNamed:@"invite_image"];
             cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
             [cell.inviteButton setImage:btnImage forState:UIControlStateNormal];
-
         }
     }
-//    UIImage *btnImage = [UIImage imageNamed:@"invite_image"];
-//    cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
-//    [cell.inviteButton setImage:btnImage forState:UIControlStateNormal];
+
     cell.inviteButton.tag = indexPath.row;
     [cell.inviteButton addTarget:self action:@selector(ontapped:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -148,10 +141,6 @@
 
 - (void)ontapped:(IndividualEventInvitePeopleInviteButton *)sender
 {
-
-    ///maybe this is easier to pass an array of PFUser's that the user selects through the segue then on create fast enumerate through them and add create the event invite object? I think that would be easier so if the user modifys it then we won't do it till create it clicked- so just fake the buttons and all that- basically each button that is green needs to be in the array
-
-
     if ([sender.imageView.image isEqual:[UIImage imageNamed:@"invite_image"]])
     {
         UIImage *btnImage = [UIImage imageNamed:@"invite_selected_image"];

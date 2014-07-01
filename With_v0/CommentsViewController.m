@@ -32,14 +32,6 @@
     self.usersAttendingArray = [NSMutableArray array];
     [self gettingComments];
 
-//    //notification for Ugly keyboard animation
-//    NSLog(@"9");
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
-//    NSLog(@"10");
-//
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
-//    NSLog(@"11");
-
     [self.textField becomeFirstResponder];
 }
 
@@ -57,7 +49,6 @@
          [self.commentsArray addObjectsFromArray:results];
          [self.tableView reloadData];
      }];
-
 }
 
 #pragma mark - Table View
@@ -129,36 +120,6 @@
     return cell;
 }
 
-
-//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    UIView *header = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 320)];
-//    header.backgroundColor = [UIColor clearColor];
-//
-//    UIImageView *imageView = [[UIImageView alloc]initWithFrame:header.frame];
-//
-//    [self.individualEventPhoto.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
-//     {
-//         if (!error)
-//         {
-//             UIImage *temporaryImage = [UIImage imageWithData:data];
-//             imageView.image = temporaryImage;
-//
-//
-//             //             self.imageView.image = temporaryImage;
-//         }
-//     }];
-//
-//    [header addSubview:imageView];
-//
-//    return header;
-//}
-//
-//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return 320;
-//}
-
 - (void)onButtonTitlePressed:(UIButton *)sender
 {
     self.indexPathRow = sender.tag;
@@ -175,8 +136,8 @@
     }
 }
 
-- (IBAction)sendButtPushed:(UIButton *)sender {
-    //    PFObject *object = self.commentObject;
+- (IBAction)sendButtPushed:(UIButton *)sender
+{
     PFUser *picturePhotographer = [self.individualEventPhoto.object objectForKey:@"photographer"];
 
     PFObject *comment = [PFObject objectWithClassName:@"CommentActivity"];
@@ -195,6 +156,9 @@
     [self.textField resignFirstResponder];
     [self gettingComments];
 }
+
+@end
+
 
 //input accesorry view- view attached to the top of the keyboard
 
@@ -293,27 +257,6 @@
 //    [self.textField resignFirstResponder];
 //}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //- (void)getComments
 //{
 //    PFQuery *query = [PFQuery queryWithClassName:@"CommentActivity"];
@@ -327,5 +270,3 @@
 //         [self.tableView reloadData];
 //    }];
 //}
-
-@end

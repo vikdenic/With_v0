@@ -13,7 +13,6 @@
 @interface StreamEventViewController : UIViewController
 
 @property PFObject *event;
-
 @property PFUser *userToPass;
 @property IndividualEventPhoto *individualEventPhoto;
 

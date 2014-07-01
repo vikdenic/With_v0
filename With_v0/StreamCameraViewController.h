@@ -10,5 +10,4 @@
 
 @interface StreamCameraViewController : UIViewController
 
-
 @end

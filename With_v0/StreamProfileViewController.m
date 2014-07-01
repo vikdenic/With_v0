@@ -25,6 +25,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *friendButton;
 @property (weak, nonatomic) IBOutlet UIButton *friendStatusButton;
+@property PFObject *friendshipObject;
 
 @end
 
@@ -41,6 +42,8 @@
     self.profileAvatar.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
 
     self.profileAvatar.layer.borderWidth = 2.0;
+
+    [self.friendStatusButton addTarget:self action:@selector(onFriendStatusButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
 }
 
@@ -167,19 +170,22 @@
     PFQuery *combinedQuery = [PFQuery orQueryWithSubqueries:@[query,query2]];
     [combinedQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error)
      {
+
+         self.friendshipObject = object;
+
          if ([[object objectForKey:@"status"] isEqualToString:@"Approved"])
          {
-             UIImage *btnImage = [UIImage imageNamed:@"added_button_image"];
+             UIImage *btnImage = [UIImage imageNamed:@"friends_profile"];
              [self.friendStatusButton setImage:btnImage forState:UIControlStateNormal];
 
          } else if ([[object objectForKey:@"status"] isEqualToString:@"Pending"])
          {
-             UIImage *btnImage = [UIImage imageNamed:@"pending_image"];
+             UIImage *btnImage = [UIImage imageNamed:@"pending_profile"];
              [self.friendStatusButton setImage:btnImage forState:UIControlStateNormal];
 
          } else if ([[object objectForKey:@"status"] isEqualToString:@"Denied"])
          {
-             UIImage *btnImage = [UIImage imageNamed:@"add_friend_button_image"];
+             UIImage *btnImage = [UIImage imageNamed:@"add_friend_profile"];
              [self.friendStatusButton setImage:btnImage forState:UIControlStateNormal];
 
          } else {
@@ -190,13 +196,49 @@
                  self.friendStatusButton.userInteractionEnabled = NO;
              } else
              {
-                 UIImage *btnImage = [UIImage imageNamed:@"add_friend_button_image"];
+                 UIImage *btnImage = [UIImage imageNamed:@"add_friend_profile"];
                  [self.friendStatusButton setImage:btnImage forState:UIControlStateNormal];
              }
          }
     }];
 }
-///need to add selector to this button
 
+- (void)onFriendStatusButtonPressed:(UIButton *)sender
+{
+    if ([sender.imageView.image isEqual:[UIImage imageNamed:@"add_friend_profile"]])
+    {
+        UIImage *btnImage = [UIImage imageNamed:@"pending_profile"];
+        [sender setImage:btnImage forState:UIControlStateNormal];
+
+        if (self.friendshipObject == nil)
+        {
+            PFObject *friendship = [PFObject objectWithClassName:@"Friendship"];
+            friendship[@"fromUser"] = [PFUser currentUser];
+            friendship[@"toUser"] = self.userToPass;
+            friendship[@"status"] = @"Pending";
+            [friendship saveInBackground];
+
+        } else {
+            self.friendshipObject[@"status"] = @"Pending";
+            [self.friendshipObject saveInBackground];
+        }
+
+    } else if ([sender.imageView.image isEqual:[UIImage imageNamed:@"friends_profile"]])
+    {
+        UIImage *btnImage = [UIImage imageNamed:@"add_friend_profile"];
+        [sender setImage:btnImage forState:UIControlStateNormal];
+
+        self.friendshipObject[@"status"] = @"Denied";
+        [self.friendshipObject saveInBackground];
+
+    } else if ([sender.imageView.image isEqual:[UIImage imageNamed:@"pending_profile"]])
+    {
+        UIImage *btnImage = [UIImage imageNamed:@"add_friend_profile"];
+        [sender setImage:btnImage forState:UIControlStateNormal];
+
+        self.friendshipObject[@"status"] = @"Denied";
+        [self.friendshipObject saveInBackground];
+    }
+}
 
 @end

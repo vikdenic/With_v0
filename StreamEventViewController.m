@@ -21,21 +21,16 @@
 @interface StreamEventViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, GKImagePickerDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property UIImagePickerController *cameraController;
-
 @property (strong, nonatomic) NSURL *videoUrl;
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
-
-@property UIRefreshControl *refreshControl;
-
-@property NSMutableArray *theLegitArrayOfEverything;
-
-@property (nonatomic, strong) GKImagePicker *imagePicker;
-@property (nonatomic, strong) UIPopoverController *popoverController;
-
-@property PFFile *selectedImageFile;
+@property (strong, nonatomic) GKImagePicker *imagePicker;
+@property (strong, nonatomic) UIPopoverController *popoverController;
 
 @property (nonatomic) CGRect originalFrame;
+@property UIImagePickerController *cameraController;
+@property PFFile *selectedImageFile;
+@property UIRefreshControl *refreshControl;
+@property NSMutableArray *theLegitArrayOfEverything;
 
 @property int section;
 
@@ -90,8 +85,6 @@
     [query includeKey:@"photographer"];
     [query includeKey:@"createdAt"];
     [query orderByDescending:@"createdAt"];
-
-    //query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
      {
          if (!error)
@@ -179,7 +172,6 @@
         [sender setImage:btnImage forState:UIControlStateNormal];
 
         IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:sender.tag];
-//        PFUser *picturePhotographer = [individualEventPhoto.object objectForKey:@"photographer"];
 
         PFRelation *relation2 = [individualEventPhoto.object relationForKey:@"likeActivity"];
         PFQuery *query2 = [relation2 query];
@@ -251,12 +243,6 @@
             minutes = minutes/1440;
             timeInterval.text = [NSString stringWithFormat:@"%id", minutes];
         }
-
-    //setting the username
-//    StreamEventTitleLabel *title = [[StreamEventTitleLabel alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
-//    title.text = [NSString stringWithFormat:@"%@", individualEventPhoto.username];
-//    title.textColor = [UIColor whiteColor];
-//    title.section = (int)section;
 
     //setting the username
     UIButton *title = [[UIButton alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
@@ -369,6 +355,7 @@
         [cell.theImageView addGestureRecognizer:tapping];
         cell.theImageView.userInteractionEnabled = YES;
     }
+
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     return cell;
@@ -403,9 +390,6 @@
              [individualEventPhoto.object saveInBackground];
          }];
 
-//        StreamTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sender.tag]];
-
-
         UIImage *btnImage = [UIImage imageNamed:@"like_selected"];
         [cell.likeButton setImage:btnImage forState:UIControlStateNormal];
 
@@ -422,14 +406,6 @@
             numberOfLikesInt++;
             [cell.numberOfLikesButton setTitle:[NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt] forState:UIControlStateNormal];
         }
-
-    //    PFRelation *relation = [individualEventPhoto.object relationForKey:@"likeActivity"];
-    //    PFQuery *query1 = [relation query];
-    //    [query1 countObjectsInBackgroundWithBlock:^(int number, NSError *error)
-    //     {
-    //        cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%i likes", number];
-    //     }];
-
 
         cell.likedImageView.hidden = NO;
         cell.likedImageView.alpha = 0;
@@ -458,29 +434,31 @@
     [self performSegueWithIdentifier:@"LikesLabelToLikeList" sender:self];
 }
 
-//#pragma mark - Helper Method
-//
-//- (void)cameraSetUp
-//{
-//    self.cameraController = [[UIImagePickerController alloc] init];
-//    self.cameraController.delegate = self;
-//    self.cameraController.allowsEditing = YES;
-//    self.cameraController.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
-//    self.cameraController.videoMaximumDuration = 11;
-//}
+#pragma mark - Helper Method
 
-//#pragma mark - Image Picker
-//
-//- (IBAction)onPickerButtonTapped:(id)sender
-//{
-//    [self cameraSetUp];
-//
-//    self.cameraController.sourceType = UIImagePickerControllerSourceTypeCamera;
-//
-//    [self presentViewController:self.cameraController animated:NO completion:^{
-//        //
-//    }];
-//}
+- (void)cameraSetUp
+{
+   self.cameraController = [[UIImagePickerController alloc] init];
+   self.cameraController.delegate = self;
+   self.cameraController.allowsEditing = YES;
+    self.cameraController.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+
+    ///put this back in for video
+//   self.cameraController.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+//    self.cameraController.videoMaximumDuration = 11;
+}
+
+#pragma mark - Image Picker
+
+- (IBAction)onPickerButtonTapped:(id)sender
+{
+    [self cameraSetUp];
+
+   self.cameraController.sourceType = UIImagePickerControllerSourceTypeCamera;
+   [self presentViewController:self.cameraController animated:NO completion:^{
+
+  }];
+}
 
 - (IBAction)onPhotoLibraryButtonTapped:(id)sender
 {
@@ -562,52 +540,44 @@
      }];
 }
 
-//-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-//{
-//    [picker dismissViewControllerAnimated:YES completion:^{
-//
-//        //NEED TO FIGURE OUT HOW TO SAVE VIDEOS DIFFERENTLY- THIS MIGHT BE TRICKY
-//        UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-//
-//        CGSize sacleSize = CGSizeMake(320, 320);
-//        UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
-//        [image drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
-//        UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
-//        UIGraphicsEndImageContext();
-//
-//        NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.05f);
-//        PFFile *imageFile = [PFFile fileWithData:imageData];
-//
-//        // Save PFFile
-//        [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-//         {
-//             if (!error) {
-//
-//                 PFObject *photoTaken = [PFObject objectWithClassName:@"Photo"];
-//                 [photoTaken setObject:imageFile forKey:@"photo"];
-//                 [photoTaken setObject:[PFUser currentUser] forKey:@"photographer"];
-////                 photoTaken[@"caption"] = //
-//
-//                 [photoTaken saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-//                  {
-//                      if (!error) {
-//
-//                          PFRelation *relation = [self.event relationforKey:@"eventPhotos"];
-//                          [relation addObject:photoTaken];
-//                          [self.event saveInBackground];
-//
-//                          //[self dismissViewControllerAnimated:NO completion:nil];
-//
-//                          [self.tableView reloadData];
-//                      }
-//                      else {
-//                          NSLog(@"Error");
-//                      }
-//                  }];
-//             }
-//         }];
-//    }];
-//}
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [picker dismissViewControllerAnimated:YES completion:^{
+
+    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+
+    CGSize sacleSize = CGSizeMake(320, 320);
+    UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
+    UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.05f);
+    PFFile *imageFile = [PFFile fileWithData:imageData];
+    [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             if (!error) {
+
+                 PFObject *photoTaken = [PFObject objectWithClassName:@"Photo"];
+                 [photoTaken setObject:imageFile forKey:@"photo"];
+                 [photoTaken setObject:[PFUser currentUser] forKey:@"photographer"];
+                 [photoTaken saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                  {
+                      if (!error) {
+
+                          PFRelation *relation = [self.event relationforKey:@"eventPhotos"];
+                          [relation addObject:photoTaken];
+                          [self.event saveInBackground];
+                          [self.tableView reloadData];
+                      }
+                      else
+                      {
+                      }
+                  }];
+             }
+         }];
+    }];
+}
 
 #pragma mark - Segue
 
@@ -634,8 +604,8 @@
 
     } else if ([segue.identifier isEqualToString:@"ToChatSegue"])
     {
-    ChatEventViewController *chatEventViewController = segue.destinationViewController;
-    chatEventViewController.event = self.event;
+        ChatEventViewController *chatEventViewController = segue.destinationViewController;
+        chatEventViewController.event = self.event;
     }
 }
 
@@ -657,33 +627,6 @@
 {
     [self.refreshControl endRefreshing];
 }
-
-#pragma mark - Action Sheet
-
-///if the current user is the one who took the photo then show the delete button, but they can still report it
-
-//- (IBAction)showActionSheet:(id)sender
-//{
-//    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Report", nil];
-//
-//    [actionSheet showInView:self.view];
-//}
-//
-//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-//{
-//
-//    NSString *theButtonIndex = [actionSheet buttonTitleAtIndex:buttonIndex];
-//
-//    if ([theButtonIndex isEqualToString:@"Cancel"])
-//    {
-//        //dismiss
-//
-//    } else if ([theButtonIndex isEqualToString:@"Report"])
-//    {
-//        ///if it is reported- this button is clicked- we need to notify ourselves somehow?
-//        ///send them a uialert to tell them it has been reported
-//    }
-//}
 
 @end
 
