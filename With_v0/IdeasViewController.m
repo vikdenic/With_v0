@@ -42,6 +42,7 @@
 {
     PFQuery *query = [PFQuery queryWithClassName:@"Idea"];
 
+    query.cachePolicy = kPFCachePolicyCacheOnly;
     [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
      {
 //         NSLog(@"%@",results);
