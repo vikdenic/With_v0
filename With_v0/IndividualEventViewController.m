@@ -10,6 +10,7 @@
 #import "PeopleAttendingEventViewController.h"
 #import "InvitedPeopleViewController.h"
 #import "IndividualEventInvitePeopleViewController.h"
+#import "ChatEventViewController.h"
 
 @interface IndividualEventViewController ()
 
@@ -298,6 +299,11 @@
     {
         IndividualEventInvitePeopleViewController *individualEventInvitePeopleViewController = segue.destinationViewController;
         individualEventInvitePeopleViewController.event = self.event;
+
+    } else if ([segue.identifier isEqualToString:@"ToChatSegue"])
+    {
+        ChatEventViewController *chatEventViewController = segue.destinationViewController;
+        chatEventViewController.event = self.event;
     }
 }
 

@@ -30,6 +30,7 @@
 ///
 @property NSString *channelPlaceHolder;
 
+
 @end
 
 
@@ -104,19 +105,10 @@
 {
     [self.view endEditing:YES];
 
-    self.enteredText = self.chatTextFieldOutlet.text;
-
-    //Create Comment Object
     PFObject *chatComment = [PFObject objectWithClassName:@"ChatMessage"];
-
-    //this adds the text into parse key textContent
-    [chatComment setObject:self.enteredText forKey:@"chatText"];
-
-    //This Creates relationship to the user!
-
-    [chatComment setObject:[PFUser currentUser].username forKey:@"author"];
-
-    //Save comment
+    chatComment[@"chatText"] = self.chatTextFieldOutlet.text;
+    chatComment[@"author2"] = [PFUser currentUser];
+    chatComment[@"chatEvent"] = self.event;
     [chatComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
 
