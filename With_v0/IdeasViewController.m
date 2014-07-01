@@ -8,6 +8,7 @@
 
 #import "IdeasViewController.h"
 #import "IdeasTableViewCell.h"
+#import "ThemeObject.h"
 #import <Parse/Parse.h>
 
 @interface IdeasViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -31,6 +32,7 @@
     [self getParseData];
 }
 
+//make custom object with sort property
 #pragma mark - Parse
 -(void)getParseData
 {
@@ -38,6 +40,7 @@
 
     [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
      {
+         NSLog(@"%@",results);
         for (PFObject *object in results)
         {
             NSString *themeName = [object objectForKey:@"themeName"];
@@ -48,7 +51,7 @@
             [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
                 UIImage *themeImage = [UIImage imageWithData:data];
                 [self.ideaImages addObject:themeImage];
-                NSLog(@"%d",self.ideaImages.count);
+//                NSLog(@"%d",self.ideaImages.count);
                 [self.tableView reloadData];
             }];
         }

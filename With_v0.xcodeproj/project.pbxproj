@@ -80,6 +80,7 @@
 		930D1924195886E700AE4AE1 /* PLCameraSheetDoneButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 930D191C195886E700AE4AE1 /* PLCameraSheetDoneButtonPressed.png */; };
 		93513A6119528A9000302A54 /* ChooseEventLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93513A6019528A9000302A54 /* ChooseEventLocationViewController.m */; };
 		93513A641952902C00302A54 /* FSVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 93513A631952902C00302A54 /* FSVenue.m */; };
+		9368F99919630074005477A1 /* ThemeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9368F99819630074005477A1 /* ThemeObject.m */; };
 		9375544A1950A5BF008AAD45 /* FindFriendsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 937554491950A5BF008AAD45 /* FindFriendsTableViewCell.m */; };
 		9375544D1950B883008AAD45 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9375544C1950B883008AAD45 /* EditProfileViewController.m */; };
 		93802209195659A0004B492D /* DateAndTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93802208195659A0004B492D /* DateAndTimeViewController.m */; };
@@ -240,6 +241,8 @@
 		93513A6019528A9000302A54 /* ChooseEventLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseEventLocationViewController.m; sourceTree = "<group>"; };
 		93513A621952902C00302A54 /* FSVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSVenue.h; sourceTree = "<group>"; };
 		93513A631952902C00302A54 /* FSVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSVenue.m; sourceTree = "<group>"; };
+		9368F99719630074005477A1 /* ThemeObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeObject.h; sourceTree = "<group>"; };
+		9368F99819630074005477A1 /* ThemeObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeObject.m; sourceTree = "<group>"; };
 		937554481950A5BF008AAD45 /* FindFriendsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendsTableViewCell.h; sourceTree = "<group>"; };
 		937554491950A5BF008AAD45 /* FindFriendsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendsTableViewCell.m; sourceTree = "<group>"; };
 		9375544B1950B883008AAD45 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
@@ -426,6 +429,8 @@
 				93CE89041961399D007BA434 /* IdeasViewController.m */,
 				93CE890619613D15007BA434 /* IdeasTableViewCell.h */,
 				93CE890719613D15007BA434 /* IdeasTableViewCell.m */,
+				9368F99719630074005477A1 /* ThemeObject.h */,
+				9368F99819630074005477A1 /* ThemeObject.m */,
 			);
 			name = Create;
 			sourceTree = "<group>";
@@ -655,7 +660,7 @@
 				ORGANIZATIONNAME = "Mobile Makers";
 				TargetAttributes = {
 					93952F89194D5D4C001AA3E4 = {
-						DevelopmentTeam = ZNAFR9K9ZC;
+						DevelopmentTeam = 3DJPBY6593;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -754,6 +759,7 @@
 				608B6C9E1950FF51007D4503 /* CommentsViewController.m in Sources */,
 				9375544A1950A5BF008AAD45 /* FindFriendsTableViewCell.m in Sources */,
 				606DAE3A1961FA80003F3AAE /* StreamProfileFriendsListTableViewCell.m in Sources */,
+				9368F99919630074005477A1 /* ThemeObject.m in Sources */,
 				93952F9E194D5D4C001AA3E4 /* AppDelegate.m in Sources */,
 				606DAE4319624DFD003F3AAE /* LikesListTableViewCell.m in Sources */,
 				60694166195FD98F00C8310F /* InvitesButton.m in Sources */,
