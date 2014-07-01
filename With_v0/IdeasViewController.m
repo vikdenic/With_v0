@@ -11,6 +11,8 @@
 
 @interface IdeasViewController () <UITableViewDelegate, UITableViewDataSource>
 
+@property NSArray *ideaStrings;
+
 @end
 
 @implementation IdeasViewController
@@ -19,6 +21,8 @@
 {
     [super viewDidLoad];
 
+    self.ideaStrings = [[NSArray alloc]initWithObjects:@[@"Nine Hole", @"Mock Wedding",@"Jersey Party",
+                                                         @"Pub Crawl",@"Tequila Mockingbird",@""]];
 
 }
 
@@ -43,18 +47,5 @@
 
     return cell;
 }
-
-//#pragma mark - Segue
-//
-//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-//{
-//    if ([segue.identifier isEqualToString:@"IdeasToCreateSegue"])
-//    {
-//        [self dismissViewControllerAnimated:YES completion:^{
-//            
-//        }];
-//    }
-//}
-
 
 @end

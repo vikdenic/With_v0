@@ -67,7 +67,7 @@
     [[self navigationItem] setBackBarButtonItem:newBackButton];
 
 //    self.title = [PFUser currentUser].username;
-    self.navigationController.navigationBar.topItem.title = [PFUser currentUser].username;
+//    self.navigationController.navigationBar.topItem.title = [PFUser currentUser].username;
 
 //    self.usersArray = [[NSArray alloc]init];
 
@@ -77,6 +77,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    self.navigationController.navigationBar.topItem.title = [PFUser currentUser].username;
 
     self.nameLabel.numberOfLines = 0;
     self.cityStateLabel.numberOfLines = 0;
