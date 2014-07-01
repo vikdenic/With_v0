@@ -15,6 +15,7 @@
 #import "IndividualEventPhoto.h"
 #import "GKImagePicker.h"
 #import "StreamProfileViewController.h"
+#import "LikeListViewController.h"
 
 @interface StreamEventViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, GKImagePickerDelegate, UIActionSheetDelegate>
 
@@ -52,7 +53,6 @@
 
     self.originalFrame = self.tabBarController.tabBar.frame;
 
-    //add a uiimageview and then on viewDidAppear I remove it or animate it out after 1.2 seconds
     self.theLegitArrayOfEverything = [NSMutableArray array];
 
     //pull to refresh
@@ -156,17 +156,19 @@
         StreamTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sender.tag]];
 
         //increment count
-        NSString *numberOfLikesString = cell.numberOfLikesLabel.text;
+        NSString *numberOfLikesString = [cell.numberOfLikesButton titleForState:UIControlStateNormal];
         NSInteger numberOfLikesInt = [numberOfLikesString integerValue];
+
 
         if (numberOfLikesInt == 0)
         {
             numberOfLikesInt++;
-            cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li like", (long)numberOfLikesInt];
+
+            [cell.numberOfLikesButton setTitle:[NSString stringWithFormat:@"%li like", (long)numberOfLikesInt] forState:UIControlStateNormal];
         } else
         {
             numberOfLikesInt++;
-            cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
+            [cell.numberOfLikesButton setTitle:[NSString stringWithFormat:@"%li like", (long)numberOfLikesInt] forState:UIControlStateNormal];
         }
 
     }
@@ -192,22 +194,23 @@
         StreamTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sender.tag]];
 
         //decrement count
-        NSString *numberOfLikesString = cell.numberOfLikesLabel.text;
+        NSString *numberOfLikesString = [cell.numberOfLikesButton titleForState:UIControlStateNormal];
         NSInteger numberOfLikesInt = [numberOfLikesString integerValue];
 
         if (numberOfLikesInt == 1)
         {
             numberOfLikesInt--;
-            cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
+            [cell.numberOfLikesButton setTitle:[NSString stringWithFormat:@"%li like", (long)numberOfLikesInt] forState:UIControlStateNormal];
+
         }else if (numberOfLikesInt == 2)
         {
             numberOfLikesInt--;
-            cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li like", (long)numberOfLikesInt];
+            [cell.numberOfLikesButton setTitle:[NSString stringWithFormat:@"%li like", (long)numberOfLikesInt] forState:UIControlStateNormal];
         }
         else
         {
             numberOfLikesInt--;
-            cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
+            [cell.numberOfLikesButton setTitle:[NSString stringWithFormat:@"%li like", (long)numberOfLikesInt] forState:UIControlStateNormal];
         }
 
         ///need to remove relation
@@ -227,6 +230,7 @@
     CGRect frame = tableView.frame;
 
     IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:section];
+
 
     //setting time top right
     NSDate *timeOfPicture = [individualEventPhoto.object valueForKey:@"createdAt"];
@@ -259,12 +263,6 @@
     [title setTintColor:[UIColor whiteColor]];
     title.tag = section;
     [title addTarget:self action:@selector(onButtonTitlePressed:) forControlEvents:UIControlEventTouchUpInside];
-
-
-//    //allows the segue to profile
-//    UITapGestureRecognizer *tapping = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnUsername:)];
-//    [title addGestureRecognizer:tapping];
-//    title.userInteractionEnabled = YES;
 
     UIImageView *customImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
     customImageView.layer.cornerRadius = customImageView.bounds.size.width/2;
@@ -317,13 +315,11 @@
     cell.likedImageView.hidden = YES;
     cell.commentButton.tag = indexPath.section;
 
-    IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:indexPath.section];
+    cell.numberOfLikesButton.tag = indexPath.section;
+    [cell.numberOfLikesButton addTarget:self action:@selector(onNumberOfLikesButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.numberOfLikesButton setTintColor:[UIColor blackColor]];
 
-//    //number of likes
-//    cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)individualEventPhoto.likes.count];
-//
-//    ///need to requery and down below actually add the count
-//    ///this isn't cutting it, so just query here again for the count of the likes- it's quick- do like above
+    IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:indexPath.section];
 
     PFRelation *relation2 = [individualEventPhoto.object relationForKey:@"likeActivity"];
     PFQuery *query2 = [relation2 query];
@@ -331,12 +327,11 @@
     {
         if (number == 1)
         {
-          cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%i like", number];
+          [cell.numberOfLikesButton setTitle:[NSString stringWithFormat:@"%i like", number] forState:UIControlStateNormal];
 
         } else
         {
-          cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%i likes", number];
-        }
+          [cell.numberOfLikesButton setTitle:[NSString stringWithFormat:@"%i likes", number] forState:UIControlStateNormal];        }
     }];
 
     [individualEventPhoto.photo getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
@@ -378,6 +373,7 @@
     return cell;
 }
 
+
 #pragma mark - Tap Gesture Recognizer
 
 - (void)tapTap:(UITapGestureRecognizer *)tapGestureRecognizer
@@ -408,21 +404,22 @@
 
 //        StreamTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sender.tag]];
 
+
         UIImage *btnImage = [UIImage imageNamed:@"like_selected"];
         [cell.likeButton setImage:btnImage forState:UIControlStateNormal];
 
         //increment count
-        NSString *numberOfLikesString = cell.numberOfLikesLabel.text;
+        NSString *numberOfLikesString = [cell.numberOfLikesButton titleForState:UIControlStateNormal];
         NSInteger numberOfLikesInt = [numberOfLikesString integerValue];
 
         if (numberOfLikesInt == 0)
         {
             numberOfLikesInt++;
-            cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li like", (long)numberOfLikesInt];
+            [cell.numberOfLikesButton setTitle:[NSString stringWithFormat:@"%li like", (long)numberOfLikesInt] forState:UIControlStateNormal];
         } else
         {
             numberOfLikesInt++;
-            cell.numberOfLikesLabel.text = [NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt];
+            [cell.numberOfLikesButton setTitle:[NSString stringWithFormat:@"%li likes", (long)numberOfLikesInt] forState:UIControlStateNormal];
         }
 
     //    PFRelation *relation = [individualEventPhoto.object relationForKey:@"likeActivity"];
@@ -452,6 +449,12 @@
 {
     self.section = (int)sender.tag;
     [self performSegueWithIdentifier:@"StreamToProfile" sender:self];
+}
+
+- (void)onNumberOfLikesButtonPressed: (UIButton *)sender
+{
+    self.section = (int)sender.tag;
+    [self performSegueWithIdentifier:@"LikesLabelToLikeList" sender:self];
 }
 
 //#pragma mark - Helper Method
@@ -620,6 +623,13 @@
         IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:self.section];
         PFUser *userToPass = individualEventPhoto.photographer;
         streamProfileViewController.userToPass = userToPass;
+
+    } else if ([segue.identifier isEqualToString:@"LikesLabelToLikeList"])
+    {
+        IndividualEventPhoto *individualEventPhoto = [self.theLegitArrayOfEverything objectAtIndex:self.section];
+
+        LikeListViewController *likesListViewController = segue.destinationViewController;
+        likesListViewController.individualEventPhoto = individualEventPhoto;
     }
 
 }
