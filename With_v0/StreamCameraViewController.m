@@ -11,12 +11,12 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "CamPreView.h"
 
+
 static void *CapturingStillImageContext = &CapturingStillImageContext;
 static void *RecordingContext = &RecordingContext;
 static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDeviceAuthorizedContext;
 
 @interface StreamCameraViewController () <AVCaptureFileOutputRecordingDelegate, UIImagePickerControllerDelegate>
-
 
 // For use in the storyboards.
 @property (nonatomic, weak) IBOutlet CamPreView *previewView;
@@ -67,6 +67,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 	//Create the AVCaptureSession
 	AVCaptureSession *session = [[AVCaptureSession alloc] init];
 	[self setSession:session];
+
 
 	//Setup the preview
 	[[self previewView] setSession:session];

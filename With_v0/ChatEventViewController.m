@@ -18,17 +18,17 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *chatTextFieldOutlet;
 @property (weak, nonatomic) IBOutlet UITableView *commentTableView;
+@property (strong, nonatomic) CustomTableViewCell *customCell;
 @property NSString *enteredText;
 @property NSArray *chatRoomMessagesArray;
 @property NSArray *authorsArray;
 @property NSArray *messagesArray5000;
 @property NSArray *imageFilesArray;
 @property NSMutableArray *imagesArray;
-
-@property (strong, nonatomic) CustomTableViewCell *customCell;
-
 @property NSString *usernamePlaceHolder;
 
+///
+@property NSString *channelPlaceHolder;
 
 @end
 
@@ -51,10 +51,10 @@
 {
     [super viewDidLoad];
 
+    self.channelPlaceHolder = @"party";
+
     self.imagesArray = [[NSMutableArray alloc] init];
-
     self.navigationController.hidesBottomBarWhenPushed = NO;
-
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
     //Scroll opposite
@@ -72,7 +72,7 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
 
-    self.navigationController.hidesBottomBarWhenPushed = NO;
+    //self.navigationController.hidesBottomBarWhenPushed = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -129,14 +129,36 @@
 
     self.chatTextFieldOutlet.text = @"";
 
-    // Create our Installation query
-    PFQuery *pushQuery = [PFInstallation query];
-    ///change below for channel push
-    [pushQuery whereKey:@"deviceType" equalTo:@"ios"];
 
-    // Send push notification to query
-    [PFPush sendPushMessageToQueryInBackground:pushQuery
-                                   withMessage:@"new chat message in \"event name\""];
+    ///
+    // Send a notification to all devices subscribed to the "Giants" channel.
+    PFPush *push = [[PFPush alloc] init];
+    [push setChannel:self.channelPlaceHolder];
+    [push setMessage:@"The Giants just scored!"];
+    [push sendPushInBackground];
+
+
+    ///multiple channel prototype
+//    NSArray *channels = [NSArray arrayWithObjects:@"Giants", @"Mets", nil];
+//    PFPush *push = [[PFPush alloc] init];
+//
+//    // Be sure to use the plural 'setChannels'.
+//    [push setChannels:channels];
+//    [push setMessage:@"The Giants won against the Mets 2-3."];
+//    [push sendPushInBackground];
+
+    ///send to all prototype
+//    // Create our Installation query
+//    PFQuery *pushQuery = [PFInstallation query];
+//    ///change below for channel push
+//    [pushQuery whereKey:@"channels" equalTo:self.channelPlaceHolder];
+//    //[pushQuery whereKey:@"channels" equalTo:@"ios"];
+//
+//
+//
+//    // Send push notification to query
+//    [PFPush sendPushMessageToQueryInBackground:pushQuery
+//                                   withMessage:[NSString stringWithFormat:@"new chat message in %@", self.channelPlaceHolder]];
 
 
     //Animate the send button
@@ -150,6 +172,16 @@
     sender.transform = CGAffineTransformConcat(scaleTrans, lefttorightTrans);
     [UIView commitAnimations];
 }
+
+- (IBAction)cancelTest:(id)sender
+{
+    // When users indicate they are no longer Giants fans, we unsubscribe them.
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation removeObject:self.channelPlaceHolder forKey:@"channels"];
+    [currentInstallation saveInBackground];
+}
+
+
 
 
 #pragma mark - (scroll methods) Method to figure out if scrolling up or down //-------------------------
@@ -209,7 +241,6 @@
     }
 }
 
-
 - (void)reload
 {
     [self retrieveCommentsFromParse];
@@ -220,15 +251,14 @@
 
 
 //////////CHANNELS
-//- (IBAction)testChannelSubscribeButt:(id)sender {
-//    // When users indicate they are Giants fans, we subscribe them to that channel.
-//    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-//    [currentInstallation addUniqueObject:@"Giants" forKey:@"channels"];
-//    [currentInstallation saveInBackground];
-//    NSLog(@"some punk likes the giants");
-//
-//}
+- (IBAction)testChannelSubscribeButt:(id)sender {
+    // When users indicate they are Giants fans, we subscribe them to that channel.
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation addUniqueObject:self.channelPlaceHolder forKey:@"channels"];
+    [currentInstallation saveInBackground];
+    NSLog(@"some punk is goin to the party");
 
+}
 
 
 #pragma mark - Getting from parse //------------------------------------------------
@@ -241,9 +271,7 @@
         if (!error)
         {
             [objects.lastObject objectForKey:@"chatText"]; //objectForKey:@"chatText"];
-
             self.messagesArray5000 = objects;
-
             [self.commentTableView reloadData];
         }
     }];
@@ -259,11 +287,7 @@
         if (!error)
         {
             [[users.lastObject objectForKey:@"author2"] objectForKey:@"username"];
-
             self.authorsArray = users;
-
-            NSLog(@"%@", self.authorsArray);
-
             [self.commentTableView reloadData];
         }
     }];
@@ -357,14 +381,36 @@
 
     cell.usernameChatCellLabel.text = self.usernamePlaceHolder;
 
-    //Avatar pic stuff
+
+
+
+    ///Avatar pic stuff
+    PFFile *userProfilePhoto = [[message objectForKey:@"fromUser"] objectForKey:@"userProfilePhoto"];
+
+    [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+     {
+         if (!error)
+         {
+             UIImage *image = [UIImage imageWithData:data];
+             cell.chatAvatarImage.image = image;
+
+         } else {
+             cell.chatAvatarImage.image = [UIImage imageNamed:@"clock"];
+         }
+     }];
+    ///
+
+
+
     //cell.chatAvatarImage.image = [UIImage imageNamed:@"pacMan.jpg"];
     //cell.chatAvatarImage.image = [self.imagesArray objectAtIndex:indexPath.row];
+
+
     cell.chatAvatarImage.layer.borderWidth = 1.0f;
     cell.chatAvatarImage.layer.cornerRadius = 11.7;
     cell.chatAvatarImage.layer.masksToBounds = YES;
     cell.chatAvatarImage.layer.borderColor = [[UIColor blackColor] CGColor];
-    
+
     //Rotate the cell too
     cell.transform = CGAffineTransformMakeRotation(M_PI);
     
