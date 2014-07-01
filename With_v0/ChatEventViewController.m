@@ -27,7 +27,6 @@
 @property NSMutableArray *imagesArray;
 @property PFUser *usernamePlaceHolder;
 
-///
 @property NSString *channelPlaceHolder;
 
 
@@ -85,7 +84,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    self.usernamePlaceHolder = [[NSString alloc] init];
+    self.usernamePlaceHolder = [[PFUser alloc] init];
 }
 
 
