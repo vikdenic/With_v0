@@ -99,13 +99,13 @@
     chatComment[@"chatText"] = self.chatTextFieldOutlet.text;
     chatComment[@"author"] = [PFUser currentUser];
     chatComment[@"chatEvent"] = self.event;
-    [chatComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-
-            [self.commentTableView reloadData];
-        }
+    [chatComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+     {
+         if (!error)
+         {
+             [self getChatObject];
+         }
     }];
-
     self.chatTextFieldOutlet.text = @"";
 
     ///
