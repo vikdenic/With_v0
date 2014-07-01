@@ -12,6 +12,7 @@
 		6050D51F1962FB60008AAF8F /* IndividualEventInvitePeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6050D51E1962FB60008AAF8F /* IndividualEventInvitePeopleViewController.m */; };
 		6050D5221962FC86008AAF8F /* IndividualEventInvitePeopleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6050D5211962FC86008AAF8F /* IndividualEventInvitePeopleTableViewCell.m */; };
 		6050D5251962FCD0008AAF8F /* IndividualEventInvitePeopleInviteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6050D5241962FCD0008AAF8F /* IndividualEventInvitePeopleInviteButton.m */; };
+		6050D52819633FAA008AAF8F /* ChatEventObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6050D52719633FAA008AAF8F /* ChatEventObject.m */; };
 		605ADBE3195CABC000254B92 /* PeopleAttendingFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 605ADBE2195CABBF00254B92 /* PeopleAttendingFriendButton.m */; };
 		605ADBE6195CF36400254B92 /* FindFriendsFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 605ADBE5195CF36400254B92 /* FindFriendsFriendButton.m */; };
 		60694166195FD98F00C8310F /* InvitesButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 60694165195FD98F00C8310F /* InvitesButton.m */; };
@@ -130,6 +131,8 @@
 		6050D5211962FC86008AAF8F /* IndividualEventInvitePeopleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualEventInvitePeopleTableViewCell.m; sourceTree = "<group>"; };
 		6050D5231962FCD0008AAF8F /* IndividualEventInvitePeopleInviteButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualEventInvitePeopleInviteButton.h; sourceTree = "<group>"; };
 		6050D5241962FCD0008AAF8F /* IndividualEventInvitePeopleInviteButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualEventInvitePeopleInviteButton.m; sourceTree = "<group>"; };
+		6050D52619633FAA008AAF8F /* ChatEventObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatEventObject.h; path = ../ChatEventObject.h; sourceTree = "<group>"; };
+		6050D52719633FAA008AAF8F /* ChatEventObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatEventObject.m; path = ../ChatEventObject.m; sourceTree = "<group>"; };
 		605ADBE1195CABBF00254B92 /* PeopleAttendingFriendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleAttendingFriendButton.h; sourceTree = "<group>"; };
 		605ADBE2195CABBF00254B92 /* PeopleAttendingFriendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleAttendingFriendButton.m; sourceTree = "<group>"; };
 		605ADBE4195CF36400254B92 /* FindFriendsFriendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendsFriendButton.h; sourceTree = "<group>"; };
@@ -489,6 +492,8 @@
 			children = (
 				810C1EC0195605B70046DFB1 /* CustomTableViewCell.h */,
 				810C1EC1195605B70046DFB1 /* CustomTableViewCell.m */,
+				6050D52619633FAA008AAF8F /* ChatEventObject.h */,
+				6050D52719633FAA008AAF8F /* ChatEventObject.m */,
 				60C72083194F677300ADE5DF /* ChatEventViewController.h */,
 				60C72084194F677300ADE5DF /* ChatEventViewController.m */,
 			);
@@ -675,7 +680,7 @@
 				ORGANIZATIONNAME = "Mobile Makers";
 				TargetAttributes = {
 					93952F89194D5D4C001AA3E4 = {
-						DevelopmentTeam = 3DJPBY6593;
+						DevelopmentTeam = ZNAFR9K9ZC;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -775,6 +780,7 @@
 				9375544A1950A5BF008AAD45 /* FindFriendsTableViewCell.m in Sources */,
 				606DAE3A1961FA80003F3AAE /* StreamProfileFriendsListTableViewCell.m in Sources */,
 				9368F99919630074005477A1 /* ThemeObject.m in Sources */,
+				6050D52819633FAA008AAF8F /* ChatEventObject.m in Sources */,
 				93952F9E194D5D4C001AA3E4 /* AppDelegate.m in Sources */,
 				606DAE4319624DFD003F3AAE /* LikesListTableViewCell.m in Sources */,
 				60694166195FD98F00C8310F /* InvitesButton.m in Sources */,
