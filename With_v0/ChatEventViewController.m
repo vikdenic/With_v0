@@ -107,7 +107,7 @@
 
     PFObject *chatComment = [PFObject objectWithClassName:@"ChatMessage"];
     chatComment[@"chatText"] = self.chatTextFieldOutlet.text;
-    chatComment[@"author2"] = [PFUser currentUser];
+    chatComment[@"author"] = [PFUser currentUser];
     chatComment[@"chatEvent"] = self.event;
     [chatComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
@@ -257,7 +257,9 @@
 - (void)retrieveCommentsFromParse
 {
     PFQuery *commentQuery = [PFQuery queryWithClassName:@"ChatMessage"];
+    [commentQuery whereKey:@"chatEvent" equalTo:self.event];
     [commentQuery orderByDescending:@"createdAt"];
+    [commentQuery includeKey:@"author"];
 
     [commentQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error)
@@ -273,12 +275,12 @@
 {
     PFQuery *authorQuery = [PFQuery queryWithClassName:@"ChatMessage"];
     [authorQuery orderByDescending:@"createdAt"];
-    [authorQuery includeKey:@"author2"];
+    [authorQuery includeKey:@"author"];
 
     [authorQuery findObjectsInBackgroundWithBlock:^(NSArray *users, NSError *error) {
         if (!error)
         {
-            [[users.lastObject objectForKey:@"author2"] objectForKey:@"username"];
+            [[users.lastObject objectForKey:@"author"] objectForKey:@"username"];
             self.authorsArray = users;
             [self.commentTableView reloadData];
         }
@@ -359,7 +361,7 @@
     cell.chatMessageCellLabel.text = self.enteredText;
 
 
-    if ([self.usernamePlaceHolder isEqualToString:[PFUser currentUser].username])
+    if ([self.usernamePlaceHolder isEqual:[PFUser currentUser]])
     {
         cell = [tableView dequeueReusableCellWithIdentifier:@"UserChatCell"];
         cell.usernameChatCellLabel.textColor = [UIColor orangeColor];

@@ -9,6 +9,7 @@
 #import "PageViewController.h"
 #import "IndividualEventViewController.h"
 #import "StreamEventViewController.h"
+#import "ChatEventViewController.h"
 
 @interface PageViewController () <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
@@ -107,6 +108,16 @@
         return nil;
     }
 }
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"ToChatSegue"])
+    {
+        ChatEventViewController *chatEventViewController = segue.destinationViewController;
+        chatEventViewController.event = self.event;
+    }
+}
+
 
 //- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 //{

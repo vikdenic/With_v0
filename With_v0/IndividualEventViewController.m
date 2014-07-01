@@ -300,11 +300,12 @@
         IndividualEventInvitePeopleViewController *individualEventInvitePeopleViewController = segue.destinationViewController;
         individualEventInvitePeopleViewController.event = self.event;
 
-    } else if ([segue.identifier isEqualToString:@"ToChatSegue"])
-    {
-        ChatEventViewController *chatEventViewController = segue.destinationViewController;
-        chatEventViewController.event = self.event;
     }
+//    else if ([segue.identifier isEqualToString:@"ToChatSegue"])
+//    {
+//        ChatEventViewController *chatEventViewController = segue.destinationViewController;
+//        chatEventViewController.event = self.event;
+//    }
 }
 
 - (IBAction)unwindSegueToIndividualViewController:(UIStoryboardSegue *)sender
