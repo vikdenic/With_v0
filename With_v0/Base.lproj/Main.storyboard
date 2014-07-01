@@ -1514,11 +1514,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="91r-nT-LcS">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="91r-nT-LcS">
                                 <rect key="frame" x="266" y="434" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="onInviteOnlySwitch:" destination="slZ-Mk-xvY" eventType="valueChanged" id="FJA-1q-4dP"/>
+                                </connections>
                             </switch>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oAR-7V-NmD">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="oAR-7V-NmD">
                                 <rect key="frame" x="266" y="478" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </switch>
@@ -1653,6 +1656,7 @@
                         <outlet property="dateAndTimeButton" destination="goa-9d-jMz" id="sfU-xx-He5"/>
                         <outlet property="detailsPlaceholderLabel" destination="E78-e0-wwE" id="viv-RE-0pu"/>
                         <outlet property="detailsTextView" destination="Icf-pK-GzR" id="dvl-8O-9Us"/>
+                        <outlet property="inviteOnly" destination="91r-nT-LcS" id="AMF-Bg-uBu"/>
                         <outlet property="invitePeopleButton" destination="f3W-tn-PLV" id="A8N-kW-uVw"/>
                         <outlet property="locationButton" destination="RT0-wg-hSx" id="beG-4k-Kzd"/>
                         <outlet property="placeholderLabel" destination="0cc-kL-xY6" id="p3l-ri-GXK"/>
