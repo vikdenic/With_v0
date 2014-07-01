@@ -12,6 +12,8 @@
 @interface IdeasViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property NSArray *ideaStrings;
+@property NSArray *ideaImages;
+
 
 @end
 
@@ -21,9 +23,10 @@
 {
     [super viewDidLoad];
 
-    self.ideaStrings = [[NSArray alloc]initWithObjects:@[@"Nine Hole", @"Mock Wedding",@"Jersey Party",
-                                                         @"Pub Crawl",@"Tequila Mockingbird",@""]];
+    self.ideaStrings = @[@"Glow Party", @"Pub Crawl", @"Nine Hole",
+                         @"Mock Wedding", @"Tequila Mockingbird"];
 
+    self.ideaImages = @[[UIImage imageNamed:@"glow_image"],[UIImage imageNamed:@"pub_image"],[UIImage imageNamed:@"golf_image"],[UIImage imageNamed:@"wedding_image"], [UIImage imageNamed:@"tequilla_image"]];
 }
 
 #pragma mark - Action
@@ -36,14 +39,16 @@
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return self.ideaStrings.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     IdeasTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
 
-    cell.themeImageView.image = [UIImage imageNamed:@"pacMan"];
+    cell.themeImageView.image = [self.ideaImages objectAtIndex:indexPath.row];
+
+//    cell.themeLabel.text = [self.ideaStrings objectAtIndex:indexPath.row];
 
     return cell;
 }
