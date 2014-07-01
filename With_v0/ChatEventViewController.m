@@ -25,14 +25,13 @@
 @property NSArray *messagesArray5000;
 @property NSArray *imageFilesArray;
 @property NSMutableArray *imagesArray;
-@property NSString *usernamePlaceHolder;
+@property PFUser *usernamePlaceHolder;
 
 ///
 @property NSString *channelPlaceHolder;
 
 
 @end
-
 
 #pragma mark - view life cycle //------------------------------------------------
 
@@ -98,7 +97,6 @@
         [self reload];
     }
 }
-
 
 #pragma mark - send button  CGAFFINE!!!!! //------------------------------------------------
 - (IBAction)sendButtonPressed:(UIButton *)sender
@@ -172,8 +170,6 @@
     [currentInstallation removeObject:self.channelPlaceHolder forKey:@"channels"];
     [currentInstallation saveInBackground];
 }
-
-
 
 
 #pragma mark - (scroll methods) Method to figure out if scrolling up or down //-------------------------
@@ -287,36 +283,6 @@
     }];
 }
 
-//- (void)retrieveAuthorsAvatarImages
-//{
-//    PFQuery *avatarQuery = [PFQuery queryWithClassName:@"ChatMessage"];
-//    [avatarQuery orderByDescending:@"createdAt"];
-//    [avatarQuery includeKey:@"author2"];
-//
-//    [avatarQuery findObjectsInBackgroundWithBlock:^(NSArray *imageFiles, NSError *error) {
-//        if (!error)
-//        {
-//            [[imageFiles.lastObject objectForKey:@"author2"] objectForKey:@"miniProfilePhoto"];
-//
-//            self.imageFilesArray = imageFiles;
-//
-//            for (PFFile *file in self.imageFilesArray) {
-//                [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-//                    UIImage *finalImage = [UIImage imageWithData:data];
-//                    [self.imagesArray addObject:finalImage];
-//
-//                    NSLog(@"FINAL IMAGE: %@",finalImage);
-//                }];
-//
-//            }
-//
-//            [self.commentTableView reloadData];
-//        }
-//    }];
-//}
-
-
-
 #pragma mark - TableView del methods //------------------------------------------------
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -354,9 +320,9 @@
 {
     CustomTableViewCell *cell = [[CustomTableViewCell alloc] init];
     PFObject *message = [self.messagesArray5000 objectAtIndex:indexPath.row];
-    PFObject *author = [self.authorsArray objectAtIndex:indexPath.row];
+    PFObject *chatMessage = [self.authorsArray objectAtIndex:indexPath.row];
 
-    self.usernamePlaceHolder = [author objectForKey:@"author"];
+    self.usernamePlaceHolder = [chatMessage objectForKey:@"author"];
 
     cell.chatMessageCellLabel.text = self.enteredText;
 
@@ -373,13 +339,11 @@
 
     [cell.chatMessageCellLabel setText:[message objectForKey:@"chatText"]];
 
-    cell.usernameChatCellLabel.text = self.usernamePlaceHolder;
+    cell.usernameChatCellLabel.text = self.usernamePlaceHolder.username;
 
 
-
-
-    ///Avatar pic stuff
-    PFFile *userProfilePhoto = [[message objectForKey:@"fromUser"] objectForKey:@"userProfilePhoto"];
+    //setting the user profile picture
+    PFFile *userProfilePhoto = [self.usernamePlaceHolder objectForKey:@"miniProfilePhoto"];
 
     [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
      {
@@ -394,11 +358,8 @@
      }];
     ///
 
-
-
     //cell.chatAvatarImage.image = [UIImage imageNamed:@"pacMan.jpg"];
     //cell.chatAvatarImage.image = [self.imagesArray objectAtIndex:indexPath.row];
-
 
     cell.chatAvatarImage.layer.borderWidth = 1.0f;
     cell.chatAvatarImage.layer.cornerRadius = 11.7;
