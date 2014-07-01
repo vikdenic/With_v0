@@ -228,10 +228,20 @@
 
         if (self.isEventinviteOnly)
         {
-            event[@"eventPrivate"] = @"YES";
+            event[@"eventPrivate"] = @YES;
+        } else
+        {
+            event[@"eventPrivate"] = @NO;
         }
-        
-    event[@"eventPrivate"] = @"self.isEventinviteOnly";
+
+        if (self.canGuestInviteOthers)
+        {
+            event[@"guestCanInviteOthers"] = @YES;
+        } else
+        {
+            event[@"guestCanInviteOthers"] = @NO;
+        }
+
     event[@"guestCanInviteOthers"] = @"self.canGuestInviteOthers";
     [event saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
     {
