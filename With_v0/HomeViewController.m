@@ -253,6 +253,8 @@
 
              [self.tableView insertRowsAtIndexPaths:self.indexPathArray withRowAnimation:UITableViewRowAnimationFade];
              [self.indexPathArray removeAllObjects];
+             ///
+             [self.tableView reloadData];
          }
          self.doingTheQuery = NO;
      }];

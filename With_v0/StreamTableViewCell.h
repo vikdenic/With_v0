@@ -11,7 +11,7 @@
 @interface StreamTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *theImageView;
-@property (weak, nonatomic) IBOutlet UILabel *numberOfLikesLabel;
+@property (weak, nonatomic) IBOutlet UIButton *numberOfLikesButton;
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (weak, nonatomic) IBOutlet UIButton *commentButton;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;

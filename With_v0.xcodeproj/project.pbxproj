@@ -17,6 +17,9 @@
 		606DAE371961FA1E003F3AAE /* StreamProfileFriendListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 606DAE361961FA1E003F3AAE /* StreamProfileFriendListViewController.m */; };
 		606DAE3A1961FA80003F3AAE /* StreamProfileFriendsListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 606DAE391961FA80003F3AAE /* StreamProfileFriendsListTableViewCell.m */; };
 		606DAE3D1961FB1E003F3AAE /* StreamProfileFriendListFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 606DAE3C1961FB1E003F3AAE /* StreamProfileFriendListFriendButton.m */; };
+		606DAE4019624D83003F3AAE /* LikeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 606DAE3F19624D82003F3AAE /* LikeListViewController.m */; };
+		606DAE4319624DFD003F3AAE /* LikesListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 606DAE4219624DFD003F3AAE /* LikesListTableViewCell.m */; };
+		606DAE4619624E1C003F3AAE /* LikesListFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 606DAE4519624E1C003F3AAE /* LikesListFriendButton.m */; };
 		607E90EC19565E8D006F88C8 /* IndividualEventPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 607E90EB19565E8D006F88C8 /* IndividualEventPhoto.m */; };
 		608B6C991950DBCF007D4503 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608B6C961950DBCF007D4503 /* LoginViewController.m */; };
 		608B6C9A1950DBCF007D4503 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608B6C981950DBCF007D4503 /* SignupViewController.m */; };
@@ -133,6 +136,12 @@
 		606DAE391961FA80003F3AAE /* StreamProfileFriendsListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamProfileFriendsListTableViewCell.m; sourceTree = "<group>"; };
 		606DAE3B1961FB1E003F3AAE /* StreamProfileFriendListFriendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamProfileFriendListFriendButton.h; sourceTree = "<group>"; };
 		606DAE3C1961FB1E003F3AAE /* StreamProfileFriendListFriendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamProfileFriendListFriendButton.m; sourceTree = "<group>"; };
+		606DAE3E19624D82003F3AAE /* LikeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeListViewController.h; sourceTree = "<group>"; };
+		606DAE3F19624D82003F3AAE /* LikeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikeListViewController.m; sourceTree = "<group>"; };
+		606DAE4119624DFD003F3AAE /* LikesListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikesListTableViewCell.h; sourceTree = "<group>"; };
+		606DAE4219624DFD003F3AAE /* LikesListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikesListTableViewCell.m; sourceTree = "<group>"; };
+		606DAE4419624E1C003F3AAE /* LikesListFriendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikesListFriendButton.h; sourceTree = "<group>"; };
+		606DAE4519624E1C003F3AAE /* LikesListFriendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikesListFriendButton.m; sourceTree = "<group>"; };
 		607E90EA19565E8D006F88C8 /* IndividualEventPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualEventPhoto.h; sourceTree = "<group>"; };
 		607E90EB19565E8D006F88C8 /* IndividualEventPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualEventPhoto.m; sourceTree = "<group>"; };
 		608B6C951950DBCF007D4503 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -367,6 +376,12 @@
 				606DAE3C1961FB1E003F3AAE /* StreamProfileFriendListFriendButton.m */,
 				606DAE351961FA1E003F3AAE /* StreamProfileFriendListViewController.h */,
 				606DAE361961FA1E003F3AAE /* StreamProfileFriendListViewController.m */,
+				606DAE4119624DFD003F3AAE /* LikesListTableViewCell.h */,
+				606DAE4219624DFD003F3AAE /* LikesListTableViewCell.m */,
+				606DAE4419624E1C003F3AAE /* LikesListFriendButton.h */,
+				606DAE4519624E1C003F3AAE /* LikesListFriendButton.m */,
+				606DAE3E19624D82003F3AAE /* LikeListViewController.h */,
+				606DAE3F19624D82003F3AAE /* LikeListViewController.m */,
 				601F5D8F1951DD8E00B6D89C /* CommentsTableViewCell.h */,
 				601F5D901951DD8E00B6D89C /* CommentsTableViewCell.m */,
 				606DAE321961B5B7003F3AAE /* CommentsButton.h */,
@@ -640,7 +655,7 @@
 				ORGANIZATIONNAME = "Mobile Makers";
 				TargetAttributes = {
 					93952F89194D5D4C001AA3E4 = {
-						DevelopmentTeam = 3DJPBY6593;
+						DevelopmentTeam = ZNAFR9K9ZC;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -740,6 +755,7 @@
 				9375544A1950A5BF008AAD45 /* FindFriendsTableViewCell.m in Sources */,
 				606DAE3A1961FA80003F3AAE /* StreamProfileFriendsListTableViewCell.m in Sources */,
 				93952F9E194D5D4C001AA3E4 /* AppDelegate.m in Sources */,
+				606DAE4319624DFD003F3AAE /* LikesListTableViewCell.m in Sources */,
 				60694166195FD98F00C8310F /* InvitesButton.m in Sources */,
 				93513A641952902C00302A54 /* FSVenue.m in Sources */,
 				608B6C9A1950DBCF007D4503 /* SignupViewController.m in Sources */,
@@ -760,9 +776,11 @@
 				930D1911195886DC00AE4AE1 /* GKImageCropView.m in Sources */,
 				93952FC4194D6BEA001AA3E4 /* HomeViewController.m in Sources */,
 				60F5B34C1957555E00A80467 /* ExploreAnnotation.m in Sources */,
+				606DAE4019624D83003F3AAE /* LikeListViewController.m in Sources */,
 				609FDC71195F4CBB00EF7C5B /* InvitePeopleTableViewCell.m in Sources */,
 				93CE89051961399D007BA434 /* IdeasViewController.m in Sources */,
 				93802209195659A0004B492D /* DateAndTimeViewController.m in Sources */,
+				606DAE4619624E1C003F3AAE /* LikesListFriendButton.m in Sources */,
 				60C7208E194F689400ADE5DF /* PageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
