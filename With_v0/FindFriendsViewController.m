@@ -89,12 +89,24 @@
     [self searchForFriends];
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
-    ///remove all the data and reload tableview
+//- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+//{
+//    ///remove all the data and reload tableview
+//
+//    [self.results removeAllObjects];
+//    [self.tableView reloadData];
+//}
 
-    [self.results removeAllObjects];
-    [self.tableView reloadData];
+//VIK: Clears tableview upon 'x' button pressed
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    // This method has been called when u enter some text on search or Cancel the search.
+    // so make some condition for example:
+
+    if([searchText isEqualToString:@""] || searchText==nil)
+    {
+        [self.results removeAllObjects];
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - TableView

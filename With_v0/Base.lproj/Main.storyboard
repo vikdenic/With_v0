@@ -2745,6 +2745,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="1PW-vZ-Ulp" id="UCw-M8-150"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fjv-y1-u4i" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="IqI-ey-0Il" userLabel="Exit" sceneMemberID="exit"/>
