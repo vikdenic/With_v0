@@ -11,23 +11,25 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "CamPreView.h"
 
-static void * CapturingStillImageContext = &CapturingStillImageContext;
-static void * RecordingContext = &RecordingContext;
-static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDeviceAuthorizedContext;
+
+static void *CapturingStillImageContext = &CapturingStillImageContext;
+static void *RecordingContext = &RecordingContext;
+static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDeviceAuthorizedContext;
 
 @interface StreamCameraViewController () <AVCaptureFileOutputRecordingDelegate, UIImagePickerControllerDelegate>
-
 
 // For use in the storyboards.
 @property (nonatomic, weak) IBOutlet CamPreView *previewView;
 @property (nonatomic, weak) IBOutlet UIButton *recordButton;
 @property (nonatomic, weak) IBOutlet UIButton *cameraButton;
 @property (nonatomic, weak) IBOutlet UIButton *stillButton;
+@property (weak, nonatomic) IBOutlet UITextField *descriptionTextField;
+@property (weak, nonatomic) IBOutlet UILabel *tapInstructLabel;
 
-- (IBAction)toggleMovieRecording:(id)sender;
+//- (IBAction)toggleMovieRecording:(id)sender;
 - (IBAction)changeCamera:(id)sender;
 - (IBAction)snapStillImage:(id)sender;
-- (IBAction)focusAndExposeTap:(UIGestureRecognizer *)gestureRecognizer;
+//- (IBAction)focusAndExposeTap:(UIGestureRecognizer *)gestureRecognizer;
 
 // Session management.
 @property (nonatomic) dispatch_queue_t sessionQueue; // Communicate with the session and other session objects on this queue.
@@ -61,19 +63,17 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 {
 	[super viewDidLoad];
 
-	// Create the AVCaptureSession
+
+	//Create the AVCaptureSession
 	AVCaptureSession *session = [[AVCaptureSession alloc] init];
 	[self setSession:session];
 
-	// Setup the preview view
+
+	//Setup the preview
 	[[self previewView] setSession:session];
 
-	// Check for device authorization
+	//Check for device authorization
 	[self checkDeviceAuthorizationStatus];
-
-	// In general it is not safe to mutate an AVCaptureSession or any of its inputs, outputs, or connections from multiple threads at the same time.
-	// Why not do all of this on the main queue?
-	// -[AVCaptureSession startRunning] is a blocking call which can take a long time. We dispatch session setup to the sessionQueue so that the main queue isn't blocked (which keeps the UI responsive).
 
 	dispatch_queue_t sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL);
 	[self setSessionQueue:sessionQueue];
@@ -97,9 +97,7 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 			[self setVideoDeviceInput:videoDeviceInput];
 
 			dispatch_async(dispatch_get_main_queue(), ^{
-				// Why are we dispatching this to the main queue?
-				// Because AVCaptureVideoPreviewLayer is the backing layer for AVCamPreviewView and UIView can only be manipulated on main thread.
-				// Note: As an exception to the above rule, it is not necessary to serialize video orientation changes on the AVCaptureVideoPreviewLayer’s connection with other session manipulation.
+                ///video for future
 
 				[[(AVCaptureVideoPreviewLayer *)[[self previewView] layer] connection] setVideoOrientation:(AVCaptureVideoOrientation)[self interfaceOrientation]];
 			});
@@ -136,10 +134,17 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 			[self setStillImageOutput:stillImageOutput];
 		}
 	});
+
+    //notification for keyboard anime
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+
 	dispatch_async([self sessionQueue], ^{
 		[self addObserver:self forKeyPath:@"sessionRunningAndDeviceAuthorized" options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:SessionRunningAndDeviceAuthorizedContext];
 		[self addObserver:self forKeyPath:@"stillImageOutput.capturingStillImage" options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:CapturingStillImageContext];
@@ -157,6 +162,23 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 		}]];
 		[[self session] startRunning];
 	});
+
+    //    stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
+    //    NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey, nil];
+    //    [stillImageOutput setOutputSettings:outputSettings];
+    //
+    //    [session addOutput:stillImageOutput];
+}
+
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:2.0];
+    [self.tapInstructLabel setAlpha:0];
+    [UIView commitAnimations];
+
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -178,21 +200,6 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 	return YES;
 }
 
-- (BOOL)shouldAutorotate
-{
-	// Disable autorotation of the interface when recording is in progress.
-	return ![self lockInterfaceRotation];
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-	return UIInterfaceOrientationMaskAll;
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-	[[(AVCaptureVideoPreviewLayer *)[[self previewView] layer] connection] setVideoOrientation:(AVCaptureVideoOrientation)toInterfaceOrientation];
-}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -249,39 +256,59 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 	}
 }
 
-#pragma mark Actions
-
-- (IBAction)toggleMovieRecording:(id)sender
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-	[[self recordButton] setEnabled:NO];
+//    PFUser *picturePhotographer = [self.individualEventPhoto.object objectForKey:@"photographer"];
+//
+//    PFObject *comment = [PFObject objectWithClassName:@"CommentActivity"];
+//    comment[@"fromUser"] = [PFUser currentUser];
+//    comment[@"toUser"] = picturePhotographer;
+//    comment[@"photo"] = self.individualEventPhoto.object;
+//    comment[@"commentContent"] = self.textField.text;
+//    [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+//     {
+//         PFRelation *relation = [self.individualEventPhoto.object relationForKey:@"commentActivity"];
+//         [relation addObject:comment];
+//         [self.individualEventPhoto.object saveInBackground];
+//     }];
 
-	dispatch_async([self sessionQueue], ^{
-		if (![[self movieFileOutput] isRecording])
-		{
-			[self setLockInterfaceRotation:YES];
+    [self.descriptionTextField resignFirstResponder];
 
-			if ([[UIDevice currentDevice] isMultitaskingSupported])
-			{
-				// Setup background task. This is needed because the captureOutput:didFinishRecordingToOutputFileAtURL: callback is not received until AVCam returns to the foreground unless you request background execution time. This also ensures that there will be time to write the file to the assets library when AVCam is backgrounded. To conclude this background execution, -endBackgroundTask is called in -recorder:recordingDidFinishToOutputFileURL:error: after the recorded file has been saved.
-				[self setBackgroundRecordingID:[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil]];
-			}
-
-			// Update the orientation on the movie file output video connection before starting recording.
-			[[[self movieFileOutput] connectionWithMediaType:AVMediaTypeVideo] setVideoOrientation:[[(AVCaptureVideoPreviewLayer *)[[self previewView] layer] connection] videoOrientation]];
-
-			// Turning OFF flash for video recording
-			[StreamCameraViewController setFlashMode:AVCaptureFlashModeOff forDevice:[[self videoDeviceInput] device]];
-
-			// Start recording to a temporary file.
-			NSString *outputFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[@"movie" stringByAppendingPathExtension:@"mov"]];
-			[[self movieFileOutput] startRecordingToOutputFileURL:[NSURL fileURLWithPath:outputFilePath] recordingDelegate:self];
-		}
-		else
-		{
-			[[self movieFileOutput] stopRecording];
-		}
-	});
+    return YES;
 }
+
+#pragma mark Actions
+///future video
+//- (IBAction)toggleMovieRecording:(id)sender
+//{
+//	[[self recordButton] setEnabled:NO];
+//
+//	dispatch_async([self sessionQueue], ^{
+//		if (![[self movieFileOutput] isRecording])
+//		{
+//			[self setLockInterfaceRotation:YES];
+//
+//			if ([[UIDevice currentDevice] isMultitaskingSupported])
+//			{
+//				[self setBackgroundRecordingID:[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil]];
+//			}
+//
+//			// Update the orientation on the movie file output video connection before starting recording.
+//			[[[self movieFileOutput] connectionWithMediaType:AVMediaTypeVideo] setVideoOrientation:[[(AVCaptureVideoPreviewLayer *)[[self previewView] layer] connection] videoOrientation]];
+//
+//			// Turning OFF flash for video recording
+//			[StreamCameraViewController setFlashMode:AVCaptureFlashModeOff forDevice:[[self videoDeviceInput] device]];
+//
+//			// Start recording to a temporary file.
+//			NSString *outputFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[@"movie" stringByAppendingPathExtension:@"mov"]];
+//			[[self movieFileOutput] startRecordingToOutputFileURL:[NSURL fileURLWithPath:outputFilePath] recordingDelegate:self];
+//		}
+//		else
+//		{
+//			[[self movieFileOutput] stopRecording];
+//		}
+//	});
+//}
 
 - (IBAction)changeCamera:(id)sender
 {
@@ -362,8 +389,28 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 
 - (IBAction)focusAndExposeTap:(UIGestureRecognizer *)gestureRecognizer
 {
+    dispatch_async([self sessionQueue], ^{
+		// Update the orientation on the still image output video connection before capturing.
+		[[[self stillImageOutput] connectionWithMediaType:AVMediaTypeVideo] setVideoOrientation:[[(AVCaptureVideoPreviewLayer *)[[self previewView] layer] connection] videoOrientation]];
+
+		// Flash set to Auto for Still Capture
+		[StreamCameraViewController setFlashMode:AVCaptureFlashModeAuto forDevice:[[self videoDeviceInput] device]];
+
+		// Capture a still image.
+		[[self stillImageOutput] captureStillImageAsynchronouslyFromConnection:[[self stillImageOutput] connectionWithMediaType:AVMediaTypeVideo] completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
+
+			if (imageDataSampleBuffer)
+			{
+				NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
+				UIImage *image = [[UIImage alloc] initWithData:imageData];
+				[[[ALAssetsLibrary alloc] init] writeImageToSavedPhotosAlbum:[image CGImage] orientation:(ALAssetOrientation)[image imageOrientation] completionBlock:nil];
+			}
+		}];
+	});
 	CGPoint devicePoint = [(AVCaptureVideoPreviewLayer *)[[self previewView] layer] captureDevicePointOfInterestForPoint:[gestureRecognizer locationInView:[gestureRecognizer view]]];
 	[self focusWithMode:AVCaptureFocusModeAutoFocus exposeWithMode:AVCaptureExposureModeAutoExpose atDevicePoint:devicePoint monitorSubjectAreaChange:YES];
+
+    [self.descriptionTextField resignFirstResponder];
 }
 
 - (void)subjectAreaDidChange:(NSNotification *)notification
@@ -379,9 +426,8 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 	if (error)
 		NSLog(@"%@", error);
 
-	[self setLockInterfaceRotation:NO];
+	//[self setLockInterfaceRotation:NO];
 
-	// Note the backgroundRecordingID for use in the ALAssetsLibrary completion handler to end the background task associated with this recording. This allows a new recording to be started, associated with a new UIBackgroundTaskIdentifier, once the movie file output's -isRecording is back to NO — which happens sometime after this method returns.
 	UIBackgroundTaskIdentifier backgroundRecordingID = [self backgroundRecordingID];
 	[self setBackgroundRecordingID:UIBackgroundTaskInvalid];
 
@@ -465,7 +511,7 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[[[self previewView] layer] setOpacity:0.0];
-		[UIView animateWithDuration:.25 animations:^{
+		[UIView animateWithDuration:2 animations:^{
 			[[[self previewView] layer] setOpacity:1.0];
 		}];
 	});
@@ -478,12 +524,12 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 	[AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
 		if (granted)
 		{
-			//Granted access to mediaType
+			//Granted access
 			[self setDeviceAuthorized:YES];
 		}
 		else
 		{
-			//Not granted access to mediaType
+			//Not granted access, go away
 			dispatch_async(dispatch_get_main_queue(), ^{
 				[[[UIAlertView alloc] initWithTitle:@"AVCam!"
 											message:@"AVCam doesn't have permission to use Camera, please change privacy settings"
@@ -497,5 +543,55 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 }
 
 
+//new style keyboard animation
+- (void) keyboardDidShow:(NSNotification *)notification
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationCurve:[notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue]];
+    [UIView setAnimationDuration:[notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] intValue]];
+
+
+    if ([[UIScreen mainScreen] bounds].size.height == 1136)
+    {
+        [self.view setFrame:CGRectMake(0, -220, 640, 1120)];
+    } else {
+        [self.view setFrame:CGRectMake(0, -220, 640, 920)];
+    }
+
+    [UIView commitAnimations];
+}
+
+
+//Old style
+- (void) keyboardDidHide:(NSNotification *)notification
+{
+    if ([[UIScreen mainScreen] bounds].size.height == 1136)
+    {
+        [UIView animateWithDuration:0.25 animations:^{
+            [self.view setFrame:CGRectMake(0, 0, 640, 1120)];
+        }];
+    } else {
+        [UIView animateWithDuration:0.25 animations:^{
+            [self.view setFrame:CGRectMake(0, 0, 640, 920)];
+        }];
+    }
+}
+
+
+//- (BOOL)shouldAutorotate
+//{
+//	// Disable autorotation of the interface when recording is in progress.
+//	return ![self lockInterfaceRotation];
+//}
+//
+//- (NSUInteger)supportedInterfaceOrientations
+//{
+//	return UIInterfaceOrientationMaskAll;
+//}
+
+//- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+//{
+//	[[(AVCaptureVideoPreviewLayer *)[[self previewView] layer] connection] setVideoOrientation:(AVCaptureVideoOrientation)toInterfaceOrientation];
+//}
 
 @end
