@@ -52,7 +52,7 @@
 
     [self queryForImages];
 
-    self.originalFrame = self.tabBarController.tabBar.frame;
+//    self.originalFrame = self.tabBarController.tabBar.frame;
 
     self.theLegitArrayOfEverything = [NSMutableArray array];
 
@@ -68,16 +68,16 @@
     [super viewWillAppear:animated];
 }
 
-#pragma mark - Hide TabBar
-
--(void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    UITabBar *tb = self.tabBarController.tabBar;
-    NSInteger yOffset = scrollView.contentOffset.y;
-    if (yOffset > 0) {
-        tb.frame = CGRectMake(tb.frame.origin.x, self.originalFrame.origin.y + yOffset, tb.frame.size.width, tb.frame.size.height);
-    }
-    if (yOffset < 1) tb.frame = self.originalFrame;
-}
+//#pragma mark - Hide TabBar
+//
+//-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    UITabBar *tb = self.tabBarController.tabBar;
+//    NSInteger yOffset = scrollView.contentOffset.y;
+//    if (yOffset > 0) {
+//        tb.frame = CGRectMake(tb.frame.origin.x, self.originalFrame.origin.y + yOffset, tb.frame.size.width, tb.frame.size.height);
+//    }
+//    if (yOffset < 1) tb.frame = self.originalFrame;
+//}
 
 #pragma mark - Getting Pictures and Videos
 

@@ -13,6 +13,8 @@
 #import "PageViewController.h"
 #import "LoginViewController.h"
 
+#import "UITabBarController+hidable.h"
+
 #import <QuartzCore/QuartzCore.h>
 #import <CoreImage/CoreImage.h>
 
@@ -30,7 +32,11 @@
 
 @end
 
-@implementation HomeViewController
+@implementation HomeViewController{
+    CGFloat startContentOffset;
+    CGFloat lastContentOffset;
+    BOOL hidden;
+}
 
 - (void)viewDidLoad
 {
@@ -83,15 +89,96 @@
     }
 }
 
-#pragma mark - Hide TabBar
--(void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    UITabBar *tb = self.tabBarController.tabBar;
-    NSInteger yOffset = scrollView.contentOffset.y;
-    if (yOffset > 0) {
-        tb.frame = CGRectMake(tb.frame.origin.x, self.originalFrame.origin.y + yOffset, tb.frame.size.width, tb.frame.size.height);
-    }
-    if (yOffset < 1) tb.frame = self.originalFrame;
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = NO;
+
 }
+
+#pragma mark - The Magic!
+
+-(void)expand
+{
+    if(hidden)
+        return;
+
+    hidden = YES;
+
+    [self.tabBarController setTabBarHidden:YES
+                                  animated:YES];
+
+    [self.navigationController setNavigationBarHidden:YES
+                                             animated:YES];
+}
+
+-(void)contract
+{
+    if(!hidden)
+        return;
+
+    hidden = NO;
+
+    [self.tabBarController setTabBarHidden:NO
+                                  animated:YES];
+
+    [self.navigationController setNavigationBarHidden:NO
+                                             animated:YES];
+}
+
+#pragma mark -
+#pragma mark UIScrollViewDelegate Methods
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    startContentOffset = lastContentOffset = scrollView.contentOffset.y;
+    //NSLog(@"scrollViewWillBeginDragging: %f", scrollView.contentOffset.y);
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat currentOffset = scrollView.contentOffset.y;
+    CGFloat differenceFromStart = startContentOffset - currentOffset;
+    CGFloat differenceFromLast = lastContentOffset - currentOffset;
+    lastContentOffset = currentOffset;
+
+
+
+    if((differenceFromStart) < 0)
+    {
+        // scroll up
+        if(scrollView.isTracking && (abs(differenceFromLast)>1))
+            [self expand];
+    }
+    else {
+        if(scrollView.isTracking && (abs(differenceFromLast)>1))
+            [self contract];
+    }
+
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+}
+
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView
+{
+    [self contract];
+    return YES;
+}
+
+//#pragma mark - Hide TabBar
+//-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    UITabBar *tb = self.tabBarController.tabBar;
+//    NSInteger yOffset = scrollView.contentOffset.y;
+//    if (yOffset > 0) {
+//        tb.frame = CGRectMake(tb.frame.origin.x, self.originalFrame.origin.y + yOffset, tb.frame.size.width, tb.frame.size.height);
+//    }
+//    if (yOffset < 1) tb.frame = self.originalFrame;
+//}
 
 #pragma mark - Blur
 
