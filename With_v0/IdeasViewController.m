@@ -15,6 +15,8 @@
 
 @property (strong, nonatomic) NSMutableArray *ideaStrings;
 @property (strong, nonatomic) NSMutableArray *ideaImages;
+@property (strong, nonatomic) NSMutableArray *ideas;
+
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -29,6 +31,9 @@
     self.ideaStrings = [[NSMutableArray alloc]init];
     self.ideaImages = [[NSMutableArray alloc]init];
 
+
+    self.ideas = [[NSMutableArray alloc]init];
+
     [self getParseData];
 }
 
@@ -40,18 +45,24 @@
 
     [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
      {
-         NSLog(@"%@",results);
+//         NSLog(@"%@",results);
         for (PFObject *object in results)
         {
+            ThemeObject *themeObject = [[ThemeObject alloc]init];
             NSString *themeName = [object objectForKey:@"themeName"];
-            [self.ideaStrings addObject:themeName];
+
+//            [self.ideaStrings addObject:themeName];
 //            NSLog(@"%@",themeName);
+            themeObject.themeName = themeName;
 
             PFFile *imageFile = [object objectForKey:@"themeImage"];
             [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
                 UIImage *themeImage = [UIImage imageWithData:data];
-                [self.ideaImages addObject:themeImage];
+//                [self.ideaImages addObject:themeImage];
 //                NSLog(@"%d",self.ideaImages.count);
+                themeObject.themeImage = themeImage;
+
+                [self.ideas addObject:themeObject];
                 [self.tableView reloadData];
             }];
         }
@@ -70,16 +81,16 @@
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.ideaImages.count;
+    return self.ideas.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     IdeasTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
 
-    cell.themeLabel.text = [self.ideaStrings objectAtIndex:indexPath.row];
+    cell.themeLabel.text = [[self.ideas objectAtIndex:indexPath.row] themeName];
 
-    cell.themeImageView.image = [self.ideaImages objectAtIndex:indexPath.row];
+    cell.themeImageView.image = [[self.ideas objectAtIndex:indexPath.row] themeImage];
 
     return cell;
 }
