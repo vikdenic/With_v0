@@ -11,7 +11,7 @@
 
 @interface IdeasViewController () <UITableViewDelegate, UITableViewDataSource>
 
-@property NSArray *ideasArray;
+@property NSArray *ideaStrings;
 
 @end
 
@@ -21,7 +21,9 @@
 {
     [super viewDidLoad];
 
-//    self.ideaStrings = [[NSArray alloc]initWithObjects:@", nil
+    self.ideaStrings = [[NSArray alloc]initWithObjects:@[@"Nine Hole", @"Mock Wedding",@"Jersey Party",
+                                                         @"Pub Crawl",@"Tequila Mockingbird",@""]];
+
 }
 
 #pragma mark - Action
