@@ -79,6 +79,12 @@
 {
     [super viewWillAppear:animated];
 
+    ///
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation addUniqueObject:self.tempTitle forKey:@"channels"];
+    [currentInstallation saveInBackground];
+    ///
+
     self.detailsTextView.text = self.event[@"details"];
     self.addressTextView.text = self.event[@"location"];
     self.dateAndTimeTextView.text = self.event[@"eventDate"];
@@ -134,12 +140,6 @@
         [self.event saveInBackground];
         [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:0.8];
 
-        ///
-        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-        [currentInstallation addUniqueObject:self.tempTitle forKey:@"channels"];
-        [currentInstallation saveInBackground];
-        ///
-
     } else {
 
         self.yesButtonTapped = NO;
@@ -153,13 +153,6 @@
         [relation2 removeObject:[PFUser currentUser]];
         [self.event saveInBackground];
         [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:0.8];
-
-        ///
-        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-        [currentInstallation removeObject:self.tempTitle forKey:@"channels"];
-        [currentInstallation saveInBackground];
-        ///
-
     }
 }
 
@@ -181,11 +174,11 @@
         [self.event saveInBackground];
         [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:1.2];
 
-        ///
-        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-        [currentInstallation removeObject:self.tempTitle forKey:@"channels"];
-        [currentInstallation saveInBackground];
-        ///
+//        ///
+//        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+//        [currentInstallation removeObject:self.tempTitle forKey:@"channels"];
+//        [currentInstallation saveInBackground];
+//        ///
 
     } else {
 
@@ -199,13 +192,6 @@
         [relation2 removeObject:[PFUser currentUser]];
         [self.event saveInBackground];
         [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:1.2];
-
-
-        ///
-        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-        [currentInstallation addUniqueObject:self.tempTitle forKey:@"channels"];
-        [currentInstallation saveInBackground];
-        ///
     }
 }
 
