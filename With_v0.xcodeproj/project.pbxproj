@@ -106,6 +106,7 @@
 		93952FCA194D7241001AA3E4 /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FC9194D7241001AA3E4 /* ExploreViewController.m */; };
 		93952FCD194D7318001AA3E4 /* CreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FCC194D7318001AA3E4 /* CreateEventViewController.m */; };
 		93952FD0194D7347001AA3E4 /* FindFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FCF194D7347001AA3E4 /* FindFriendsViewController.m */; };
+		93BF983E1963403400A7DD67 /* UITabBarController+hidable.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF983D1963403400A7DD67 /* UITabBarController+hidable.m */; };
 		93CE89051961399D007BA434 /* IdeasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE89041961399D007BA434 /* IdeasViewController.m */; };
 		93CE890819613D15007BA434 /* IdeasTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE890719613D15007BA434 /* IdeasTableViewCell.m */; };
 /* End PBXBuildFile section */
@@ -286,6 +287,8 @@
 		93952FCC194D7318001AA3E4 /* CreateEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateEventViewController.m; sourceTree = "<group>"; };
 		93952FCE194D7347001AA3E4 /* FindFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendsViewController.h; sourceTree = "<group>"; };
 		93952FCF194D7347001AA3E4 /* FindFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendsViewController.m; sourceTree = "<group>"; };
+		93BF983C1963403400A7DD67 /* UITabBarController+hidable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+hidable.h"; sourceTree = "<group>"; };
+		93BF983D1963403400A7DD67 /* UITabBarController+hidable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+hidable.m"; sourceTree = "<group>"; };
 		93CE89031961399D007BA434 /* IdeasViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeasViewController.h; sourceTree = "<group>"; };
 		93CE89041961399D007BA434 /* IdeasViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdeasViewController.m; sourceTree = "<group>"; };
 		93CE890619613D15007BA434 /* IdeasTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeasTableViewCell.h; sourceTree = "<group>"; };
@@ -579,6 +582,8 @@
 		93952F93194D5D4C001AA3E4 /* With_v0 */ = {
 			isa = PBXGroup;
 			children = (
+				93BF983C1963403400A7DD67 /* UITabBarController+hidable.h */,
+				93BF983D1963403400A7DD67 /* UITabBarController+hidable.m */,
 				93952F9C194D5D4C001AA3E4 /* AppDelegate.h */,
 				93952F9D194D5D4C001AA3E4 /* AppDelegate.m */,
 				93952F9F194D5D4C001AA3E4 /* Main.storyboard */,
@@ -777,6 +782,7 @@
 				9368F99919630074005477A1 /* ThemeObject.m in Sources */,
 				93952F9E194D5D4C001AA3E4 /* AppDelegate.m in Sources */,
 				606DAE4319624DFD003F3AAE /* LikesListTableViewCell.m in Sources */,
+				93BF983E1963403400A7DD67 /* UITabBarController+hidable.m in Sources */,
 				60694166195FD98F00C8310F /* InvitesButton.m in Sources */,
 				93513A641952902C00302A54 /* FSVenue.m in Sources */,
 				608B6C9A1950DBCF007D4503 /* SignupViewController.m in Sources */,
