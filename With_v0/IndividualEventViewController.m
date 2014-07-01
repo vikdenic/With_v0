@@ -38,6 +38,10 @@
 @property UIImage *noButtonUnselected;
 @property BOOL isTheUserAttending;
 
+///
+@property NSString *tempTitle;
+///
+
 @end
 
 @implementation IndividualEventViewController
@@ -45,6 +49,11 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+
+    ///
+    self.tempTitle = self.event[@"title"];
+    NSLog(@"\n\ntitle is %@\n\n", self.tempTitle);
+    ///
 
     [self checkingUsersEventStatus];
     [self checkingUsersAttending];
@@ -125,6 +134,12 @@
         [self.event saveInBackground];
         [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:0.8];
 
+        ///
+        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+        [currentInstallation addUniqueObject:self.tempTitle forKey:@"channels"];
+        [currentInstallation saveInBackground];
+        ///
+
     } else {
 
         self.yesButtonTapped = NO;
@@ -138,6 +153,13 @@
         [relation2 removeObject:[PFUser currentUser]];
         [self.event saveInBackground];
         [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:0.8];
+
+        ///
+        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+        [currentInstallation removeObject:self.tempTitle forKey:@"channels"];
+        [currentInstallation saveInBackground];
+        ///
+
     }
 }
 
@@ -159,6 +181,12 @@
         [self.event saveInBackground];
         [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:1.2];
 
+        ///
+        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+        [currentInstallation removeObject:self.tempTitle forKey:@"channels"];
+        [currentInstallation saveInBackground];
+        ///
+
     } else {
 
         self.noButtonTapped = NO;
@@ -171,6 +199,13 @@
         [relation2 removeObject:[PFUser currentUser]];
         [self.event saveInBackground];
         [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:1.2];
+
+
+        ///
+        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+        [currentInstallation addUniqueObject:self.tempTitle forKey:@"channels"];
+        [currentInstallation saveInBackground];
+        ///
     }
 }
 
