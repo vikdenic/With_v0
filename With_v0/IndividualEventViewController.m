@@ -9,6 +9,7 @@
 #import "IndividualEventViewController.h"
 #import "PeopleAttendingEventViewController.h"
 #import "InvitedPeopleViewController.h"
+#import "IndividualEventInvitePeopleViewController.h"
 
 @interface IndividualEventViewController ()
 
@@ -287,18 +288,46 @@
     {
         PeopleAttendingEventViewController *peopleAttendingEventViewController = segue.destinationViewController;
         peopleAttendingEventViewController.event = self.event;
-    }
 
-    if ([segue.identifier isEqualToString:@"InvitedButtonToPeopleAttendingSegue"])
+    } else if ([segue.identifier isEqualToString:@"InvitedButtonToPeopleAttendingSegue"])
     {
         InvitedPeopleViewController *invitedPeopleViewController = segue.destinationViewController;
         invitedPeopleViewController.event = self.event;
+
+    } else if ([segue.identifier isEqualToString:@"IndividualToIndividualInvite"])
+    {
+        IndividualEventInvitePeopleViewController *individualEventInvitePeopleViewController = segue.destinationViewController;
+        individualEventInvitePeopleViewController.event = self.event;
     }
 }
 
 - (IBAction)unwindSegueToIndividualViewController:(UIStoryboardSegue *)sender
 {
     
+}
+
+- (IBAction)unwindFromIndividualInviteTOIndividual:(UIStoryboardSegue *)sender
+{
+    IndividualEventInvitePeopleViewController *individualEventInvitePeopleViewController = sender.sourceViewController;
+    self.usersInvitedArray = individualEventInvitePeopleViewController.usersInvitedArray;
+    [self performSelector:@selector(creatingEventInvitesFromSegue) withObject:nil afterDelay:2.0];
+}
+
+- (void)creatingEventInvitesFromSegue
+{
+    for (PFUser *user in self.usersInvitedArray)
+    {
+        PFObject *eventInvite = [PFObject objectWithClassName:@"EventInvite"];
+        eventInvite[@"toUser"] = user;
+        eventInvite[@"event"] = self.event;
+        eventInvite[@"statusOfUser"] = @"Invited";
+        [eventInvite saveInBackground];
+
+        //creates relations to the event for each user
+        PFRelation *relation = [self.event relationforKey:@"usersInvited"];
+        [relation addObject:user];
+        [self.event saveInBackground];
+    }
 }
 
 @end

@@ -13,6 +13,6 @@
 
 @property PFObject *event;
 @property PFObject *eventObject;
-
+@property NSMutableArray *usersInvitedArray;
 
 @end
