@@ -61,6 +61,8 @@
 
     [self.goingButton setImage:self.yesButtonUnselected forState:UIControlStateNormal];
     [self.notGoingButton setImage:self.noButtonUnselected forState:UIControlStateNormal];
+
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated
