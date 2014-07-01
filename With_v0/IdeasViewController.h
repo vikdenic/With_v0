@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ThemeObject.h"
 
 @interface IdeasViewController : UIViewController
+
+@property (strong, nonatomic) ThemeObject *themeObject;
 
 @end

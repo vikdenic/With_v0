@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
-
+#import "ThemeObject.h"
 @interface CreateEventViewController : UIViewController
 
 @property (strong, nonatomic) NSString *eventName;
@@ -18,5 +18,7 @@
 @property (strong, nonatomic) NSString *dateString;
 
 @property NSMutableArray *usersInvitedArray;
+
+@property ThemeObject *themeObject;
 
 @end

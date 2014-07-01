@@ -12,6 +12,7 @@
 #import "DateAndTimeViewController.h"
 #import "GKImagePicker.h"
 #import "InvitePeopleViewController.h"
+#import "IdeasViewController.h"
 
 @interface CreateEventViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, GKImagePickerDelegate>
 
@@ -134,7 +135,7 @@
 {
    if ([[notification name] isEqualToString:@"Test1"])
    {
-       NSLog(@"Notification Triggered");
+//       NSLog(@"Notification Triggered");
        [self resetCreateFields];
     }
 }
@@ -462,7 +463,17 @@
 
 -(IBAction)unwindIdeasToCreate:(UIStoryboardSegue *)sender
 {
-    
+    IdeasViewController *ideasVC = sender.sourceViewController;
+    self.themeObject = ideasVC.themeObject;
+
+    self.themeImageView.image = self.themeObject.themeImage;
+    self.titleTextField.text = self.themeObject.themeName;
+    self.detailsTextView.text = self.themeObject.themeDeets;
+
+    self.placeholderLabel.hidden = YES;
+    self.detailsPlaceholderLabel.hidden = YES;
+
+//    NSLog(@"UNWIND %@", self.themeObject.themeName);
 }
 
 @end
