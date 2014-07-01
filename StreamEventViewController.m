@@ -16,6 +16,7 @@
 #import "GKImagePicker.h"
 #import "StreamProfileViewController.h"
 #import "LikeListViewController.h"
+#import "ChatEventViewController.h"
 
 @interface StreamEventViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, GKImagePickerDelegate, UIActionSheetDelegate>
 
@@ -630,8 +631,12 @@
 
         LikeListViewController *likesListViewController = segue.destinationViewController;
         likesListViewController.individualEventPhoto = individualEventPhoto;
-    }
 
+    } else if ([segue.identifier isEqualToString:@"ToChatSegue"])
+    {
+    ChatEventViewController *chatEventViewController = segue.destinationViewController;
+    chatEventViewController.event = self.event;
+    }
 }
 
 - (IBAction)unwindSegueToStreamEventViewController:(UIStoryboardSegue *)sender

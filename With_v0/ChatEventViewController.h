@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface ChatEventViewController : UIViewController
+
+@property PFObject *event;
 
 @end

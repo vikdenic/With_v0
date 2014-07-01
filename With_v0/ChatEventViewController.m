@@ -25,13 +25,13 @@
 @property NSArray *messagesArray5000;
 @property NSArray *imageFilesArray;
 @property NSMutableArray *imagesArray;
-@property NSString *usernamePlaceHolder;
+@property PFUser *usernamePlaceHolder;
 
 ///
 @property NSString *channelPlaceHolder;
 
-@end
 
+@end
 
 #pragma mark - view life cycle //------------------------------------------------
 
@@ -98,25 +98,15 @@
     }
 }
 
-
 #pragma mark - send button  CGAFFINE!!!!! //------------------------------------------------
 - (IBAction)sendButtonPressed:(UIButton *)sender
 {
     [self.view endEditing:YES];
 
-    self.enteredText = self.chatTextFieldOutlet.text;
-
-    //Create Comment Object
     PFObject *chatComment = [PFObject objectWithClassName:@"ChatMessage"];
-
-    //this adds the text into parse key textContent
-    [chatComment setObject:self.enteredText forKey:@"chatText"];
-
-    //This Creates relationship to the user!
-
-    [chatComment setObject:[PFUser currentUser].username forKey:@"author"];
-
-    //Save comment
+    chatComment[@"chatText"] = self.chatTextFieldOutlet.text;
+    chatComment[@"author"] = [PFUser currentUser];
+    chatComment[@"chatEvent"] = self.event;
     [chatComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
 
@@ -180,8 +170,6 @@
     [currentInstallation removeObject:self.channelPlaceHolder forKey:@"channels"];
     [currentInstallation saveInBackground];
 }
-
-
 
 
 #pragma mark - (scroll methods) Method to figure out if scrolling up or down //-------------------------
@@ -265,7 +253,9 @@
 - (void)retrieveCommentsFromParse
 {
     PFQuery *commentQuery = [PFQuery queryWithClassName:@"ChatMessage"];
+    [commentQuery whereKey:@"chatEvent" equalTo:self.event];
     [commentQuery orderByDescending:@"createdAt"];
+    [commentQuery includeKey:@"author"];
 
     [commentQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error)
@@ -281,47 +271,17 @@
 {
     PFQuery *authorQuery = [PFQuery queryWithClassName:@"ChatMessage"];
     [authorQuery orderByDescending:@"createdAt"];
-    [authorQuery includeKey:@"author2"];
+    [authorQuery includeKey:@"author"];
 
     [authorQuery findObjectsInBackgroundWithBlock:^(NSArray *users, NSError *error) {
         if (!error)
         {
-            [[users.lastObject objectForKey:@"author2"] objectForKey:@"username"];
+            [[users.lastObject objectForKey:@"author"] objectForKey:@"username"];
             self.authorsArray = users;
             [self.commentTableView reloadData];
         }
     }];
 }
-
-//- (void)retrieveAuthorsAvatarImages
-//{
-//    PFQuery *avatarQuery = [PFQuery queryWithClassName:@"ChatMessage"];
-//    [avatarQuery orderByDescending:@"createdAt"];
-//    [avatarQuery includeKey:@"author2"];
-//
-//    [avatarQuery findObjectsInBackgroundWithBlock:^(NSArray *imageFiles, NSError *error) {
-//        if (!error)
-//        {
-//            [[imageFiles.lastObject objectForKey:@"author2"] objectForKey:@"miniProfilePhoto"];
-//
-//            self.imageFilesArray = imageFiles;
-//
-//            for (PFFile *file in self.imageFilesArray) {
-//                [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-//                    UIImage *finalImage = [UIImage imageWithData:data];
-//                    [self.imagesArray addObject:finalImage];
-//
-//                    NSLog(@"FINAL IMAGE: %@",finalImage);
-//                }];
-//
-//            }
-//
-//            [self.commentTableView reloadData];
-//        }
-//    }];
-//}
-
-
 
 #pragma mark - TableView del methods //------------------------------------------------
 
@@ -360,14 +320,14 @@
 {
     CustomTableViewCell *cell = [[CustomTableViewCell alloc] init];
     PFObject *message = [self.messagesArray5000 objectAtIndex:indexPath.row];
-    PFObject *author = [self.authorsArray objectAtIndex:indexPath.row];
+    PFObject *chatMessage = [self.authorsArray objectAtIndex:indexPath.row];
 
-    self.usernamePlaceHolder = [author objectForKey:@"author"];
+    self.usernamePlaceHolder = [chatMessage objectForKey:@"author"];
 
     cell.chatMessageCellLabel.text = self.enteredText;
 
 
-    if ([self.usernamePlaceHolder isEqualToString:[PFUser currentUser].username])
+    if ([self.usernamePlaceHolder isEqual:[PFUser currentUser]])
     {
         cell = [tableView dequeueReusableCellWithIdentifier:@"UserChatCell"];
         cell.usernameChatCellLabel.textColor = [UIColor orangeColor];
@@ -379,13 +339,11 @@
 
     [cell.chatMessageCellLabel setText:[message objectForKey:@"chatText"]];
 
-    cell.usernameChatCellLabel.text = self.usernamePlaceHolder;
+    cell.usernameChatCellLabel.text = self.usernamePlaceHolder.username;
 
 
-
-
-    ///Avatar pic stuff
-    PFFile *userProfilePhoto = [[message objectForKey:@"fromUser"] objectForKey:@"userProfilePhoto"];
+    //setting the user profile picture
+    PFFile *userProfilePhoto = [self.usernamePlaceHolder objectForKey:@"miniProfilePhoto"];
 
     [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
      {
@@ -400,11 +358,8 @@
      }];
     ///
 
-
-
     //cell.chatAvatarImage.image = [UIImage imageNamed:@"pacMan.jpg"];
     //cell.chatAvatarImage.image = [self.imagesArray objectAtIndex:indexPath.row];
-
 
     cell.chatAvatarImage.layer.borderWidth = 1.0f;
     cell.chatAvatarImage.layer.cornerRadius = 11.7;
