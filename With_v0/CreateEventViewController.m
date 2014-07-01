@@ -459,6 +459,8 @@
     InvitePeopleViewController *invitePeopleViewController = sender.sourceViewController;
     self.usersInvitedArray = invitePeopleViewController.usersInvitedArray;
     ///not sure if this is really going to work
+
+//    [self.invitePeopleButton setTitle:[NSString stringWithFormat:@"          %lu", (unsigned long)self.usersInvitedArray.count] forState:UIControlStateNormal];
 }
 
 -(IBAction)unwindIdeasToCreate:(UIStoryboardSegue *)sender

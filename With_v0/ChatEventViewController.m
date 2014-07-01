@@ -10,6 +10,7 @@
 #import "ChatEventViewController.h"
 #import <Parse/Parse.h>
 #import "CustomTableViewCell.h"
+#import "ChatEventObject.h"
 
 //-----------------------------------------------
 
@@ -21,14 +22,8 @@
 @property (strong, nonatomic) CustomTableViewCell *customCell;
 @property NSString *enteredText;
 @property NSArray *chatRoomMessagesArray;
-@property NSArray *authorsArray;
-@property NSArray *messagesArray5000;
-@property NSArray *imageFilesArray;
-@property NSMutableArray *imagesArray;
-@property PFUser *usernamePlaceHolder;
-
-///
 @property NSString *channelPlaceHolder;
+@property NSMutableArray *chatObjects;
 
 
 @end
@@ -51,9 +46,9 @@
 {
     [super viewDidLoad];
 
-    self.channelPlaceHolder = @"party";
+    self.chatObjects = [NSMutableArray array];
 
-    self.imagesArray = [[NSMutableArray alloc] init];
+    self.channelPlaceHolder = @"party";
     self.navigationController.hidesBottomBarWhenPushed = NO;
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
@@ -77,15 +72,12 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self retrieveAuthorsUsernames];
-    [self retrieveCommentsFromParse];
-    //[self retrieveAuthorsAvatarImages];
+    [self getChatObject];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    self.usernamePlaceHolder = [[NSString alloc] init];
 }
 
 
@@ -110,15 +102,11 @@
     [chatComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
 
-            [self retrieveAuthorsUsernames];
-            [self retrieveCommentsFromParse];
-            //[self retrieveAuthorsAvatarImages];
-            //[self.commentTableView reloadData];
+            [self.commentTableView reloadData];
         }
     }];
 
     self.chatTextFieldOutlet.text = @"";
-
 
     ///
     // Send a notification to all devices subscribed to the "Giants" channel.
@@ -231,9 +219,7 @@
 
 - (void)reload
 {
-    [self retrieveCommentsFromParse];
-    [self retrieveAuthorsUsernames];
-    //[self retrieveAuthorsAvatarImages];
+    [self getChatObject];
     [self.commentTableView reloadData];
 }
 
@@ -250,35 +236,26 @@
 
 
 #pragma mark - Getting from parse //------------------------------------------------
-- (void)retrieveCommentsFromParse
+
+- (void)getChatObject
 {
     PFQuery *commentQuery = [PFQuery queryWithClassName:@"ChatMessage"];
     [commentQuery whereKey:@"chatEvent" equalTo:self.event];
     [commentQuery orderByDescending:@"createdAt"];
     [commentQuery includeKey:@"author"];
-
+    [commentQuery includeKey:@"chatMessage"];
     [commentQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error)
         {
-            [objects.lastObject objectForKey:@"chatText"]; //objectForKey:@"chatText"];
-            self.messagesArray5000 = objects;
-            [self.commentTableView reloadData];
-        }
-    }];
-}
 
-- (void)retrieveAuthorsUsernames
-{
-    PFQuery *authorQuery = [PFQuery queryWithClassName:@"ChatMessage"];
-    [authorQuery orderByDescending:@"createdAt"];
-    [authorQuery includeKey:@"author"];
-
-    [authorQuery findObjectsInBackgroundWithBlock:^(NSArray *users, NSError *error) {
-        if (!error)
-        {
-            [[users.lastObject objectForKey:@"author"] objectForKey:@"username"];
-            self.authorsArray = users;
-            [self.commentTableView reloadData];
+            for (PFObject *object in objects)
+            {
+                ChatEventObject *chatEventObject = [[ChatEventObject alloc]init];
+                chatEventObject.user = [object objectForKey:@"author"];
+                chatEventObject.chatMessage = [object objectForKey:@"chatText"];
+                [self.chatObjects addObject:chatEventObject];
+                [self.commentTableView reloadData];
+            }
         }
     }];
 }
@@ -292,9 +269,9 @@
     }
 
     ///configure the cell pain in thee ass
-    PFObject *message = [self.messagesArray5000 objectAtIndex:indexPath.row];
+    ChatEventObject *chatEventObject = [self.chatObjects objectAtIndex:indexPath.row];
 
-    [self.customCell.chatMessageCellLabel setText:[message objectForKey:@"chatText"]];
+    [self.customCell.chatMessageCellLabel setText:chatEventObject.chatMessage];
 
     ///layout cell
     [self.customCell layoutIfNeeded];
@@ -308,7 +285,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.messagesArray5000.count;
+    return self.chatObjects.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -319,31 +296,25 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CustomTableViewCell *cell = [[CustomTableViewCell alloc] init];
-    PFObject *message = [self.messagesArray5000 objectAtIndex:indexPath.row];
-    PFObject *chatMessage = [self.authorsArray objectAtIndex:indexPath.row];
 
-    self.usernamePlaceHolder = [chatMessage objectForKey:@"author"];
+    ChatEventObject *chatEventObject = [self.chatObjects objectAtIndex:indexPath.row];
 
-    cell.chatMessageCellLabel.text = self.enteredText;
-
-
-    if ([self.usernamePlaceHolder isEqual:[PFUser currentUser]])
+    if ([chatEventObject.user.objectId isEqualToString:[PFUser currentUser].objectId])
     {
         cell = [tableView dequeueReusableCellWithIdentifier:@"UserChatCell"];
         cell.usernameChatCellLabel.textColor = [UIColor orangeColor];
-
 
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:@"ChatroomCell"];
     }
 
-    [cell.chatMessageCellLabel setText:[message objectForKey:@"chatText"]];
+    cell.chatMessageCellLabel.text = [NSString stringWithFormat:@"%@", chatEventObject.chatMessage];
 
-    cell.usernameChatCellLabel.text = self.usernamePlaceHolder.username;
+    cell.usernameChatCellLabel.text = chatEventObject.user.username;
 
 
     //setting the user profile picture
-    PFFile *userProfilePhoto = [self.usernamePlaceHolder objectForKey:@"miniProfilePhoto"];
+    PFFile *userProfilePhoto = [chatEventObject.user objectForKey:@"miniProfilePhoto"];
 
     [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
      {
@@ -356,11 +327,6 @@
              cell.chatAvatarImage.image = [UIImage imageNamed:@"clock"];
          }
      }];
-    ///
-
-    //cell.chatAvatarImage.image = [UIImage imageNamed:@"pacMan.jpg"];
-    //cell.chatAvatarImage.image = [self.imagesArray objectAtIndex:indexPath.row];
-
     cell.chatAvatarImage.layer.borderWidth = 1.0f;
     cell.chatAvatarImage.layer.cornerRadius = 11.7;
     cell.chatAvatarImage.layer.masksToBounds = YES;

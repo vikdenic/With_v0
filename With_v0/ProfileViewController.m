@@ -31,6 +31,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *friendButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *friendStatusButton;
+
 //Data
 
 @property NSArray *usersArray;

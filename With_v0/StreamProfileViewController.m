@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (weak, nonatomic) IBOutlet UIButton *friendButton;
+@property (weak, nonatomic) IBOutlet UIButton *friendStatusButton;
 
 @end
 
@@ -53,6 +54,7 @@
 
     [self checkingNumberOfFriends];
     [self setUserInfo];
+    [self queryForUserAndProfileUserFriendStatus];
 }
 
 -(void)setUserInfo
@@ -126,18 +128,19 @@
 
 #pragma mark - TableView
 
-//-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-//{
-////    return self.usersArray.count;
-//
-//}
-//
-//-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-////    HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileCell"];
-////    
-////    return cell;
-//}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+//    return self.usersArray.count;
+    return 0;
+
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileCell"];
+    
+    return cell;
+}
 
 #pragma mark - Segue
 
@@ -150,6 +153,50 @@
         streamProfileFriendListViewController.userToPass = self.userToPass;
     }
 }
+
+- (void)queryForUserAndProfileUserFriendStatus
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Friendship"];
+    [query whereKey:@"fromUser" equalTo:self.userToPass];
+    [query whereKey:@"toUser" equalTo:[PFUser currentUser]];
+
+    PFQuery *query2 = [PFQuery queryWithClassName:@"Friendship"];
+    [query2 whereKey:@"fromUser" equalTo:[PFUser currentUser]];
+    [query2 whereKey:@"toUser" equalTo:self.userToPass];
+
+    PFQuery *combinedQuery = [PFQuery orQueryWithSubqueries:@[query,query2]];
+    [combinedQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error)
+     {
+         if ([[object objectForKey:@"status"] isEqualToString:@"Approved"])
+         {
+             UIImage *btnImage = [UIImage imageNamed:@"added_button_image"];
+             [self.friendStatusButton setImage:btnImage forState:UIControlStateNormal];
+
+         } else if ([[object objectForKey:@"status"] isEqualToString:@"Pending"])
+         {
+             UIImage *btnImage = [UIImage imageNamed:@"pending_image"];
+             [self.friendStatusButton setImage:btnImage forState:UIControlStateNormal];
+
+         } else if ([[object objectForKey:@"status"] isEqualToString:@"Denied"])
+         {
+             UIImage *btnImage = [UIImage imageNamed:@"add_friend_button_image"];
+             [self.friendStatusButton setImage:btnImage forState:UIControlStateNormal];
+
+         } else {
+
+             if ([self.userToPass.objectId isEqualToString:[PFUser currentUser].objectId])
+             {
+                 self.friendStatusButton.hidden = YES;
+                 self.friendStatusButton.userInteractionEnabled = NO;
+             } else
+             {
+                 UIImage *btnImage = [UIImage imageNamed:@"add_friend_button_image"];
+                 [self.friendStatusButton setImage:btnImage forState:UIControlStateNormal];
+             }
+         }
+    }];
+}
+///need to add selector to this button
 
 
 @end
