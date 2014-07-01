@@ -685,7 +685,7 @@
 				ORGANIZATIONNAME = "Mobile Makers";
 				TargetAttributes = {
 					93952F89194D5D4C001AA3E4 = {
-						DevelopmentTeam = ZNAFR9K9ZC;
+						DevelopmentTeam = 3DJPBY6593;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
