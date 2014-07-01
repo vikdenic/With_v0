@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		601F5D8E1951D99A00B6D89C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 601F5D8D1951D99A00B6D89C /* Parse.framework */; };
 		601F5D911951DD8E00B6D89C /* CommentsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 601F5D901951DD8E00B6D89C /* CommentsTableViewCell.m */; };
+		6050D51F1962FB60008AAF8F /* IndividualEventInvitePeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6050D51E1962FB60008AAF8F /* IndividualEventInvitePeopleViewController.m */; };
+		6050D5221962FC86008AAF8F /* IndividualEventInvitePeopleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6050D5211962FC86008AAF8F /* IndividualEventInvitePeopleTableViewCell.m */; };
+		6050D5251962FCD0008AAF8F /* IndividualEventInvitePeopleInviteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6050D5241962FCD0008AAF8F /* IndividualEventInvitePeopleInviteButton.m */; };
 		605ADBE3195CABC000254B92 /* PeopleAttendingFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 605ADBE2195CABBF00254B92 /* PeopleAttendingFriendButton.m */; };
 		605ADBE6195CF36400254B92 /* FindFriendsFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 605ADBE5195CF36400254B92 /* FindFriendsFriendButton.m */; };
 		60694166195FD98F00C8310F /* InvitesButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 60694165195FD98F00C8310F /* InvitesButton.m */; };
@@ -120,6 +123,12 @@
 		601F5D8D1951D99A00B6D89C /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		601F5D8F1951DD8E00B6D89C /* CommentsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsTableViewCell.h; sourceTree = "<group>"; };
 		601F5D901951DD8E00B6D89C /* CommentsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsTableViewCell.m; sourceTree = "<group>"; };
+		6050D51D1962FB60008AAF8F /* IndividualEventInvitePeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualEventInvitePeopleViewController.h; sourceTree = "<group>"; };
+		6050D51E1962FB60008AAF8F /* IndividualEventInvitePeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualEventInvitePeopleViewController.m; sourceTree = "<group>"; };
+		6050D5201962FC86008AAF8F /* IndividualEventInvitePeopleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualEventInvitePeopleTableViewCell.h; sourceTree = "<group>"; };
+		6050D5211962FC86008AAF8F /* IndividualEventInvitePeopleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualEventInvitePeopleTableViewCell.m; sourceTree = "<group>"; };
+		6050D5231962FCD0008AAF8F /* IndividualEventInvitePeopleInviteButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualEventInvitePeopleInviteButton.h; sourceTree = "<group>"; };
+		6050D5241962FCD0008AAF8F /* IndividualEventInvitePeopleInviteButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualEventInvitePeopleInviteButton.m; sourceTree = "<group>"; };
 		605ADBE1195CABBF00254B92 /* PeopleAttendingFriendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleAttendingFriendButton.h; sourceTree = "<group>"; };
 		605ADBE2195CABBF00254B92 /* PeopleAttendingFriendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleAttendingFriendButton.m; sourceTree = "<group>"; };
 		605ADBE4195CF36400254B92 /* FindFriendsFriendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendsFriendButton.h; sourceTree = "<group>"; };
@@ -352,6 +361,12 @@
 				607E90EB19565E8D006F88C8 /* IndividualEventPhoto.m */,
 				60F47AB3194E7653007422E7 /* IndividualEventViewController.h */,
 				60F47AB4194E7653007422E7 /* IndividualEventViewController.m */,
+				6050D5201962FC86008AAF8F /* IndividualEventInvitePeopleTableViewCell.h */,
+				6050D5211962FC86008AAF8F /* IndividualEventInvitePeopleTableViewCell.m */,
+				6050D5231962FCD0008AAF8F /* IndividualEventInvitePeopleInviteButton.h */,
+				6050D5241962FCD0008AAF8F /* IndividualEventInvitePeopleInviteButton.m */,
+				6050D51D1962FB60008AAF8F /* IndividualEventInvitePeopleViewController.h */,
+				6050D51E1962FB60008AAF8F /* IndividualEventInvitePeopleViewController.m */,
 				60B954541959CA9300AE363D /* PeopleAttendingTableViewCell.h */,
 				60B954551959CA9300AE363D /* PeopleAttendingTableViewCell.m */,
 				605ADBE1195CABBF00254B92 /* PeopleAttendingFriendButton.h */,
@@ -564,8 +579,8 @@
 				93952F9F194D5D4C001AA3E4 /* Main.storyboard */,
 				813A921F1961AD5D00843C6F /* CamPreView.h */,
 				813A92201961AD5D00843C6F /* CamPreView.m */,
-				810C1EBD1956058A0046DFB1 /* ChatFolder */,
 				60A7DAD3195E2FBE003258F0 /* Home */,
+				810C1EBD1956058A0046DFB1 /* ChatFolder */,
 				60A7DAD4195E3053003258F0 /* Explore */,
 				60A7DAD5195E3071003258F0 /* Create */,
 				930D1901195886BE00AE4AE1 /* GK Classes */,
@@ -655,7 +670,7 @@
 				ORGANIZATIONNAME = "Mobile Makers";
 				TargetAttributes = {
 					93952F89194D5D4C001AA3E4 = {
-						DevelopmentTeam = 368PGMF9QJ;
+						DevelopmentTeam = ZNAFR9K9ZC;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -759,10 +774,12 @@
 				60694166195FD98F00C8310F /* InvitesButton.m in Sources */,
 				93513A641952902C00302A54 /* FSVenue.m in Sources */,
 				608B6C9A1950DBCF007D4503 /* SignupViewController.m in Sources */,
+				6050D5221962FC86008AAF8F /* IndividualEventInvitePeopleTableViewCell.m in Sources */,
 				609FDC6E195F4C6600EF7C5B /* InvitePeopleViewController.m in Sources */,
 				810C1EC3195605B70046DFB1 /* CustomTableViewCell.m in Sources */,
 				605ADBE3195CABC000254B92 /* PeopleAttendingFriendButton.m in Sources */,
 				60C72094194F692000ADE5DF /* StreamEventViewController.m in Sources */,
+				6050D5251962FCD0008AAF8F /* IndividualEventInvitePeopleInviteButton.m in Sources */,
 				93952F9A194D5D4C001AA3E4 /* main.m in Sources */,
 				606DAE311961AB0A003F3AAE /* StreamCameraViewController.m in Sources */,
 				60D47AC419608A3E005FB3F4 /* StreamProfileViewController.m in Sources */,
@@ -776,6 +793,7 @@
 				930D1911195886DC00AE4AE1 /* GKImageCropView.m in Sources */,
 				93952FC4194D6BEA001AA3E4 /* HomeViewController.m in Sources */,
 				60F5B34C1957555E00A80467 /* ExploreAnnotation.m in Sources */,
+				6050D51F1962FB60008AAF8F /* IndividualEventInvitePeopleViewController.m in Sources */,
 				606DAE4019624D83003F3AAE /* LikeListViewController.m in Sources */,
 				609FDC71195F4CBB00EF7C5B /* InvitePeopleTableViewCell.m in Sources */,
 				93CE89051961399D007BA434 /* IdeasViewController.m in Sources */,
