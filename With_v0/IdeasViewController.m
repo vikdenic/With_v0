@@ -8,7 +8,7 @@
 
 #import "IdeasViewController.h"
 #import "IdeasTableViewCell.h"
-#import "ThemeObject.h"
+//#import "ThemeObject.h"
 #import <Parse/Parse.h>
 
 @interface IdeasViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -31,7 +31,6 @@
     self.ideaStrings = [[NSMutableArray alloc]init];
     self.ideaImages = [[NSMutableArray alloc]init];
 
-
     self.ideas = [[NSMutableArray alloc]init];
 
     [self getParseData];
@@ -50,10 +49,12 @@
         {
             ThemeObject *themeObject = [[ThemeObject alloc]init];
             NSString *themeName = [object objectForKey:@"themeName"];
+            NSString *themeDeets = [object objectForKey:@"themeDeets"];
 
 //            [self.ideaStrings addObject:themeName];
 //            NSLog(@"%@",themeName);
             themeObject.themeName = themeName;
+            themeObject.themeDeets = themeDeets;
 
             PFFile *imageFile = [object objectForKey:@"themeImage"];
             [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
@@ -93,6 +94,14 @@
     cell.themeImageView.image = [[self.ideas objectAtIndex:indexPath.row] themeImage];
 
     return cell;
+}
+
+-(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.themeObject = [self.ideas objectAtIndex:indexPath.row];
+
+//    NSLog(@"CHCKN SELECTS %@",self.themeObject.themeName);
+    return indexPath;
 }
 
 @end

@@ -14,4 +14,6 @@
 
 @property UIImage *themeImage;
 
+@property NSString *themeDeets;
+
 @end
