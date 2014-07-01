@@ -48,7 +48,7 @@
 
     cell.themeImageView.image = [self.ideaImages objectAtIndex:indexPath.row];
 
-    cell.themeLabel.text = [self.ideaStrings objectAtIndex:indexPath.row];
+//    cell.themeLabel.text = [self.ideaStrings objectAtIndex:indexPath.row];
 
     return cell;
 }
