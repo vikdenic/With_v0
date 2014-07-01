@@ -24,7 +24,7 @@
 @property NSArray *chatRoomMessagesArray;
 @property NSString *channelPlaceHolder;
 @property NSMutableArray *chatObjects;
-
+@property int numberOfRows;
 
 @end
 
@@ -53,14 +53,14 @@
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
     //Scroll opposite
-    [self.commentTableView setScrollsToTop:YES];
+//    [self.commentTableView setScrollsToTop:YES];
 
     //Save tableview frame
-    CGRect frame = self.commentTableView.frame;
+//    CGRect frame = self.commentTableView.frame;
 
     //Apply the transform
-    self.commentTableView.transform=CGAffineTransformMakeRotation(M_PI);
-    self.commentTableView.frame = frame;
+//    self.commentTableView.transform=CGAffineTransformMakeRotation(M_PI);
+//    self.commentTableView.frame = frame;
 
     //notification for Ugly keyboard animation
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -93,8 +93,6 @@
 #pragma mark - send button  CGAFFINE!!!!! //------------------------------------------------
 - (IBAction)sendButtonPressed:(UIButton *)sender
 {
-    [self.view endEditing:YES];
-
     PFObject *chatComment = [PFObject objectWithClassName:@"ChatMessage"];
     chatComment[@"chatText"] = self.chatTextFieldOutlet.text;
     chatComment[@"author"] = [PFUser currentUser];
@@ -103,7 +101,13 @@
      {
          if (!error)
          {
-             [self getChatObject];
+             ChatEventObject *chatEventObject = [[ChatEventObject alloc]init];
+             chatEventObject.user = [PFUser currentUser];
+             chatEventObject.chatMessage = chatComment[@"chatText"];
+             [self.chatObjects addObject:chatEventObject];
+             NSIndexPath *path = [NSIndexPath indexPathForRow:self.numberOfRows inSection:0];
+             [self.commentTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
+//             [self.view endEditing:YES];
          }
     }];
     self.chatTextFieldOutlet.text = @"";
@@ -140,15 +144,15 @@
 
 
     //Animate the send button
-    sender.transform = CGAffineTransformMakeScale(.5f, .5f);
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDuration:0.8];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    CGAffineTransform scaleTrans  = CGAffineTransformMakeScale(1.0f, 1.0f);
-    CGAffineTransform lefttorightTrans  = CGAffineTransformMakeTranslation(0.0f,0.0f);
-    sender.transform = CGAffineTransformConcat(scaleTrans, lefttorightTrans);
-    [UIView commitAnimations];
+//    sender.transform = CGAffineTransformMakeScale(.5f, .5f);
+//    [UIView beginAnimations:nil context:nil];
+//    [UIView setAnimationDelegate:self];
+//    [UIView setAnimationDuration:0.8];
+//    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+//    CGAffineTransform scaleTrans  = CGAffineTransformMakeScale(1.0f, 1.0f);
+//    CGAffineTransform lefttorightTrans  = CGAffineTransformMakeTranslation(0.0f,0.0f);
+//    sender.transform = CGAffineTransformConcat(scaleTrans, lefttorightTrans);
+//    [UIView commitAnimations];
 }
 
 - (IBAction)cancelTest:(id)sender
@@ -220,7 +224,6 @@
 - (void)reload
 {
     [self getChatObject];
-    [self.commentTableView reloadData];
 }
 
 
@@ -256,6 +259,8 @@
                 [self.chatObjects addObject:chatEventObject];
                 [self.commentTableView reloadData];
             }
+
+            self.chatObjects = self.chatObjects.reverseObjectEnumerator.allObjects.mutableCopy;
         }
     }];
 }
@@ -285,12 +290,18 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    self.numberOfRows = (int)self.chatObjects.count;
     return self.chatObjects.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 80;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -312,10 +323,8 @@
 
     cell.usernameChatCellLabel.text = chatEventObject.user.username;
 
-
     //setting the user profile picture
     PFFile *userProfilePhoto = [chatEventObject.user objectForKey:@"miniProfilePhoto"];
-
     [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
      {
          if (!error)
@@ -333,8 +342,8 @@
     cell.chatAvatarImage.layer.borderColor = [[UIColor blackColor] CGColor];
 
     //Rotate the cell too
-    cell.transform = CGAffineTransformMakeRotation(M_PI);
-    
+//    cell.transform = CGAffineTransformMakeRotation(M_PI);
+
     return cell;
 }
 

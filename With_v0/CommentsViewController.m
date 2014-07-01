@@ -19,6 +19,7 @@
 @property NSMutableArray *commentsArray;
 @property NSInteger indexPathRow;
 @property NSMutableArray *usersAttendingArray;
+@property int numberOfRows;
 
 @end
 
@@ -55,6 +56,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    self.numberOfRows = (int)self.commentsArray.count;
     return self.commentsArray.count;
 }
 
@@ -63,6 +65,11 @@
     PFObject *comment = [self.commentsArray objectAtIndex:indexPath.row];
 
     CommentsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+
+    if (cell == nil) {
+        cell = [[CommentsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    }
+
     cell.commentLabel.text = [comment objectForKey:@"commentContent"];
 
     //setting the time since comment was uploaded
@@ -120,6 +127,13 @@
     return cell;
 }
 
+//-(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+//{
+//    UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, 80, 40)];
+//
+//    return textField;
+//}
+
 - (void)onButtonTitlePressed:(UIButton *)sender
 {
     self.indexPathRow = sender.tag;
@@ -136,6 +150,27 @@
     }
 }
 
+//- (IBAction)sendButtPushed:(UIButton *)sender
+//{
+//    PFUser *picturePhotographer = [self.individualEventPhoto.object objectForKey:@"photographer"];
+//
+//    PFObject *comment = [PFObject objectWithClassName:@"CommentActivity"];
+//    comment[@"fromUser"] = [PFUser currentUser];
+//    comment[@"toUser"] = picturePhotographer;
+//    comment[@"photo"] = self.individualEventPhoto.object;
+//    comment[@"commentContent"] = self.textField.text;
+//    [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+//     {
+//         PFRelation *relation = [self.individualEventPhoto.object relationForKey:@"commentActivity"];
+//         [relation addObject:comment];
+//         [self.individualEventPhoto.object saveInBackground];
+//     }];
+//
+//    self.textField.text = @"";
+//    [self.textField resignFirstResponder];
+//    [self gettingComments];
+//}
+
 - (IBAction)sendButtPushed:(UIButton *)sender
 {
     PFUser *picturePhotographer = [self.individualEventPhoto.object objectForKey:@"photographer"];
@@ -150,11 +185,18 @@
          PFRelation *relation = [self.individualEventPhoto.object relationForKey:@"commentActivity"];
          [relation addObject:comment];
          [self.individualEventPhoto.object saveInBackground];
+
+         if (!error)
+         {
+             [self.commentsArray addObject:comment];
+             NSIndexPath *path = [NSIndexPath indexPathForRow:self.numberOfRows inSection:0];
+             [self.tableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
+//             [self.tableView reloadData];
+         }
      }];
 
     self.textField.text = @"";
     [self.textField resignFirstResponder];
-    [self gettingComments];
 }
 
 @end
