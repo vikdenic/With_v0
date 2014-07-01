@@ -131,6 +131,7 @@
 
     // Create our Installation query
     PFQuery *pushQuery = [PFInstallation query];
+    ///change below for channel push
     [pushQuery whereKey:@"deviceType" equalTo:@"ios"];
 
     // Send push notification to query
@@ -218,7 +219,7 @@
 }
 
 
-///
+//////////CHANNELS
 //- (IBAction)testChannelSubscribeButt:(id)sender {
 //    // When users indicate they are Giants fans, we subscribe them to that channel.
 //    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
@@ -349,7 +350,7 @@
 
 
     } else {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"ChatroomCell"];///change later
+        cell = [tableView dequeueReusableCellWithIdentifier:@"ChatroomCell"];
     }
 
     [cell.chatMessageCellLabel setText:[message objectForKey:@"chatText"]];
@@ -357,8 +358,8 @@
     cell.usernameChatCellLabel.text = self.usernamePlaceHolder;
 
     //Avatar pic stuff
-    cell.chatAvatarImage.image = [UIImage imageNamed:@"pacMan.jpg"];
-    cell.chatAvatarImage.image = [self.imagesArray objectAtIndex:indexPath.row];
+    //cell.chatAvatarImage.image = [UIImage imageNamed:@"pacMan.jpg"];
+    //cell.chatAvatarImage.image = [self.imagesArray objectAtIndex:indexPath.row];
     cell.chatAvatarImage.layer.borderWidth = 1.0f;
     cell.chatAvatarImage.layer.cornerRadius = 11.7;
     cell.chatAvatarImage.layer.masksToBounds = YES;
