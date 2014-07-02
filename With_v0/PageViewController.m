@@ -29,6 +29,7 @@
     self.delegate = self;
     [self setupScene];
     [self setupPageControl];
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -57,10 +58,12 @@
 
 - (void)setupPageControl
 {
+
     UIPageControl *pageControl = [UIPageControl appearance];
     pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-    pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
-    pageControl.backgroundColor = [UIColor whiteColor];
+    pageControl.currentPageIndicatorTintColor = [UIColor orangeColor];
+    pageControl.backgroundColor = [UIColor clearColor];
+
 }
 
 #pragma mark - Page View Controller Data Source

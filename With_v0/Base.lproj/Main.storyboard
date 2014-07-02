@@ -2010,9 +2010,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Find Friends" id="urb-Jk-ehv">
-                        <barButtonItem key="rightBarButtonItem" image="invites_drawer_25x18" id="wS4-Ol-xaS">
+                        <barButtonItem key="rightBarButtonItem" image="bell_icon" id="wS4-Ol-xaS">
                             <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-5"/>
-                            <color key="tintColor" red="0.28578563950000002" green="0.18065478930000001" blue="0.348832111" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <segue destination="fdI-rc-XHF" kind="modal" id="Oe1-h7-kjO"/>
                             </connections>
@@ -2958,6 +2958,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
     <resources>
         <image name="Yes_Button" width="95" height="35"/>
         <image name="album_image" width="34" height="28"/>
+        <image name="bell_icon" width="20" height="23"/>
         <image name="camera_image" width="34" height="26"/>
         <image name="clock" width="23" height="23"/>
         <image name="comment_image" width="39" height="39"/>
@@ -2967,7 +2968,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="find_tab_image" width="31" height="32"/>
         <image name="home_tab_image" width="32" height="32"/>
         <image name="invite_people" width="33" height="22"/>
-        <image name="invites_drawer_25x18" width="25" height="18"/>
         <image name="lightbulb_image_24x34" width="24" height="35"/>
         <image name="like_big" width="202" height="202"/>
         <image name="login_background" width="320" height="568"/>
