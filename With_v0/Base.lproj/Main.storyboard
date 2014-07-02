@@ -1327,7 +1327,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="nDt-Ws-sQM" customClass="StreamProfileFriendsListTableViewCell">
-                                        <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nDt-Ws-sQM" id="SP7-yF-Wrs">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -2992,7 +2992,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="stH-2g-YYg"/>
-        <segue reference="aiq-0h-64W"/>
+        <segue reference="YVC-aR-cB7"/>
+        <segue reference="68L-Rg-k8c"/>
     </inferredMetricsTieBreakers>
 </document>
