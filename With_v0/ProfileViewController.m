@@ -11,6 +11,7 @@
 #import "IndividualEventViewController.h"
 #import "HomeTableViewCell.h"
 #import "HomeViewController.h"
+#import "ProfileTableViewCell.h"
 
 #import "ProfileView1.h"
 #import "ProfileView2.h"
@@ -41,6 +42,7 @@
 //Data
 
 @property NSArray *usersArray;
+@property NSMutableArray *eventsAttendingArray;
 
 @end
 
@@ -49,6 +51,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.eventsAttendingArray = [NSMutableArray array];
+
+    [self queryForUsersUpcomingEvents];
 
     ProfileView1 *prof1 = [[ProfileView1 alloc]init];
     ProfileView2 *prof2 = [[ProfileView2 alloc]init];
@@ -215,15 +221,29 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.usersArray.count;
+    return 1;
 
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileCell"];
+    ProfileTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+
+    cell.textLabel.text = @"Blake";
 
     return cell;
+}
+
+- (void)queryForUsersUpcomingEvents
+{
+    PFRelation *relation = [[PFUser currentUser] relationForKey:@"eventsAttending"];
+    PFQuery *query = [relation query];
+
+    [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
+     {
+         self.eventsAttendingArray = [NSMutableArray arrayWithArray:results];
+         [self.tableView reloadData];
+     }];
 }
 
 - (void)checkingNumberOfFriends;

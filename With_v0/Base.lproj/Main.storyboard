@@ -666,7 +666,7 @@
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rsu-Eq-FSi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2681" y="-822"/>
+            <point key="canvasLocation" x="2621" y="-822"/>
         </scene>
         <!--Chat Event View Controller-->
         <scene sceneID="7J6-Oh-bDP">
@@ -2186,23 +2186,35 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="157" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="LLO-pV-R77">
-                                <rect key="frame" x="0.0" y="268" width="320" height="300"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="I9O-Le-rO7">
+                                <rect key="frame" x="0.0" y="271" width="320" height="248"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProfileCell" rowHeight="157" id="Yre-Ji-tj5" customClass="HomeTableViewCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="157"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="MUB-wP-RVH" style="IBUITableViewCellStyleDefault" id="Srj-A6-FPR" customClass="ProfileTableViewCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Yre-Ji-tj5" id="kgE-RC-cjF">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="156"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Srj-A6-FPR" id="yCS-sn-1Fx">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MUB-wP-RVH">
+                                                    <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="7iB-Zu-qxq" kind="push" id="0zA-8l-HTa"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="gZ4-Yo-Uwp" id="13w-uO-q1r"/>
-                                    <outlet property="delegate" destination="gZ4-Yo-Uwp" id="9Az-4j-PYp"/>
+                                    <outlet property="dataSource" destination="gZ4-Yo-Uwp" id="fCS-3x-k2k"/>
+                                    <outlet property="delegate" destination="gZ4-Yo-Uwp" id="w8E-bb-wsJ"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -2225,12 +2237,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="pastLabel" destination="Boq-A0-O7y" id="tVG-ME-5p7"/>
                         <outlet property="profileAvatar" destination="dsJ-w2-I2W" id="2js-fx-n2y"/>
                         <outlet property="scrollView" destination="QaT-2R-0lU" id="ysg-5H-nOD"/>
-                        <outlet property="tableView" destination="LLO-pV-R77" id="jxM-ug-ilk"/>
+                        <outlet property="tableView" destination="I9O-Le-rO7" id="5Om-0y-lBG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b61-Vf-d5R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1307" y="1466"/>
+            <point key="canvasLocation" x="1466" y="1466"/>
         </scene>
         <!--Friends List View Controller-->
         <scene sceneID="x7Z-OD-uwy">
@@ -3037,5 +3049,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
     <inferredMetricsTieBreakers>
         <segue reference="stH-2g-YYg"/>
         <segue reference="aiq-0h-64W"/>
+        <segue reference="0zA-8l-HTa"/>
     </inferredMetricsTieBreakers>
 </document>
