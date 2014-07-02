@@ -107,7 +107,8 @@
              [self.chatObjects addObject:chatEventObject];
              NSIndexPath *path = [NSIndexPath indexPathForRow:self.numberOfRows inSection:0];
              [self.commentTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
-//             [self.view endEditing:YES];
+             ///
+             [self.commentTableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:NO];
          }
     }];
     self.chatTextFieldOutlet.text = @"";
@@ -242,11 +243,12 @@
 
 - (void)getChatObject
 {
+    [self.chatObjects removeAllObjects];
+
     PFQuery *commentQuery = [PFQuery queryWithClassName:@"ChatMessage"];
     [commentQuery whereKey:@"chatEvent" equalTo:self.event];
     [commentQuery orderByDescending:@"createdAt"];
     [commentQuery includeKey:@"author"];
-    [commentQuery includeKey:@"chatMessage"];
     [commentQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error)
         {
