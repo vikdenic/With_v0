@@ -38,6 +38,10 @@
 @property UIImage *noButtonUnselected;
 @property BOOL isTheUserAttending;
 
+///
+@property NSString *tempTitle;
+///
+
 @end
 
 @implementation IndividualEventViewController
@@ -45,6 +49,11 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+
+    ///
+    self.tempTitle = self.event[@"title"];
+    NSLog(@"\n\ntitle is %@\n\n", self.tempTitle);
+    ///
 
     [self checkingUsersEventStatus];
     [self checkingUsersAttending];
@@ -69,6 +78,12 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    ///
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation addUniqueObject:self.tempTitle forKey:@"channels"];
+    [currentInstallation saveInBackground];
+    ///
 
     self.detailsTextView.text = self.event[@"details"];
     self.addressTextView.text = self.event[@"location"];
@@ -158,6 +173,12 @@
         [relation2 addObject:[PFUser currentUser]];
         [self.event saveInBackground];
         [self performSelector:@selector(checkingUsersAttending) withObject:nil afterDelay:1.2];
+
+//        ///
+//        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+//        [currentInstallation removeObject:self.tempTitle forKey:@"channels"];
+//        [currentInstallation saveInBackground];
+//        ///
 
     } else {
 
