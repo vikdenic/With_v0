@@ -61,7 +61,7 @@
 
     UIPageControl *pageControl = [UIPageControl appearance];
     pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-    pageControl.currentPageIndicatorTintColor = [UIColor orangeColor];
+    pageControl.currentPageIndicatorTintColor = [UIColor purpleColor];
     pageControl.backgroundColor = [UIColor clearColor];
 
 }

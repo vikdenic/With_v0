@@ -155,7 +155,7 @@
     if (self.themeImageView.image && ![self.titleTextField.text isEqualToString:@""] && self.dateString && !(self.coordinate.latitude == 0.0) )
     {
 //        self.createButton.titleLabel.textColor = [UIColor orangeColor];
-    [self.createButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    [self.createButton setTitleColor:[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] forState:UIControlStateNormal];
 
         self.canCreateEvent = YES;
     }
