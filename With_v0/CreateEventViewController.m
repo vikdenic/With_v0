@@ -469,8 +469,15 @@
     self.themeObject = ideasVC.themeObject;
 
     self.themeImageView.image = self.themeObject.themeImage;
+
+    NSData *themeImageData = UIImagePNGRepresentation(self.themeObject.themeImage);
+    self.themeImageFile = [PFFile fileWithData:themeImageData];
+
     self.titleTextField.text = self.themeObject.themeName;
     self.detailsTextView.text = self.themeObject.themeDeets;
+
+
+    self.mapThemeImageFile = self.themeImageFile;
 
     self.placeholderLabel.hidden = YES;
     self.detailsPlaceholderLabel.hidden = YES;
