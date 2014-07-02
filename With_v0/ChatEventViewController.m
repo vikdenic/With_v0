@@ -72,14 +72,17 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+
     [self getChatObject];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-}
 
+}
 
 #pragma mark - notifications //------------------------------------------------
 - (void)receiveNotification: (NSNotification *) notification
@@ -107,8 +110,14 @@
              [self.chatObjects addObject:chatEventObject];
              NSIndexPath *path = [NSIndexPath indexPathForRow:self.numberOfRows inSection:0];
              [self.commentTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
-             ///
-             [self.commentTableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:NO];
+
+//             int row = (int)self.chatObjects.count -1;
+//
+//             NSIndexPath *path2 = [NSIndexPath indexPathForRow:row-- inSection:0];
+
+             [self.commentTableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionBottom  animated:NO];
+
+             [self.commentTableView reloadData];
          }
     }];
     self.chatTextFieldOutlet.text = @"";
@@ -299,6 +308,21 @@
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 80;
+}
+
+
+-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if([indexPath row] == 0)
+    {
+        int row = (int)self.chatObjects.count -1;
+
+        NSIndexPath *path = [NSIndexPath indexPathForRow:row-- inSection:0];
+
+        [self.commentTableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionBottom  animated:NO];
+
+        [self.commentTableView reloadData];
+    }
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
