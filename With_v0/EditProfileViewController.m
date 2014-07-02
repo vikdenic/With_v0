@@ -13,6 +13,7 @@
 @interface EditProfileViewController () <GKImagePickerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *locationTextField;
@@ -20,6 +21,7 @@
 
 @property (nonatomic, strong) GKImagePicker *imagePicker;
 @property (nonatomic, strong) UIPopoverController *popoverController;
+@property (weak, nonatomic) IBOutlet UIButton *editCoverButton;
 
 @property PFFile *avatarImageFile;
 @property PFFile *miniAvatarImageFile;
@@ -62,6 +64,10 @@
     [super viewDidAppear:animated];
 
 //    [self setUserInfo];
+}
+- (IBAction)onEditCoverPressed:(id)sender
+{
+    
 }
 
 #pragma mark - Helpers
