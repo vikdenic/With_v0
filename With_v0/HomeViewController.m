@@ -42,8 +42,6 @@
 {
     [super viewDidLoad];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:@"Test1" object:nil];
-
     self.originalFrame = self.tabBarController.tabBar.frame;
 
     self.eventArray = [NSMutableArray array];
