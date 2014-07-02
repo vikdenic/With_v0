@@ -107,6 +107,8 @@
 		93952FCA194D7241001AA3E4 /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FC9194D7241001AA3E4 /* ExploreViewController.m */; };
 		93952FCD194D7318001AA3E4 /* CreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FCC194D7318001AA3E4 /* CreateEventViewController.m */; };
 		93952FD0194D7347001AA3E4 /* FindFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FCF194D7347001AA3E4 /* FindFriendsViewController.m */; };
+		93AB70911963B4EA002569B1 /* ProfileView1.m in Sources */ = {isa = PBXBuildFile; fileRef = 93AB70901963B4EA002569B1 /* ProfileView1.m */; };
+		93AB70941963B4FE002569B1 /* ProfileView2.m in Sources */ = {isa = PBXBuildFile; fileRef = 93AB70931963B4FE002569B1 /* ProfileView2.m */; };
 		93BF983E1963403400A7DD67 /* UITabBarController+hidable.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF983D1963403400A7DD67 /* UITabBarController+hidable.m */; };
 		93CE89051961399D007BA434 /* IdeasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE89041961399D007BA434 /* IdeasViewController.m */; };
 		93CE890819613D15007BA434 /* IdeasTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE890719613D15007BA434 /* IdeasTableViewCell.m */; };
@@ -290,6 +292,10 @@
 		93952FCC194D7318001AA3E4 /* CreateEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateEventViewController.m; sourceTree = "<group>"; };
 		93952FCE194D7347001AA3E4 /* FindFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendsViewController.h; sourceTree = "<group>"; };
 		93952FCF194D7347001AA3E4 /* FindFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendsViewController.m; sourceTree = "<group>"; };
+		93AB708F1963B4EA002569B1 /* ProfileView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileView1.h; sourceTree = "<group>"; };
+		93AB70901963B4EA002569B1 /* ProfileView1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileView1.m; sourceTree = "<group>"; };
+		93AB70921963B4FE002569B1 /* ProfileView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileView2.h; path = ../ProfileView2.h; sourceTree = "<group>"; };
+		93AB70931963B4FE002569B1 /* ProfileView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileView2.m; path = ../ProfileView2.m; sourceTree = "<group>"; };
 		93BF983C1963403400A7DD67 /* UITabBarController+hidable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+hidable.h"; sourceTree = "<group>"; };
 		93BF983D1963403400A7DD67 /* UITabBarController+hidable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+hidable.m"; sourceTree = "<group>"; };
 		93CE89031961399D007BA434 /* IdeasViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeasViewController.h; sourceTree = "<group>"; };
@@ -480,6 +486,10 @@
 			children = (
 				93952FC5194D6BFC001AA3E4 /* ProfileViewController.h */,
 				93952FC6194D6BFC001AA3E4 /* ProfileViewController.m */,
+				93AB708F1963B4EA002569B1 /* ProfileView1.h */,
+				93AB70901963B4EA002569B1 /* ProfileView1.m */,
+				93AB70921963B4FE002569B1 /* ProfileView2.h */,
+				93AB70931963B4FE002569B1 /* ProfileView2.m */,
 				60A7DAD0195E2EE3003258F0 /* FriendsListTableViewCell.h */,
 				60A7DAD1195E2EE3003258F0 /* FriendsListTableViewCell.m */,
 				60A7DADF195E3E55003258F0 /* FriendsListFriendButton.h */,
@@ -789,6 +799,7 @@
 				93952F9E194D5D4C001AA3E4 /* AppDelegate.m in Sources */,
 				606DAE4319624DFD003F3AAE /* LikesListTableViewCell.m in Sources */,
 				93BF983E1963403400A7DD67 /* UITabBarController+hidable.m in Sources */,
+				93AB70941963B4FE002569B1 /* ProfileView2.m in Sources */,
 				60694166195FD98F00C8310F /* InvitesButton.m in Sources */,
 				93513A641952902C00302A54 /* FSVenue.m in Sources */,
 				608B6C9A1950DBCF007D4503 /* SignupViewController.m in Sources */,
@@ -800,6 +811,7 @@
 				6050D5251962FCD0008AAF8F /* IndividualEventInvitePeopleInviteButton.m in Sources */,
 				93952F9A194D5D4C001AA3E4 /* main.m in Sources */,
 				606DAE311961AB0A003F3AAE /* StreamCameraViewController.m in Sources */,
+				93AB70911963B4EA002569B1 /* ProfileView1.m in Sources */,
 				60D47AC419608A3E005FB3F4 /* StreamProfileViewController.m in Sources */,
 				93952FC7194D6BFC001AA3E4 /* ProfileViewController.m in Sources */,
 				930D1912195886DC00AE4AE1 /* GKImageCropOverlayView.m in Sources */,

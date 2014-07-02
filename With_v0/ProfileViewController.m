@@ -12,7 +12,10 @@
 #import "HomeTableViewCell.h"
 #import "HomeViewController.h"
 
-@interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource>
+#import "ProfileView1.h"
+#import "ProfileView2.h"
+
+@interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 
 //Views
 
@@ -32,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *friendButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *friendStatusButton;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 //Data
 
@@ -44,6 +48,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    ProfileView1 *prof1 = [[ProfileView1 alloc]init];
+    ProfileView2 *prof2 = [[ProfileView2 alloc]init];
+
+    //    self.scrollView.contentSize = CGSizeMake(1000, 160);
+    [self.scrollView addSubview:prof1];
+    [self.scrollView addSubview:prof2];
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:@"Test1" object:nil];
 
@@ -113,6 +124,11 @@
 //        [self.whatEverArrayFillsTheTableView removeAllObjects];
 //        [self.whatEverArrayFillsTheTableView reloadData];
     }
+}
+
+-(void)viewDidLayoutSubviews
+{
+    [self.scrollView setContentSize:CGSizeMake(640, 50)];
 }
 
 #pragma mark - Helpers
