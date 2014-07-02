@@ -20,11 +20,15 @@
 @property (weak, nonatomic) IBOutlet UITextView *bioTextView;
 
 @property (nonatomic, strong) GKImagePicker *imagePicker;
+
+@property (nonatomic, strong) GKImagePicker *imagePickerCover;
+
 @property (nonatomic, strong) UIPopoverController *popoverController;
 @property (weak, nonatomic) IBOutlet UIButton *editCoverButton;
 
 @property PFFile *avatarImageFile;
 @property PFFile *miniAvatarImageFile;
+@property PFFile *coverImageFile;
 
 @end
 
@@ -32,6 +36,8 @@
 
 @synthesize imagePicker;
 @synthesize popoverController;
+
+@synthesize imagePickerCover;
 
 - (void)viewDidLoad
 {
@@ -65,10 +71,7 @@
 
 //    [self setUserInfo];
 }
-- (IBAction)onEditCoverPressed:(id)sender
-{
-    
-}
+
 
 #pragma mark - Helpers
 
@@ -89,6 +92,13 @@
                 UIImage *image = [UIImage imageWithData:data];
                 self.avatarImageView.image = image;
             }];
+
+            PFFile *coverImageFile = [user objectForKey:@"coverPhoto"];
+            [coverImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                UIImage *coverImage = [UIImage imageWithData:data];
+                self.coverImageView.image = coverImage;
+            }];
+
 
 //            [self. sizeToFit];
 //            [self.cityStateLabel sizeToFit];
@@ -131,6 +141,9 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"Test1" object:self];
     [self dismissViewControllerAnimated:NO completion:nil];
 }
+
+
+
 #pragma mark - Tap Gesture Recognizer
 
 - (void)tapTap:(UITapGestureRecognizer *)tapGestureRecognizer
@@ -154,6 +167,22 @@
 }
 
 #pragma mark - Image Picker
+- (IBAction)onEditCoverPressed:(id)sender
+{
+    self.imagePickerCover = [[GKImagePicker alloc] init];
+    self.imagePickerCover.cropSize = CGSizeMake(320, 160);
+    self.imagePickerCover.delegate = self;
+
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+
+        self.popoverController = [[UIPopoverController alloc] initWithContentViewController:self.imagePickerCover.imagePickerController];
+        [self.popoverController presentPopoverFromRect:self.editCoverButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+
+    } else {
+        //        [self presentModalViewController:self.imagePicker.imagePickerController animated:YES];
+        [self presentViewController:self.imagePickerCover.imagePickerController animated:YES completion:nil];
+    }
+}
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
@@ -166,26 +195,14 @@
 //going to put a tap gesture on this so that when the user taps it, modally a view controller comes up that allows the user to select photos from their library to put in as the theme photo
 //might have some sizing issues and stuff here
 
--(void)imagePicker:(GKImagePicker *)imagePicker pickedImage:(UIImage *)image
+-(void)imagePicker:(GKImagePicker *)imagePickerd pickedImage:(UIImage *)image
 {
 
-    //THEME IMAGE FOR HOMEPAGE
-//    CGSize scaledSize = CGSizeMake(320, 320);
-//    UIGraphicsBeginImageContextWithOptions(scaledSize, NO, 2.0);
-//
-//    [image drawInRect:(CGRect){.size = scaledSize}];
-//    UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
-//
-//    NSData *imageData = UIImagePNGRepresentation(resizedImage);
-//    PFFile *imageFile = [PFFile fileWithData:imageData];
-
-//    NSLog(@"IMAGEPICKED");
-
     //    self.themeImageView.image = image;
-
+    if(imagePickerd == self.imagePicker)
+    {
     //THEME IMAGE FOR HOMEPAGE
-    CGSize scaledSize = CGSizeMake(70, 70);
+    CGSize scaledSize = CGSizeMake(75, 75);
     UIGraphicsBeginImageContextWithOptions(scaledSize, NO, 2.0);
 
     [image drawInRect:(CGRect){.size = scaledSize}];
@@ -213,21 +230,6 @@
     self.miniAvatarImageFile = [PFFile fileWithData:miniAvatarImageData];
     //
 
-//    ////VIK: SAVE TO PARSE
-//    PFUser *user = [PFUser currentUser];
-//    [user setValue:self.avatarImageFile forKey:@"userProfilePhoto"];
-//    [user setValue:self.miniAvatarImageFile forKey:@"miniProfilePhoto"];
-//    [user saveInBackground];
-
-//    [self setUserInfo];
-
-//    PFUser *user = [PFUser currentUser];
-//
-//    [user setValue:self.avatarImageFile forKey:@"userProfilePhoto"];
-//    [user setValue:self.miniAvatarImageFile forKey:@"miniProfilePhoto"];
-//
-//    [user saveInBackground];
-
     // Save PFFile
     [self.avatarImageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
      {
@@ -251,6 +253,33 @@
          
      }];
 
+    }
+    else{
+
+        CGSize scaledSize = CGSizeMake(320, 160);
+        UIGraphicsBeginImageContextWithOptions(scaledSize, NO, 2.0);
+
+        [image drawInRect:(CGRect){.size = scaledSize}];
+        UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+
+        self.coverImageView.image = resizedImage;
+
+        NSData *coverImageData = UIImagePNGRepresentation(resizedImage);
+        self.coverImageFile = [PFFile fileWithData:coverImageData];
+
+        // Save PFFile
+        [self.coverImageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             PFUser *user = [PFUser currentUser];
+
+             [user setValue:self.coverImageFile forKey:@"coverPhoto"];
+             //        [user setValue:self.miniAvatarImageFile forKey:@"miniProfilePhoto"];
+
+             [user saveInBackground];
+
+         }];
+    }
     [self hideImagePicker];
 }
 
@@ -262,6 +291,7 @@
     } else {
 
         [self.imagePicker.imagePickerController dismissViewControllerAnimated:YES completion:nil];
+        [self.imagePickerCover.imagePickerController dismissViewControllerAnimated:YES completion:nil];
     }
 }
 

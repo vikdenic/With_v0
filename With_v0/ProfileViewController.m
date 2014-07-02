@@ -36,6 +36,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *friendStatusButton;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
 
 //Data
 
@@ -156,6 +157,7 @@
             self.nameLabel.text = [object objectForKey:@"name"];
             self.cityStateLabel.text = [object objectForKey:@"userCityState"];
             self.bioTextView.text = [object objectForKey:@"userBio"];
+            PFFile *coverImageFile = [object objectForKey:@"coverPhoto"];
 
             PFFile *imageFile = [object objectForKey:@"userProfilePhoto"];
 
@@ -164,6 +166,10 @@
                 self.profileAvatar.image = image;
 
     }];
+        [coverImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            UIImage *coverImage = [UIImage imageWithData:data];
+            self.coverImageView.image = coverImage;
+        }];
     }];
 }
 
