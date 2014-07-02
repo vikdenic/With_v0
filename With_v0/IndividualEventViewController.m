@@ -55,6 +55,12 @@
     NSLog(@"\n\ntitle is %@\n\n", self.tempTitle);
     ///
 
+    ///
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation addUniqueObject:self.tempTitle forKey:@"channels"];
+    [currentInstallation saveInBackground];
+    ///
+
     [self checkingUsersEventStatus];
     [self checkingUsersAttending];
     [self checkingUsersInvited];
@@ -78,12 +84,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-    ///
-    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-    [currentInstallation addUniqueObject:self.tempTitle forKey:@"channels"];
-    [currentInstallation saveInBackground];
-    ///
 
     self.detailsTextView.text = self.event[@"details"];
     self.addressTextView.text = self.event[@"location"];
