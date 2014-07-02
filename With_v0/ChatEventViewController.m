@@ -48,7 +48,7 @@
 
     self.chatObjects = [NSMutableArray array];
 
-    self.channelPlaceHolder = @"party";
+    self.channelPlaceHolder = [NSString stringWithFormat:@"%@", [self.event objectForKey:@"title"]];
     self.navigationController.hidesBottomBarWhenPushed = NO;
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
@@ -126,7 +126,7 @@
     // Send a notification to all devices subscribed to the "Giants" channel.
     PFPush *push = [[PFPush alloc] init];
     [push setChannel:self.channelPlaceHolder];
-    [push setMessage:@"The Giants just scored!"];
+    [push setMessage:@""];
     [push sendPushInBackground];
 
 
