@@ -27,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *friendStatusButton;
 @property PFObject *friendshipObject;
 
+@property (weak, nonatomic) IBOutlet UIImageView *coverPhoto;
+
 @end
 
 @implementation StreamProfileViewController
@@ -72,6 +74,15 @@
         self.nameLabel.text = [object objectForKey:@"username"];
 //        self.cityStateLabel.text = [object objectForKey:@"userCityState"];
 //        self.bioTextView.text = [object objectForKey:@"userBio"];
+
+        PFFile *coverImageFile = [object objectForKey:@"coverPhoto"];
+
+        [coverImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            UIImage *image = [UIImage imageWithData:data];
+            self.coverPhoto.image = image;
+
+        }];
+
 
         PFFile *imageFile = [object objectForKey:@"userProfilePhoto"];
 

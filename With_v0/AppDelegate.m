@@ -23,6 +23,9 @@
      UIRemoteNotificationTypeAlert|
      UIRemoteNotificationTypeSound];
 
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+//    [[UINavigationBar appearance]setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+
     return YES;
 }
 

@@ -100,10 +100,13 @@
     [super viewWillAppear:animated];
 
     self.navigationController.navigationBar.topItem.title = [PFUser currentUser].username;
+    
 
     self.nameLabel.numberOfLines = 0;
     self.cityStateLabel.numberOfLines = 0;
     [self.bioTextView sizeToFit];
+
+    self.tabBarController.tabBar.hidden = NO;
 
     [self setUserInfo];
 
