@@ -343,6 +343,7 @@
 
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:@"ChatroomCell"];
+        cell.usernameChatCellLabel.textColor = [UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1];
     }
 
     cell.chatMessageCellLabel.text = [NSString stringWithFormat:@"%@", chatEventObject.chatMessage];

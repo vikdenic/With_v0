@@ -260,8 +260,8 @@
 {
     if ([segue.identifier isEqualToString:@"FromExploreToIndividualSegue"])
     {
-//        IndividualEventViewController *individualEventViewController = segue.destinationViewController;
-//        individualEventViewController.eventObject = self.eventObject;
+        IndividualEventViewController *individualEventViewController = segue.destinationViewController;
+        individualEventViewController.eventObject = self.eventObject;
 
         //what is the best way to pass this?
     }
