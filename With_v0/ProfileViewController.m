@@ -12,6 +12,7 @@
 #import "HomeTableViewCell.h"
 #import "HomeViewController.h"
 #import "ProfileTableViewCell.h"
+#import "IndividualEventViewController.h"
 
 #import "ProfileView1.h"
 #import "ProfileView2.h"
@@ -221,23 +222,76 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
-
+    return self.eventsAttendingArray.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ProfileTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
 
-    cell.textLabel.text = @"Blake";
+    PFObject *object = [self.eventsAttendingArray objectAtIndex:indexPath.row];
+
+    dispatch_queue_t queue2 = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+
+    PFFile *userProfilePhoto = [[object objectForKey:@"creator"] objectForKey:@"userProfilePhoto"];
+    [userProfilePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+     {
+         if (data == nil)
+         {
+             cell.creatorImageView.image = nil;
+
+         } else
+         {
+
+             dispatch_async(queue2, ^{
+                 UIImage *temporaryImage = [UIImage imageWithData:data];
+
+                 cell.creatorImageView.layer.cornerRadius = cell.creatorImageView.bounds.size.width/2;
+                 cell.creatorImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
+                 cell.creatorImageView.layer.borderWidth = 2.0;
+                 cell.creatorImageView.layer.masksToBounds = YES;
+                 //         cell.creatorImageView.backgroundColor = [UIColor redColor];
+
+                 dispatch_sync(dispatch_get_main_queue(), ^{
+                     cell.creatorImageView.image = temporaryImage;
+                 });
+             });
+         }
+     }];
+
+    //this gets the image not on the main thread
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    PFFile *file = [object objectForKey:@"themeImage"];
+    [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+     {
+         dispatch_async(queue, ^{
+             UIImage *image = [UIImage imageWithData:data];
+
+             dispatch_sync(dispatch_get_main_queue(), ^{
+                 cell.themeImageView.image = image;
+             });
+         });
+     }];
+
+    //creator username
+    PFObject *userName = [[object objectForKey:@"creator"] objectForKey:@"username"];
+    cell.creatorNameLabel.text = [NSString stringWithFormat:@"%@", userName];
+
+    //event Name and Date;
+    cell.eventNameLabel.text = object[@"title"];
+    cell.eventDateLabel.text = object[@"eventDate"];
+
+    cell.accessoryType = UITableViewCellAccessoryNone;
 
     return cell;
+
 }
 
 - (void)queryForUsersUpcomingEvents
 {
     PFRelation *relation = [[PFUser currentUser] relationForKey:@"eventsAttending"];
     PFQuery *query = [relation query];
+    [query includeKey:@"creator"];
 
     [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
      {
@@ -303,5 +357,16 @@
 //
 //    [self performSegueWithIdentifier:@"LogOutToSignIn" sender:self];
 //}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"ProfileToIndividualSegue"])
+    {
+        IndividualEventViewController *individualEventViewController = segue.destinationViewController;
+        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+        self.event = [self.eventsAttendingArray objectAtIndex:selectedIndexPath.row];
+        individualEventViewController.event = self.event;
+    }
+}
 
 @end
