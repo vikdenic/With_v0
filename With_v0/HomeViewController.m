@@ -47,7 +47,7 @@
     self.eventArray = [NSMutableArray array];
     self.indexPathArray = [NSMutableArray array];
 
-    self.tabBarController.tabBar.tintColor = [UIColor orangeColor];
+    self.tabBarController.tabBar.tintColor = [UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1];
 
     PFUser *currentUser = [PFUser currentUser];
 
