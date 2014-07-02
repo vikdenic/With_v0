@@ -65,8 +65,9 @@
                 themeObject.themeImage = themeImage;
 
                 [self.ideas addObject:themeObject];
-                [self.tableView reloadData];
+//                [self.tableView reloadData];
             }];
+            [self.tableView reloadData];
         }
     }];
 }

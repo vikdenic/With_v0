@@ -54,6 +54,9 @@
     //tap on themImageView to open Image Picker
     UITapGestureRecognizer *tapping = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapTap:)];
     tapping.numberOfTapsRequired = 1;
+
+    [self setUserInfo];
+
     [self.avatarImageView addGestureRecognizer:tapping];
     self.avatarImageView.userInteractionEnabled = YES;
 
@@ -62,7 +65,6 @@
     self.avatarImageView.layer.borderColor = [[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] CGColor];
     self.avatarImageView.layer.borderWidth = 2.0;
 
-    [self setUserInfo];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -137,6 +139,7 @@
     self.nameTextField.text = nil;
     self.locationTextField.text = nil;
     self.bioTextView.text = nil;
+    self.coverImageView.image = nil;
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"Test1" object:self];
     [self dismissViewControllerAnimated:NO completion:nil];
