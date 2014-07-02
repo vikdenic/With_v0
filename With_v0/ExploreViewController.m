@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UITextView *detailsTextView;
+@property (weak, nonatomic) IBOutlet UIImageView *eventImageView;
 
 @end
 
@@ -78,6 +79,9 @@
     //need to make this so user can search around and also see events not around their current location?
 
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
+
+    [query includeKey:@"creator"]; //
+
     [query whereKey:@"locationGeoPoint" nearGeoPoint:userGeoPoint withinMiles:20];
     query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
@@ -97,6 +101,17 @@
              exploreAnnotation.location = [object objectForKey:@"location"];
              exploreAnnotation.date = [object objectForKey:@"eventDate"];
 
+             exploreAnnotation.creatorImageFile = [[object objectForKey:@"creator"]objectForKey:@"userProfilePhoto"];
+
+             [exploreAnnotation.creatorImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+
+                 exploreAnnotation.creatorImage = [UIImage imageWithData:data];
+
+                 [self.comparisonExploreAnnotationArray addObject:exploreAnnotation];
+                 [self.mapView addAnnotation:exploreAnnotation];
+                 
+             }];
+             
              exploreAnnotation.themeFile = [object objectForKey:@"mapThemeImage"];
              [exploreAnnotation.themeFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
 
@@ -130,7 +145,7 @@
 
     [self performSelector:@selector(delayForZoom)
                withObject:nil
-               afterDelay:2.0];
+               afterDelay:1.3];
 }
 
 - (void)delayForZoom
@@ -155,7 +170,8 @@
     ExploreEventAnnotationView *annotationView = [[ExploreEventAnnotationView alloc]initWithAnnotation:exploreAnnotation reuseIdentifier:nil];
 
     //VIK: Circular annotation
-    annotationView.image = exploreAnnotation.themeImage;
+//    annotationView.image = exploreAnnotation.themeImage;
+    annotationView.image = exploreAnnotation.creatorImage;
 
     annotationView.frame = CGRectMake(0,0,70,70);
 
@@ -170,7 +186,6 @@
 
     annotationView.layer.borderWidth = 2.0;
     //
-
 
     annotationView.geoPoint = exploreAnnotation.geoPoint;
 
@@ -211,6 +226,8 @@
         self.detailsTextView.text = exploreAnnotation.details;
         //size to fit this
 
+        self.eventImageView.image = exploreAnnotation.themeImage;
+
         self.eventObject = exploreAnnotation.object;
     } else {
     }
@@ -243,7 +260,7 @@
 {
     if ([segue.identifier isEqualToString:@"FromExploreToIndividualSegue"])
     {
-        IndividualEventViewController *individualEventViewController = segue.destinationViewController;
+//        IndividualEventViewController *individualEventViewController = segue.destinationViewController;
 //        individualEventViewController.eventObject = self.eventObject;
 
         //what is the best way to pass this?

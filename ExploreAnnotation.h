@@ -21,5 +21,9 @@
 @property PFFile *themeFile;
 @property UIImage *themeImage;
 @property NSString *date;
+@property PFFile *creatorImageFile;
+@property UIImage *creatorImage;
+
+
 
 @end
