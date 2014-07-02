@@ -55,6 +55,7 @@
 
         if (currentUser)
         {
+            [self queryForEvents];
 
         } else {
             
@@ -68,8 +69,6 @@
     [self.tableView addSubview:refreshControl];
 
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
-
-    [self queryForEvents];
 
     UIBarButtonItem *newBackButton =
     [[UIBarButtonItem alloc] initWithTitle:@"Home"
