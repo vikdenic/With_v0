@@ -19,9 +19,9 @@
 
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 
-//    [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
-//     UIRemoteNotificationTypeAlert|
-//     UIRemoteNotificationTypeSound];
+    [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
+     UIRemoteNotificationTypeAlert|
+     UIRemoteNotificationTypeSound];
 
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 //    [[UINavigationBar appearance]setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
