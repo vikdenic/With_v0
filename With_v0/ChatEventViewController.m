@@ -76,6 +76,8 @@
 
     [self getChatObject];
 
+    //need to not reload the data each time a comment happens
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
