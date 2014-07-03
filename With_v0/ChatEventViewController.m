@@ -111,24 +111,21 @@
              NSIndexPath *path = [NSIndexPath indexPathForRow:self.numberOfRows inSection:0];
              [self.commentTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
 
-//             int row = (int)self.chatObjects.count -1;
-//
-//             NSIndexPath *path2 = [NSIndexPath indexPathForRow:row-- inSection:0];
-
-             [self.commentTableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionBottom  animated:NO];
+             [self.commentTableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionBottom animated:NO];
 
              [self.commentTableView reloadData];
          }
     }];
     self.chatTextFieldOutlet.text = @"";
 
+
     ///
     // Send a notification to all devices subscribed to the "Giants" channel.
+
     PFPush *push = [[PFPush alloc] init];
     [push setChannel:self.channelPlaceHolder];
-    [push setMessage:@""];
+    [push setMessage:@"New Message!"];
     [push sendPushInBackground];
-
 
     ///multiple channel prototype
 //    NSArray *channels = [NSArray arrayWithObjects:@"Giants", @"Mets", nil];
@@ -270,7 +267,6 @@
                 [self.chatObjects addObject:chatEventObject];
                 [self.commentTableView reloadData];
             }
-
             self.chatObjects = self.chatObjects.reverseObjectEnumerator.allObjects.mutableCopy;
         }
     }];
