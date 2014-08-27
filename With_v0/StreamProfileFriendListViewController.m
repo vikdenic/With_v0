@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property NSMutableArray *approvedFriendships;
-@property NSInteger *indexPathRow;
+@property NSInteger indexPathRow;
 @property NSMutableArray *usersAttendingArray;
 
 @end

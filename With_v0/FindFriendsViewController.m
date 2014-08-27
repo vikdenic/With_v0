@@ -20,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) NSString *userSearch;
 @property BOOL resultsToDisplay;
-@property NSInteger *indexPathRow;
+@property NSInteger indexPathRow;
 
 
 @end

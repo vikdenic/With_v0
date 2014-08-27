@@ -224,7 +224,7 @@
 
 #pragma mark - TableView Delegates
 //NOT SURE WHERE THESE WARNINGS CAME FROM?
--(int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(self.isSearching == NO)
     {

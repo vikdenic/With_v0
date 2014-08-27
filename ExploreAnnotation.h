@@ -24,6 +24,4 @@
 @property PFFile *creatorImageFile;
 @property UIImage *creatorImage;
 
-
-
 @end
