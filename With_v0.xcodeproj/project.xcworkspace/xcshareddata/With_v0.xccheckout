@@ -10,29 +10,29 @@
 	<string>With_v0</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>77894F37-F836-4D00-BCEB-0481A0D4BE94</key>
+		<key>C324C681ADCF4CD2958C81B6E462509126844F81</key>
 		<string>https://github.com/vikdenic/With_v0.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>With_v0.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>77894F37-F836-4D00-BCEB-0481A0D4BE94</key>
+		<key>C324C681ADCF4CD2958C81B6E462509126844F81</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/vikdenic/With_v0.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>77894F37-F836-4D00-BCEB-0481A0D4BE94</string>
+	<string>C324C681ADCF4CD2958C81B6E462509126844F81</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>77894F37-F836-4D00-BCEB-0481A0D4BE94</string>
+			<string>C324C681ADCF4CD2958C81B6E462509126844F81</string>
 			<key>IDESourceControlWCCName</key>
 			<string>With_v0</string>
 		</dict>
