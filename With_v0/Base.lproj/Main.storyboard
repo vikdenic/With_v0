@@ -118,9 +118,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="With" id="vKJ-AE-kfH">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="Efm-QH-mnN">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="Efm-QH-mnN">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="WF4-BF-OZZ">
-                                <rect key="frame" x="267" y="4" width="37" height="35"/>
+                                <rect key="frame" x="16" y="4" width="37" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="envelope_unopened_image">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -129,6 +129,12 @@
                                     <segue destination="Vdk-Mo-UU7" kind="modal" id="qiD-kZ-uj3"/>
                                 </connections>
                             </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="izx-6X-2Xc">
+                            <connections>
+                                <action selector="onCreateButtonTapped:" destination="vXZ-lx-hvc" id="pmE-3T-eEK"/>
+                                <segue destination="FQN-Pl-k2W" kind="modal" id="QGs-n5-9DE"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -1782,38 +1788,20 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Create Event" id="suv-hu-U5g">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="Qd9-Nw-hMR">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4uO-FL-srB" userLabel="LightBulb Button">
-                                <rect key="frame" x="16" y="4" width="79" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="50" maxY="0.0"/>
-                                <state key="normal" image="lightbulb_image_24x34">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="0fM-Up-xTc" kind="modal" identifier="CreateToIdeas" modalTransitionStyle="coverVertical" id="hCq-9I-eQq"/>
-                                </connections>
-                            </button>
-                            <color key="tintColor" red="0.8078432083" green="0.98431378599999997" blue="0.28627452250000002" alpha="1" colorSpace="deviceRGB"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="i3s-hF-elt">
+                            <connections>
+                                <action selector="onCancelButtonTapped:" destination="slZ-Mk-xvY" id="HG6-94-hpd"/>
+                            </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="c1l-i0-MrE">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" enabled="NO" highlighted="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5oF-D6-yhx">
-                                <rect key="frame" x="233" y="5" width="71" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <state key="normal" title="Create">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="onCreateButtonTapped:" destination="slZ-Mk-xvY" eventType="touchUpInside" id="W83-fa-eb3"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="done" id="c1l-i0-MrE">
+                            <connections>
+                                <action selector="onCreateButtonTapped:" destination="slZ-Mk-xvY" id="W3V-59-7V7"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="changeThemeButton" destination="ZMX-EF-D4I" id="EFP-wa-4ua"/>
-                        <outlet property="createButton" destination="5oF-D6-yhx" id="jRY-Jp-cgE"/>
+                        <outlet property="createButton" destination="c1l-i0-MrE" id="8gO-dm-e9r"/>
                         <outlet property="dateAndTimeButton" destination="goa-9d-jMz" id="sfU-xx-He5"/>
                         <outlet property="detailsPlaceholderLabel" destination="E78-e0-wwE" id="viv-RE-0pu"/>
                         <outlet property="detailsTextView" destination="Icf-pK-GzR" id="dvl-8O-9Us"/>
@@ -2661,7 +2649,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <connections>
                         <segue destination="ueY-w6-Wwn" kind="relationship" relationship="viewControllers" id="YVC-aR-cB7"/>
                         <segue destination="AJ7-T6-riw" kind="relationship" relationship="viewControllers" id="NyY-oT-clK"/>
-                        <segue destination="FQN-Pl-k2W" kind="relationship" relationship="viewControllers" id="A2d-Sx-egb"/>
                         <segue destination="UEV-r9-cAY" kind="relationship" relationship="viewControllers" id="R6y-AY-X3a"/>
                         <segue destination="Lkr-EG-DoK" kind="relationship" relationship="viewControllers" id="eVm-Fk-D6n"/>
                     </connections>
@@ -3060,7 +3047,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="find_tab_image" width="31" height="32"/>
         <image name="home_tab_image" width="32" height="32"/>
         <image name="invite_people" width="33" height="22"/>
-        <image name="lightbulb_image_24x34" width="24" height="35"/>
         <image name="like_big" width="202" height="202"/>
         <image name="login_background" width="320" height="568"/>
         <image name="login_image" width="149" height="46"/>

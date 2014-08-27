@@ -41,7 +41,7 @@
 @property (nonatomic, strong) GKImagePicker *imagePicker;
 @property (nonatomic, strong) UIPopoverController *popoverController;
 
-@property (weak, nonatomic) IBOutlet UIButton *createButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *createButton;
 
 @property BOOL canCreateEvent;
 @property BOOL isEventinviteOnly;
@@ -140,14 +140,22 @@
     }
 }
 
+- (IBAction)onCancelButtonTapped:(UIBarButtonItem *)sender
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        //
+    }];
+}
+
 #pragma mark - Helpers
 
 -(void)checkIfFormsComplete
 {
     if( !self.themeImageView.image || [self.titleTextField.text isEqualToString:@""] || !self.dateString || self.coordinate.latitude == 0.0)
     {
-//        self.createButton.titleLabel.textColor = [UIColor grayColor];
-        [self.createButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+//        [self.createButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+
+        self.createButton.tintColor = [UIColor grayColor];
 
         self.canCreateEvent = NO;
     }
@@ -155,7 +163,9 @@
     if (self.themeImageView.image && ![self.titleTextField.text isEqualToString:@""] && self.dateString && !(self.coordinate.latitude == 0.0) )
     {
 //        self.createButton.titleLabel.textColor = [UIColor orangeColor];
-    [self.createButton setTitleColor:[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] forState:UIControlStateNormal];
+//    [self.createButton setTitleColor:[UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1] forState:UIControlStateNormal];
+
+        self.createButton.tintColor = [UIColor colorWithRed:202/255.0 green:250/255.0 blue:53/255.0 alpha:1];
 
         self.canCreateEvent = YES;
     }
@@ -210,75 +220,77 @@
 - (IBAction)onCreateButtonTapped:(id)sender
 {
 
-    if (self.canCreateEvent == YES)
-    {
-    //if statement here requiring certain fields
 
-    PFObject *event = [PFObject objectWithClassName:@"Event"];
-//    event[@"title"] = self.titleTextView.text;
-    event[@"title"] = self.titleTextField.text;
-    event[@"details"] = self.detailsTextView.text;
-    event[@"location"] = self.eventName;
-    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:self.coordinate.latitude
-                                                  longitude:self.coordinate.longitude];
-    event[@"locationGeoPoint"] = geoPoint;
-    event[@"themeImage"] = self.themeImageFile;
-    event[@"mapThemeImage"] = self.mapThemeImageFile;
-    event[@"creator"] = [PFUser currentUser];
-    event[@"eventDate"] = self.dateString;
+        if (self.canCreateEvent == YES)
+        {
+        //if statement here requiring certain fields
 
-        if (self.isEventinviteOnly == YES)
-        {
-            event[@"eventPrivate"] = @YES;
-        } else
-        {
-            event[@"eventPrivate"] = @NO;
-        }
+        PFObject *event = [PFObject objectWithClassName:@"Event"];
+    //    event[@"title"] = self.titleTextView.text;
+        event[@"title"] = self.titleTextField.text;
+        event[@"details"] = self.detailsTextView.text;
+        event[@"location"] = self.eventName;
+        PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:self.coordinate.latitude
+                                                      longitude:self.coordinate.longitude];
+        event[@"locationGeoPoint"] = geoPoint;
+        event[@"themeImage"] = self.themeImageFile;
+        event[@"mapThemeImage"] = self.mapThemeImageFile;
+        event[@"creator"] = [PFUser currentUser];
+        event[@"eventDate"] = self.dateString;
 
-        if (self.canGuestInviteOthers == YES)
-        {
-            event[@"guestCanInviteOthers"] = @YES;
-        } else
-        {
-            event[@"guestCanInviteOthers"] = @NO;
-        }
-    [event saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-    {
-        //send invites to people invited
-        for (PFUser *user in self.usersInvitedArray)
-        {
-            PFObject *eventInvite = [PFObject objectWithClassName:@"EventInvite"];
-            eventInvite[@"toUser"] = user;
-            eventInvite[@"event"] = event;
-            eventInvite[@"statusOfUser"] = @"Invited";
-            [eventInvite saveInBackground];
+            if (self.isEventinviteOnly == YES)
+            {
+                event[@"eventPrivate"] = @YES;
+            } else
+            {
+                event[@"eventPrivate"] = @NO;
+            }
 
-            //creates relations to the event for each user
-            PFRelation *relation = [event relationforKey:@"usersInvited"];
-            [relation addObject:user];
+            if (self.canGuestInviteOthers == YES)
+            {
+                event[@"guestCanInviteOthers"] = @YES;
+            } else
+            {
+                event[@"guestCanInviteOthers"] = @NO;
+            }
+        [event saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+        {
+            //send invites to people invited
+            for (PFUser *user in self.usersInvitedArray)
+            {
+                PFObject *eventInvite = [PFObject objectWithClassName:@"EventInvite"];
+                eventInvite[@"toUser"] = user;
+                eventInvite[@"event"] = event;
+                eventInvite[@"statusOfUser"] = @"Invited";
+                [eventInvite saveInBackground];
+
+                //creates relations to the event for each user
+                PFRelation *relation = [event relationforKey:@"usersInvited"];
+                [relation addObject:user];
+                [event saveInBackground];
+            }
+            //puts the event the user created into their events attending and adds them to the going list
+    //        PFRelation *relation = [event relationForKey:@"usersInvited"];
+    //        [relation addObject:[PFUser currentUser]];
+
+            PFRelation *eventRelation = [[PFUser currentUser] relationForKey:@"eventsAttending"];
+            [eventRelation addObject:event];
+            [[PFUser currentUser] saveInBackground];
+
+            PFRelation *goingToRelation = [event relationForKey:@"usersAttending"];
+            [goingToRelation addObject:[PFUser currentUser]];
             [event saveInBackground];
+        }];
+
+
+
+
+            //takes user back to home page
+            [self.tabBarController setSelectedIndex:0];
+
+            [self resetCreateFields];
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
-        //puts the event the user created into their events attending and adds them to the going list
-//        PFRelation *relation = [event relationForKey:@"usersInvited"];
-//        [relation addObject:[PFUser currentUser]];
-
-        PFRelation *eventRelation = [[PFUser currentUser] relationForKey:@"eventsAttending"];
-        [eventRelation addObject:event];
-        [[PFUser currentUser] saveInBackground];
-
-        PFRelation *goingToRelation = [event relationForKey:@"usersAttending"];
-        [goingToRelation addObject:[PFUser currentUser]];
-        [event saveInBackground];
-    }];
-
-
-
-
-    //takes user back to home page
-    [self.tabBarController setSelectedIndex:0];
-
-    [self resetCreateFields];
-    }
 }
 
 -(void)resetCreateFields

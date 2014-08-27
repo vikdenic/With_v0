@@ -89,8 +89,15 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.tabBarController.tabBar.hidden = NO;
+}
+
+#pragma mark - Create
+
+- (IBAction)onCreateButtonTapped:(id)sender
+{
 
 }
+
 
 #pragma mark - The Magic!
 
