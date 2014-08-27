@@ -9,7 +9,6 @@
 #import "PageViewController.h"
 #import "IndividualEventViewController.h"
 #import "StreamEventViewController.h"
-#import "ChatEventViewController.h"
 
 @interface PageViewController () <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
@@ -114,11 +113,7 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"ToChatSegue"])
-    {
-        ChatEventViewController *chatEventViewController = segue.destinationViewController;
-        chatEventViewController.event = self.event;
-    }
+
 }
 
 

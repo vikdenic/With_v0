@@ -12,7 +12,6 @@
 #import "DateAndTimeViewController.h"
 #import "GKImagePicker.h"
 #import "InvitePeopleViewController.h"
-#import "IdeasViewController.h"
 
 @interface CreateEventViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, GKImagePickerDelegate>
 
@@ -442,19 +441,9 @@
 //    [self viewWillAppear:YES];
 }
 
-- (IBAction)unwindInviteToCreate:(UIStoryboardSegue *)sender
-{
-    InvitePeopleViewController *invitePeopleViewController = sender.sourceViewController;
-    self.usersInvitedArray = invitePeopleViewController.usersInvitedArray;
-    ///not sure if this is really going to work
-
-//    [self.invitePeopleButton setTitle:[NSString stringWithFormat:@"          %lu", (unsigned long)self.usersInvitedArray.count] forState:UIControlStateNormal];
-}
 
 -(IBAction)unwindIdeasToCreate:(UIStoryboardSegue *)sender
 {
-    IdeasViewController *ideasVC = sender.sourceViewController;
-    self.themeObject = ideasVC.themeObject;
 
     self.themeImageView.image = self.themeObject.themeImage;
 

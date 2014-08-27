@@ -10,7 +10,6 @@
 #import "PeopleAttendingEventViewController.h"
 #import "InvitedPeopleViewController.h"
 #import "IndividualEventInvitePeopleViewController.h"
-#import "ChatEventViewController.h"
 
 @interface IndividualEventViewController ()
 

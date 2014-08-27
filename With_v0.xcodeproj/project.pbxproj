@@ -12,9 +12,7 @@
 		6050D51F1962FB60008AAF8F /* IndividualEventInvitePeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6050D51E1962FB60008AAF8F /* IndividualEventInvitePeopleViewController.m */; };
 		6050D5221962FC86008AAF8F /* IndividualEventInvitePeopleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6050D5211962FC86008AAF8F /* IndividualEventInvitePeopleTableViewCell.m */; };
 		6050D5251962FCD0008AAF8F /* IndividualEventInvitePeopleInviteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6050D5241962FCD0008AAF8F /* IndividualEventInvitePeopleInviteButton.m */; };
-		6050D52819633FAA008AAF8F /* ChatEventObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6050D52719633FAA008AAF8F /* ChatEventObject.m */; };
 		605ADBE3195CABC000254B92 /* PeopleAttendingFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 605ADBE2195CABBF00254B92 /* PeopleAttendingFriendButton.m */; };
-		605ADBE6195CF36400254B92 /* FindFriendsFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 605ADBE5195CF36400254B92 /* FindFriendsFriendButton.m */; };
 		60694166195FD98F00C8310F /* InvitesButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 60694165195FD98F00C8310F /* InvitesButton.m */; };
 		606DAE311961AB0A003F3AAE /* StreamCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 606DAE301961AB09003F3AAE /* StreamCameraViewController.m */; };
 		606DAE341961B5B7003F3AAE /* CommentsButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 606DAE331961B5B7003F3AAE /* CommentsButton.m */; };
@@ -30,8 +28,6 @@
 		608B6C9E1950FF51007D4503 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608B6C9D1950FF51007D4503 /* CommentsViewController.m */; };
 		6091D1ED195B1A68001A371E /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6091D1EB195B1A68001A371E /* AddressBook.framework */; };
 		6091D1EE195B1A68001A371E /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6091D1EC195B1A68001A371E /* AddressBookUI.framework */; };
-		6091D1F1195B2806001A371E /* PendingFriendRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6091D1F0195B2806001A371E /* PendingFriendRequestsViewController.m */; };
-		6091D1F4195B28F6001A371E /* PendingFriendRequestsCustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6091D1F3195B28F6001A371E /* PendingFriendRequestsCustomTableViewCell.m */; };
 		609FDC6E195F4C6600EF7C5B /* InvitePeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 609FDC6D195F4C6600EF7C5B /* InvitePeopleViewController.m */; };
 		609FDC71195F4CBB00EF7C5B /* InvitePeopleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 609FDC70195F4CBB00EF7C5B /* InvitePeopleTableViewCell.m */; };
 		609FDC74195F4F6E00EF7C5B /* InvitePeopleInviteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 609FDC73195F4F6E00EF7C5B /* InvitePeopleInviteButton.m */; };
@@ -42,7 +38,6 @@
 		60A7DAE1195E3E55003258F0 /* FriendsListFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 60A7DAE0195E3E55003258F0 /* FriendsListFriendButton.m */; };
 		60B954531959C95900AE363D /* PeopleAttendingEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B954521959C95800AE363D /* PeopleAttendingEventViewController.m */; };
 		60B954561959CA9300AE363D /* PeopleAttendingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B954551959CA9300AE363D /* PeopleAttendingTableViewCell.m */; };
-		60C72085194F677300ADE5DF /* ChatEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C72084194F677300ADE5DF /* ChatEventViewController.m */; };
 		60C7208E194F689400ADE5DF /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C7208D194F689400ADE5DF /* PageViewController.m */; };
 		60C72094194F692000ADE5DF /* StreamEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C72093194F692000ADE5DF /* StreamEventViewController.m */; };
 		60C72097194FAFC200ADE5DF /* StreamTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C72096194FAFC200ADE5DF /* StreamTableViewCell.m */; };
@@ -65,7 +60,6 @@
 		60F5B3461957537200A80467 /* ExploreEventAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F5B3451957537200A80467 /* ExploreEventAnnotationView.m */; };
 		60F5B34C1957555E00A80467 /* ExploreAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F5B34B1957555E00A80467 /* ExploreAnnotation.m */; };
 		60FFB56419646FAB0025D73C /* ProfileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 60FFB56319646FAB0025D73C /* ProfileTableViewCell.m */; };
-		810C1EC3195605B70046DFB1 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 810C1EC1195605B70046DFB1 /* CustomTableViewCell.m */; };
 		813A92211961AD5D00843C6F /* CamPreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 813A92201961AD5D00843C6F /* CamPreView.m */; };
 		813A92231961AEA200843C6F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 813A92221961AEA200843C6F /* AVFoundation.framework */; };
 		813A92251961AEBC00843C6F /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 813A92241961AEBC00843C6F /* AssetsLibrary.framework */; };
@@ -86,7 +80,6 @@
 		93513A6119528A9000302A54 /* ChooseEventLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93513A6019528A9000302A54 /* ChooseEventLocationViewController.m */; };
 		93513A641952902C00302A54 /* FSVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 93513A631952902C00302A54 /* FSVenue.m */; };
 		9368F99919630074005477A1 /* ThemeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9368F99819630074005477A1 /* ThemeObject.m */; };
-		9375544A1950A5BF008AAD45 /* FindFriendsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 937554491950A5BF008AAD45 /* FindFriendsTableViewCell.m */; };
 		9375544D1950B883008AAD45 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9375544C1950B883008AAD45 /* EditProfileViewController.m */; };
 		93802209195659A0004B492D /* DateAndTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93802208195659A0004B492D /* DateAndTimeViewController.m */; };
 		9391EEC4195BD25C00554584 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9391EEC3195BD25C00554584 /* CoreImage.framework */; };
@@ -107,12 +100,9 @@
 		93952FC7194D6BFC001AA3E4 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FC6194D6BFC001AA3E4 /* ProfileViewController.m */; };
 		93952FCA194D7241001AA3E4 /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FC9194D7241001AA3E4 /* ExploreViewController.m */; };
 		93952FCD194D7318001AA3E4 /* CreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FCC194D7318001AA3E4 /* CreateEventViewController.m */; };
-		93952FD0194D7347001AA3E4 /* FindFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FCF194D7347001AA3E4 /* FindFriendsViewController.m */; };
 		93AB70911963B4EA002569B1 /* ProfileView1.m in Sources */ = {isa = PBXBuildFile; fileRef = 93AB70901963B4EA002569B1 /* ProfileView1.m */; };
 		93AB70941963B4FE002569B1 /* ProfileView2.m in Sources */ = {isa = PBXBuildFile; fileRef = 93AB70931963B4FE002569B1 /* ProfileView2.m */; };
 		93BF983E1963403400A7DD67 /* UITabBarController+hidable.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF983D1963403400A7DD67 /* UITabBarController+hidable.m */; };
-		93CE89051961399D007BA434 /* IdeasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE89041961399D007BA434 /* IdeasViewController.m */; };
-		93CE890819613D15007BA434 /* IdeasTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE890719613D15007BA434 /* IdeasTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,12 +125,8 @@
 		6050D5211962FC86008AAF8F /* IndividualEventInvitePeopleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualEventInvitePeopleTableViewCell.m; sourceTree = "<group>"; };
 		6050D5231962FCD0008AAF8F /* IndividualEventInvitePeopleInviteButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualEventInvitePeopleInviteButton.h; sourceTree = "<group>"; };
 		6050D5241962FCD0008AAF8F /* IndividualEventInvitePeopleInviteButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualEventInvitePeopleInviteButton.m; sourceTree = "<group>"; };
-		6050D52619633FAA008AAF8F /* ChatEventObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatEventObject.h; path = ../ChatEventObject.h; sourceTree = "<group>"; };
-		6050D52719633FAA008AAF8F /* ChatEventObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatEventObject.m; path = ../ChatEventObject.m; sourceTree = "<group>"; };
 		605ADBE1195CABBF00254B92 /* PeopleAttendingFriendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleAttendingFriendButton.h; sourceTree = "<group>"; };
 		605ADBE2195CABBF00254B92 /* PeopleAttendingFriendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleAttendingFriendButton.m; sourceTree = "<group>"; };
-		605ADBE4195CF36400254B92 /* FindFriendsFriendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendsFriendButton.h; sourceTree = "<group>"; };
-		605ADBE5195CF36400254B92 /* FindFriendsFriendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendsFriendButton.m; sourceTree = "<group>"; };
 		60694164195FD98F00C8310F /* InvitesButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitesButton.h; sourceTree = "<group>"; };
 		60694165195FD98F00C8310F /* InvitesButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitesButton.m; sourceTree = "<group>"; };
 		606DAE2F1961AB09003F3AAE /* StreamCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamCameraViewController.h; sourceTree = "<group>"; };
@@ -169,10 +155,6 @@
 		608B6C9D1950FF51007D4503 /* CommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsViewController.m; sourceTree = "<group>"; };
 		6091D1EB195B1A68001A371E /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		6091D1EC195B1A68001A371E /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
-		6091D1EF195B2806001A371E /* PendingFriendRequestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingFriendRequestsViewController.h; sourceTree = "<group>"; };
-		6091D1F0195B2806001A371E /* PendingFriendRequestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingFriendRequestsViewController.m; sourceTree = "<group>"; };
-		6091D1F2195B28F6001A371E /* PendingFriendRequestsCustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingFriendRequestsCustomTableViewCell.h; sourceTree = "<group>"; };
-		6091D1F3195B28F6001A371E /* PendingFriendRequestsCustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingFriendRequestsCustomTableViewCell.m; sourceTree = "<group>"; };
 		609FDC6C195F4C6600EF7C5B /* InvitePeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitePeopleViewController.h; sourceTree = "<group>"; };
 		609FDC6D195F4C6600EF7C5B /* InvitePeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitePeopleViewController.m; sourceTree = "<group>"; };
 		609FDC6F195F4CBB00EF7C5B /* InvitePeopleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitePeopleTableViewCell.h; sourceTree = "<group>"; };
@@ -193,8 +175,6 @@
 		60B954521959C95800AE363D /* PeopleAttendingEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleAttendingEventViewController.m; sourceTree = "<group>"; };
 		60B954541959CA9300AE363D /* PeopleAttendingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleAttendingTableViewCell.h; sourceTree = "<group>"; };
 		60B954551959CA9300AE363D /* PeopleAttendingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleAttendingTableViewCell.m; sourceTree = "<group>"; };
-		60C72083194F677300ADE5DF /* ChatEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatEventViewController.h; sourceTree = "<group>"; };
-		60C72084194F677300ADE5DF /* ChatEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatEventViewController.m; sourceTree = "<group>"; };
 		60C7208C194F689400ADE5DF /* PageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageViewController.h; sourceTree = "<group>"; };
 		60C7208D194F689400ADE5DF /* PageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageViewController.m; sourceTree = "<group>"; };
 		60C72092194F692000ADE5DF /* StreamEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamEventViewController.h; path = ../StreamEventViewController.h; sourceTree = "<group>"; };
@@ -229,8 +209,6 @@
 		60F5B34B1957555E00A80467 /* ExploreAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExploreAnnotation.m; path = ../ExploreAnnotation.m; sourceTree = "<group>"; };
 		60FFB56219646FAB0025D73C /* ProfileTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileTableViewCell.h; sourceTree = "<group>"; };
 		60FFB56319646FAB0025D73C /* ProfileTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileTableViewCell.m; sourceTree = "<group>"; };
-		810C1EC0195605B70046DFB1 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
-		810C1EC1195605B70046DFB1 /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
 		813A921F1961AD5D00843C6F /* CamPreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamPreView.h; sourceTree = "<group>"; };
 		813A92201961AD5D00843C6F /* CamPreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CamPreView.m; sourceTree = "<group>"; };
 		813A92221961AEA200843C6F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -261,8 +239,6 @@
 		93513A631952902C00302A54 /* FSVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSVenue.m; sourceTree = "<group>"; };
 		9368F99719630074005477A1 /* ThemeObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeObject.h; sourceTree = "<group>"; };
 		9368F99819630074005477A1 /* ThemeObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeObject.m; sourceTree = "<group>"; };
-		937554481950A5BF008AAD45 /* FindFriendsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendsTableViewCell.h; sourceTree = "<group>"; };
-		937554491950A5BF008AAD45 /* FindFriendsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendsTableViewCell.m; sourceTree = "<group>"; };
 		9375544B1950B883008AAD45 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
 		9375544C1950B883008AAD45 /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
 		93802207195659A0004B492D /* DateAndTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateAndTimeViewController.h; sourceTree = "<group>"; };
@@ -293,18 +269,12 @@
 		93952FC9194D7241001AA3E4 /* ExploreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploreViewController.m; sourceTree = "<group>"; };
 		93952FCB194D7318001AA3E4 /* CreateEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateEventViewController.h; sourceTree = "<group>"; };
 		93952FCC194D7318001AA3E4 /* CreateEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateEventViewController.m; sourceTree = "<group>"; };
-		93952FCE194D7347001AA3E4 /* FindFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendsViewController.h; sourceTree = "<group>"; };
-		93952FCF194D7347001AA3E4 /* FindFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendsViewController.m; sourceTree = "<group>"; };
 		93AB708F1963B4EA002569B1 /* ProfileView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileView1.h; sourceTree = "<group>"; };
 		93AB70901963B4EA002569B1 /* ProfileView1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileView1.m; sourceTree = "<group>"; };
 		93AB70921963B4FE002569B1 /* ProfileView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileView2.h; path = ../ProfileView2.h; sourceTree = "<group>"; };
 		93AB70931963B4FE002569B1 /* ProfileView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileView2.m; path = ../ProfileView2.m; sourceTree = "<group>"; };
 		93BF983C1963403400A7DD67 /* UITabBarController+hidable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+hidable.h"; sourceTree = "<group>"; };
 		93BF983D1963403400A7DD67 /* UITabBarController+hidable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+hidable.m"; sourceTree = "<group>"; };
-		93CE89031961399D007BA434 /* IdeasViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeasViewController.h; sourceTree = "<group>"; };
-		93CE89041961399D007BA434 /* IdeasViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdeasViewController.m; sourceTree = "<group>"; };
-		93CE890619613D15007BA434 /* IdeasTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdeasTableViewCell.h; sourceTree = "<group>"; };
-		93CE890719613D15007BA434 /* IdeasTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdeasTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -457,31 +427,10 @@
 				609FDC73195F4F6E00EF7C5B /* InvitePeopleInviteButton.m */,
 				609FDC6C195F4C6600EF7C5B /* InvitePeopleViewController.h */,
 				609FDC6D195F4C6600EF7C5B /* InvitePeopleViewController.m */,
-				93CE89031961399D007BA434 /* IdeasViewController.h */,
-				93CE89041961399D007BA434 /* IdeasViewController.m */,
-				93CE890619613D15007BA434 /* IdeasTableViewCell.h */,
-				93CE890719613D15007BA434 /* IdeasTableViewCell.m */,
 				9368F99719630074005477A1 /* ThemeObject.h */,
 				9368F99819630074005477A1 /* ThemeObject.m */,
 			);
 			name = Create;
-			sourceTree = "<group>";
-		};
-		60A7DAD7195E310B003258F0 /* Find Friends */ = {
-			isa = PBXGroup;
-			children = (
-				937554481950A5BF008AAD45 /* FindFriendsTableViewCell.h */,
-				937554491950A5BF008AAD45 /* FindFriendsTableViewCell.m */,
-				605ADBE4195CF36400254B92 /* FindFriendsFriendButton.h */,
-				605ADBE5195CF36400254B92 /* FindFriendsFriendButton.m */,
-				93952FCE194D7347001AA3E4 /* FindFriendsViewController.h */,
-				93952FCF194D7347001AA3E4 /* FindFriendsViewController.m */,
-				6091D1F2195B28F6001A371E /* PendingFriendRequestsCustomTableViewCell.h */,
-				6091D1F3195B28F6001A371E /* PendingFriendRequestsCustomTableViewCell.m */,
-				6091D1EF195B2806001A371E /* PendingFriendRequestsViewController.h */,
-				6091D1F0195B2806001A371E /* PendingFriendRequestsViewController.m */,
-			);
-			name = "Find Friends";
 			sourceTree = "<group>";
 		};
 		60A7DAD8195E3155003258F0 /* Profile */ = {
@@ -505,19 +454,6 @@
 				9375544C1950B883008AAD45 /* EditProfileViewController.m */,
 			);
 			name = Profile;
-			sourceTree = "<group>";
-		};
-		810C1EBD1956058A0046DFB1 /* ChatFolder */ = {
-			isa = PBXGroup;
-			children = (
-				810C1EC0195605B70046DFB1 /* CustomTableViewCell.h */,
-				810C1EC1195605B70046DFB1 /* CustomTableViewCell.m */,
-				6050D52619633FAA008AAF8F /* ChatEventObject.h */,
-				6050D52719633FAA008AAF8F /* ChatEventObject.m */,
-				60C72083194F677300ADE5DF /* ChatEventViewController.h */,
-				60C72084194F677300ADE5DF /* ChatEventViewController.m */,
-			);
-			name = ChatFolder;
 			sourceTree = "<group>";
 		};
 		930D1901195886BE00AE4AE1 /* GK Classes */ = {
@@ -610,12 +546,10 @@
 				93952F9D194D5D4C001AA3E4 /* AppDelegate.m */,
 				93952F9F194D5D4C001AA3E4 /* Main.storyboard */,
 				60A7DAD3195E2FBE003258F0 /* Home */,
-				810C1EBD1956058A0046DFB1 /* ChatFolder */,
 				60A7DAD4195E3053003258F0 /* Explore */,
 				60A7DAD5195E3071003258F0 /* Create */,
 				930D1901195886BE00AE4AE1 /* GK Classes */,
 				60A7DAD8195E3155003258F0 /* Profile */,
-				60A7DAD7195E310B003258F0 /* Find Friends */,
 				608B6C9B1950DE61007D4503 /* Login and SignUp */,
 				93952FA5194D5D4C001AA3E4 /* Images.xcassets */,
 				93952F94194D5D4C001AA3E4 /* Supporting Files */,
@@ -766,15 +700,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				60D47AD01961066F005FB3F4 /* InvitedPeopleButton.m in Sources */,
-				93CE890819613D15007BA434 /* IdeasTableViewCell.m in Sources */,
 				609FDC77195F551100EF7C5B /* InvitesTableViewCell.m in Sources */,
 				930D1910195886DC00AE4AE1 /* GKImageCropViewController.m in Sources */,
 				813A92211961AD5D00843C6F /* CamPreView.m in Sources */,
-				93952FD0194D7347001AA3E4 /* FindFriendsViewController.m in Sources */,
 				60F47AB5194E7653007422E7 /* IndividualEventViewController.m in Sources */,
 				93952FCA194D7241001AA3E4 /* ExploreViewController.m in Sources */,
-				6091D1F1195B2806001A371E /* PendingFriendRequestsViewController.m in Sources */,
-				60C72085194F677300ADE5DF /* ChatEventViewController.m in Sources */,
 				608B6C991950DBCF007D4503 /* LoginViewController.m in Sources */,
 				930D190F195886DC00AE4AE1 /* GKImagePicker.m in Sources */,
 				60A7DAD2195E2EE3003258F0 /* FriendsListTableViewCell.m in Sources */,
@@ -795,13 +725,10 @@
 				60B954531959C95900AE363D /* PeopleAttendingEventViewController.m in Sources */,
 				606DAE371961FA1E003F3AAE /* StreamProfileFriendListViewController.m in Sources */,
 				930D1913195886DC00AE4AE1 /* GKCropBorderView.m in Sources */,
-				6091D1F4195B28F6001A371E /* PendingFriendRequestsCustomTableViewCell.m in Sources */,
 				60C72097194FAFC200ADE5DF /* StreamTableViewCell.m in Sources */,
 				608B6C9E1950FF51007D4503 /* CommentsViewController.m in Sources */,
-				9375544A1950A5BF008AAD45 /* FindFriendsTableViewCell.m in Sources */,
 				606DAE3A1961FA80003F3AAE /* StreamProfileFriendsListTableViewCell.m in Sources */,
 				9368F99919630074005477A1 /* ThemeObject.m in Sources */,
-				6050D52819633FAA008AAF8F /* ChatEventObject.m in Sources */,
 				93952F9E194D5D4C001AA3E4 /* AppDelegate.m in Sources */,
 				606DAE4319624DFD003F3AAE /* LikesListTableViewCell.m in Sources */,
 				93BF983E1963403400A7DD67 /* UITabBarController+hidable.m in Sources */,
@@ -811,7 +738,6 @@
 				608B6C9A1950DBCF007D4503 /* SignupViewController.m in Sources */,
 				6050D5221962FC86008AAF8F /* IndividualEventInvitePeopleTableViewCell.m in Sources */,
 				609FDC6E195F4C6600EF7C5B /* InvitePeopleViewController.m in Sources */,
-				810C1EC3195605B70046DFB1 /* CustomTableViewCell.m in Sources */,
 				605ADBE3195CABC000254B92 /* PeopleAttendingFriendButton.m in Sources */,
 				60C72094194F692000ADE5DF /* StreamEventViewController.m in Sources */,
 				6050D5251962FCD0008AAF8F /* IndividualEventInvitePeopleInviteButton.m in Sources */,
@@ -823,7 +749,6 @@
 				930D1912195886DC00AE4AE1 /* GKImageCropOverlayView.m in Sources */,
 				601F5D911951DD8E00B6D89C /* CommentsTableViewCell.m in Sources */,
 				60D47ACA196105E0005FB3F4 /* InvitedPeopleViewController.m in Sources */,
-				605ADBE6195CF36400254B92 /* FindFriendsFriendButton.m in Sources */,
 				606DAE3D1961FB1E003F3AAE /* StreamProfileFriendListFriendButton.m in Sources */,
 				9375544D1950B883008AAD45 /* EditProfileViewController.m in Sources */,
 				930D1911195886DC00AE4AE1 /* GKImageCropView.m in Sources */,
@@ -832,7 +757,6 @@
 				6050D51F1962FB60008AAF8F /* IndividualEventInvitePeopleViewController.m in Sources */,
 				606DAE4019624D83003F3AAE /* LikeListViewController.m in Sources */,
 				609FDC71195F4CBB00EF7C5B /* InvitePeopleTableViewCell.m in Sources */,
-				93CE89051961399D007BA434 /* IdeasViewController.m in Sources */,
 				93802209195659A0004B492D /* DateAndTimeViewController.m in Sources */,
 				606DAE4619624E1C003F3AAE /* LikesListFriendButton.m in Sources */,
 				60C7208E194F689400ADE5DF /* PageViewController.m in Sources */,
