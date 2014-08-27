@@ -193,30 +193,6 @@
     //modally brings up all of the users friends and they can tap them to invite
 }
 
-- (IBAction)onInviteOnlySwitch: (id)sender
-{
-    if (self.inviteOnly.isOn)
-    {
-        self.isEventinviteOnly = YES;
-
-    } else
-    {
-        self.isEventinviteOnly = NO;
-    }
-}
-
-- (IBAction)canGuestsInviteOthers: (id)sender
-{
-    if (self.guestCanInviteOthers.isOn)
-    {
-        self.canGuestInviteOthers = YES;
-
-    } else
-    {
-        self.canGuestInviteOthers = NO;
-    }
-}
-
 - (IBAction)onCreateButtonTapped:(id)sender
 {
 
