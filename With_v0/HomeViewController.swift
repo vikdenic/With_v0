@@ -42,11 +42,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     {
         super.viewDidLoad()
 
+        tabBarController.tabBar.hidden = false;
         originalFrame = tabBarController.tabBar.frame
-
         tabBarController.tabBar.tintColor = UIColor.greenColor()
 
-        var currentUser = PFUser.currentUser()
+        let currentUser = PFUser.currentUser()
 
         if currentUser != nil
         {
@@ -62,8 +62,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         refreshControl.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
         tableView.addSubview(refreshControl)
 
-        //TODO: finish viewcontroller
-        
+        navigationController.setNavigationBarHidden(false, animated: true)
+
+        let newBackButton = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Bordered, target: nil, action: nil)
     }
 
     //MARK: Helpers
@@ -88,7 +89,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
             if self.eventArray.count < 3
             {
-//                self.eventArray.append(<#newElement: T#>)
                 self.eventArray = objects as [PFObject]
                 self.tableView.reloadData()
             }
@@ -112,6 +112,16 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
 
+    //MARK: Notif Center
+    func receiveNotification(notification : NSNotification)
+    {
+        if notification.name == "Test1"
+        {
+            eventArray.removeAll(keepCapacity: false)
+            tableView.reloadData()
+        }
+    }
+
     //MARK: TableView
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int
     {
@@ -124,6 +134,68 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         return cell
     }
+
+    //MARK: Hide TabBar
+    func expand()
+    {
+        if hidden
+        {
+            return
+        }
+
+        hidden = false;
+        tabBarController.setTabBarHidden(false, animated: true)
+        navigationController.setNavigationBarHidden(false, animated: true)
+    }
+
+    func contract()
+    {
+        if !hidden
+        {
+            return
+        }
+
+        hidden = false
+
+        tabBarController.setTabBarHidden(false, animated: true)
+        navigationController.setNavigationBarHidden(false, animated: true)
+    }
+
+    func scrollViewWillBeginDragging(scrollView: UIScrollView!)
+    {
+        startContentOffset = lastContentOffset
+        lastContentOffset = scrollView.contentOffset.y
+    }
+
+    func scrollViewDidScroll(scrollView: UIScrollView!)
+    {
+        var currentOffset = scrollView.contentOffset.y
+        var differenceFromStart = startContentOffset - currentOffset
+        var differenceFromLast = lastContentOffset - currentOffset
+        lastContentOffset = currentOffset
+
+        if differenceFromStart < 0
+        {
+            if scrollView.tracking && abs(differenceFromLast) > 1
+            {
+                expand()
+            }
+            else
+            {
+                if scrollView.tracking && abs(differenceFromLast)>1
+                {
+                    contract()
+                }
+            }
+        }
+    }
+
+    func scrollViewShouldScrollToTop(scrollView: UIScrollView!) -> Bool
+    {
+        contract()
+        return true
+    }
+
 
 
 
