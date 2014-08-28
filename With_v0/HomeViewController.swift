@@ -125,12 +125,18 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK: TableView
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int
     {
-        return 1
+        return self.eventArray.count
     }
 
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell!
     {
         var cell = tableView.dequeueReusableCellWithIdentifier("Cell") as HomeTableViewCell
+
+        //TODO: finish this function
+//        if cell == nil
+//        {
+//            cell = HomeTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
+//        }
 
         return cell
     }
