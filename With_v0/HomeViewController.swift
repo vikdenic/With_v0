@@ -19,9 +19,9 @@ import UIKit
 //    }
 //}
 
-class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate {
+class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, PFLogInViewControllerDelegate {
 
-    var event = PFObject()
+    var event = PFObject(className: "Event")
 
     @IBOutlet var tableView: UITableView!
 
@@ -45,6 +45,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         originalFrame = tabBarController.tabBar.frame
         tabBarController.tabBar.tintColor = UIColor.greenColor()
 
+    }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         let currentUser = PFUser.currentUser()
 
         if currentUser != nil
@@ -53,17 +56,25 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         else
         {
-            performSegueWithIdentifier("showLogin", sender: self)
+            var plvc = PFLogInViewController()
+            plvc.delegate = self
+            presentViewController(plvc, animated: false, completion: nil)
+            //            performSegueWithIdentifier("showLogin", sender: self)
         }
 
-        //pull to refresh
-        refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
-        tableView.addSubview(refreshControl)
+//        //pull to refresh
+//        refreshControl = UIRefreshControl()
+//        refreshControl.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+//        tableView.addSubview(refreshControl)
 
         navigationController.setNavigationBarHidden(false, animated: true)
 
         let newBackButton = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Bordered, target: nil, action: nil)
+    }
+
+    func logInViewController(logInController: PFLogInViewController!, didLogInUser user: PFUser!) {
+        queryForEvents()
+        dismissViewControllerAnimated(true, completion: nil)
     }
 
     //MARK: Helpers
@@ -125,6 +136,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK: Notif Center
     func receiveNotification(notification : NSNotification)
     {
+
         if notification.name == "Test1"
         {
             eventArray.removeAll(keepCapacity: false)
@@ -143,7 +155,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as HomeTableViewCell
 
         //TODO: if cell == nil
-
         let object = eventArray[indexPath.row]
 
         let queue2 = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
@@ -186,7 +197,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             })
         }
 
-        let username = object.objectForKey("creator").objectForKey("username") as PFObject
+        let username: AnyObject? = object.objectForKey("creator").objectForKey("username")
         cell.creatorNameLabel.text = "\(username)"
 
         cell.eventNameLabel.text = object["title"] as String
@@ -285,7 +296,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             pageViewController.event = event
         }
     }
-
 }
 
 

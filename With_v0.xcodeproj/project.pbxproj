@@ -96,7 +96,6 @@
 		93952FAF194D5D4C001AA3E4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93952F91194D5D4C001AA3E4 /* UIKit.framework */; };
 		93952FB7194D5D4C001AA3E4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 93952FB5194D5D4C001AA3E4 /* InfoPlist.strings */; };
 		93952FB9194D5D4C001AA3E4 /* With_v0Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FB8194D5D4C001AA3E4 /* With_v0Tests.m */; };
-		93952FC4194D6BEA001AA3E4 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FC3194D6BEA001AA3E4 /* HomeViewController.m */; };
 		93952FC7194D6BFC001AA3E4 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FC6194D6BFC001AA3E4 /* ProfileViewController.m */; };
 		93952FCA194D7241001AA3E4 /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FC9194D7241001AA3E4 /* ExploreViewController.m */; };
 		93952FCD194D7318001AA3E4 /* CreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93952FCC194D7318001AA3E4 /* CreateEventViewController.m */; };
@@ -104,6 +103,8 @@
 		93AB70941963B4FE002569B1 /* ProfileView2.m in Sources */ = {isa = PBXBuildFile; fileRef = 93AB70931963B4FE002569B1 /* ProfileView2.m */; };
 		93BF983E1963403400A7DD67 /* UITabBarController+hidable.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF983D1963403400A7DD67 /* UITabBarController+hidable.m */; };
 		93C75DCA19AF7A2A009CA5B8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C75DC919AF7A2A009CA5B8 /* HomeViewController.swift */; };
+		93C75DCC19B0F56E009CA5B8 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93C75DCB19B0F56E009CA5B8 /* Accounts.framework */; };
+		93C75DCE19B0F593009CA5B8 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93C75DCD19B0F593009CA5B8 /* Social.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -262,8 +263,6 @@
 		93952FB4194D5D4C001AA3E4 /* With_v0Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "With_v0Tests-Info.plist"; sourceTree = "<group>"; };
 		93952FB6194D5D4C001AA3E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		93952FB8194D5D4C001AA3E4 /* With_v0Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = With_v0Tests.m; sourceTree = "<group>"; };
-		93952FC2194D6BEA001AA3E4 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
-		93952FC3194D6BEA001AA3E4 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		93952FC5194D6BFC001AA3E4 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		93952FC6194D6BFC001AA3E4 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		93952FC8194D7241001AA3E4 /* ExploreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreViewController.h; sourceTree = "<group>"; };
@@ -278,6 +277,8 @@
 		93BF983D1963403400A7DD67 /* UITabBarController+hidable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+hidable.m"; sourceTree = "<group>"; };
 		93C75DC819AF7A29009CA5B8 /* With_v0-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "With_v0-Bridging-Header.h"; sourceTree = "<group>"; };
 		93C75DC919AF7A2A009CA5B8 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		93C75DCB19B0F56E009CA5B8 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		93C75DCD19B0F593009CA5B8 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -285,6 +286,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93C75DCE19B0F593009CA5B8 /* Social.framework in Frameworks */,
+				93C75DCC19B0F56E009CA5B8 /* Accounts.framework in Frameworks */,
 				813A92251961AEBC00843C6F /* AssetsLibrary.framework in Frameworks */,
 				813A92231961AEA200843C6F /* AVFoundation.framework in Frameworks */,
 				9391EEC4195BD25C00554584 /* CoreImage.framework in Frameworks */,
@@ -337,8 +340,6 @@
 				60F47AB0194E5223007422E7 /* HomeTableViewCell.h */,
 				60F47AB1194E5223007422E7 /* HomeTableViewCell.m */,
 				93C75DC919AF7A2A009CA5B8 /* HomeViewController.swift */,
-				93952FC2194D6BEA001AA3E4 /* HomeViewController.h */,
-				93952FC3194D6BEA001AA3E4 /* HomeViewController.m */,
 				609FDC75195F551100EF7C5B /* InvitesTableViewCell.h */,
 				609FDC76195F551100EF7C5B /* InvitesTableViewCell.m */,
 				60694164195FD98F00C8310F /* InvitesButton.h */,
@@ -517,6 +518,8 @@
 		93952F8C194D5D4C001AA3E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				93C75DCD19B0F593009CA5B8 /* Social.framework */,
+				93C75DCB19B0F56E009CA5B8 /* Accounts.framework */,
 				813A92241961AEBC00843C6F /* AssetsLibrary.framework */,
 				813A92221961AEA200843C6F /* AVFoundation.framework */,
 				9391EEC3195BD25C00554584 /* CoreImage.framework */,
@@ -758,7 +761,6 @@
 				606DAE3D1961FB1E003F3AAE /* StreamProfileFriendListFriendButton.m in Sources */,
 				9375544D1950B883008AAD45 /* EditProfileViewController.m in Sources */,
 				930D1911195886DC00AE4AE1 /* GKImageCropView.m in Sources */,
-				93952FC4194D6BEA001AA3E4 /* HomeViewController.m in Sources */,
 				60F5B34C1957555E00A80467 /* ExploreAnnotation.m in Sources */,
 				6050D51F1962FB60008AAF8F /* IndividualEventInvitePeopleViewController.m in Sources */,
 				606DAE4019624D83003F3AAE /* LikeListViewController.m in Sources */,

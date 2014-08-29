@@ -10,7 +10,6 @@
 #import <Parse/Parse.h>
 #import "IndividualEventViewController.h"
 #import "HomeTableViewCell.h"
-#import "HomeViewController.h"
 #import "ProfileTableViewCell.h"
 #import "IndividualEventViewController.h"
 
