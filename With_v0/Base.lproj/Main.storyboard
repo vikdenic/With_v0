@@ -63,7 +63,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="50" translatesAutoresizingMaskIntoConstraints="NO" id="chy-SK-PNn">
-                                                                    <rect key="frame" x="90" y="62" width="50" height="21"/>
+                                                                    <rect key="frame" x="90" y="61" width="175" height="29"/>
                                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -77,15 +77,6 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="onh-1Y-Onn">
                                                     <rect key="frame" x="10" y="123" width="70" height="70"/>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCe-RU-QgQ">
-                                                    <rect key="frame" x="235" y="176" width="46" height="30"/>
-                                                    <state key="normal" title="...">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="showActionSheet:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="3E0-yF-1pp"/>
-                                                    </connections>
-                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
@@ -117,7 +108,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Vdk-Mo-UU7" kind="modal" identifier="ToInvitesSegue" id="E0X-Ou-fLz"/>
+                                    <segue destination="Zt6-hg-VoZ" kind="modal" id="qjQ-gc-imK"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -225,34 +216,24 @@
                                     <outlet property="delegate" destination="Vdk-Mo-UU7" id="KgO-O2-w35"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="teH-Dw-m1X">
-                                <rect key="frame" x="20" y="28" width="69" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <state key="normal" title="&lt;Home">
-                                    <color key="titleColor" red="0.8078432083" green="0.98431378599999997" blue="0.28627452250000002" alpha="1" colorSpace="deviceRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="S5m-gh-nxk" kind="unwind" unwindAction="unwindSegueInvitesToHome:" id="0TM-O7-OZL"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Invites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e9W-3f-aKi">
-                                <rect key="frame" x="132" y="32" width="57" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <color key="textColor" red="0.28578563950000002" green="0.18065478930000001" blue="0.348832111" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="eMT-dv-idf">
+                        <barButtonItem key="leftBarButtonItem" title="Dismiss" id="wGJ-XN-ymb">
+                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="onDismissTapped:" destination="Vdk-Mo-UU7" id="woh-4m-ZsO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="256-Lm-tT8" id="Lug-SQ-m6A"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tnZ-Ut-4MM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="S5m-gh-nxk" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1852" y="-2047"/>
+            <point key="canvasLocation" x="2701" y="-2059"/>
         </scene>
         <!--Individual Event View Controller-->
         <scene sceneID="WFR-du-iNY">
@@ -601,7 +582,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jTo-ED-ll5" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="jxk-p3-eWn" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2681" y="-1487"/>
+            <point key="canvasLocation" x="3213" y="-1487"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="0HF-FT-6AY">
@@ -805,7 +786,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nq5-LH-AIe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4229" y="-2185"/>
+            <point key="canvasLocation" x="4761" y="-2185"/>
         </scene>
         <!--Stream Camera View Controller-->
         <scene sceneID="Lvi-oi-xcS">
@@ -931,7 +912,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="6089" y="-1936"/>
+            <point key="canvasLocation" x="6621" y="-1936"/>
         </scene>
         <!--Stream Profile View Controller-->
         <scene sceneID="4UC-Ea-6OJ">
@@ -1214,7 +1195,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w8z-Vr-mmB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3554" y="-2274"/>
+            <point key="canvasLocation" x="4086" y="-2274"/>
         </scene>
         <!--Explore View Controller-->
         <scene sceneID="upb-6q-sMu">
@@ -1470,7 +1451,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1223" y="378"/>
+            <point key="canvasLocation" x="1315" y="353"/>
         </scene>
         <!--Date & Time-->
         <scene sceneID="OJq-xW-7P6">
@@ -2379,6 +2360,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dYa-yp-r2k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="649" y="-575"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="bgg-gb-Hak">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Zt6-hg-VoZ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="wIV-4V-ZGB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Vdk-Mo-UU7" kind="relationship" relationship="rootViewController" id="5vW-le-geL"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ehf-re-4Mh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2169" y="-2059"/>
         </scene>
     </scenes>
     <resources>

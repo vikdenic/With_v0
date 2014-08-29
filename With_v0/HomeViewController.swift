@@ -186,8 +186,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             })
         }
 
-        let username: AnyObject? = object.objectForKey("creator").objectForKey("username")
-        cell.creatorNameLabel.text = "\(username)"
+        let username = object.objectForKey("creator").objectForKey("username") as String
+        cell.creatorNameLabel.text = username
 
         cell.eventNameLabel.text = object["title"] as String
         cell.eventDateLabel.text = object["eventDate"] as String

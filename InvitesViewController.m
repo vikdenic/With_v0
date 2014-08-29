@@ -64,6 +64,11 @@
      }];
 }
 
+- (IBAction)onDismissTapped:(UIBarButtonItem *)sender
+{
+    [self dismissViewControllerAnimated:true completion:nil];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.eventArray.count;
