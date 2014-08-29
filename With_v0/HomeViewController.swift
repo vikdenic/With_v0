@@ -8,17 +8,6 @@
 
 import UIKit
 
-//extension Array{
-//    func appendAllObjectsFromArray(array : [AnyObject], arrayWithObjects : [AnyObject]) -> [AnyObject]
-//    {
-//        for object in arrayWithObjects
-//        {
-//            array.append(object)
-//        }
-//        return array
-//    }
-//}
-
 class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, PFLogInViewControllerDelegate {
 
     var event = PFObject(className: "Event")
@@ -288,12 +277,15 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK: Segue
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!)
     {
-        if segue.identifier == "ToPageViewControllerSegue"
+        if segue.identifier != nil
         {
-            let selectedIndexPath = tableView.indexPathForSelectedRow()
-            event = eventArray[selectedIndexPath.row] as PFObject
-            let pageViewController = segue.destinationViewController as PageViewController
-            pageViewController.event = event
+            if segue.identifier == "ToPageViewControllerSegue"
+            {
+                let selectedIndexPath = tableView.indexPathForSelectedRow()
+                event = eventArray[selectedIndexPath.row] as PFObject
+                let pageViewController = segue.destinationViewController as PageViewController
+                pageViewController.event = event
+            }
         }
     }
 }
