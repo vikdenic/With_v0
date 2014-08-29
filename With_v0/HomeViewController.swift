@@ -9,13 +9,12 @@
 import UIKit
 
 //extension Array{
-//    func appendAllObjectsFromArray(array : [AnyObject]) -> [AnyObject]
+//    func appendAllObjectsFromArray(array : [AnyObject], arrayWithObjects : [AnyObject]) -> [AnyObject]
 //    {
-//        for object in array
+//        for object in arrayWithObjects
 //        {
 //            array.append(object)
 //        }
-//
 //        return array
 //    }
 //}
@@ -111,6 +110,17 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
 
+    //MARK: Refresh
+    func refresh(refreshControl : UIRefreshControl)
+    {
+        queryForEvents()
+        let timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector:  Selector("stopRefresh"), userInfo: nil, repeats: false)
+    }
+
+    func stopRefresh()
+    {
+        refreshControl.endRefreshing()
+    }
 
     //MARK: Notif Center
     func receiveNotification(notification : NSNotification)
@@ -130,15 +140,77 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell!
     {
-        var cell = tableView.dequeueReusableCellWithIdentifier("Cell") as HomeTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as HomeTableViewCell
 
-        //TODO: finish this function
-//        if cell == nil
-//        {
-//            cell = HomeTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
-//        }
+        //TODO: if cell == nil
+
+        let object = eventArray[indexPath.row]
+
+        let queue2 = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
+
+        let userProfilePhoto = object.objectForKey("creator").objectForKey("userProfilePhoto") as PFFile
+
+        userProfilePhoto.getDataInBackgroundWithBlock({ (data, error) -> Void in
+
+            if data == nil
+            {
+                cell.creatorImageView.image = nil
+            }
+            else
+            {
+                dispatch_async(queue2, { () -> Void in
+                    var temporaryImage = UIImage(data: data)
+
+                    cell.creatorImageView.layer.cornerRadius = cell.creatorImageView.bounds.size.width/2
+                    cell.creatorImageView.layer.borderColor = UIColor.greenColor().CGColor
+                    cell.creatorImageView.layer.borderWidth = 2.0
+                    cell.creatorImageView.layer.masksToBounds = true
+
+                    dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                        cell.creatorImageView.image = temporaryImage
+                    })
+                })
+            }
+
+        })
+
+        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
+        let file = object.objectForKey("themeImage") as PFFile
+        file.getDataInBackgroundWithBlock { (data, error) -> Void in
+            dispatch_async(queue, { () -> Void in
+                var image = UIImage(data: data)
+
+                dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                    cell.themeImageView.image = image
+                })
+            })
+        }
+
+        let username = object.objectForKey("creator").objectForKey("username") as PFObject
+        cell.creatorNameLabel.text = "\(username)"
+
+        cell.eventNameLabel.text = object["title"] as String
+        cell.eventDateLabel.text = object["eventDate"] as String
+
+        cell.accessoryType = UITableViewCellAccessoryType.None
+
+        let sectionsAmount = tableView.numberOfSections()
+        let rowsAmount = tableView.numberOfRowsInSection(indexPath.section)
+
+        if indexPath.section == sectionsAmount - 1 && indexPath.row == rowsAmount - 1
+        {
+            if !doingTheQuery
+            {
+                queryForEvents()
+            }
+        }
 
         return cell
+    }
+
+    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!)
+    {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 
     //MARK: Hide TabBar
@@ -202,8 +274,17 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return true
     }
 
-
-
+    //MARK: Segue
+    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!)
+    {
+        if segue.identifier == "ToPageViewControllerSegue"
+        {
+            let selectedIndexPath = tableView.indexPathForSelectedRow()
+            event = eventArray[selectedIndexPath.row] as PFObject
+            let pageViewController = segue.destinationViewController as PageViewController
+            pageViewController.event = event
+        }
+    }
 
 }
 
