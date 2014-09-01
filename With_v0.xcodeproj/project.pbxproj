@@ -105,6 +105,7 @@
 		93C75DCA19AF7A2A009CA5B8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C75DC919AF7A2A009CA5B8 /* HomeViewController.swift */; };
 		93C75DCC19B0F56E009CA5B8 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93C75DCB19B0F56E009CA5B8 /* Accounts.framework */; };
 		93C75DCE19B0F593009CA5B8 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93C75DCD19B0F593009CA5B8 /* Social.framework */; };
+		93CDD0C419B4F956000122F6 /* InvitesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CDD0C319B4F956000122F6 /* InvitesViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -279,6 +280,7 @@
 		93C75DC919AF7A2A009CA5B8 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		93C75DCB19B0F56E009CA5B8 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		93C75DCD19B0F593009CA5B8 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		93CDD0C319B4F956000122F6 /* InvitesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InvitesViewController.swift; path = ../InvitesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,6 +346,7 @@
 				609FDC76195F551100EF7C5B /* InvitesTableViewCell.m */,
 				60694164195FD98F00C8310F /* InvitesButton.h */,
 				60694165195FD98F00C8310F /* InvitesButton.m */,
+				93CDD0C319B4F956000122F6 /* InvitesViewController.swift */,
 				60A7DADC195E32BA003258F0 /* InvitesViewController.h */,
 				60A7DADD195E32BA003258F0 /* InvitesViewController.m */,
 				60C7208C194F689400ADE5DF /* PageViewController.h */,
@@ -728,6 +731,7 @@
 				60A7DACF195E2E73003258F0 /* FriendsListViewController.m in Sources */,
 				60A7DADE195E32BA003258F0 /* InvitesViewController.m in Sources */,
 				93513A6119528A9000302A54 /* ChooseEventLocationViewController.m in Sources */,
+				93CDD0C419B4F956000122F6 /* InvitesViewController.swift in Sources */,
 				60F5B3461957537200A80467 /* ExploreEventAnnotationView.m in Sources */,
 				93952FCD194D7318001AA3E4 /* CreateEventViewController.m in Sources */,
 				60B954531959C95900AE363D /* PeopleAttendingEventViewController.m in Sources */,

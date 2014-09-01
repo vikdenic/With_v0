@@ -51,11 +51,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             //            performSegueWithIdentifier("showLogin", sender: self)
         }
 
-//        //pull to refresh
-//        refreshControl = UIRefreshControl()
-//        refreshControl.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
-//        tableView.addSubview(refreshControl)
-
         navigationController.setNavigationBarHidden(false, animated: true)
 
         let newBackButton = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Bordered, target: nil, action: nil)
