@@ -135,12 +135,65 @@ class InvitesViewController: UIViewController, UITableViewDelegate, UITableViewD
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as InvitesTableViewCell
         //TODO: cellForRow
+
+        let object = eventArray[indexPath.row]
+        let eventInvite = eventInviteArray[indexPath.row]
+
+        let userProfilePhoto = object.objectForKey("creator").objectForKey("userProfilePhoto") as PFFile
+        userProfilePhoto.getDataInBackgroundWithBlock { (data, error) -> Void in
+            if data == nil
+            {
+                cell.creatorImageView.image = nil
+            }
+            else
+            {
+                let temporaryImage = UIImage(data: data)
+                cell.creatorImageView.layer.cornerRadius = cell.creatorImageView.bounds.size.width/2
+                cell.creatorImageView.layer.borderColor = UIColor.greenColor().CGColor
+                cell.creatorImageView.layer.borderWidth = 2.0
+                cell.creatorImageView.layer.masksToBounds = true
+                cell.creatorImageView.image = temporaryImage
+            }
+        }
+
+        let file = object.objectForKey("themeImage") as PFFile
+        file.getDataInBackgroundWithBlock { (data, error) -> Void in
+            let image = UIImage(data: data)
+            cell.themeImageView.image = image
+        }
+
+        let userName = object.objectForKey("creator").objectForKey("username") as String
+        cell.creatorNameLabel.text = userName
+
+        cell.eventNameLabel.text = object["title"] as String
+        cell.eventDateLabel.text = object["eventDate"] as String
+        cell.accessoryType = UITableViewCellAccessoryType.None
+
+        let yesButton = UIImage(named: "yes_image_unselected")
+        cell.yesButton.setImage(yesButton, forState: UIControlState.Normal)
+        cell.yesButton.eventObject = object
+        cell.yesButton.tag = indexPath.row
+        cell.yesButton.eventInviteObject = eventInvite
+        cell.yesButton.addTarget(self, action: "onYesTapped", forControlEvents: UIControlEvents.TouchUpInside)
+
+        let noButton = UIImage(named: "no_image_unselected")
+        cell.noButton.setImage(noButton, forState: UIControlState.Normal)
+        cell.noButton.eventObject = object
+        cell.noButton.eventInviteObject = eventInvite
+        cell.noButton.tag = indexPath.row
+        cell.noButton.addTarget(self, action: "onNoTapped", forControlEvents: UIControlEvents.TouchUpInside)
+
         return cell
     }
 
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int
     {
         return eventArray.count
+    }
+
+    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!)
+    {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 
 }
