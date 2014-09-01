@@ -30,10 +30,12 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     {
         super.viewDidLoad()
 
-        tabBarController.tabBar.hidden = false;
-        originalFrame = tabBarController.tabBar.frame
-        tabBarController.tabBar.tintColor = UIColor.greenColor()
-
+        if tabBarController != nil
+        {
+            tabBarController.tabBar.hidden = false;
+            originalFrame = tabBarController.tabBar.frame
+            tabBarController.tabBar.tintColor = UIColor.greenColor()
+        }
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
