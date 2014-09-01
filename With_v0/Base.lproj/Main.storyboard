@@ -211,6 +211,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Vdk-Mo-UU7" id="v8w-jS-vFA"/>
+                                    <outlet property="delegate" destination="Vdk-Mo-UU7" id="NW2-Dl-oEl"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
