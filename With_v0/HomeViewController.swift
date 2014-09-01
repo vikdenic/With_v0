@@ -83,8 +83,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
             if self.eventArray.count < 3
             {
-                self.eventArray = objects as [PFObject]
-                self.tableView.reloadData()
+                if objects != nil
+                {
+                    self.eventArray = objects as [PFObject]
+                    self.tableView.reloadData()
+                }
             }
             else if self.eventArray.count >= 3
             {
